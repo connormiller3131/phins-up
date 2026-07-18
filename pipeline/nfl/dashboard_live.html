@@ -591,7 +591,11 @@ function renderMLBGames(){
   document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
   const ep = MLB_DATA.elo_params;
   document.getElementById('mlb-meta').textContent =
-    `Model basis: Elo rating fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since. Backtested out-of-sample on all of 2026 played so far: Brier 0.249, 54.3% accuracy. Generated ${MLB_DATA.generated_at}.`;
+    `Model basis: team Elo fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression})` +
+    (MLB_DATA.pitcher_blend_used
+      ? `, blended with real starting-pitcher and bullpen strength (Statcast run-value, trailing 6 starts / 10 relief outings) via a logistic regression fit on 2024-2025 and validated out-of-sample on 2026: Brier 0.249&rarr;0.248, log loss 0.690&rarr;0.689 vs. team-Elo alone -- a real but modest gain, consistent with bullpens and game-to-game variance diluting a starter's influence on a single game's outcome.`
+      : `. Pitcher/bullpen blend not available this run -- showing team-only Elo.`) +
+    ` Generated ${MLB_DATA.generated_at}.`;
 
   const root = document.getElementById("mlb-games");
   root.innerHTML = "";

@@ -33,6 +33,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
+from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
 DATA_DIR = ROOT / "data" / "mlb"
@@ -91,6 +92,41 @@ def elo_predictions(games_df, slate):
     preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
                     season_regression=elo_params.get("season_regression", 0.65))
     return preds[-len(slate):], elo_params
+
+
+def logit(p, eps=1e-6):
+    p = min(max(p, eps), 1 - eps)
+    return np.log(p / (1 - p))
+
+
+def blend_with_pitcher_strength(elo_preds, slate):
+    """Refine the team-only Elo prediction with real starting-pitcher and
+    bullpen strength, using the fitted blend from backtest_pitcher_model.py
+    (validated out-of-sample: Brier 0.2486 -> 0.2480 on the 2026 holdout).
+    Falls back to the pure Elo number if the backtest artifact is missing."""
+    path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
+    if not path.exists():
+        return list(elo_preds)
+    with open(path) as f:
+        b = json.load(f)
+    coef, intercept = b["coef"], b["intercept"]
+    sp_fill, bp_fill = b["sp_fill"], b["bp_fill"]
+
+    out = []
+    for i, g in enumerate(slate):
+        home_pid = g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None
+        away_pid = g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None
+        home_sp = current_sp_rating(home_pid) if home_pid else None
+        away_sp = current_sp_rating(away_pid) if away_pid else None
+        home_bp = current_bullpen_rating(g["home_team"])
+        away_bp = current_bullpen_rating(g["away_team"])
+
+        sp_diff = (home_sp - away_sp) if (home_sp is not None and away_sp is not None) else sp_fill
+        bp_diff = (home_bp - away_bp) if (home_bp is not None and away_bp is not None) else bp_fill
+
+        z = coef[0] * logit(float(elo_preds[i])) + coef[1] * sp_diff + coef[2] * bp_diff + intercept
+        out.append(1.0 / (1.0 + np.exp(-z)))
+    return out
 
 
 def attach_market_odds(slate):
@@ -322,7 +358,9 @@ def main():
     print(f"Target date: {target_date} -- {len(slate)} games")
 
     games_df = load_games()
-    elo_preds, elo_params = elo_predictions(games_df, slate)
+    team_elo_preds, elo_params = elo_predictions(games_df, slate)
+    print("Blending in starting-pitcher + bullpen strength...")
+    elo_preds = blend_with_pitcher_strength(team_elo_preds, slate)
     attach_market_odds(slate)
 
     print("Fitting prop models on full historical data...")
@@ -392,16 +430,20 @@ def main():
             "homeProbablePitcher": g["home_probable_pitcher"]["fullName"] if g["home_probable_pitcher"] else None,
             "homeProbablePitcherId": g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
             "elo_home_prob": round(float(elo_preds[i]), 4),
+            "team_elo_home_prob": round(float(team_elo_preds[i]), 4),
             "market": g["market"],
             "hr_combo": combo,
             "props": props,
         })
-        print(f"  {g['away_team']} @ {g['home_team']}: elo_home={elo_preds[i]:.3f} market={'yes' if g['market'] else 'no'} props={len(props)}")
+        print(f"  {g['away_team']} @ {g['home_team']}: model_home={elo_preds[i]:.3f} (team-only elo={team_elo_preds[i]:.3f}) market={'yes' if g['market'] else 'no'} props={len(props)}")
 
     attach_featured_prop_odds(games_out, limit=int(os.environ.get("FEATURED_PROPS_LIMIT", "1")))
 
+    pitcher_model_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
+    pitcher_blend_used = pitcher_model_path.exists()
     payload = {
         "date": target_date, "elo_params": elo_params,
+        "pitcher_blend_used": pitcher_blend_used,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "games": games_out,
     }

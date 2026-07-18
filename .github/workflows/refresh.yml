@@ -22,13 +22,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # notebooks_out/ (fitted model parameters) is gitignored -- a fresh
+      # checkout has none of it, so every backtest that writes there has to
+      # run before anything that reads its output. Skipping this caused
+      # every scheduled run to fail at "Generate current-week projections"
+      # (FileNotFoundError on nfl_win_prob_backtest.json) until this fix.
       - name: Pull latest NFL data
         run: python pipeline/nfl/pull_data.py
+
+      - name: Fit/backtest NFL win-probability model
+        run: python pipeline/nfl/backtest_win_prob.py
 
       - name: Generate current-week NFL projections
         run: python pipeline/nfl/generate_current_week.py
 
-      # NOTE: these two MLB pulls currently re-pull the FULL 2023-present
+      # NOTE: these two MLB pulls currently re-pull the FULL 2024-present
       # history every run (team schedules via 30x Baseball-Reference scrapes,
       # plus month-by-month Statcast). That's a real inefficiency -- it only
       # needs to grow by one day's worth of games -- but the daily runtime
@@ -41,6 +49,12 @@ jobs:
 
       - name: Pull latest MLB Statcast game logs
         run: python pipeline/mlb/pull_statcast_gamelogs.py
+
+      - name: Fit/backtest MLB win-probability model
+        run: python pipeline/mlb/backtest_win_prob.py
+
+      - name: Fit/backtest MLB starting-pitcher + bullpen blend
+        run: python pipeline/mlb/backtest_pitcher_model.py
 
       - name: Generate current-slate MLB projections
         env:

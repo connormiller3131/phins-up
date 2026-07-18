@@ -12,8 +12,14 @@ seasons of raw pitch data at once):
    that team that game -- an approximation that can misfire on true
    bullpen/opener games, a known simplification).
 3. pitcher_pitch_profile -- monthly per-pitcher-per-pitch-type velocity/
-   movement/usage, the raw ingredient for a pitcher "signature" used later
-   to find batters' performance against similar pitchers.
+   movement/usage, the raw ingredient for a pitcher "signature".
+4. batter_vs_hand_logs -- hits/TB/HR/K per batter per game, split by the
+   handedness (p_throws) of the pitcher(s) they faced -- lets prop models
+   use "how has this batter hit against RHP" instead of a blunt team-wide
+   opponent rate. A batter can have two rows for one game if they faced
+   both hands (e.g. a late same-handed reliever) -- both rows are kept, the
+   trailing feature built from this picks whichever hand matters for a
+   given upcoming matchup.
 """
 import pathlib
 import warnings
@@ -65,10 +71,10 @@ def aggregate_pitch_profile(df):
 
 def aggregate_chunk(df):
     if df.empty:
-        return None, None
+        return None, None, None
     pa = df[df["events"].notna()].copy()
     if pa.empty:
-        return None, None
+        return None, None, None
 
     pa["is_home_bat"] = pa["inning_topbot"] == "Bot"
     pa["batter_team"] = np.where(pa["is_home_bat"], pa["home_team"], pa["away_team"])
@@ -95,7 +101,17 @@ def aggregate_chunk(df):
         .rename(columns={"pitcher": "player_id", "batter_opp": "team", "batter_team": "opponent_team"})
     )
 
-    return batter_game, pitcher_game
+    batter_vs_hand = (
+        pa[pa["p_throws"].notna()]
+        .groupby(["game_pk", "game_date", "batter", "batter_team", "batter_opp", "p_throws"])
+        .agg(hits=("is_hit", "sum"), total_bases=("tb", "sum"), home_runs=("is_hr", "sum"),
+             strikeouts=("is_k", "sum"), pa_count=("is_hit", "size"))
+        .reset_index()
+        .rename(columns={"batter": "player_id", "batter_team": "team", "batter_opp": "opponent_team",
+                         "p_throws": "vs_hand"})
+    )
+
+    return batter_game, pitcher_game, batter_vs_hand
 
 
 def add_starter_flag(pitchers):
@@ -106,7 +122,7 @@ def add_starter_flag(pitchers):
 
 
 def main():
-    batter_chunks, pitcher_chunks, profile_chunks = [], [], []
+    batter_chunks, pitcher_chunks, profile_chunks, hand_chunks = [], [], [], []
     for start, end in SEASON_MONTHS:
         print(f"Pulling {start} to {end}...")
         try:
@@ -119,12 +135,14 @@ def main():
         if profile is not None:
             profile_chunks.append(profile)
 
-        b, p = aggregate_chunk(raw)
+        b, p, h = aggregate_chunk(raw)
         if b is not None:
             batter_chunks.append(b)
             pitcher_chunks.append(p)
+            hand_chunks.append(h)
             print(f"  -> {len(b)} batter-games, {len(p)} pitcher-games, "
-                  f"{len(profile) if profile is not None else 0} pitch-profile rows")
+                  f"{len(profile) if profile is not None else 0} pitch-profile rows, "
+                  f"{len(h)} batter-vs-hand rows")
         del raw
 
     batters = pd.concat(batter_chunks, ignore_index=True)
@@ -149,11 +167,15 @@ def main():
     profiles["avg_spin"] = profiles["_w_spin"] / profiles["n_pitches"]
     profiles = profiles.drop(columns=["_w_speed", "_w_pfx_x", "_w_pfx_z", "_w_spin"])
 
+    hand = pd.concat(hand_chunks, ignore_index=True)
+
     batters.to_parquet(DATA_DIR / "batter_game_logs.parquet")
     pitchers.to_parquet(DATA_DIR / "pitcher_game_logs.parquet")
     profiles.to_parquet(DATA_DIR / "pitcher_pitch_profile.parquet")
+    hand.to_parquet(DATA_DIR / "batter_vs_hand_logs.parquet")
     print(f"\nWrote {len(batters)} batter-game rows, {len(pitchers)} pitcher-game rows "
-          f"({pitchers['is_starter'].sum()} flagged as starts), {len(profiles)} pitch-profile rows")
+          f"({pitchers['is_starter'].sum()} flagged as starts), {len(profiles)} pitch-profile rows, "
+          f"{len(hand)} batter-vs-hand rows")
 
 
 if __name__ == "__main__":

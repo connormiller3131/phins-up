@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.mlb.games import load_games
 from pipeline.mlb.elo_model import run_elo
-from pipeline.mlb.team_map import full_name_to_statcast
+from pipeline.mlb.team_map import full_name_to_statcast, STATCAST_TO_MLB_TEAM_ID
 from pipeline.mlb.props.prop_data import build_batter_prop_table, build_pitcher_prop_table
 from pipeline.mlb.props.current_state import (
     batter_current_trailing, batter_opponent_current_trailing,
@@ -69,6 +69,7 @@ def parse_slate(raw_games):
             "away_probable_pitcher": away.get("probablePitcher"),
             "home_probable_pitcher": home.get("probablePitcher"),
             "game_datetime": g.get("gameDate"),
+            "game_pk": g.get("gamePk"),
         })
     return out
 
@@ -240,8 +241,28 @@ def project_count_stat(model, resid_std, own_avg, opp_avg):
     return round(pred_mean, 1), line, round(p_over, 3)
 
 
-def top_batters_for_team(pa_own, team, n=3):
-    team_players = pa_own[pa_own["team"] == team].sort_values("current_avg", ascending=False)
+def get_active_roster_ids(team_abbr):
+    """Real current 26-man active roster (excludes injured/optioned/DFA'd
+    players) -- fixes recommending someone like an injured star whose recent
+    trailing stats still look great but who literally isn't playing."""
+    team_id = STATCAST_TO_MLB_TEAM_ID.get(team_abbr)
+    if not team_id:
+        return None
+    try:
+        resp = requests.get(f"https://statsapi.mlb.com/api/v1/teams/{team_id}/roster",
+                            params={"rosterType": "active"}, timeout=15)
+        resp.raise_for_status()
+        return {p["person"]["id"] for p in resp.json().get("roster", [])}
+    except Exception as e:
+        print(f"  roster fetch failed for {team_abbr}: {e}")
+        return None  # fail open: don't filter if the roster call itself breaks
+
+
+def top_batters_for_team(pa_own, team, active_ids, n=3):
+    team_players = pa_own[pa_own["team"] == team]
+    if active_ids is not None:
+        team_players = team_players[team_players.index.isin(active_ids)]
+    team_players = team_players.sort_values("current_avg", ascending=False)
     return team_players.head(n).index.tolist()
 
 
@@ -263,19 +284,20 @@ def batter_props_for_team(team, opp_team, player_ids, models, own_lookups, opp_l
         own_hits = hits_own.loc[pid, "current_avg"]
         if pd.notna(own_hits):
             proj, line, p_over = project_count_stat(hits_model, hits_std, float(own_hits), float(hits_opp.loc[opp_team]))
-            entries.append({"player": name, "team": team, "market": "Hits", "line": line, "projected": proj,
-                            "model_over_prob": p_over, "model_std": round(hits_std, 3)})
+            entries.append({"player": name, "player_id": int(pid), "team": team, "market": "Hits", "line": line,
+                            "projected": proj, "model_over_prob": p_over, "model_std": round(hits_std, 3)})
 
         own_tb = tb_own.loc[pid, "current_avg"] if pid in tb_own.index else None
         if own_tb is not None and pd.notna(own_tb):
             proj, line, p_over = project_count_stat(tb_model, tb_std, float(own_tb), float(tb_opp.loc[opp_team]))
-            entries.append({"player": name, "team": team, "market": "Total Bases", "line": line, "projected": proj,
-                            "model_over_prob": p_over, "model_std": round(tb_std, 3)})
+            entries.append({"player": name, "player_id": int(pid), "team": team, "market": "Total Bases", "line": line,
+                            "projected": proj, "model_over_prob": p_over, "model_std": round(tb_std, 3)})
 
         own_hr = hr_own.loc[pid, "current_avg"] if pid in hr_own.index else None
         if own_hr is not None and pd.notna(own_hr):
             hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
-            entries.append({"player": name, "team": team, "market": "Anytime HR", "model_prob": round(hr_prob, 3)})
+            entries.append({"player": name, "player_id": int(pid), "team": team, "market": "Anytime HR",
+                            "model_prob": round(hr_prob, 3)})
             hr_candidates.append((name, hr_prob))
 
     best_hr = max(hr_candidates, key=lambda x: x[1]) if hr_candidates else None
@@ -290,8 +312,8 @@ def pitcher_prop(pitcher_id, opp_team, model, resid_std, own, opp):
         return None
     name = own.loc[pitcher_id, "player_display_name"]
     proj, line, p_over = project_count_stat(model, resid_std, float(own_avg), float(opp.loc[opp_team]))
-    return {"player": name, "market": "Pitcher Strikeouts", "line": line, "projected": proj,
-            "model_over_prob": p_over, "model_std": round(resid_std, 3)}
+    return {"player": name, "player_id": int(pitcher_id), "market": "Pitcher Strikeouts", "line": line,
+            "projected": proj, "model_over_prob": p_over, "model_std": round(resid_std, 3)}
 
 
 def main():
@@ -325,10 +347,14 @@ def main():
     pk_own = pitcher_current_trailing()
     pk_opp = pitcher_opponent_current_trailing()
 
+    team_abbrs = sorted({g["home_team"] for g in slate} | {g["away_team"] for g in slate})
+    print(f"Fetching active rosters for {len(team_abbrs)} teams...")
+    active_rosters = {abbr: get_active_roster_ids(abbr) for abbr in team_abbrs}
+
     games_out = []
     for i, g in enumerate(slate):
-        home_batters = top_batters_for_team(pa_own, g["home_team"])
-        away_batters = top_batters_for_team(pa_own, g["away_team"])
+        home_batters = top_batters_for_team(pa_own, g["home_team"], active_rosters.get(g["home_team"]))
+        away_batters = top_batters_for_team(pa_own, g["away_team"], active_rosters.get(g["away_team"]))
 
         home_props, home_best_hr = batter_props_for_team(
             g["home_team"], g["away_team"], home_batters, models, own_lookups, opp_lookups)
@@ -360,8 +386,11 @@ def main():
             "awayAbbr": g["away_team"], "homeAbbr": g["home_team"],
             "awayName": g["away_name"], "homeName": g["home_name"],
             "gameDatetime": g["game_datetime"],
+            "gamePk": g["game_pk"],
             "awayProbablePitcher": g["away_probable_pitcher"]["fullName"] if g["away_probable_pitcher"] else None,
+            "awayProbablePitcherId": g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None,
             "homeProbablePitcher": g["home_probable_pitcher"]["fullName"] if g["home_probable_pitcher"] else None,
+            "homeProbablePitcherId": g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
             "elo_home_prob": round(float(elo_preds[i]), 4),
             "market": g["market"],
             "hr_combo": combo,

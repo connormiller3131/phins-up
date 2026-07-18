@@ -72,7 +72,8 @@ def main():
 
     with open(ROOT / "notebooks_out" / "nfl_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
-    elo_preds_full = run_elo(games_df, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"], rest_adv=elo_params.get("rest_adv", 0.0))
+    elo_preds_full = run_elo(games_df, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
+                             rest_adv=elo_params.get("rest_adv", 0.0), season_regression=elo_params.get("season_regression", 0.75))
     games_df = games_df.assign(elo_home_prob=elo_preds_full)
 
     week_games = games_df[(games_df["season"] == SEASON) & (games_df["week"] == WEEK)].reset_index(drop=True)

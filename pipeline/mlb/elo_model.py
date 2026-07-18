@@ -2,16 +2,16 @@
 model (pipeline/nfl/elo_model.py), but with a simpler log-margin multiplier
 instead of NFL's borrowed point-scale constants -- baseball run margins are
 small and don't need a sport-specific published formula, so the overall
-sensitivity is left entirely to the fitted K. K / home-advantage / scale are
-grid-searched on real data, not assumed."""
+sensitivity is left entirely to the fitted K. All four knobs -- K,
+home-advantage, scale, and between-season regression -- are grid-searched
+on real data, not assumed."""
 import numpy as np
 import pandas as pd
 
 INITIAL_RATING = 1500.0
-SEASON_REGRESSION = 0.65  # MLB rosters/form churn more between seasons than NFL
 
 
-def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float):
+def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, season_regression: float = 0.65):
     ratings = {}
     last_season = {}
     preds = np.zeros(len(df))
@@ -23,7 +23,7 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float):
                 ratings[team] = INITIAL_RATING
                 last_season[team] = season
             elif last_season[team] != season:
-                ratings[team] = SEASON_REGRESSION * ratings[team] + (1 - SEASON_REGRESSION) * INITIAL_RATING
+                ratings[team] = season_regression * ratings[team] + (1 - season_regression) * INITIAL_RATING
                 last_season[team] = season
 
         r_home, r_away = ratings[home], ratings[away]
@@ -50,10 +50,13 @@ def fit_elo_hyperparams(train_df: pd.DataFrame):
     for k in (4, 6, 8, 10, 14, 18, 24):
         for home_adv in (0, 10, 20, 30, 40):
             for scale in (200, 250, 300, 350):
-                preds = run_elo(train_df, k=k, home_adv=home_adv, scale=scale)
-                ll = log_loss(train_df["home_win"], preds)
-                if best is None or ll < best[0]:
-                    best = (ll, k, home_adv, scale)
+                for season_regression in (0.5, 0.65, 0.8, 0.9):
+                    preds = run_elo(train_df, k=k, home_adv=home_adv, scale=scale,
+                                    season_regression=season_regression)
+                    ll = log_loss(train_df["home_win"], preds)
+                    if best is None or ll < best[0]:
+                        best = (ll, k, home_adv, scale, season_regression)
 
-    ll, k, home_adv, scale = best
-    return {"k": k, "home_adv": home_adv, "scale": scale, "train_log_loss": ll}
+    ll, k, home_adv, scale, season_regression = best
+    return {"k": k, "home_adv": home_adv, "scale": scale,
+            "season_regression": season_regression, "train_log_loss": ll}

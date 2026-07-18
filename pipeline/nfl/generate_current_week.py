@@ -86,7 +86,8 @@ def elo_predictions_for_target(games_df, target_wk):
     })
     cols = ["season", "week", "home_team", "away_team", "margin", "home_win", "location", "home_rest", "away_rest"]
     combined = pd.concat([games_df[cols], future_rows], ignore_index=True)
-    preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"], rest_adv=elo_params.get("rest_adv", 0.0))
+    preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
+                    rest_adv=elo_params.get("rest_adv", 0.0), season_regression=elo_params.get("season_regression", 0.75))
     n_future = len(future_rows)
     return preds[-n_future:], elo_params
 

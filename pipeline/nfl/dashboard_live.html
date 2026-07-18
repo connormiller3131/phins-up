@@ -440,7 +440,7 @@ function renderGames(){
   document.getElementById('eyebrow').textContent = `NFL · Week ${DATA.week} · ${DATA.season} Season`;
   const ep = DATA.elo_params;
   document.getElementById('elo-meta').textContent =
-    `Model basis: Elo rating fit on 2019-2022 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, grid-searched to minimize log loss), carried forward through every completed game 2019-2025 into this week. Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate.`;
+    `Model basis: Elo rating fit on 2019-2024 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, rest-day edge=${ep.rest_adv} pts/day, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since into this week. Backtested out-of-sample on all of 2025: Brier 0.221, 65.5% accuracy (market: 0.211 Brier, 65.9%). Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate.`;
 
   const root = document.getElementById("games");
   root.innerHTML = "";
@@ -588,7 +588,7 @@ function renderMLBGames(){
   document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
   const ep = MLB_DATA.elo_params;
   document.getElementById('mlb-meta').textContent =
-    `Model basis: Elo rating fit on 2023-2024 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, grid-searched to minimize log loss), carried forward through every completed game since. Generated ${MLB_DATA.generated_at}.`;
+    `Model basis: Elo rating fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since. Backtested out-of-sample on all of 2026 played so far: Brier 0.249, 54.3% accuracy. Generated ${MLB_DATA.generated_at}.`;
 
   const root = document.getElementById("mlb-games");
   root.innerHTML = "";
@@ -634,14 +634,16 @@ function renderMLBGames(){
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
+      <div id="mlb-live-${idx}"></div>
     `;
     root.appendChild(card);
   });
 
   document.getElementById("mlb-foot").innerHTML =
-    `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>Model win %</b> is our Elo rating, fit and backtested on 2023-2024 data, carried forward through every real completed game since (2025 backtest: Brier 0.244, 55% accuracy out-of-sample -- MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound). ` +
-    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume get hits/total-bases/anytime-HR projections -- this is a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
-    `<b>★ Featured game:</b> the day's most competitive matchup also shows real DraftKings prop lines and over/under prices (with the no-vig fair %), and its Model % is recomputed against DK's actual line rather than the trailing-average proxy. Only one game gets this because per-game prop-odds API calls are expensive on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can.`;
+    `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons including the 60-game 2020 season) and backtested out-of-sample on every 2026 game played so far -- Brier 0.249, 54.3% accuracy, essentially tied with a market-favorite baseline. MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound. ` +
+    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume among currently active roster players get hits/total-bases/anytime-HR projections -- filtered against each team's real active 26-man roster so injured/inactive players (e.g. someone on the IL) don't show up, but it's still a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
+    `<b>★ Featured game:</b> the day's most competitive matchup also shows real DraftKings prop lines and over/under prices (with the no-vig fair %), and its Model % is recomputed against DK's actual line rather than the trailing-average proxy. Only one game gets this because per-game prop-odds API calls are expensive on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
+    `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting/pitching and every shown player's actual in-game line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
 }
 
 function noVigProb(mlHome, mlAway){
@@ -694,6 +696,83 @@ async function updateMLBScores(){
 }
 updateMLBScores();
 setInterval(updateMLBScores, 60000);
+
+// ---- Live batter/pitcher stats: separate dropdown per game, fetched
+// client-side (same free keyless API as the scores) so it reflects the
+// actual live box score -- including who's currently up/on the mound --
+// independent of the once/twice-daily site rebuild.
+function mlbLiveStatsTable(nowLine, rows){
+  const body = rows.map(r => `<tr>
+    <td>${r.name} <span class="p-team">${r.team}</span></td>
+    <td>${r.role}</td>
+    <td>${r.line}</td>
+  </tr>`).join("");
+  return `
+    <details class="props-toggle">
+      <summary>Live Batter/Pitcher Stats <span class="props-sample-tag">(fetched live from MLB, updates every 60s)</span></summary>
+      ${nowLine ? `<div class="h2h-note" style="border-top:none;padding-top:0;margin-top:6px;">${nowLine}</div>` : ""}
+      <table class="props-table">
+        <thead><tr><th>Player</th><th>Role</th><th>Live line</th></tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </details>
+  `;
+}
+
+async function updateMLBLiveStats(){
+  for(let idx=0; idx<MLB_DATA.games.length; idx++){
+    const g = MLB_DATA.games[idx];
+    const el = document.getElementById('mlb-live-'+idx);
+    if(!el || !g.gamePk) continue;
+
+    // Unique players referenced in this game's props (dedup by player_id).
+    const uniq = new Map();
+    (g.props||[]).forEach(p => {
+      if(p.player_id!=null && !uniq.has(p.player_id)){
+        uniq.set(p.player_id, {name: p.player, team: p.team, role: p.market==='Pitcher Strikeouts' ? 'P' : 'B'});
+      }
+    });
+    if(uniq.size===0) continue;
+
+    let box, line;
+    try{
+      const [boxResp, lineResp] = await Promise.all([
+        fetch(`https://statsapi.mlb.com/api/v1/game/${g.gamePk}/boxscore`),
+        fetch(`https://statsapi.mlb.com/api/v1/game/${g.gamePk}/linescore`),
+      ]);
+      box = await boxResp.json();
+      line = await lineResp.json();
+    }catch(e){ continue; } // transient network failure: leave dropdown as-is
+
+    let nowLine = "";
+    const off = line.offense || {};
+    if(off.batter || off.pitcher){
+      const parts = [];
+      if(off.pitcher) parts.push(`Now pitching: <b>${off.pitcher.fullName}</b>`);
+      if(off.batter) parts.push(`Now batting: <b>${off.batter.fullName}</b>`);
+      nowLine = parts.join(' &middot; ');
+    }
+
+    const rows = [];
+    for(const [pid, info] of uniq){
+      const side = info.team===g.homeAbbr ? 'home' : (info.team===g.awayAbbr ? 'away' : null);
+      const p = side && box.teams && box.teams[side] ? box.teams[side].players['ID'+pid] : null;
+      let stat = null;
+      if(p){
+        stat = info.role==='P' ? p.stats?.pitching : p.stats?.batting;
+      }
+      const played = stat && (info.role==='P' ? stat.inningsPitched && stat.inningsPitched!=='0.0' : (stat.atBats||0)>0 || (stat.baseOnBalls||0)>0 || (stat.hitByPitch||0)>0);
+      rows.push({
+        name: info.name, team: info.team, role: info.role==='P' ? 'Pitcher' : 'Batter',
+        line: played ? (stat.summary || '—') : '<span style="color:var(--text-dim)">Pregame / not yet up</span>',
+      });
+    }
+
+    el.innerHTML = mlbLiveStatsTable(nowLine, rows);
+  }
+}
+updateMLBLiveStats();
+setInterval(updateMLBLiveStats, 60000);
 </script>
 </body>
 </html>

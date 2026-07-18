@@ -1,13 +1,14 @@
-"""Margin-of-victory Elo rating model for NFL, with K / home-advantage / scale
-fit by grid search on training seasons (not assumed constants)."""
+"""Margin-of-victory Elo rating model for NFL. K, home-advantage, scale,
+rest-day advantage, and between-season regression are all fit by grid search
+on training seasons (not assumed constants)."""
 import numpy as np
 import pandas as pd
 
 INITIAL_RATING = 1500.0
-SEASON_REGRESSION = 0.75  # fraction of rating carried over between seasons; rest reverts to 1500
 
 
-def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, rest_adv: float = 0.0):
+def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float,
+            rest_adv: float = 0.0, season_regression: float = 0.75):
     """Sequentially simulate Elo through df (must be chronologically sorted).
     Returns array of pre-game home win probabilities, aligned to df rows."""
     ratings = {}
@@ -22,7 +23,7 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, rest_adv:
                 ratings[team] = INITIAL_RATING
                 last_season[team] = season
             elif last_season[team] != season:
-                ratings[team] = SEASON_REGRESSION * ratings[team] + (1 - SEASON_REGRESSION) * INITIAL_RATING
+                ratings[team] = season_regression * ratings[team] + (1 - season_regression) * INITIAL_RATING
                 last_season[team] = season
 
         r_home, r_away = ratings[home], ratings[away]
@@ -51,19 +52,23 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, rest_adv:
 
 
 def fit_elo_hyperparams(train_df: pd.DataFrame):
-    """Coarse grid search over K, home_adv, scale, rest_adv minimizing log loss on train_df only."""
+    """Coarse grid search over K, home_adv, scale, rest_adv, season_regression
+    minimizing log loss on train_df only."""
     from pipeline.common.metrics import log_loss
 
+    mask = train_df["home_win"] != 0.5  # exclude ties from loss calc
     best = None
     for k in (8, 12, 16, 20, 26, 32):
         for home_adv in (0, 25, 40, 55, 70, 90):
             for scale in (300, 350, 400, 450):
                 for rest_adv in (0, 3, 6, 9, 12, 15):
-                    preds = run_elo(train_df, k=k, home_adv=home_adv, scale=scale, rest_adv=rest_adv)
-                    mask = train_df["home_win"] != 0.5  # exclude ties from loss calc
-                    ll = log_loss(train_df.loc[mask, "home_win"], preds[mask.values])
-                    if best is None or ll < best[0]:
-                        best = (ll, k, home_adv, scale, rest_adv)
+                    for season_regression in (0.6, 0.75, 0.9):
+                        preds = run_elo(train_df, k=k, home_adv=home_adv, scale=scale,
+                                        rest_adv=rest_adv, season_regression=season_regression)
+                        ll = log_loss(train_df.loc[mask, "home_win"], preds[mask.values])
+                        if best is None or ll < best[0]:
+                            best = (ll, k, home_adv, scale, rest_adv, season_regression)
 
-    ll, k, home_adv, scale, rest_adv = best
-    return {"k": k, "home_adv": home_adv, "scale": scale, "rest_adv": rest_adv, "train_log_loss": ll}
+    ll, k, home_adv, scale, rest_adv, season_regression = best
+    return {"k": k, "home_adv": home_adv, "scale": scale, "rest_adv": rest_adv,
+            "season_regression": season_regression, "train_log_loss": ll}

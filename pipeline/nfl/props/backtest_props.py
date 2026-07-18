@@ -30,7 +30,7 @@ from pipeline.nfl.props.prop_data import build_prop_table
 from pipeline.nfl.props.prop_models import walk_forward_yardage, walk_forward_anytime_td, yardage_over_prob
 from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
 
-TEST_SEASONS = [2023, 2024]
+TEST_SEASONS = [2025]  # freshest completed season, never touched during development
 
 YARDAGE_PROPS = {
     "passing_yards": ["QB"],

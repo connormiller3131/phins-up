@@ -13,7 +13,7 @@ pb.cache.enable()
 DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-SEASONS = [2023, 2024, 2025, 2026]
+SEASONS = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]  # 2020 is the 60-game COVID season
 
 TEAMS_BY_SEASON = {
     season: [

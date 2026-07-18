@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE HOLD — Real Model Replay, NFL Week 1 2024</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#12151A;
+    --panel:#1A1F26;
+    --panel-alt:#20262E;
+    --line:#2A313B;
+    --text:#EDEFF2;
+    --text-dim:#8C94A0;
+    --green:#46C56B;
+    --green-dim:#1E3A2A;
+    --amber:#F5A93F;
+    --amber-dim:#3A2F18;
+    --red:#F0555F;
+    --red-dim:#3A1E22;
+    --blue:#5FA8E0;
+    --mono:'Consolas','SFMono-Regular',monospace;
+    --disp:'Arial Narrow',sans-serif;
+    --body:-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    padding:28px 16px 60px;
+  }
+  .wrap{max-width:960px;margin:0 auto;}
+
+  .tabnav{
+    display:flex;gap:8px;margin-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .tabnav button{
+    font-family:var(--disp);
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--text-dim);
+    padding:8px 4px 10px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    margin-right:14px;
+  }
+  .tabnav button.active{color:var(--text);border-bottom-color:var(--green);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  header{margin-bottom:22px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:var(--disp);
+    font-weight:800;
+    font-size:52px;
+    letter-spacing:.01em;
+    line-height:.9;
+    margin:0 0 10px;
+    text-transform:uppercase;
+  }
+  h1 span{color:var(--green);}
+  .sub{
+    color:var(--text-dim);
+    font-size:14px;
+    line-height:1.5;
+    max-width:640px;
+    margin:0 0 18px;
+  }
+  .metabar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    padding:12px 14px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:10px;
+  }
+  .metabar b{color:var(--text);font-weight:600;}
+  .metabar .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:6px;}
+
+  .legend{
+    display:flex;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;color:var(--text-dim);
+    margin:18px 0 10px;
+  }
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .game{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .game-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .matchup{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:26px;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    line-height:1;
+  }
+  .matchup .at{color:var(--text-dim);font-weight:600;margin:0 6px;}
+  .kickoff{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    margin-top:4px;
+  }
+  .final-badge{
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:right;
+    color:var(--text-dim);
+    min-width:120px;
+  }
+  .final-badge .score{
+    font-size:18px;
+    font-weight:600;
+    display:block;
+    color:var(--text);
+  }
+
+  .rowgrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+  }
+  .side{
+    background:var(--panel-alt);
+    border-radius:8px;
+    padding:12px 14px;
+  }
+  .side.winner{box-shadow:inset 0 0 0 1px var(--green);}
+  .side .team{
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .side .team small{
+    font-family:var(--mono);
+    font-weight:400;
+    color:var(--text-dim);
+    font-size:11px;
+  }
+  .stat-line{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    padding:3px 0;
+  }
+  .stat-line b{color:var(--text);font-weight:600;}
+  .stat-line.model b{color:var(--blue);}
+
+  .prob-bar-wrap{margin:10px 0 6px;}
+  .prob-bar{
+    display:flex;height:20px;border-radius:5px;overflow:hidden;
+    font-family:var(--mono);font-size:10px;
+  }
+  .prob-bar div{display:flex;align-items:center;justify-content:center;color:#0C0F12;font-weight:600;}
+
+  .props-toggle{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+  }
+  .props-toggle summary{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    user-select:none;
+  }
+  .props-toggle summary::-webkit-details-marker{color:var(--amber);}
+  .props-sample-tag{
+    display:inline-block;
+    margin-left:8px;
+    font-size:9.5px;
+    color:var(--text-dim);
+    text-transform:none;
+    letter-spacing:0;
+  }
+  .props-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    font-family:var(--mono);
+    font-size:11.5px;
+  }
+  .props-table th{
+    text-align:left;
+    color:var(--text-dim);
+    font-weight:500;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:4px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .props-table td{
+    padding:6px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+    color:var(--text);
+    white-space:nowrap;
+  }
+  .props-table tr:last-child td{border-bottom:none;}
+  .props-table .p-team{color:var(--text-dim);font-size:10px;}
+  .props-table .p-model{color:var(--blue);}
+  .props-table .p-actual{color:var(--text-dim);font-size:10.5px;}
+  .hit{color:var(--green);}
+  .miss{color:var(--red);}
+
+  .placeholder{
+    background:var(--panel);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:22px;
+    color:var(--text-dim);
+    font-size:13px;
+    line-height:1.6;
+  }
+  .placeholder b{color:var(--text);}
+
+  @media (max-width:560px){
+    h1{font-size:38px;}
+    .rowgrid{grid-template-columns:1fr;}
+    .game-top{flex-direction:column;}
+    .final-badge{text-align:left;}
+  }
+
+  footer{
+    margin-top:26px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    line-height:1.7;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  footer b{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tabnav">
+    <button id="tabbtn-nfl" class="active" onclick="showTab('nfl')">NFL</button>
+    <button id="tabbtn-mlb" onclick="showTab('mlb')">MLB</button>
+    <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
+  </div>
+
+  <div id="tab-nfl" class="tab-panel active">
+  <header>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1>THE <span>HOLD</span></h1>
+    <p class="sub">Same dashboard shell as the prototype — but every number below now comes from the fitted, backtested pipeline: Elo ratings grid-searched on 2019-2022 and validated out-of-sample, and ridge/logistic prop models refit walk-forward. This is a real week that already happened, so actual results are shown alongside the predictions.</p>
+    <div class="metabar">
+      <span class="dot"></span>
+      <b id="elo-meta"></b>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--text-dim)"></i>Fair % — real no-vig market probability, from that week's actual closing moneylines</span>
+    <span><i class="sw" style="background:var(--blue)"></i>Model % — our fitted Elo / prop models</span>
+  </div>
+
+  <div id="games"></div>
+
+  <footer id="foot"></footer>
+  </div>
+
+  <div id="tab-mlb" class="tab-panel">
+    <header>
+      <p class="eyebrow">MLB</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> The NFL pipeline (Elo win-probability + ridge/logistic prop models, both backtested against real closing lines and real outcomes) is done and shown in the NFL tab. MLB is next: pybaseball for Statcast/standings, a log5 or run-differential rating model, and matchup-adjusted batter/pitcher props — all fit and backtested the same way, not filled in with placeholder data here.
+    </div>
+  </div>
+
+  <div id="tab-nhl" class="tab-panel">
+    <header>
+      <p class="eyebrow">NHL</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> Same story as MLB — the NHL public API pipeline, goal-differential rating model, and player prop models come after MLB, fit and backtested against real game logs rather than filled in with placeholder data here.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(name){
+  ['nfl','mlb','nhl'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
+    document.getElementById('tabbtn-'+t).classList.toggle('active', t===name);
+  });
+}
+
+const DATA = __DATA_JSON__;
+
+function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
+function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+function fmtSpread(s, isHome){
+  const v = isHome ? s : -s;
+  return (v>0?"+":"") + v;
+}
+function impliedProb(american){
+  if(american===null||american===undefined) return null;
+  return american < 0 ? (-american)/(-american+100) : 100/(american+100);
+}
+
+function propRow(p){
+  if(p.market === "Anytime TD"){
+    const result = p.actual ? '<span class="hit">SCORED</span>' : '<span class="miss">no TD</span>';
+    return `<tr>
+      <td>${p.player} <span class="p-team">${p.team}</span></td>
+      <td>Anytime TD</td>
+      <td>—</td>
+      <td class="p-model">${pct(p.model_prob)}</td>
+      <td class="p-actual">${result}</td>
+    </tr>`;
+  }
+  const over = p.actual > p.line;
+  const modelSaidOver = p.model_over_prob > 0.5;
+  const correct = over === modelSaidOver;
+  const resultTag = `<span class="${correct ? 'hit' : 'miss'}">${p.actual.toFixed(0)} (${over ? 'over' : 'under'})</span>`;
+  return `<tr>
+    <td>${p.player} <span class="p-team">${p.team}</span></td>
+    <td>${p.market}</td>
+    <td>${p.line}</td>
+    <td class="p-model">${pct(p.model_over_prob)} over <span class="props-sample-tag">(proj ${p.projected})</span></td>
+    <td class="p-actual">${resultTag}</td>
+  </tr>`;
+}
+
+function propsTable(props){
+  if(!props || !props.length) return "";
+  const rows = props.map(propRow).join("");
+  return `
+    <details class="props-toggle">
+      <summary>Player Props <span class="props-sample-tag">(line = trailing average, used as a stand-in for a real book line — see footer)</span></summary>
+      <table class="props-table">
+        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th><th>Actual</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </details>
+  `;
+}
+
+function renderGames(){
+  document.getElementById('eyebrow').textContent = `NFL · Week ${DATA.week} · ${DATA.season} Season (historical replay)`;
+  const ep = DATA.elo_params;
+  document.getElementById('elo-meta').textContent =
+    `Elo fit on 2019-2022 (grid search): K=${ep.k}, home-field=${ep.home_adv} rating pts, scale=${ep.scale}. Ratings then carried forward through real games into ${DATA.season}, exactly as backtested.`;
+
+  const root = document.getElementById("games");
+  root.innerHTML = "";
+
+  DATA.games.forEach(g => {
+    const homeWon = g.actual_home_score > g.actual_away_score;
+    const card = document.createElement("div");
+    card.className = "game";
+
+    card.innerHTML = `
+      <div class="game-top">
+        <div>
+          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
+          <div class="kickoff">${g.gameday}</div>
+        </div>
+        <div class="final-badge">
+          FINAL
+          <span class="score">${g.awayAbbr} ${g.actual_away_score} – ${g.actual_home_score} ${g.homeAbbr}</span>
+        </div>
+      </div>
+
+      <div class="prob-bar-wrap">
+        <div class="prob-bar">
+          <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
+          <div style="width:${g.elo_home_prob*100}%;background:var(--blue)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
+        </div>
+      </div>
+
+      <div class="rowgrid">
+        <div class="side ${!homeWon ? 'winner' : ''}">
+          <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(1-g.market_home_prob)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+        </div>
+        <div class="side ${homeWon ? 'winner' : ''}">
+          <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(g.market_home_prob)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+        </div>
+      </div>
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${g.total_line}</b></div>
+      ${propsTable(g.props)}
+    `;
+    root.appendChild(card);
+  });
+
+  document.getElementById("foot").innerHTML =
+    `<b>Fair win %</b> is the real no-vig probability from that week's actual closing moneylines (nflverse schedules data). ` +
+    `<b>Model win %</b> is our Elo rating (K/home-field/scale grid-searched on 2019-2022, frozen and run forward — see backtest results). Green outline marks the side that actually won. ` +
+    `<b>Player props:</b> since there's no free source of real historical player-prop odds, the "line" shown is the player's own trailing average (a common rule of thumb — real lines track recent form closely), used only so Model % has something to compare against. Green/red on the Actual column shows whether the model's over/under call (or TD call) matched what actually happened. This is a full backtest replay, not a live prediction — real current-week output is the next step once MLB and NHL are built out.`;
+}
+
+renderGames();
+</script>
+</body>
+</html>

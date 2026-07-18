@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE HOLD — NFL Weekly Projections</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#12151A;
+    --panel:#1A1F26;
+    --panel-alt:#20262E;
+    --line:#2A313B;
+    --text:#EDEFF2;
+    --text-dim:#8C94A0;
+    --green:#46C56B;
+    --green-dim:#1E3A2A;
+    --amber:#F5A93F;
+    --amber-dim:#3A2F18;
+    --red:#F0555F;
+    --red-dim:#3A1E22;
+    --blue:#5FA8E0;
+    --mono:'Consolas','SFMono-Regular',monospace;
+    --disp:'Arial Narrow',sans-serif;
+    --body:-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    padding:28px 16px 60px;
+  }
+  .wrap{max-width:960px;margin:0 auto;}
+
+  .tabnav{
+    display:flex;gap:8px;margin-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .tabnav button{
+    font-family:var(--disp);
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--text-dim);
+    padding:8px 4px 10px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    margin-right:14px;
+  }
+  .tabnav button.active{color:var(--text);border-bottom-color:var(--green);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  header{margin-bottom:22px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:var(--disp);
+    font-weight:800;
+    font-size:52px;
+    letter-spacing:.01em;
+    line-height:.9;
+    margin:0 0 10px;
+    text-transform:uppercase;
+  }
+  h1 span{color:var(--green);}
+  .sub{
+    color:var(--text-dim);
+    font-size:14px;
+    line-height:1.5;
+    max-width:640px;
+    margin:0 0 18px;
+  }
+  .metabar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    padding:12px 14px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:10px;
+  }
+  .metabar b{color:var(--text);font-weight:600;}
+  .metabar .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:6px;}
+  .metabar.model .dot{background:var(--blue);}
+
+  .legend{
+    display:flex;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;color:var(--text-dim);
+    margin:18px 0 10px;
+  }
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .game{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .game-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .matchup{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:26px;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    line-height:1;
+  }
+  .matchup .at{color:var(--text-dim);font-weight:600;margin:0 6px;}
+  .kickoff{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    margin-top:4px;
+  }
+  .hold-badge{
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:right;
+    color:var(--text-dim);
+    min-width:120px;
+  }
+  .hold-badge .pct{
+    font-size:18px;
+    font-weight:600;
+    display:block;
+  }
+  .hold-track{
+    width:120px;height:5px;border-radius:3px;background:var(--line);
+    margin-top:5px;overflow:hidden;
+  }
+  .hold-fill{height:100%;border-radius:3px;}
+
+  .rowgrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+  }
+  .side{
+    background:var(--panel-alt);
+    border-radius:8px;
+    padding:12px 14px;
+  }
+  .side .team{
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .side .team small{
+    font-family:var(--mono);
+    font-weight:400;
+    color:var(--text-dim);
+    font-size:11px;
+  }
+  .stat-line{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    padding:3px 0;
+  }
+  .stat-line b{color:var(--text);font-weight:600;}
+  .stat-line.model b{color:var(--blue);}
+
+  .prob-bar-wrap{margin:10px 0 6px;}
+  .prob-bar{
+    display:flex;height:20px;border-radius:5px;overflow:hidden;
+    font-family:var(--mono);font-size:10px;
+  }
+  .prob-bar div{display:flex;align-items:center;justify-content:center;color:#0C0F12;font-weight:600;}
+
+  .model-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:8px;
+  }
+  .model-row label{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .model-row input{
+    width:58px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:13px;
+    border-radius:5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .edge-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    padding:3px 8px;
+    border-radius:5px;
+    white-space:nowrap;
+  }
+
+  .props-toggle{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+  }
+  .props-toggle summary{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    user-select:none;
+  }
+  .props-toggle summary::-webkit-details-marker{color:var(--amber);}
+  .props-sample-tag{
+    display:inline-block;
+    margin-left:8px;
+    font-size:9.5px;
+    color:var(--text-dim);
+    text-transform:none;
+    letter-spacing:0;
+  }
+  .props-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    font-family:var(--mono);
+    font-size:11.5px;
+  }
+  .props-table th{
+    text-align:left;
+    color:var(--text-dim);
+    font-weight:500;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:4px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .props-table td{
+    padding:6px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+    color:var(--text);
+    white-space:nowrap;
+  }
+  .props-table tr:last-child td{border-bottom:none;}
+  .props-table .p-team{color:var(--text-dim);font-size:10px;}
+  .props-table .p-model{color:var(--blue);}
+  .props-table .p-exp{color:var(--text-dim);font-size:10px;}
+
+  .placeholder{
+    background:var(--panel);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:22px;
+    color:var(--text-dim);
+    font-size:13px;
+    line-height:1.6;
+  }
+  .placeholder b{color:var(--text);}
+
+  @media (max-width:560px){
+    h1{font-size:38px;}
+    .rowgrid{grid-template-columns:1fr;}
+    .game-top{flex-direction:column;}
+    .hold-badge{text-align:left;}
+  }
+
+  footer{
+    margin-top:26px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    line-height:1.7;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  footer b{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tabnav">
+    <button id="tabbtn-nfl" class="active" onclick="showTab('nfl')">NFL</button>
+    <button id="tabbtn-mlb" onclick="showTab('mlb')">MLB</button>
+    <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
+  </div>
+
+  <div id="tab-nfl" class="tab-panel active">
+  <header>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1>THE <span>HOLD</span></h1>
+    <p class="sub">Real upcoming games, real posted opening lines, and a real fitted model — no hand-typed ratings or guessed constants. "Model %" is the Elo rating from the backtested pipeline, carried forward through every completed game into this week. Edit "Your %" if you know something the model doesn't.</p>
+    <div class="metabar">
+      <span class="dot"></span>
+      <b>Not yet played</b> — this is a genuine future-week projection, not a replay. Opening lines shown were pulled from nflverse's live schedule feed.
+    </div>
+    <div class="metabar model">
+      <span class="dot"></span>
+      <b id="elo-meta"></b>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--green)"></i>Edge for you &ge; 3%</span>
+    <span><i class="sw" style="background:var(--amber)"></i>Edge within &plusmn;3%</span>
+    <span><i class="sw" style="background:var(--red)"></i>Edge against you &ge; 3%</span>
+  </div>
+
+  <div id="games"></div>
+
+  <footer id="foot"></footer>
+  </div>
+
+  <div id="tab-mlb" class="tab-panel">
+    <header>
+      <p class="eyebrow">MLB</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> The NFL pipeline (Elo win-probability + ridge/logistic prop models, both backtested against real closing lines and real outcomes, now also producing genuine next-week projections) is done. MLB is next.
+    </div>
+  </div>
+
+  <div id="tab-nhl" class="tab-panel">
+    <header>
+      <p class="eyebrow">NHL</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> Same story as MLB — comes after it.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(name){
+  ['nfl','mlb','nhl'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
+    document.getElementById('tabbtn-'+t).classList.toggle('active', t===name);
+  });
+}
+
+const DATA = {"season": 2026, "week": 1, "elo_params": {"k": 32, "home_adv": 25, "scale": 350, "rest_adv": 0, "train_log_loss": 0.6391189428235361}, "depth_chart_as_of": "2026-07-17T09:05:33Z", "generated_at": "2026-07-17T23:01:44", "games": [{"awayAbbr": "NE", "homeAbbr": "SEA", "awayName": "New England Patriots", "homeName": "Seattle Seahawks", "gameday": "2026-09-09", "spread_line": 3.5, "total_line": 44.5, "mlAway": 160, "mlHome": -192, "market_home_prob": 0.6309, "elo_home_prob": 0.6654, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Drake Maye", "team": "NE", "market": "Passing Yds", "line": 226.0, "projected": 211.4, "model_over_prob": 0.433}, {"player": "Rhamondre Stevenson", "team": "NE", "market": "Rushing Yds", "line": 62.0, "projected": 55.2, "model_over_prob": 0.407}, {"player": "Rhamondre Stevenson", "team": "NE", "market": "Anytime TD", "model_prob": 0.327}, {"player": "A.J. Brown", "team": "NE", "market": "Receiving Yds", "line": 77.5, "projected": 67.5, "model_over_prob": 0.36}, {"player": "A.J. Brown", "team": "NE", "market": "Anytime TD", "model_prob": 0.252}, {"player": "Sam Darnold", "team": "SEA", "market": "Passing Yds", "line": 226.0, "projected": 199.4, "model_over_prob": 0.379}, {"player": "Zach Charbonnet", "team": "SEA", "market": "Rushing Yds", "line": 50.0, "projected": 46.2, "model_over_prob": 0.448}, {"player": "Zach Charbonnet", "team": "SEA", "market": "Anytime TD", "model_prob": 0.412}, {"player": "Jaxon Smith-Njigba", "team": "SEA", "market": "Receiving Yds", "line": 82.0, "projected": 70.4, "model_over_prob": 0.339}, {"player": "Jaxon Smith-Njigba", "team": "SEA", "market": "Anytime TD", "model_prob": 0.327}]}, {"awayAbbr": "SF", "homeAbbr": "LA", "awayName": "San Francisco 49ers", "homeName": "Los Angeles Rams", "gameday": "2026-09-10", "spread_line": 3.0, "total_line": 48.5, "mlAway": 145, "mlHome": -175, "market_home_prob": 0.6092, "elo_home_prob": 0.5966, "roof": "dome", "away_rest": 7, "home_rest": 7, "props": [{"player": "Brock Purdy", "team": "SF", "market": "Passing Yds", "line": 223.0, "projected": 229.8, "model_over_prob": 0.531}, {"player": "Christian McCaffrey", "team": "SF", "market": "Rushing Yds", "line": 72.0, "projected": 65.6, "model_over_prob": 0.412}, {"player": "Christian McCaffrey", "team": "SF", "market": "Anytime TD", "model_prob": 0.563}, {"player": "Mike Evans", "team": "SF", "market": "Receiving Yds", "line": 46.0, "projected": 45.0, "model_over_prob": 0.485}, {"player": "Mike Evans", "team": "SF", "market": "Anytime TD", "model_prob": 0.3}, {"player": "Matthew Stafford", "team": "LA", "market": "Passing Yds", "line": 321.0, "projected": 288.8, "model_over_prob": 0.354}, {"player": "Kyren Williams", "team": "LA", "market": "Rushing Yds", "line": 71.0, "projected": 66.9, "model_over_prob": 0.443}, {"player": "Kyren Williams", "team": "LA", "market": "Anytime TD", "model_prob": 0.45}, {"player": "Puka Nacua", "team": "LA", "market": "Receiving Yds", "line": 128.5, "projected": 110.9, "model_over_prob": 0.263}, {"player": "Puka Nacua", "team": "LA", "market": "Anytime TD", "model_prob": 0.541}]}, {"awayAbbr": "CHI", "homeAbbr": "CAR", "awayName": "Chicago Bears", "homeName": "Carolina Panthers", "gameday": "2026-09-13", "spread_line": -2.5, "total_line": 44.5, "mlAway": -135, "mlHome": 118, "market_home_prob": 0.444, "elo_home_prob": 0.3791, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Caleb Williams", "team": "CHI", "market": "Passing Yds", "line": 249.0, "projected": 228.7, "model_over_prob": 0.407}, {"player": "D'Andre Swift", "team": "CHI", "market": "Rushing Yds", "line": 71.0, "projected": 67.7, "model_over_prob": 0.454}, {"player": "D'Andre Swift", "team": "CHI", "market": "Anytime TD", "model_prob": 0.353}, {"player": "Rome Odunze", "team": "CHI", "market": "Receiving Yds", "line": 49.0, "projected": 44.3, "model_over_prob": 0.433}, {"player": "Rome Odunze", "team": "CHI", "market": "Anytime TD", "model_prob": 0.154}, {"player": "Bryce Young", "team": "CAR", "market": "Passing Yds", "line": 220.0, "projected": 216.6, "model_over_prob": 0.484}, {"player": "Chuba Hubbard", "team": "CAR", "market": "Rushing Yds", "line": 30.5, "projected": 30.9, "model_over_prob": 0.505}, {"player": "Chuba Hubbard", "team": "CAR", "market": "Anytime TD", "model_prob": 0.199}, {"player": "Tetairoa McMillan", "team": "CAR", "market": "Receiving Yds", "line": 59.5, "projected": 54.3, "model_over_prob": 0.426}, {"player": "Tetairoa McMillan", "team": "CAR", "market": "Anytime TD", "model_prob": 0.34}]}, {"awayAbbr": "TB", "homeAbbr": "CIN", "awayName": "Tampa Bay Buccaneers", "homeName": "Cincinnati Bengals", "gameday": "2026-09-13", "spread_line": 3.5, "total_line": 50.5, "mlAway": 176, "mlHome": -198, "market_home_prob": 0.6471, "elo_home_prob": 0.5339, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Baker Mayfield", "team": "TB", "market": "Passing Yds", "line": 187.5, "projected": 182.8, "model_over_prob": 0.478}, {"player": "Bucky Irving", "team": "TB", "market": "Rushing Yds", "line": 60.0, "projected": 55.5, "model_over_prob": 0.438}, {"player": "Bucky Irving", "team": "TB", "market": "Anytime TD", "model_prob": 0.266}, {"player": "Chris Godwin Jr.", "team": "TB", "market": "Receiving Yds", "line": 42.0, "projected": 38.4, "model_over_prob": 0.448}, {"player": "Chris Godwin Jr.", "team": "TB", "market": "Anytime TD", "model_prob": 0.201}, {"player": "Joe Burrow", "team": "CIN", "market": "Passing Yds", "line": 226.0, "projected": 220.6, "model_over_prob": 0.475}, {"player": "Chase Brown", "team": "CIN", "market": "Rushing Yds", "line": 75.0, "projected": 65.5, "model_over_prob": 0.371}, {"player": "Chase Brown", "team": "CIN", "market": "Anytime TD", "model_prob": 0.35}, {"player": "Ja'Marr Chase", "team": "CIN", "market": "Receiving Yds", "line": 86.5, "projected": 75.7, "model_over_prob": 0.35}, {"player": "Ja'Marr Chase", "team": "CIN", "market": "Anytime TD", "model_prob": 0.205}]}, {"awayAbbr": "NO", "homeAbbr": "DET", "awayName": "New Orleans Saints", "homeName": "Detroit Lions", "gameday": "2026-09-13", "spread_line": 7.0, "total_line": 48.5, "mlAway": 295, "mlHome": -325, "market_home_prob": 0.7513, "elo_home_prob": 0.7345, "roof": "dome", "away_rest": 7, "home_rest": 7, "props": [{"player": "Tyler Shough", "team": "NO", "market": "Passing Yds", "line": 260.0, "projected": 254.9, "model_over_prob": 0.476}, {"player": "Travis Etienne", "team": "NO", "market": "Rushing Yds", "line": 55.5, "projected": 53.8, "model_over_prob": 0.476}, {"player": "Travis Etienne", "team": "NO", "market": "Anytime TD", "model_prob": 0.461}, {"player": "Chris Olave", "team": "NO", "market": "Receiving Yds", "line": 82.5, "projected": 74.9, "model_over_prob": 0.392}, {"player": "Chris Olave", "team": "NO", "market": "Anytime TD", "model_prob": 0.461}, {"player": "Jared Goff", "team": "DET", "market": "Passing Yds", "line": 291.0, "projected": 259.5, "model_over_prob": 0.357}, {"player": "Jahmyr Gibbs", "team": "DET", "market": "Rushing Yds", "line": 66.0, "projected": 60.8, "model_over_prob": 0.428}, {"player": "Jahmyr Gibbs", "team": "DET", "market": "Anytime TD", "model_prob": 0.356}, {"player": "Amon-Ra St. Brown", "team": "DET", "market": "Receiving Yds", "line": 88.5, "projected": 77.8, "model_over_prob": 0.351}, {"player": "Amon-Ra St. Brown", "team": "DET", "market": "Anytime TD", "model_prob": 0.21}]}, {"awayAbbr": "BUF", "homeAbbr": "HOU", "awayName": "Buffalo Bills", "homeName": "Houston Texans", "gameday": "2026-09-13", "spread_line": -1.5, "total_line": 44.5, "mlAway": -112, "mlHome": -108, "market_home_prob": 0.4957, "elo_home_prob": 0.5393, "roof": NaN, "away_rest": 7, "home_rest": 7, "props": [{"player": "Josh Allen", "team": "BUF", "market": "Passing Yds", "line": 221.0, "projected": 204.6, "model_over_prob": 0.425}, {"player": "James Cook", "team": "BUF", "market": "Rushing Yds", "line": 87.5, "projected": 75.8, "model_over_prob": 0.342}, {"player": "James Cook", "team": "BUF", "market": "Anytime TD", "model_prob": 0.199}, {"player": "DJ Moore", "team": "BUF", "market": "Receiving Yds", "line": 39.0, "projected": 36.2, "model_over_prob": 0.46}, {"player": "DJ Moore", "team": "BUF", "market": "Anytime TD", "model_prob": 0.34}, {"player": "C.J. Stroud", "team": "HOU", "market": "Passing Yds", "line": 225.0, "projected": 199.3, "model_over_prob": 0.383}, {"player": "David Montgomery", "team": "HOU", "market": "Rushing Yds", "line": 31.0, "projected": 30.3, "model_over_prob": 0.49}, {"player": "David Montgomery", "team": "HOU", "market": "Anytime TD", "model_prob": 0.26}, {"player": "Nico Collins", "team": "HOU", "market": "Receiving Yds", "line": 73.5, "projected": 63.1, "model_over_prob": 0.355}, {"player": "Nico Collins", "team": "HOU", "market": "Anytime TD", "model_prob": 0.26}]}, {"awayAbbr": "BAL", "homeAbbr": "IND", "awayName": "Baltimore Ravens", "homeName": "Indianapolis Colts", "gameday": "2026-09-13", "spread_line": -3.5, "total_line": 49.5, "mlAway": -185, "mlHome": 154, "market_home_prob": 0.3775, "elo_home_prob": 0.423, "roof": NaN, "away_rest": 7, "home_rest": 7, "props": [{"player": "Lamar Jackson", "team": "BAL", "market": "Passing Yds", "line": 184.5, "projected": 190.3, "model_over_prob": 0.527}, {"player": "Derrick Henry", "team": "BAL", "market": "Rushing Yds", "line": 111.5, "projected": 99.8, "model_over_prob": 0.343}, {"player": "Derrick Henry", "team": "BAL", "market": "Anytime TD", "model_prob": 0.426}, {"player": "Zay Flowers", "team": "BAL", "market": "Receiving Yds", "line": 73.0, "projected": 65.9, "model_over_prob": 0.399}, {"player": "Zay Flowers", "team": "BAL", "market": "Anytime TD", "model_prob": 0.34}, {"player": "Daniel Jones", "team": "IND", "market": "Passing Yds", "line": 226.5, "projected": 222.0, "model_over_prob": 0.479}, {"player": "Jonathan Taylor", "team": "IND", "market": "Rushing Yds", "line": 86.0, "projected": 73.4, "model_over_prob": 0.331}, {"player": "Jonathan Taylor", "team": "IND", "market": "Anytime TD", "model_prob": 0.334}, {"player": "Alec Pierce", "team": "IND", "market": "Receiving Yds", "line": 63.0, "projected": 56.3, "model_over_prob": 0.405}, {"player": "Alec Pierce", "team": "IND", "market": "Anytime TD", "model_prob": 0.334}]}, {"awayAbbr": "CLE", "homeAbbr": "JAX", "awayName": "Cleveland Browns", "homeName": "Jacksonville Jaguars", "gameday": "2026-09-13", "spread_line": 7.5, "total_line": 40.5, "mlAway": 260, "mlHome": -325, "market_home_prob": 0.7335, "elo_home_prob": 0.7576, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Deshaun Watson", "team": "CLE", "market": "Passing Yds", "line": 170.0, "projected": 168.4, "model_over_prob": 0.493}, {"player": "Quinshon Judkins", "team": "CLE", "market": "Rushing Yds", "line": 45.0, "projected": 39.1, "model_over_prob": 0.418}, {"player": "Quinshon Judkins", "team": "CLE", "market": "Anytime TD", "model_prob": 0.141}, {"player": "Jerry Jeudy", "team": "CLE", "market": "Receiving Yds", "line": 33.5, "projected": 31.7, "model_over_prob": 0.474}, {"player": "Jerry Jeudy", "team": "CLE", "market": "Anytime TD", "model_prob": 0.141}, {"player": "Trevor Lawrence", "team": "JAX", "market": "Passing Yds", "line": 258.0, "projected": 229.6, "model_over_prob": 0.371}, {"player": "Bhayshul Tuten", "team": "JAX", "market": "Rushing Yds", "line": 25.0, "projected": 29.0, "model_over_prob": 0.555}, {"player": "Bhayshul Tuten", "team": "JAX", "market": "Anytime TD", "model_prob": 0.346}, {"player": "Brian Thomas Jr.", "team": "JAX", "market": "Receiving Yds", "line": 45.5, "projected": 40.7, "model_over_prob": 0.432}, {"player": "Brian Thomas Jr.", "team": "JAX", "market": "Anytime TD", "model_prob": 0.203}]}, {"awayAbbr": "ATL", "homeAbbr": "PIT", "awayName": "Atlanta Falcons", "homeName": "Pittsburgh Steelers", "gameday": "2026-09-13", "spread_line": 3.0, "total_line": 41.5, "mlAway": 145, "mlHome": -175, "market_home_prob": 0.6092, "elo_home_prob": 0.6182, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Michael Penix Jr.", "team": "ATL", "market": "Passing Yds", "line": 210.5, "projected": 203.6, "model_over_prob": 0.468}, {"player": "Bijan Robinson", "team": "ATL", "market": "Rushing Yds", "line": 100.0, "projected": 90.8, "model_over_prob": 0.374}, {"player": "Bijan Robinson", "team": "ATL", "market": "Anytime TD", "model_prob": 0.43}, {"player": "Drake London", "team": "ATL", "market": "Receiving Yds", "line": 81.0, "projected": 71.3, "model_over_prob": 0.364}, {"player": "Drake London", "team": "ATL", "market": "Anytime TD", "model_prob": 0.343}, {"player": "Aaron Rodgers", "team": "PIT", "market": "Passing Yds", "line": 202.0, "projected": 204.6, "model_over_prob": 0.512}, {"player": "Jaylen Warren", "team": "PIT", "market": "Rushing Yds", "line": 58.0, "projected": 51.9, "model_over_prob": 0.417}, {"player": "Jaylen Warren", "team": "PIT", "market": "Anytime TD", "model_prob": 0.34}, {"player": "DK Metcalf", "team": "PIT", "market": "Receiving Yds", "line": 53.0, "projected": 49.2, "model_over_prob": 0.446}, {"player": "DK Metcalf", "team": "PIT", "market": "Anytime TD", "model_prob": 0.199}]}, {"awayAbbr": "NYJ", "homeAbbr": "TEN", "awayName": "New York Jets", "homeName": "Tennessee Titans", "gameday": "2026-09-13", "spread_line": 3.0, "total_line": 39.5, "mlAway": 136, "mlHome": -162, "market_home_prob": 0.5934, "elo_home_prob": 0.5566, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Geno Smith", "team": "NYJ", "market": "Passing Yds", "line": 201.0, "projected": 204.4, "model_over_prob": 0.516}, {"player": "Breece Hall", "team": "NYJ", "market": "Rushing Yds", "line": 60.5, "projected": 51.9, "model_over_prob": 0.382}, {"player": "Breece Hall", "team": "NYJ", "market": "Anytime TD", "model_prob": 0.28}, {"player": "Garrett Wilson", "team": "NYJ", "market": "Receiving Yds", "line": 56.0, "projected": 51.3, "model_over_prob": 0.433}, {"player": "Garrett Wilson", "team": "NYJ", "market": "Anytime TD", "model_prob": 0.36}, {"player": "Cam Ward", "team": "TEN", "market": "Passing Yds", "line": 176.0, "projected": 180.5, "model_over_prob": 0.521}, {"player": "Tony Pollard", "team": "TEN", "market": "Rushing Yds", "line": 75.0, "projected": 71.2, "model_over_prob": 0.448}, {"player": "Tony Pollard", "team": "TEN", "market": "Anytime TD", "model_prob": 0.22}]}, {"awayAbbr": "ARI", "homeAbbr": "LAC", "awayName": "Arizona Cardinals", "homeName": "Los Angeles Chargers", "gameday": "2026-09-13", "spread_line": 10.5, "total_line": 45.5, "mlAway": 455, "mlHome": -625, "market_home_prob": 0.8271, "elo_home_prob": 0.718, "roof": "dome", "away_rest": 7, "home_rest": 7, "props": [{"player": "Jacoby Brissett", "team": "ARI", "market": "Passing Yds", "line": 281.0, "projected": 260.8, "model_over_prob": 0.407}, {"player": "Marvin Harrison Jr.", "team": "ARI", "market": "Receiving Yds", "line": 50.0, "projected": 47.2, "model_over_prob": 0.46}, {"player": "Marvin Harrison Jr.", "team": "ARI", "market": "Anytime TD", "model_prob": 0.207}, {"player": "Justin Herbert", "team": "LAC", "market": "Passing Yds", "line": 187.0, "projected": 198.0, "model_over_prob": 0.551}, {"player": "Omarion Hampton", "team": "LAC", "market": "Rushing Yds", "line": 59.0, "projected": 59.8, "model_over_prob": 0.511}, {"player": "Omarion Hampton", "team": "LAC", "market": "Anytime TD", "model_prob": 0.475}, {"player": "Ladd McConkey", "team": "LAC", "market": "Receiving Yds", "line": 37.0, "projected": 37.0, "model_over_prob": 0.5}, {"player": "Ladd McConkey", "team": "LAC", "market": "Anytime TD", "model_prob": 0.303}]}, {"awayAbbr": "MIA", "homeAbbr": "LV", "awayName": "Miami Dolphins", "homeName": "Las Vegas Raiders", "gameday": "2026-09-13", "spread_line": 3.0, "total_line": 41.5, "mlAway": 142, "mlHome": -170, "market_home_prob": 0.6038, "elo_home_prob": 0.3799, "roof": "dome", "away_rest": 7, "home_rest": 7, "props": [{"player": "Malik Willis", "team": "MIA", "market": "Passing Yds", "line": 106.0, "projected": 124.6, "model_over_prob": 0.585}, {"player": "De'Von Achane", "team": "MIA", "market": "Rushing Yds", "line": 101.5, "projected": 92.3, "model_over_prob": 0.375}, {"player": "De'Von Achane", "team": "MIA", "market": "Anytime TD", "model_prob": 0.372}, {"player": "Malik Washington", "team": "MIA", "market": "Receiving Yds", "line": 17.0, "projected": 19.6, "model_over_prob": 0.537}, {"player": "Malik Washington", "team": "MIA", "market": "Anytime TD", "model_prob": 0.291}, {"player": "Kirk Cousins", "team": "LV", "market": "Passing Yds", "line": 190.0, "projected": 201.7, "model_over_prob": 0.554}, {"player": "Ashton Jeanty", "team": "LV", "market": "Rushing Yds", "line": 53.5, "projected": 50.0, "model_over_prob": 0.451}, {"player": "Ashton Jeanty", "team": "LV", "market": "Anytime TD", "model_prob": 0.222}, {"player": "Tre Tucker", "team": "LV", "market": "Receiving Yds", "line": 30.0, "projected": 31.9, "model_over_prob": 0.527}, {"player": "Tre Tucker", "team": "LV", "market": "Anytime TD", "model_prob": 0.165}]}, {"awayAbbr": "GB", "homeAbbr": "MIN", "awayName": "Green Bay Packers", "homeName": "Minnesota Vikings", "gameday": "2026-09-13", "spread_line": -1.5, "total_line": 44.5, "mlAway": -112, "mlHome": -108, "market_home_prob": 0.4957, "elo_home_prob": 0.5669, "roof": "dome", "away_rest": 7, "home_rest": 7, "props": [{"player": "Jordan Love", "team": "GB", "market": "Passing Yds", "line": 204.0, "projected": 185.2, "model_over_prob": 0.414}, {"player": "Josh Jacobs", "team": "GB", "market": "Rushing Yds", "line": 56.0, "projected": 54.1, "model_over_prob": 0.473}, {"player": "Josh Jacobs", "team": "GB", "market": "Anytime TD", "model_prob": 0.263}, {"player": "Christian Watson", "team": "GB", "market": "Receiving Yds", "line": 57.5, "projected": 51.6, "model_over_prob": 0.416}, {"player": "Christian Watson", "team": "GB", "market": "Anytime TD", "model_prob": 0.425}, {"player": "Kyler Murray", "team": "MIN", "market": "Passing Yds", "line": 216.0, "projected": 214.4, "model_over_prob": 0.492}, {"player": "Aaron Jones", "team": "MIN", "market": "Rushing Yds", "line": 51.0, "projected": 51.2, "model_over_prob": 0.502}, {"player": "Aaron Jones", "team": "MIN", "market": "Anytime TD", "model_prob": 0.224}, {"player": "Justin Jefferson", "team": "MIN", "market": "Receiving Yds", "line": 45.0, "projected": 43.6, "model_over_prob": 0.48}, {"player": "Justin Jefferson", "team": "MIN", "market": "Anytime TD", "model_prob": 0.122}]}, {"awayAbbr": "WAS", "homeAbbr": "PHI", "awayName": "Washington Commanders", "homeName": "Philadelphia Eagles", "gameday": "2026-09-13", "spread_line": 5.5, "total_line": 46.5, "mlAway": 200, "mlHome": -245, "market_home_prob": 0.6806, "elo_home_prob": 0.7096, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Jayden Daniels", "team": "WAS", "market": "Passing Yds", "line": 189.5, "projected": 176.3, "model_over_prob": 0.439}, {"player": "Jacory Croskey-Merritt", "team": "WAS", "market": "Rushing Yds", "line": 45.5, "projected": 44.8, "model_over_prob": 0.49}, {"player": "Jacory Croskey-Merritt", "team": "WAS", "market": "Anytime TD", "model_prob": 0.26}, {"player": "Terry McLaurin", "team": "WAS", "market": "Receiving Yds", "line": 63.5, "projected": 55.3, "model_over_prob": 0.384}, {"player": "Terry McLaurin", "team": "WAS", "market": "Anytime TD", "model_prob": 0.26}, {"player": "Jalen Hurts", "team": "PHI", "market": "Passing Yds", "line": 191.5, "projected": 191.6, "model_over_prob": 0.5}, {"player": "Saquon Barkley", "team": "PHI", "market": "Rushing Yds", "line": 83.5, "projected": 81.0, "model_over_prob": 0.465}, {"player": "Saquon Barkley", "team": "PHI", "market": "Anytime TD", "model_prob": 0.283}, {"player": "DeVonta Smith", "team": "PHI", "market": "Receiving Yds", "line": 51.5, "projected": 47.4, "model_over_prob": 0.442}, {"player": "DeVonta Smith", "team": "PHI", "market": "Anytime TD", "model_prob": 0.16}]}, {"awayAbbr": "DAL", "homeAbbr": "NYG", "awayName": "Dallas Cowboys", "homeName": "New York Giants", "gameday": "2026-09-13", "spread_line": -2.5, "total_line": 48.5, "mlAway": -135, "mlHome": 114, "market_home_prob": 0.4486, "elo_home_prob": 0.5037, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Dak Prescott", "team": "DAL", "market": "Passing Yds", "line": 279.0, "projected": 249.8, "model_over_prob": 0.367}, {"player": "Javonte Williams", "team": "DAL", "market": "Rushing Yds", "line": 71.0, "projected": 67.0, "model_over_prob": 0.445}, {"player": "Javonte Williams", "team": "DAL", "market": "Anytime TD", "model_prob": 0.343}, {"player": "CeeDee Lamb", "team": "DAL", "market": "Receiving Yds", "line": 73.0, "projected": 64.2, "model_over_prob": 0.376}, {"player": "CeeDee Lamb", "team": "DAL", "market": "Anytime TD", "model_prob": 0.201}, {"player": "Jaxson Dart", "team": "NYG", "market": "Passing Yds", "line": 185.0, "projected": 190.4, "model_over_prob": 0.525}, {"player": "Cam Skattebo", "team": "NYG", "market": "Rushing Yds", "line": 51.0, "projected": 45.9, "model_over_prob": 0.429}, {"player": "Cam Skattebo", "team": "NYG", "market": "Anytime TD", "model_prob": 0.437}, {"player": "Malik Nabers", "team": "NYG", "market": "Receiving Yds", "line": 82.0, "projected": 72.4, "model_over_prob": 0.365}, {"player": "Malik Nabers", "team": "NYG", "market": "Anytime TD", "model_prob": 0.35}]}, {"awayAbbr": "DEN", "homeAbbr": "KC", "awayName": "Denver Broncos", "homeName": "Kansas City Chiefs", "gameday": "2026-09-14", "spread_line": 2.5, "total_line": 42.5, "mlAway": 124, "mlHome": -148, "market_home_prob": 0.5721, "elo_home_prob": 0.3813, "roof": "outdoors", "away_rest": 7, "home_rest": 7, "props": [{"player": "Bo Nix", "team": "DEN", "market": "Passing Yds", "line": 260.5, "projected": 237.3, "model_over_prob": 0.394}, {"player": "J.K. Dobbins", "team": "DEN", "market": "Rushing Yds", "line": 79.0, "projected": 70.7, "model_over_prob": 0.387}, {"player": "J.K. Dobbins", "team": "DEN", "market": "Anytime TD", "model_prob": 0.199}, {"player": "Courtland Sutton", "team": "DEN", "market": "Receiving Yds", "line": 55.0, "projected": 49.3, "model_over_prob": 0.419}, {"player": "Courtland Sutton", "team": "DEN", "market": "Anytime TD", "model_prob": 0.34}, {"player": "Patrick Mahomes", "team": "KC", "market": "Passing Yds", "line": 259.0, "projected": 233.5, "model_over_prob": 0.383}, {"player": "Kenneth Walker III", "team": "KC", "market": "Rushing Yds", "line": 76.0, "projected": 65.6, "model_over_prob": 0.359}, {"player": "Kenneth Walker III", "team": "KC", "market": "Anytime TD", "model_prob": 0.263}, {"player": "Rashee Rice", "team": "KC", "market": "Receiving Yds", "line": 71.5, "projected": 62.9, "model_over_prob": 0.378}, {"player": "Rashee Rice", "team": "KC", "market": "Anytime TD", "model_prob": 0.34}]}]};
+
+function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
+function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+function fmtSpread(s, isHome){
+  const v = isHome ? s : -s;
+  return (v>0?"+":"") + v;
+}
+function edgeColor(edge){
+  if(edge===null) return {bg:"var(--panel-alt)", fg:"var(--text-dim)"};
+  if(edge >= 0.03) return {bg:"var(--green-dim)", fg:"var(--green)"};
+  if(edge <= -0.03) return {bg:"var(--red-dim)", fg:"var(--red)"};
+  return {bg:"var(--amber-dim)", fg:"var(--amber)"};
+}
+
+function propRow(p){
+  if(p.market === "Anytime TD"){
+    return `<tr>
+      <td>${p.player} <span class="p-team">${p.team}</span></td>
+      <td>Anytime TD</td>
+      <td>—</td>
+      <td class="p-model">${pct(p.model_prob)}</td>
+    </tr>`;
+  }
+  return `<tr>
+    <td>${p.player} <span class="p-team">${p.team}</span></td>
+    <td>${p.market}</td>
+    <td>${p.line}</td>
+    <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
+  </tr>`;
+}
+
+function propsTable(props){
+  if(!props || !props.length) return "";
+  const rows = props.map(propRow).join("");
+  return `
+    <details class="props-toggle">
+      <summary>Player Props <span class="props-sample-tag">(current depth-chart starters — line = trailing average, see footer)</span></summary>
+      <table class="props-table">
+        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </details>
+  `;
+}
+
+function renderGames(){
+  document.getElementById('eyebrow').textContent = `NFL · Week ${DATA.week} · ${DATA.season} Season`;
+  const ep = DATA.elo_params;
+  document.getElementById('elo-meta').textContent =
+    `Model basis: Elo rating fit on 2019-2022 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, grid-searched to minimize log loss), carried forward through every completed game 2019-2025 into this week. Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate.`;
+
+  const root = document.getElementById("games");
+  root.innerHTML = "";
+
+  DATA.games.forEach((g, idx) => {
+    const card = document.createElement("div");
+    card.className = "game";
+
+    const pHomeRaw = g.market_home_prob;
+
+    card.innerHTML = `
+      <div class="game-top">
+        <div>
+          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
+          <div class="kickoff">${g.gameday}</div>
+        </div>
+      </div>
+
+      <div class="prob-bar-wrap">
+        <div class="prob-bar">
+          <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
+          <div style="width:${g.elo_home_prob*100}%;background:var(--green)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
+        </div>
+      </div>
+
+      <div class="rowgrid">
+        <div class="side">
+          <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(1-pHomeRaw)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+          <div class="model-row">
+            <label>Your %</label>
+            <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="away" value="${((1-g.elo_home_prob)*100).toFixed(1)}">
+            <span class="edge-tag" data-tag="${idx}-away">—</span>
+          </div>
+        </div>
+        <div class="side">
+          <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(pHomeRaw)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+          <div class="model-row">
+            <label>Your %</label>
+            <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="home" value="${(g.elo_home_prob*100).toFixed(1)}">
+            <span class="edge-tag" data-tag="${idx}-home">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${g.total_line}</b></div>
+      ${propsTable(g.props)}
+    `;
+    root.appendChild(card);
+
+    ["away","home"].forEach(side=>{
+      const input = card.querySelector(`input[data-side="${side}"]`);
+      const tag = card.querySelector(`[data-tag="${idx}-${side}"]`);
+      const fairP = side==="home" ? pHomeRaw : 1-pHomeRaw;
+      function update(){
+        const yourP = parseFloat(input.value)/100;
+        const edge = isNaN(yourP) ? null : (yourP - fairP);
+        const c = edgeColor(edge);
+        tag.style.background = c.bg;
+        tag.style.color = c.fg;
+        tag.textContent = edge===null ? "—" : (edge>=0?"+":"") + (edge*100).toFixed(1) + "% edge vs. market";
+      }
+      input.addEventListener("input", update);
+      update();
+    });
+  });
+
+  document.getElementById("foot").innerHTML =
+    `<b>Fair win %</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Model win %</b> is our Elo rating, fit and backtested on 2019-2024 (see prior results), then carried forward through every real completed game since. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus Fair %. ` +
+    `<b>Player props:</b> each team's current depth-chart starter (QB / RB1 / WR1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. There is no free source of real historical (or current) player-prop odds, so the "line" shown is the player's own trailing average, used only so Model % has something to compare against — treat it as a projection, not a market line. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+}
+
+renderGames();
+</script>
+</body>
+</html>

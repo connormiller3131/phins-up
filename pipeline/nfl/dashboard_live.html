@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE HOLD — NFL Weekly Projections</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#12151A;
+    --panel:#1A1F26;
+    --panel-alt:#20262E;
+    --line:#2A313B;
+    --text:#EDEFF2;
+    --text-dim:#8C94A0;
+    --green:#46C56B;
+    --green-dim:#1E3A2A;
+    --amber:#F5A93F;
+    --amber-dim:#3A2F18;
+    --red:#F0555F;
+    --red-dim:#3A1E22;
+    --blue:#5FA8E0;
+    --mono:'Consolas','SFMono-Regular',monospace;
+    --disp:'Arial Narrow',sans-serif;
+    --body:-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    padding:28px 16px 60px;
+  }
+  .wrap{max-width:960px;margin:0 auto;}
+
+  .tabnav{
+    display:flex;gap:8px;margin-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .tabnav button{
+    font-family:var(--disp);
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--text-dim);
+    padding:8px 4px 10px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    margin-right:14px;
+  }
+  .tabnav button.active{color:var(--text);border-bottom-color:var(--green);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  header{margin-bottom:22px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:var(--disp);
+    font-weight:800;
+    font-size:52px;
+    letter-spacing:.01em;
+    line-height:.9;
+    margin:0 0 10px;
+    text-transform:uppercase;
+  }
+  h1 span{color:var(--green);}
+  .sub{
+    color:var(--text-dim);
+    font-size:14px;
+    line-height:1.5;
+    max-width:640px;
+    margin:0 0 18px;
+  }
+  .metabar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    padding:12px 14px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:10px;
+  }
+  .metabar b{color:var(--text);font-weight:600;}
+  .metabar .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:6px;}
+  .metabar.model .dot{background:var(--blue);}
+
+  .legend{
+    display:flex;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;color:var(--text-dim);
+    margin:18px 0 10px;
+  }
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .game{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .game-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .matchup{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:26px;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    line-height:1;
+  }
+  .matchup .at{color:var(--text-dim);font-weight:600;margin:0 6px;}
+  .kickoff{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    margin-top:4px;
+  }
+  .hold-badge{
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:right;
+    color:var(--text-dim);
+    min-width:120px;
+  }
+  .hold-badge .pct{
+    font-size:18px;
+    font-weight:600;
+    display:block;
+  }
+  .hold-track{
+    width:120px;height:5px;border-radius:3px;background:var(--line);
+    margin-top:5px;overflow:hidden;
+  }
+  .hold-fill{height:100%;border-radius:3px;}
+
+  .rowgrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+  }
+  .side{
+    background:var(--panel-alt);
+    border-radius:8px;
+    padding:12px 14px;
+  }
+  .side .team{
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .side .team small{
+    font-family:var(--mono);
+    font-weight:400;
+    color:var(--text-dim);
+    font-size:11px;
+  }
+  .stat-line{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    padding:3px 0;
+  }
+  .stat-line b{color:var(--text);font-weight:600;}
+  .stat-line.model b{color:var(--blue);}
+
+  .prob-bar-wrap{margin:10px 0 6px;}
+  .prob-bar{
+    display:flex;height:20px;border-radius:5px;overflow:hidden;
+    font-family:var(--mono);font-size:10px;
+  }
+  .prob-bar div{display:flex;align-items:center;justify-content:center;color:#0C0F12;font-weight:600;}
+
+  .model-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:8px;
+  }
+  .model-row label{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .model-row input{
+    width:58px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:13px;
+    border-radius:5px;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .edge-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    padding:3px 8px;
+    border-radius:5px;
+    white-space:nowrap;
+  }
+
+  .props-toggle{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+  }
+  .props-toggle summary{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    user-select:none;
+  }
+  .props-toggle summary::-webkit-details-marker{color:var(--amber);}
+  .props-sample-tag{
+    display:inline-block;
+    margin-left:8px;
+    font-size:9.5px;
+    color:var(--text-dim);
+    text-transform:none;
+    letter-spacing:0;
+  }
+  .props-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    font-family:var(--mono);
+    font-size:11.5px;
+  }
+  .props-table th{
+    text-align:left;
+    color:var(--text-dim);
+    font-weight:500;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:4px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .props-table td{
+    padding:6px 8px 6px 0;
+    border-bottom:1px solid var(--line);
+    color:var(--text);
+    white-space:nowrap;
+  }
+  .props-table tr:last-child td{border-bottom:none;}
+  .props-table .p-team{color:var(--text-dim);font-size:10px;}
+  .props-table .p-model{color:var(--blue);}
+  .props-table .p-exp{color:var(--text-dim);font-size:10px;}
+
+  .placeholder{
+    background:var(--panel);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:22px;
+    color:var(--text-dim);
+    font-size:13px;
+    line-height:1.6;
+  }
+  .placeholder b{color:var(--text);}
+
+  @media (max-width:560px){
+    h1{font-size:38px;}
+    .rowgrid{grid-template-columns:1fr;}
+    .game-top{flex-direction:column;}
+    .hold-badge{text-align:left;}
+  }
+
+  footer{
+    margin-top:26px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    line-height:1.7;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  footer b{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tabnav">
+    <button id="tabbtn-nfl" class="active" onclick="showTab('nfl')">NFL</button>
+    <button id="tabbtn-mlb" onclick="showTab('mlb')">MLB</button>
+    <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
+  </div>
+
+  <div id="tab-nfl" class="tab-panel active">
+  <header>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1>THE <span>HOLD</span></h1>
+    <p class="sub">Real upcoming games, real posted opening lines, and a real fitted model — no hand-typed ratings or guessed constants. "Model %" is the Elo rating from the backtested pipeline, carried forward through every completed game into this week. Edit "Your %" if you know something the model doesn't.</p>
+    <div class="metabar">
+      <span class="dot"></span>
+      <b>Not yet played</b> — this is a genuine future-week projection, not a replay. Opening lines shown were pulled from nflverse's live schedule feed.
+    </div>
+    <div class="metabar model">
+      <span class="dot"></span>
+      <b id="elo-meta"></b>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--green)"></i>Edge for you &ge; 3%</span>
+    <span><i class="sw" style="background:var(--amber)"></i>Edge within &plusmn;3%</span>
+    <span><i class="sw" style="background:var(--red)"></i>Edge against you &ge; 3%</span>
+  </div>
+
+  <div id="games"></div>
+
+  <footer id="foot"></footer>
+  </div>
+
+  <div id="tab-mlb" class="tab-panel">
+    <header>
+      <p class="eyebrow">MLB</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> The NFL pipeline (Elo win-probability + ridge/logistic prop models, both backtested against real closing lines and real outcomes, now also producing genuine next-week projections) is done. MLB is next.
+    </div>
+  </div>
+
+  <div id="tab-nhl" class="tab-panel">
+    <header>
+      <p class="eyebrow">NHL</p>
+      <h1>THE <span>HOLD</span></h1>
+    </header>
+    <div class="placeholder">
+      <b>Not built yet.</b> Same story as MLB — comes after it.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(name){
+  ['nfl','mlb','nhl'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
+    document.getElementById('tabbtn-'+t).classList.toggle('active', t===name);
+  });
+}
+
+const DATA = __DATA_JSON__;
+
+function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
+function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+function fmtSpread(s, isHome){
+  const v = isHome ? s : -s;
+  return (v>0?"+":"") + v;
+}
+function edgeColor(edge){
+  if(edge===null) return {bg:"var(--panel-alt)", fg:"var(--text-dim)"};
+  if(edge >= 0.03) return {bg:"var(--green-dim)", fg:"var(--green)"};
+  if(edge <= -0.03) return {bg:"var(--red-dim)", fg:"var(--red)"};
+  return {bg:"var(--amber-dim)", fg:"var(--amber)"};
+}
+
+function propRow(p){
+  if(p.market === "Anytime TD"){
+    return `<tr>
+      <td>${p.player} <span class="p-team">${p.team}</span></td>
+      <td>Anytime TD</td>
+      <td>—</td>
+      <td class="p-model">${pct(p.model_prob)}</td>
+    </tr>`;
+  }
+  return `<tr>
+    <td>${p.player} <span class="p-team">${p.team}</span></td>
+    <td>${p.market}</td>
+    <td>${p.line}</td>
+    <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
+  </tr>`;
+}
+
+function propsTable(props){
+  if(!props || !props.length) return "";
+  const rows = props.map(propRow).join("");
+  return `
+    <details class="props-toggle">
+      <summary>Player Props <span class="props-sample-tag">(current depth-chart starters — line = trailing average, see footer)</span></summary>
+      <table class="props-table">
+        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </details>
+  `;
+}
+
+function renderGames(){
+  document.getElementById('eyebrow').textContent = `NFL · Week ${DATA.week} · ${DATA.season} Season`;
+  const ep = DATA.elo_params;
+  document.getElementById('elo-meta').textContent =
+    `Model basis: Elo rating fit on 2019-2022 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, grid-searched to minimize log loss), carried forward through every completed game 2019-2025 into this week. Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate.`;
+
+  const root = document.getElementById("games");
+  root.innerHTML = "";
+
+  DATA.games.forEach((g, idx) => {
+    const card = document.createElement("div");
+    card.className = "game";
+
+    const pHomeRaw = g.market_home_prob;
+
+    card.innerHTML = `
+      <div class="game-top">
+        <div>
+          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
+          <div class="kickoff">${g.gameday}</div>
+        </div>
+      </div>
+
+      <div class="prob-bar-wrap">
+        <div class="prob-bar">
+          <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
+          <div style="width:${g.elo_home_prob*100}%;background:var(--green)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
+        </div>
+      </div>
+
+      <div class="rowgrid">
+        <div class="side">
+          <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(1-pHomeRaw)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+          <div class="model-row">
+            <label>Your %</label>
+            <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="away" value="${((1-g.elo_home_prob)*100).toFixed(1)}">
+            <span class="edge-tag" data-tag="${idx}-away">—</span>
+          </div>
+        </div>
+        <div class="side">
+          <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${pct(pHomeRaw)}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+          <div class="model-row">
+            <label>Your %</label>
+            <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="home" value="${(g.elo_home_prob*100).toFixed(1)}">
+            <span class="edge-tag" data-tag="${idx}-home">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${g.total_line}</b></div>
+      ${propsTable(g.props)}
+    `;
+    root.appendChild(card);
+
+    ["away","home"].forEach(side=>{
+      const input = card.querySelector(`input[data-side="${side}"]`);
+      const tag = card.querySelector(`[data-tag="${idx}-${side}"]`);
+      const fairP = side==="home" ? pHomeRaw : 1-pHomeRaw;
+      function update(){
+        const yourP = parseFloat(input.value)/100;
+        const edge = isNaN(yourP) ? null : (yourP - fairP);
+        const c = edgeColor(edge);
+        tag.style.background = c.bg;
+        tag.style.color = c.fg;
+        tag.textContent = edge===null ? "—" : (edge>=0?"+":"") + (edge*100).toFixed(1) + "% edge vs. market";
+      }
+      input.addEventListener("input", update);
+      update();
+    });
+  });
+
+  document.getElementById("foot").innerHTML =
+    `<b>Fair win %</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Model win %</b> is our Elo rating, fit and backtested on 2019-2024 (see prior results), then carried forward through every real completed game since. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus Fair %. ` +
+    `<b>Player props:</b> each team's current depth-chart starter (QB / RB1 / WR1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. There is no free source of real historical (or current) player-prop odds, so the "line" shown is the player's own trailing average, used only so Model % has something to compare against — treat it as a projection, not a market line. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+}
+
+renderGames();
+</script>
+</body>
+</html>

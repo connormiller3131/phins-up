@@ -1,0 +1,39 @@
+name: Refresh NFL projections
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # ~noon UTC daily; adjust to taste (GitHub cron is always UTC)
+  workflow_dispatch: {}     # lets you trigger a run manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Pull latest NFL data
+        run: python pipeline/nfl/pull_data.py
+
+      - name: Generate current-week projections
+        run: python pipeline/nfl/generate_current_week.py
+
+      - name: Build static site
+        run: python pipeline/nfl/build_static_site.py
+
+      - name: Commit and push updated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          git diff --quiet --cached || git commit -m "Auto-refresh NFL projections"
+          git push

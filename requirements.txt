@@ -1,0 +1,7 @@
+nflreadpy
+pandas
+numpy
+scikit-learn
+pyarrow
+matplotlib
+requests

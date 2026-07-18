@@ -522,12 +522,26 @@ function renderGames(){
 renderGames();
 
 // ============ MLB ============
-function mlbPropRow(p){
+function propFairOver(over, under){
+  if(over==null || under==null) return null;
+  const ip = (o) => o < 0 ? (-o)/(-o+100) : 100/(o+100);
+  const pO = ip(over), pU = ip(under);
+  return pO / (pO + pU);
+}
+
+function mlbPropRow(p, hasDK){
+  const dkCell = hasDK ? (
+    p.dk_over!=null
+      ? `<td>O ${fmtOdds(p.dk_over)}${p.dk_under!=null ? ' / U '+fmtOdds(p.dk_under) : ''}
+         <span class="p-exp">${p.dk_under!=null ? 'fair '+pct(propFairOver(p.dk_over,p.dk_under))+' over' : ''}</span></td>`
+      : `<td><span class="p-exp">—</span></td>`
+  ) : "";
   if(p.market === "Anytime HR"){
     return `<tr>
       <td>${p.player} <span class="p-team">${p.team}</span></td>
       <td>Anytime HR</td>
-      <td>—</td>
+      <td>${p.dk_line!=null ? p.dk_line : '—'}</td>
+      ${dkCell}
       <td class="p-model">${pct(p.model_prob)}</td>
     </tr>`;
   }
@@ -535,23 +549,28 @@ function mlbPropRow(p){
     <td>${p.player} <span class="p-team">${p.team}</span></td>
     <td>${p.market}</td>
     <td>${p.line}</td>
+    ${dkCell}
     <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
   </tr>`;
 }
 
-function mlbPropsTable(props, combo){
-  const rows = (props||[]).map(mlbPropRow).join("");
+function mlbPropsTable(props, combo, featured){
+  const hasDK = !!featured;
+  const rows = (props||[]).map(p => mlbPropRow(p, hasDK)).join("");
   const comboHtml = combo ? `
     <div class="h2h-note" style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;">
       SPECIAL — ${combo.player_a} (${pct(combo.prob_a)}) or ${combo.player_b} (${pct(combo.prob_b)}) to homer:
       <b style="color:var(--blue)">${pct(combo.prob_either)}</b> either
     </div>` : "";
   if(!props || !props.length) return comboHtml;
+  const tag = hasDK
+    ? '(FEATURED — real DraftKings lines &amp; odds; model % re-aimed at the DK line)'
+    : '(probable pitcher + top-3 recent batters per team — line = trailing average)';
   return `
-    <details class="props-toggle">
-      <summary>Player Props <span class="props-sample-tag">(probable pitcher + top-3 recent batters per team — line = trailing average)</span></summary>
+    <details class="props-toggle" ${hasDK ? 'open' : ''}>
+      <summary>Player Props ${hasDK ? '<span style="color:var(--green)">★</span>' : ''} <span class="props-sample-tag">${tag}</span></summary>
       <table class="props-table">
-        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th></tr></thead>
+        <thead><tr><th>Player</th><th>Market</th><th>Line</th>${hasDK ? '<th>DK Odds</th>' : ''}<th>Model %</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
       ${comboHtml}
@@ -614,14 +633,15 @@ function renderMLBGames(){
       </div>
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
-      ${mlbPropsTable(g.props, g.hr_combo)}
+      ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
     `;
     root.appendChild(card);
   });
 
   document.getElementById("mlb-foot").innerHTML =
     `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>Model win %</b> is our Elo rating, fit and backtested on 2023-2024 data, carried forward through every real completed game since (2025 backtest: Brier 0.244, 55% accuracy out-of-sample -- MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound). ` +
-    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume get hits/total-bases/anytime-HR projections -- this is a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice.`;
+    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume get hits/total-bases/anytime-HR projections -- this is a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
+    `<b>★ Featured game:</b> the day's most competitive matchup also shows real DraftKings prop lines and over/under prices (with the no-vig fair %), and its Model % is recomputed against DK's actual line rather than the trailing-average proxy. Only one game gets this because per-game prop-odds API calls are expensive on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can.`;
 }
 
 function noVigProb(mlHome, mlAway){

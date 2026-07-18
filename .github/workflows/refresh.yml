@@ -2,7 +2,8 @@ name: Refresh projections
 
 on:
   schedule:
-    - cron: "0 12 * * *"   # ~noon UTC daily; adjust to taste (GitHub cron is always UTC)
+    - cron: "0 12 * * *"   # ~8am ET: fresh odds/probables before day games (GitHub cron is always UTC)
+    - cron: "0 21 * * *"   # ~5pm ET: refresh before the evening slate
   workflow_dispatch: {}     # lets you trigger a run manually from the Actions tab
 
 permissions:

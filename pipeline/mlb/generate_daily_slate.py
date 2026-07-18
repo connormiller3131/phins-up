@@ -10,6 +10,7 @@
   computed from our own anytime-HR model for the single best HR bet on each
   team, assuming independence between the two players.
 """
+import os
 import sys
 import pathlib
 import json
@@ -32,7 +33,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
-from pipeline.common.odds_api import get_game_odds
+from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
 DATA_DIR = ROOT / "data" / "mlb"
 
@@ -86,7 +87,8 @@ def elo_predictions(games_df, slate):
     })
     cols = ["season", "game_date", "home_team", "away_team", "margin", "home_win"]
     combined = pd.concat([games_df[cols], future_rows], ignore_index=True)
-    preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"])
+    preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
+                    season_regression=elo_params.get("season_regression", 0.65))
     return preds[-len(slate):], elo_params
 
 
@@ -139,7 +141,83 @@ def attach_market_odds(slate):
         slate_game["market"] = {
             "mlHome": ml_home, "mlAway": ml_away,
             "run_line_home": run_line_home, "total_line": total_line,
+            "event_id": odds_game.get("id"), "commence_time": odds_game.get("commence_time"),
         }
+
+
+PROP_MARKET_KEYS = {
+    "Hits": "batter_hits",
+    "Total Bases": "batter_total_bases",
+    "Anytime HR": "batter_home_runs",
+    "Pitcher Strikeouts": "pitcher_strikeouts",
+}
+
+
+def _norm_name(name):
+    """Accent-insensitive lowercase match key (DK strips accents: Jose Ramirez)."""
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", name) if not unicodedata.combining(c)).lower().strip()
+
+
+def attach_featured_prop_odds(games_out, limit=1):
+    """Fetch real DraftKings player-prop odds for the most competitive
+    not-yet-started game(s) only -- each per-game props call costs ~4 credits,
+    so the free tier can afford 1-2 games per refresh, not the slate."""
+    now = pd.Timestamp.utcnow()
+    candidates = [
+        g for g in games_out
+        if g.get("market") and g["market"].get("event_id")
+        and g["market"].get("commence_time") and pd.Timestamp(g["market"]["commence_time"]) > now
+    ]
+    candidates.sort(key=lambda g: abs(g["elo_home_prob"] - 0.5))
+
+    for g in candidates[:limit]:
+        try:
+            data = get_event_player_props(
+                "baseball_mlb", g["market"]["event_id"],
+                markets=",".join(sorted(set(PROP_MARKET_KEYS.values()))))
+        except Exception as e:
+            print(f"  featured props fetch failed for {g['awayAbbr']} @ {g['homeAbbr']}: {e}")
+            continue
+
+        bookmakers = data.get("bookmakers", [])
+        if not bookmakers:
+            continue
+        dk_markets = {m["key"]: m for m in bookmakers[0].get("markets", [])}
+
+        # (market_key, normalized player name) -> {line, over, under}
+        odds_lookup = {}
+        for mkey, market in dk_markets.items():
+            for o in market.get("outcomes", []):
+                player = _norm_name(o.get("description", ""))
+                entry = odds_lookup.setdefault((mkey, player), {})
+                entry["line"] = o.get("point")
+                if o.get("name") == "Over":
+                    entry["over"] = o.get("price")
+                elif o.get("name") == "Under":
+                    entry["under"] = o.get("price")
+
+        matched = 0
+        for p in g["props"]:
+            mkey = PROP_MARKET_KEYS.get(p["market"])
+            if not mkey:
+                continue
+            dk = odds_lookup.get((mkey, _norm_name(p["player"])))
+            if not dk or dk.get("over") is None:
+                continue
+            p["dk_line"] = dk.get("line")
+            p["dk_over"] = dk.get("over")
+            p["dk_under"] = dk.get("under")
+            # Re-aim the model probability at DraftKings' actual line instead
+            # of our trailing-average proxy (binary Anytime HR already IS
+            # P(over 0.5), so only count props need recomputing).
+            if p["market"] != "Anytime HR" and dk.get("line") is not None and "model_std" in p:
+                p["model_over_prob"] = round(float(over_prob(p["projected"], p["model_std"], dk["line"])), 3)
+                p["line"] = dk["line"]
+            matched += 1
+
+        g["featured_props"] = True
+        print(f"  featured prop odds: {g['awayAbbr']} @ {g['homeAbbr']} ({matched} props matched to DK)")
 
 
 def fit_yardage_model(hist_df):
@@ -185,12 +263,14 @@ def batter_props_for_team(team, opp_team, player_ids, models, own_lookups, opp_l
         own_hits = hits_own.loc[pid, "current_avg"]
         if pd.notna(own_hits):
             proj, line, p_over = project_count_stat(hits_model, hits_std, float(own_hits), float(hits_opp.loc[opp_team]))
-            entries.append({"player": name, "team": team, "market": "Hits", "line": line, "projected": proj, "model_over_prob": p_over})
+            entries.append({"player": name, "team": team, "market": "Hits", "line": line, "projected": proj,
+                            "model_over_prob": p_over, "model_std": round(hits_std, 3)})
 
         own_tb = tb_own.loc[pid, "current_avg"] if pid in tb_own.index else None
         if own_tb is not None and pd.notna(own_tb):
             proj, line, p_over = project_count_stat(tb_model, tb_std, float(own_tb), float(tb_opp.loc[opp_team]))
-            entries.append({"player": name, "team": team, "market": "Total Bases", "line": line, "projected": proj, "model_over_prob": p_over})
+            entries.append({"player": name, "team": team, "market": "Total Bases", "line": line, "projected": proj,
+                            "model_over_prob": p_over, "model_std": round(tb_std, 3)})
 
         own_hr = hr_own.loc[pid, "current_avg"] if pid in hr_own.index else None
         if own_hr is not None and pd.notna(own_hr):
@@ -210,7 +290,8 @@ def pitcher_prop(pitcher_id, opp_team, model, resid_std, own, opp):
         return None
     name = own.loc[pitcher_id, "player_display_name"]
     proj, line, p_over = project_count_stat(model, resid_std, float(own_avg), float(opp.loc[opp_team]))
-    return {"player": name, "market": "Pitcher Strikeouts", "line": line, "projected": proj, "model_over_prob": p_over}
+    return {"player": name, "market": "Pitcher Strikeouts", "line": line, "projected": proj,
+            "model_over_prob": p_over, "model_std": round(resid_std, 3)}
 
 
 def main():
@@ -287,6 +368,8 @@ def main():
             "props": props,
         })
         print(f"  {g['away_team']} @ {g['home_team']}: elo_home={elo_preds[i]:.3f} market={'yes' if g['market'] else 'no'} props={len(props)}")
+
+    attach_featured_prop_odds(games_out, limit=int(os.environ.get("FEATURED_PROPS_LIMIT", "1")))
 
     payload = {
         "date": target_date, "elo_params": elo_params,

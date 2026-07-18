@@ -1,4 +1,5 @@
 nflreadpy
+pybaseball
 pandas
 numpy
 scikit-learn

@@ -230,7 +230,7 @@ def main():
             "mlAway": int(row.away_moneyline), "mlHome": int(row.home_moneyline),
             "market_home_prob": round(float(row.market_home_prob), 4),
             "elo_home_prob": round(float(elo_preds[i]), 4),
-            "roof": row.roof, "away_rest": int(row.away_rest), "home_rest": int(row.home_rest),
+            "roof": row.roof if pd.notna(row.roof) else None, "away_rest": int(row.away_rest), "home_rest": int(row.home_rest),
             "props": props,
         })
         print(f"  {away} @ {home}: market_home={row.market_home_prob:.3f} elo_home={elo_preds[i]:.3f} props={len(props)}")

@@ -349,13 +349,24 @@
   </div>
 
   <div id="tab-mlb" class="tab-panel">
-    <header>
-      <p class="eyebrow">MLB</p>
-      <h1>THE <span>HOLD</span></h1>
-    </header>
-    <div class="placeholder">
-      <b>Not built yet.</b> The NFL pipeline (Elo win-probability + ridge/logistic prop models, both backtested against real closing lines and real outcomes, now also producing genuine next-week projections) is done. MLB is next.
+  <header>
+    <p class="eyebrow" id="mlb-eyebrow"></p>
+    <h1>THE <span>HOLD</span></h1>
+    <p class="sub">Same pipeline as NFL: an Elo rating fit and backtested on real 2023-2025 game results (pybaseball), carried forward daily. Player props use each team's probable starting pitcher (real, from MLB's schedule feed) and the 3 batters with the most recent playing time per team — we don't have a confirmed daily lineup source, so that's a proxy for "everyday player," not a locked-in lineup.</p>
+    <div class="metabar">
+      <span class="dot"></span>
+      <b id="mlb-meta"></b>
     </div>
+  </header>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--text-dim)"></i>Fair % — real DraftKings moneyline, where posted</span>
+    <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
+  </div>
+
+  <div id="mlb-games"></div>
+
+  <footer id="mlb-foot"></footer>
   </div>
 
   <div id="tab-nhl" class="tab-panel">
@@ -379,6 +390,7 @@ function showTab(name){
 }
 
 const DATA = __DATA_JSON__;
+const MLB_DATA = __MLB_DATA_JSON__;
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
@@ -508,6 +520,116 @@ function renderGames(){
 }
 
 renderGames();
+
+// ============ MLB ============
+function mlbPropRow(p){
+  if(p.market === "Anytime HR"){
+    return `<tr>
+      <td>${p.player} <span class="p-team">${p.team}</span></td>
+      <td>Anytime HR</td>
+      <td>—</td>
+      <td class="p-model">${pct(p.model_prob)}</td>
+    </tr>`;
+  }
+  return `<tr>
+    <td>${p.player} <span class="p-team">${p.team}</span></td>
+    <td>${p.market}</td>
+    <td>${p.line}</td>
+    <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
+  </tr>`;
+}
+
+function mlbPropsTable(props, combo){
+  const rows = (props||[]).map(mlbPropRow).join("");
+  const comboHtml = combo ? `
+    <div class="h2h-note" style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;">
+      SPECIAL — ${combo.player_a} (${pct(combo.prob_a)}) or ${combo.player_b} (${pct(combo.prob_b)}) to homer:
+      <b style="color:var(--blue)">${pct(combo.prob_either)}</b> either
+    </div>` : "";
+  if(!props || !props.length) return comboHtml;
+  return `
+    <details class="props-toggle">
+      <summary>Player Props <span class="props-sample-tag">(probable pitcher + top-3 recent batters per team — line = trailing average)</span></summary>
+      <table class="props-table">
+        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${comboHtml}
+    </details>
+  `;
+}
+
+function fmtGameTime(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleString('en-US', {weekday:'short', hour:'numeric', minute:'2-digit', timeZoneName:'short'});
+}
+
+function renderMLBGames(){
+  document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
+  const ep = MLB_DATA.elo_params;
+  document.getElementById('mlb-meta').textContent =
+    `Model basis: Elo rating fit on 2023-2024 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, grid-searched to minimize log loss), carried forward through every completed game since. Generated ${MLB_DATA.generated_at}.`;
+
+  const root = document.getElementById("mlb-games");
+  root.innerHTML = "";
+
+  MLB_DATA.games.forEach(g => {
+    const card = document.createElement("div");
+    card.className = "game";
+    const m = g.market;
+    const fairHome = m && m.mlHome!=null && m.mlAway!=null ? noVigProb(m.mlHome, m.mlAway) : null;
+
+    card.innerHTML = `
+      <div class="game-top">
+        <div>
+          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
+          <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
+        </div>
+      </div>
+
+      <div class="prob-bar-wrap">
+        <div class="prob-bar">
+          <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
+          <div style="width:${g.elo_home_prob*100}%;background:var(--green)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
+        </div>
+      </div>
+
+      <div class="rowgrid">
+        <div class="side">
+          <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          <div class="stat-line"><span>Probable P</span><b>${g.awayProbablePitcher || "—"}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlAway : null)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(1-fairHome) : "—"}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+        </div>
+        <div class="side">
+          <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          <div class="stat-line"><span>Probable P</span><b>${g.homeProbablePitcher || "—"}</b></div>
+          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlHome : null)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(fairHome) : "—"}</b></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+        </div>
+      </div>
+      ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${m.total_line}</b></div>` : ""}
+      ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
+      ${mlbPropsTable(g.props, g.hr_combo)}
+    `;
+    root.appendChild(card);
+  });
+
+  document.getElementById("mlb-foot").innerHTML =
+    `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>Model win %</b> is our Elo rating, fit and backtested on 2023-2024 data, carried forward through every real completed game since (2025 backtest: Brier 0.244, 55% accuracy out-of-sample -- MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound). ` +
+    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume get hits/total-bases/anytime-HR projections -- this is a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice.`;
+}
+
+function noVigProb(mlHome, mlAway){
+  const impliedProb = (o) => o < 0 ? (-o)/(-o+100) : 100/(o+100);
+  const pH = impliedProb(mlHome), pA = impliedProb(mlAway);
+  return pH / (pH + pA);
+}
+
+renderMLBGames();
 </script>
 </body>
 </html>

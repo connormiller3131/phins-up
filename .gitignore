@@ -4,7 +4,5 @@ __pycache__/
 *.pyc
 data/
 notebooks_out/
-pipeline/nfl/dashboard_preview_filled.html
-pipeline/nfl/dashboard_live_filled.html
-pipeline/nfl/dashboard_preview_artifact.html
-pipeline/nfl/dashboard_live_artifact.html
+pipeline/nfl/*_filled.html
+pipeline/nfl/*_artifact*.html

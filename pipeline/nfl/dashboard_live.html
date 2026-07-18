@@ -574,7 +574,7 @@ function renderMLBGames(){
   const root = document.getElementById("mlb-games");
   root.innerHTML = "";
 
-  MLB_DATA.games.forEach(g => {
+  MLB_DATA.games.forEach((g, idx) => {
     const card = document.createElement("div");
     card.className = "game";
     const m = g.market;
@@ -586,6 +586,7 @@ function renderMLBGames(){
           <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
         </div>
+        <div class="hold-badge" id="mlb-score-${idx}"></div>
       </div>
 
       <div class="prob-bar-wrap">
@@ -630,6 +631,49 @@ function noVigProb(mlHome, mlAway){
 }
 
 renderMLBGames();
+
+// ---- Live scores: fetched client-side from MLB's free Stats API (CORS-open),
+// so scores stay current even though this page is only rebuilt once a day.
+async function updateMLBScores(){
+  if(!MLB_DATA.date || !MLB_DATA.games.length) return;
+  let apiGames = [];
+  try{
+    const r = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${MLB_DATA.date}&hydrate=linescore`);
+    const data = await r.json();
+    apiGames = (data.dates && data.dates[0]) ? data.dates[0].games : [];
+  }catch(e){ return; } // transient network failure: keep whatever is shown
+
+  MLB_DATA.games.forEach((g, idx) => {
+    const el = document.getElementById('mlb-score-'+idx);
+    if(!el) return;
+    // Match by team names; doubleheaders share a team pair, so disambiguate
+    // by closest scheduled start time.
+    const candidates = apiGames.filter(a =>
+      a.teams.away.team.name===g.awayName && a.teams.home.team.name===g.homeName);
+    if(!candidates.length) return;
+    let match = candidates[0];
+    if(candidates.length>1 && g.gameDatetime){
+      const t = new Date(g.gameDatetime).getTime();
+      match = candidates.reduce((best,c)=>
+        Math.abs(new Date(c.gameDate).getTime()-t) < Math.abs(new Date(best.gameDate).getTime()-t) ? c : best,
+        candidates[0]);
+    }
+    const st = match.status.abstractGameState;
+    const aS = match.teams.away.score, hS = match.teams.home.score;
+    const ls = match.linescore || {};
+    if(st==='Live'){
+      const inning = [ls.inningState, ls.currentInningOrdinal].filter(Boolean).join(' ');
+      el.innerHTML = `<span style="color:var(--red);font-weight:600">&#9679; LIVE${inning ? ' · '+inning : ''}</span>` +
+        `<span class="pct">${g.awayAbbr} ${aS ?? 0} – ${hS ?? 0} ${g.homeAbbr}</span>`;
+    } else if(st==='Final'){
+      el.innerHTML = `FINAL<span class="pct">${g.awayAbbr} ${aS ?? '—'} – ${hS ?? '—'} ${g.homeAbbr}</span>`;
+    } else {
+      el.innerHTML = `<span style="color:var(--text-dim)">${match.status.detailedState || 'Scheduled'}</span>`;
+    }
+  });
+}
+updateMLBScores();
+setInterval(updateMLBScores, 60000);
 </script>
 </body>
 </html>

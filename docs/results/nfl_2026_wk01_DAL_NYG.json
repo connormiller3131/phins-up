@@ -1,0 +1,892 @@
+{
+  "season": 2026,
+  "week": 1,
+  "awayAbbr": "DAL",
+  "homeAbbr": "NYG",
+  "awayName": "Dallas Cowboys",
+  "homeName": "New York Giants",
+  "gameday": "2026-09-13",
+  "predicted_at": "2026-07-18T22:49:34",
+  "elo_home_prob": 0.5188,
+  "market_home_prob": 0.4486,
+  "props_snapshot": [
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "market": "Passing Yds",
+      "line": 279.0,
+      "projected": 249.8,
+      "model_over_prob": 0.367,
+      "ladder": [
+        {
+          "line": 260.0,
+          "over_prob": 0.453
+        },
+        {
+          "line": 270.0,
+          "over_prob": 0.407
+        },
+        {
+          "line": 280.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 290.0,
+          "over_prob": 0.32
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.28
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.485
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "market": "Completions",
+      "line": 22.0,
+      "projected": 20.1,
+      "model_over_prob": 0.396
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "market": "Pass Attempts",
+      "line": 34.0,
+      "projected": 31.1,
+      "model_over_prob": 0.396
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "market": "Rushing Yds",
+      "line": 71.0,
+      "projected": 67.0,
+      "model_over_prob": 0.445,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.723
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.596
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.458
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.326
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.212
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "market": "Carries",
+      "line": 16.0,
+      "projected": 15.0,
+      "model_over_prob": 0.422
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.343
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 7.4,
+      "model_over_prob": 0.531,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.459
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.307
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.183
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.478
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "market": "Rushing Yds",
+      "line": 31.0,
+      "projected": 33.4,
+      "model_over_prob": 0.534,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.792
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.68
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.547
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.41
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.282
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "market": "Carries",
+      "line": 6.0,
+      "projected": 6.4,
+      "model_over_prob": 0.534
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.201
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 2.0,
+      "projected": 4.5,
+      "model_over_prob": 0.54,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.413
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.267
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.153
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 0.0,
+      "projected": 0.4,
+      "model_over_prob": 0.598
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 73.0,
+      "projected": 64.0,
+      "model_over_prob": 0.359,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.713
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.564
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.148
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.5,
+      "model_over_prob": 0.382
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.201
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 83.0,
+      "projected": 72.2,
+      "model_over_prob": 0.333,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.688
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.536
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.378
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.238
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.133
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 4.9,
+      "model_over_prob": 0.366
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.266
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 33.0,
+      "model_over_prob": 0.452,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.699
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.548
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.248
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.139
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.496
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.343
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "market": "Receiving Yds",
+      "line": 27.0,
+      "projected": 25.4,
+      "model_over_prob": 0.474,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.731
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.586
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.427
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.279
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.162
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.496
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.201
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "market": "Passing Yds",
+      "line": 185.0,
+      "projected": 190.4,
+      "model_over_prob": 0.525,
+      "ladder": [
+        {
+          "line": 170.0,
+          "over_prob": 0.594
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.548
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.502
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.456
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.41
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.534
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.1,
+      "model_over_prob": 0.504
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "market": "Pass Attempts",
+      "line": 27.5,
+      "projected": 27.2,
+      "model_over_prob": 0.488
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "market": "Rushing Yds",
+      "line": 51.0,
+      "projected": 45.9,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.71
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.443
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.201
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "market": "Carries",
+      "line": 12.5,
+      "projected": 11.5,
+      "model_over_prob": 0.417
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.437
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 26.0,
+      "projected": 25.7,
+      "model_over_prob": 0.495,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.736
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.591
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.165
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.471
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "market": "Rushing Yds",
+      "line": 70.5,
+      "projected": 61.9,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.526
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.389
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.264
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.164
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "market": "Carries",
+      "line": 16.0,
+      "projected": 14.2,
+      "model_over_prob": 0.359
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.205
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 25.0,
+      "projected": 25.1,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.727
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.159
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.447
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 82.0,
+      "projected": 72.5,
+      "model_over_prob": 0.352,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.693
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.541
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.383
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.135
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 5.3,
+      "model_over_prob": 0.348
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.35
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 43.0,
+      "projected": 40.2,
+      "model_over_prob": 0.455,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.791
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.659
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.214
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.447
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.152
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 31.5,
+      "projected": 30.5,
+      "model_over_prob": 0.484,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.663
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.508
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.217
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.465
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.152
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.2,
+      "model_over_prob": 0.495,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.754
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.613
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.303
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.18
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.465
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.152
+    }
+  ],
+  "graded": false,
+  "actual": null
+}

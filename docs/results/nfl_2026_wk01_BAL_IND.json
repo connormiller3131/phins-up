@@ -1,0 +1,848 @@
+{
+  "season": 2026,
+  "week": 1,
+  "awayAbbr": "BAL",
+  "homeAbbr": "IND",
+  "awayName": "Baltimore Ravens",
+  "homeName": "Indianapolis Colts",
+  "gameday": "2026-09-13",
+  "predicted_at": "2026-07-18T22:49:34",
+  "elo_home_prob": 0.4667,
+  "market_home_prob": 0.3775,
+  "props_snapshot": [
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "market": "Passing Yds",
+      "line": 184.5,
+      "projected": 190.3,
+      "model_over_prob": 0.527,
+      "ladder": [
+        {
+          "line": 160.0,
+          "over_prob": 0.637
+        },
+        {
+          "line": 170.0,
+          "over_prob": 0.593
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.547
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.501
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.455
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.493
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "market": "Completions",
+      "line": 13.0,
+      "projected": 14.0,
+      "model_over_prob": 0.556
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "market": "Pass Attempts",
+      "line": 23.0,
+      "projected": 24.4,
+      "model_over_prob": 0.549
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "market": "Rushing Yds",
+      "line": 111.5,
+      "projected": 99.8,
+      "model_over_prob": 0.343,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.634
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.498
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 130.0,
+          "over_prob": 0.147
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "market": "Carries",
+      "line": 20.0,
+      "projected": 19.0,
+      "model_over_prob": 0.421
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.426
+    },
+    {
+      "section": "Receiving",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 14.1,
+      "model_over_prob": 0.533,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.406
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.261
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.486
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "market": "Rushing Yds",
+      "line": 12.5,
+      "projected": 17.1,
+      "model_over_prob": 0.564,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.598
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.46
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.327
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "market": "Carries",
+      "line": 1.5,
+      "projected": 2.9,
+      "model_over_prob": 0.611
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.199
+    },
+    {
+      "section": "Receiving",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 18.5,
+      "projected": 19.6,
+      "model_over_prob": 0.517,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.65
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.493
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.206
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.521
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 73.0,
+      "projected": 65.3,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.73
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.584
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.425
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.161
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.1,
+      "model_over_prob": 0.413
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.34
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 14.0,
+      "projected": 15.8,
+      "model_over_prob": 0.529,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.434
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.285
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.3,
+      "model_over_prob": 0.556
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.147
+    },
+    {
+      "section": "Receiving",
+      "player": "Devontez Walker",
+      "player_id": "00-0039792",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 18.3,
+      "model_over_prob": 0.521,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.631
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.473
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.32
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.192
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Devontez Walker",
+      "player_id": "00-0039792",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.486
+    },
+    {
+      "section": "Receiving",
+      "player": "Devontez Walker",
+      "player_id": "00-0039792",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.199
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "market": "Receiving Yds",
+      "line": 22.0,
+      "projected": 22.7,
+      "model_over_prob": 0.511,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.543
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.244
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.458
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.147
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "market": "Passing Yds",
+      "line": 226.5,
+      "projected": 222.0,
+      "model_over_prob": 0.479,
+      "ladder": [
+        {
+          "line": 210.0,
+          "over_prob": 0.556
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.463
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.417
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.373
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.479
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.504
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 29.3,
+      "model_over_prob": 0.512
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "market": "Rushing Yds",
+      "line": 86.0,
+      "projected": 73.4,
+      "model_over_prob": 0.331,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.548
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.41
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.282
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.178
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.102
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "market": "Carries",
+      "line": 21.0,
+      "projected": 18.8,
+      "model_over_prob": 0.326
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.334
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 20.0,
+      "projected": 20.7,
+      "model_over_prob": 0.511,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.666
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.511
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.354
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.219
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.465
+    },
+    {
+      "section": "Rushing",
+      "player": "DJ Giddens",
+      "player_id": "00-0040179",
+      "team": "IND",
+      "market": "Rushing Yds",
+      "line": 19.0,
+      "projected": 17.3,
+      "model_over_prob": 0.477,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.601
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.463
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.215
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "DJ Giddens",
+      "player_id": "00-0040179",
+      "team": "IND",
+      "market": "Carries",
+      "line": 5.0,
+      "projected": 5.0,
+      "model_over_prob": 0.504
+    },
+    {
+      "section": "Rushing",
+      "player": "DJ Giddens",
+      "player_id": "00-0040179",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.104
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Giddens",
+      "player_id": "00-0040179",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 0.0,
+      "projected": 4.0,
+      "model_over_prob": 0.564,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.261
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.149
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Giddens",
+      "player_id": "00-0040179",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 0.0,
+      "projected": 0.3,
+      "model_over_prob": 0.573
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 63.0,
+      "projected": 56.4,
+      "model_over_prob": 0.395,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.744
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.601
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.442
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.172
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.447
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.334
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 31.5,
+      "projected": 30.4,
+      "model_over_prob": 0.482,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.793
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.662
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.506
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.216
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.447
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.143
+    },
+    {
+      "section": "Receiving",
+      "player": "Ashton Dulin",
+      "player_id": "00-0035021",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 13.9,
+      "model_over_prob": 0.531,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.562
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.404
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.259
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Ashton Dulin",
+      "player_id": "00-0035021",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.8,
+      "model_over_prob": 0.556
+    },
+    {
+      "section": "Receiving",
+      "player": "Ashton Dulin",
+      "player_id": "00-0035021",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.104
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 35.2,
+      "model_over_prob": 0.463,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.729
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.583
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.424
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.276
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.16
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.483
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.143
+    }
+  ],
+  "graded": false,
+  "actual": null
+}

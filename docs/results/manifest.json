@@ -1,0 +1,20 @@
+{
+  "files": [
+    "nfl_2026_wk01_ARI_LAC.json",
+    "nfl_2026_wk01_ATL_PIT.json",
+    "nfl_2026_wk01_BAL_IND.json",
+    "nfl_2026_wk01_BUF_HOU.json",
+    "nfl_2026_wk01_CHI_CAR.json",
+    "nfl_2026_wk01_CLE_JAX.json",
+    "nfl_2026_wk01_DAL_NYG.json",
+    "nfl_2026_wk01_DEN_KC.json",
+    "nfl_2026_wk01_GB_MIN.json",
+    "nfl_2026_wk01_MIA_LV.json",
+    "nfl_2026_wk01_NE_SEA.json",
+    "nfl_2026_wk01_NO_DET.json",
+    "nfl_2026_wk01_NYJ_TEN.json",
+    "nfl_2026_wk01_SF_LA.json",
+    "nfl_2026_wk01_TB_CIN.json",
+    "nfl_2026_wk01_WAS_PHI.json"
+  ]
+}

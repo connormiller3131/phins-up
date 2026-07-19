@@ -1,0 +1,796 @@
+{
+  "season": 2026,
+  "week": 1,
+  "awayAbbr": "SF",
+  "homeAbbr": "LA",
+  "awayName": "San Francisco 49ers",
+  "homeName": "Los Angeles Rams",
+  "gameday": "2026-09-10",
+  "predicted_at": "2026-07-18T22:49:34",
+  "elo_home_prob": 0.5709,
+  "market_home_prob": 0.6092,
+  "props_snapshot": [
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "market": "Passing Yds",
+      "line": 223.0,
+      "projected": 229.8,
+      "model_over_prob": 0.531,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.635
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.591
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.545
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.499
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.453
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.414
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.2,
+      "model_over_prob": 0.485
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "market": "Pass Attempts",
+      "line": 30.5,
+      "projected": 30.6,
+      "model_over_prob": 0.505
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "market": "Rushing Yds",
+      "line": 72.0,
+      "projected": 65.6,
+      "model_over_prob": 0.412,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.706
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.577
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.439
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.308
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.198
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "market": "Carries",
+      "line": 18.0,
+      "projected": 16.6,
+      "model_over_prob": 0.386
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.563
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 36.7,
+      "model_over_prob": 0.496,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.749
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.606
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.448
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.297
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.175
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.5,
+      "model_over_prob": 0.398
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 44.1,
+      "model_over_prob": 0.47,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.715
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.566
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.407
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.262
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.15
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.6,
+      "model_over_prob": 0.409
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.3
+    },
+    {
+      "section": "Receiving",
+      "player": "Ricky Pearsall",
+      "player_id": "00-0039916",
+      "team": "SF",
+      "market": "Receiving Yds",
+      "line": 45.5,
+      "projected": 43.7,
+      "model_over_prob": 0.471,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.709
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.559
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.257
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.146
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Ricky Pearsall",
+      "player_id": "00-0039916",
+      "team": "SF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.472
+    },
+    {
+      "section": "Receiving",
+      "player": "Ricky Pearsall",
+      "player_id": "00-0039916",
+      "team": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.125
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Kirk",
+      "player_id": "00-0034775",
+      "team": "SF",
+      "market": "Receiving Yds",
+      "line": 33.0,
+      "projected": 33.4,
+      "model_over_prob": 0.506,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.826
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.704
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.554
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.395
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.253
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Kirk",
+      "player_id": "00-0034775",
+      "team": "SF",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.466
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Kirk",
+      "player_id": "00-0034775",
+      "team": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.3
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "market": "Receiving Yds",
+      "line": 67.0,
+      "projected": 61.5,
+      "model_over_prob": 0.412,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.677
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.523
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.366
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.228
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.126
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 5.3,
+      "model_over_prob": 0.344
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.382
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "market": "Passing Yds",
+      "line": 321.0,
+      "projected": 288.8,
+      "model_over_prob": 0.354,
+      "ladder": [
+        {
+          "line": 300.0,
+          "over_prob": 0.448
+        },
+        {
+          "line": 310.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 320.0,
+          "over_prob": 0.358
+        },
+        {
+          "line": 330.0,
+          "over_prob": 0.316
+        },
+        {
+          "line": 340.0,
+          "over_prob": 0.276
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "market": "Passing TDs",
+      "line": 2.5,
+      "projected": 2.1,
+      "model_over_prob": 0.358
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "market": "Completions",
+      "line": 23.5,
+      "projected": 21.8,
+      "model_over_prob": 0.409
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "market": "Pass Attempts",
+      "line": 39.5,
+      "projected": 36.0,
+      "model_over_prob": 0.374
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "market": "Rushing Yds",
+      "line": 71.0,
+      "projected": 66.9,
+      "model_over_prob": 0.443,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.721
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.595
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.457
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.211
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "market": "Carries",
+      "line": 15.0,
+      "projected": 14.1,
+      "model_over_prob": 0.427
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.45
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 21.0,
+      "projected": 21.4,
+      "model_over_prob": 0.507,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.677
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.523
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.366
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.228
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.487
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "market": "Rushing Yds",
+      "line": 55.5,
+      "projected": 53.9,
+      "model_over_prob": 0.478,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.554
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.416
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.288
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.182
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 9.9,
+      "model_over_prob": 0.492
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.283
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 10.6,
+      "model_over_prob": 0.541,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.353
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.218
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.539
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 128.5,
+      "projected": 111.3,
+      "model_over_prob": 0.245,
+      "ladder": [
+        {
+          "line": 110.0,
+          "over_prob": 0.52
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 130.0,
+          "over_prob": 0.226
+        },
+        {
+          "line": 140.0,
+          "over_prob": 0.125
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.06
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 8.5,
+      "projected": 7.4,
+      "model_over_prob": 0.272
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.541
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 51.0,
+      "projected": 46.4,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.744
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.601
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.442
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.172
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.476
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.362
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 7.5,
+      "projected": 10.2,
+      "model_over_prob": 0.543,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.213
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.8,
+      "model_over_prob": 0.556
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.116
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 42.5,
+      "model_over_prob": 0.444,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.692
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.54
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.382
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.135
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.453
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.362
+    }
+  ],
+  "graded": false,
+  "actual": null
+}

@@ -34,6 +34,7 @@ from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from scipy.stats import norm
 
 DATA_DIR = ROOT / "data" / "nfl"
+RESULTS_DIR = ROOT / "docs" / "results"
 
 
 def detect_target_week():
@@ -245,16 +246,17 @@ def project_td(prep, player_id, opp_team, env):
     return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
 
 
-def _prop_entry(section, market, team, r, ladder=False):
-    e = {"section": section, "player": r["player_display_name"], "team": team, "market": market,
-         "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]}
+def _prop_entry(section, market, team, player_id, r, ladder=False):
+    e = {"section": section, "player": r["player_display_name"], "player_id": player_id, "team": team,
+         "market": market, "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]}
     if ladder and r.get("ladder"):
         e["ladder"] = r["ladder"]
     return e
 
 
-def _td_entry(section, team, player_name, t):
-    return {"section": section, "player": player_name, "team": team, "market": "Anytime TD", "model_prob": t["model_prob"]}
+def _td_entry(section, team, player_id, player_name, t):
+    return {"section": section, "player": player_name, "player_id": player_id, "team": team,
+            "market": "Anytime TD", "model_prob": t["model_prob"]}
 
 
 def build_props_for_team(team, opp_team, starters, env, models):
@@ -264,45 +266,45 @@ def build_props_for_team(team, opp_team, starters, env, models):
     for qb_id in picks.get("QB", []):
         r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append(_prop_entry("Passing", "Passing Yds", team, r, ladder=True))
+            entries.append(_prop_entry("Passing", "Passing Yds", team, qb_id, r, ladder=True))
         rt = project_count(models["passing_tds"], qb_id, opp_team, env)
         if rt:
-            entries.append(_prop_entry("Passing", "Passing TDs", team, rt))
+            entries.append(_prop_entry("Passing", "Passing TDs", team, qb_id, rt))
         rc = project_count(models["completions"], qb_id, opp_team, env)
         if rc:
-            entries.append(_prop_entry("Passing", "Completions", team, rc))
+            entries.append(_prop_entry("Passing", "Completions", team, qb_id, rc))
         ra = project_count(models["attempts"], qb_id, opp_team, env)
         if ra:
-            entries.append(_prop_entry("Passing", "Pass Attempts", team, ra))
+            entries.append(_prop_entry("Passing", "Pass Attempts", team, qb_id, ra))
 
     for rb_id in picks.get("RB", []):
         r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append(_prop_entry("Rushing", "Rushing Yds", team, r, ladder=True))
+            entries.append(_prop_entry("Rushing", "Rushing Yds", team, rb_id, r, ladder=True))
         rc = project_count(models["carries"], rb_id, opp_team, env)
         if rc:
-            entries.append(_prop_entry("Rushing", "Carries", team, rc))
+            entries.append(_prop_entry("Rushing", "Carries", team, rb_id, rc))
         t = project_td(models["td"], rb_id, opp_team, env)
         if t and r:
-            entries.append(_td_entry("Rushing", team, r["player_display_name"], t))
+            entries.append(_td_entry("Rushing", team, rb_id, r["player_display_name"], t))
         rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True)
         if rr:
-            entries.append(_prop_entry("Receiving", "Receiving Yds", team, rr, ladder=True))
+            entries.append(_prop_entry("Receiving", "Receiving Yds", team, rb_id, rr, ladder=True))
         rec = project_count(models["receptions"], rb_id, opp_team, env)
         if rec:
-            entries.append(_prop_entry("Receiving", "Receptions", team, rec))
+            entries.append(_prop_entry("Receiving", "Receptions", team, rb_id, rec))
 
     for wrte_pos in ("WR", "TE"):
         for pid in picks.get(wrte_pos, []):
             r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True)
             if r:
-                entries.append(_prop_entry("Receiving", "Receiving Yds", team, r, ladder=True))
+                entries.append(_prop_entry("Receiving", "Receiving Yds", team, pid, r, ladder=True))
             rec = project_count(models["receptions"], pid, opp_team, env)
             if rec:
-                entries.append(_prop_entry("Receiving", "Receptions", team, rec))
+                entries.append(_prop_entry("Receiving", "Receptions", team, pid, rec))
             t = project_td(models["td"], pid, opp_team, env)
             if t and r:
-                entries.append(_td_entry("Receiving", team, r["player_display_name"], t))
+                entries.append(_td_entry("Receiving", team, pid, r["player_display_name"], t))
 
     return entries
 
@@ -317,6 +319,44 @@ def build_env(row, temp_fill, wind_fill, own_rest):
     temp = 70.0 if is_dome else (temp_fill if pd.isna(row.temp) else float(row.temp))
     wind = 0.0 if is_dome else (wind_fill if pd.isna(row.wind) else float(row.wind))
     return {"is_dome": is_dome, "temp": temp, "wind": wind, "own_rest": float(own_rest)}
+
+
+def snapshot_path(season, week, away, home):
+    return RESULTS_DIR / f"nfl_{season}_wk{week:02d}_{away}_{home}.json"
+
+
+def write_prediction_snapshot(season, week, game):
+    """Freezes this game's pregame prediction (win probs + full props array)
+    the first time it's generated. Never overwritten on later runs, so it
+    stays the model's true pregame call even as later refreshes update
+    depth charts/trailing stats -- grade_results.py fills in the actual
+    outcome once the game is in the books."""
+    path = snapshot_path(season, week, game["awayAbbr"], game["homeAbbr"])
+    if path.exists():
+        return
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    snapshot = {
+        "season": season, "week": week,
+        "awayAbbr": game["awayAbbr"], "homeAbbr": game["homeAbbr"],
+        "awayName": game["awayName"], "homeName": game["homeName"],
+        "gameday": game["gameday"],
+        "predicted_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "elo_home_prob": game["elo_home_prob"],
+        "market_home_prob": game["market_home_prob"],
+        "props_snapshot": game["props"],
+        "graded": False,
+        "actual": None,
+    }
+    with open(path, "w") as f:
+        json.dump(snapshot, f, indent=2)
+
+
+def rebuild_results_manifest():
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    files = sorted(p.name for p in RESULTS_DIR.glob("nfl_*.json") if p.name != "manifest.json")
+    with open(RESULTS_DIR / "manifest.json", "w") as f:
+        json.dump({"files": files}, f, indent=2)
+    return len(files)
 
 
 def main():
@@ -406,6 +446,7 @@ def main():
                 "roof": row.roof if pd.notna(row.roof) else None,
                 "away_rest": int(row.away_rest) if pd.notna(row.away_rest) else None,
                 "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,
+                "already_played": bool(already_played),
                 "props": props,
             })
 
@@ -418,9 +459,22 @@ def main():
             except Exception as e:
                 print(f"  week {week}: TD odds attach failed, continuing without them: {e}", flush=True)
 
+        # Snapshot only the current week: freezing every future week's props
+        # this far ahead would lock in a July depth chart for a December
+        # game, which will be badly stale by the time it's actually played.
+        # Each week gets snapshotted exactly once, right before it happens,
+        # as current_week advances.
+        if week == current_week:
+            for g in games_out:
+                if not g["already_played"]:
+                    write_prediction_snapshot(target_season, week, g)
+
         weeks_out[str(week)] = {"games": games_out}
         print(f"  week {week}: {len(games_out)} games, "
               f"{sum(1 for g in games_out if g['market_home_prob'] is not None)} with market odds", flush=True)
+
+    n_snapshots = rebuild_results_manifest()
+    print(f"Results manifest: {n_snapshots} prediction snapshots on disk.", flush=True)
 
     payload = {
         "season": target_season, "current_week": current_week,

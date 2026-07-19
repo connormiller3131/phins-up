@@ -1,0 +1,864 @@
+{
+  "season": 2026,
+  "week": 1,
+  "awayAbbr": "BUF",
+  "homeAbbr": "HOU",
+  "awayName": "Buffalo Bills",
+  "homeName": "Houston Texans",
+  "gameday": "2026-09-13",
+  "predicted_at": "2026-07-18T22:49:34",
+  "elo_home_prob": 0.5472,
+  "market_home_prob": 0.4957,
+  "props_snapshot": [
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "market": "Passing Yds",
+      "line": 221.0,
+      "projected": 204.6,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.521
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.475
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.429
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.384
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.341
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.438
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "market": "Completions",
+      "line": 21.0,
+      "projected": 19.2,
+      "model_over_prob": 0.405
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "market": "Pass Attempts",
+      "line": 30.0,
+      "projected": 28.8,
+      "model_over_prob": 0.458
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "market": "Rushing Yds",
+      "line": 87.5,
+      "projected": 75.8,
+      "model_over_prob": 0.342,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.442
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.2
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.117
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "market": "Carries",
+      "line": 18.5,
+      "projected": 17.3,
+      "model_over_prob": 0.404
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.199
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 14.5,
+      "projected": 15.1,
+      "model_over_prob": 0.509,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.275
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.523
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "market": "Rushing Yds",
+      "line": 29.0,
+      "projected": 26.7,
+      "model_over_prob": 0.469,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.72
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.593
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.209
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "market": "Carries",
+      "line": 4.0,
+      "projected": 4.6,
+      "model_over_prob": 0.549
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.147
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 12.5,
+      "projected": 13.4,
+      "model_over_prob": 0.515,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.554
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.396
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.253
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.516
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 39.0,
+      "projected": 35.5,
+      "model_over_prob": 0.445,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.733
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.588
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.429
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.163
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.471
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.34
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 46.9,
+      "model_over_prob": 0.403,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.751
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.609
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.451
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.3
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.177
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.0,
+      "model_over_prob": 0.387
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.147
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Palmer",
+      "player_id": "00-0036988",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 20.5,
+      "projected": 20.1,
+      "model_over_prob": 0.493,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.657
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.501
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.212
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Palmer",
+      "player_id": "00-0036988",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.499
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Palmer",
+      "player_id": "00-0036988",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.106
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "market": "Receiving Yds",
+      "line": 46.5,
+      "projected": 41.7,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.68
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.527
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.231
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.128
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.1,
+      "model_over_prob": 0.408
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.34
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "market": "Passing Yds",
+      "line": 225.0,
+      "projected": 199.3,
+      "model_over_prob": 0.383,
+      "ladder": [
+        {
+          "line": 210.0,
+          "over_prob": 0.451
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.361
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.278
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.59
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 17.5,
+      "model_over_prob": 0.416
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "market": "Pass Attempts",
+      "line": 32.5,
+      "projected": 30.2,
+      "model_over_prob": 0.419
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "market": "Rushing Yds",
+      "line": 31.0,
+      "projected": 30.3,
+      "model_over_prob": 0.49,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.759
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.639
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.504
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.246
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 6.3,
+      "model_over_prob": 0.447
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.26
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 11.0,
+      "projected": 10.9,
+      "model_over_prob": 0.498,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.514
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.222
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.554
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "market": "Rushing Yds",
+      "line": 60.5,
+      "projected": 54.7,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.696
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.427
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.298
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.19
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "market": "Carries",
+      "line": 16.0,
+      "projected": 14.7,
+      "model_over_prob": 0.399
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.196
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 5.8,
+      "model_over_prob": 0.52,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.433
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.166
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.554
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 73.5,
+      "projected": 63.3,
+      "model_over_prob": 0.341,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.703
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.552
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.393
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.251
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.142
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.451
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.26
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Higgins",
+      "player_id": "00-0040130",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 41.0,
+      "projected": 36.2,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.743
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.599
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.44
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.17
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Higgins",
+      "player_id": "00-0040130",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.6,
+      "model_over_prob": 0.416
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Higgins",
+      "player_id": "00-0040130",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.196
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 10.0,
+      "projected": 10.2,
+      "model_over_prob": 0.502,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.502
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.213
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.461
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.145
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "market": "Receiving Yds",
+      "line": 42.5,
+      "projected": 37.3,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.756
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.615
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.457
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.305
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.181
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 3.9,
+      "model_over_prob": 0.366
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.196
+    }
+  ],
+  "graded": false,
+  "actual": null
+}

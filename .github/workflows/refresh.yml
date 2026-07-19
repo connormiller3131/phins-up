@@ -30,6 +30,15 @@ jobs:
       - name: Pull latest NFL data
         run: python pipeline/nfl/pull_data.py
 
+      # Grades any prediction snapshot (docs/results/nfl_*.json) whose game
+      # has now been played, using the schedules/player_stats data just
+      # pulled above. Must run before the generator below writes this
+      # week's fresh snapshots, so a game that both completed AND is still
+      # "current week" (shouldn't normally happen, but just in case) gets
+      # graded before being treated as a new pregame snapshot.
+      - name: Grade completed-game prediction snapshots
+        run: python pipeline/nfl/grade_results.py
+
       - name: Fit/backtest NFL win-probability model
         run: python pipeline/nfl/backtest_win_prob.py
 
@@ -70,6 +79,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html
+          git add docs/index.html docs/results/
           git diff --quiet --cached || git commit -m "Auto-refresh NFL + MLB projections"
           git push

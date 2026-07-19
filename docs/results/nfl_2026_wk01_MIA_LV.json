@@ -1,0 +1,784 @@
+{
+  "season": 2026,
+  "week": 1,
+  "awayAbbr": "MIA",
+  "homeAbbr": "LV",
+  "awayName": "Miami Dolphins",
+  "homeName": "Las Vegas Raiders",
+  "gameday": "2026-09-13",
+  "predicted_at": "2026-07-18T22:49:34",
+  "elo_home_prob": 0.421,
+  "market_home_prob": 0.6038,
+  "props_snapshot": [
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "market": "Passing Yds",
+      "line": 106.0,
+      "projected": 124.6,
+      "model_over_prob": 0.585,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.656
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.612
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.521
+        },
+        {
+          "line": 130.0,
+          "over_prob": 0.475
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "market": "Passing TDs",
+      "line": 0.5,
+      "projected": 0.9,
+      "model_over_prob": 0.653
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "market": "Completions",
+      "line": 7.0,
+      "projected": 9.7,
+      "model_over_prob": 0.641
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "market": "Pass Attempts",
+      "line": 9.0,
+      "projected": 13.0,
+      "model_over_prob": 0.642
+    },
+    {
+      "section": "Rushing",
+      "player": "De'Von Achane",
+      "player_id": "00-0039040",
+      "team": "MIA",
+      "market": "Rushing Yds",
+      "line": 101.5,
+      "projected": 92.3,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 80.0,
+          "over_prob": 0.666
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.532
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.395
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.269
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.168
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "De'Von Achane",
+      "player_id": "00-0039040",
+      "team": "MIA",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.0,
+      "model_over_prob": 0.458
+    },
+    {
+      "section": "Rushing",
+      "player": "De'Von Achane",
+      "player_id": "00-0039040",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.372
+    },
+    {
+      "section": "Receiving",
+      "player": "De'Von Achane",
+      "player_id": "00-0039040",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 31.5,
+      "projected": 30.4,
+      "model_over_prob": 0.483,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.794
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.662
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.216
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "De'Von Achane",
+      "player_id": "00-0039040",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.5,
+      "model_over_prob": 0.395
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "market": "Rushing Yds",
+      "line": 32.5,
+      "projected": 34.7,
+      "model_over_prob": 0.53,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.805
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.427
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.297
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "market": "Carries",
+      "line": 7.5,
+      "projected": 8.3,
+      "model_over_prob": 0.561
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.222
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 8.6,
+      "model_over_prob": 0.55,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.478
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.196
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.8,
+      "model_over_prob": 0.561
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 18.0,
+      "model_over_prob": 0.516,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.626
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.468
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.315
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.189
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.3,
+      "model_over_prob": 0.556
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.291
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Tolbert",
+      "player_id": "00-0037666",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 13.0,
+      "projected": 14.7,
+      "model_over_prob": 0.527,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.574
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.415
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.269
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Tolbert",
+      "player_id": "00-0037666",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.544
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Tolbert",
+      "player_id": "00-0037666",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.165
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 24.0,
+      "projected": 24.1,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.714
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.406
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.261
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.497
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.165
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 33.9,
+      "model_over_prob": 0.466,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.711
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.562
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.147
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.516
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.165
+    },
+    {
+      "section": "Passing",
+      "player": "Kirk Cousins",
+      "player_id": "00-0029604",
+      "team": "LV",
+      "market": "Passing Yds",
+      "line": 190.0,
+      "projected": 201.7,
+      "model_over_prob": 0.554,
+      "ladder": [
+        {
+          "line": 170.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.6
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.554
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.508
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.462
+        }
+      ]
+    },
+    {
+      "section": "Passing",
+      "player": "Kirk Cousins",
+      "player_id": "00-0029604",
+      "team": "LV",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.4,
+      "model_over_prob": 0.625
+    },
+    {
+      "section": "Passing",
+      "player": "Kirk Cousins",
+      "player_id": "00-0029604",
+      "team": "LV",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 18.4,
+      "model_over_prob": 0.551
+    },
+    {
+      "section": "Passing",
+      "player": "Kirk Cousins",
+      "player_id": "00-0029604",
+      "team": "LV",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 28.9,
+      "model_over_prob": 0.497
+    },
+    {
+      "section": "Rushing",
+      "player": "Ashton Jeanty",
+      "player_id": "00-0040122",
+      "team": "LV",
+      "market": "Rushing Yds",
+      "line": 53.5,
+      "projected": 50.0,
+      "model_over_prob": 0.451,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.756
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.635
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.499
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.243
+        }
+      ]
+    },
+    {
+      "section": "Rushing",
+      "player": "Ashton Jeanty",
+      "player_id": "00-0040122",
+      "team": "LV",
+      "market": "Carries",
+      "line": 15.5,
+      "projected": 14.3,
+      "model_over_prob": 0.4
+    },
+    {
+      "section": "Rushing",
+      "player": "Ashton Jeanty",
+      "player_id": "00-0040122",
+      "team": "LV",
+      "market": "Anytime TD",
+      "model_prob": 0.222
+    },
+    {
+      "section": "Receiving",
+      "player": "Ashton Jeanty",
+      "player_id": "00-0040122",
+      "team": "LV",
+      "market": "Receiving Yds",
+      "line": 26.0,
+      "projected": 27.2,
+      "model_over_prob": 0.52,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.755
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.614
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.456
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.181
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Ashton Jeanty",
+      "player_id": "00-0040122",
+      "team": "LV",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.462
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Tucker",
+      "player_id": "00-0038563",
+      "team": "LV",
+      "market": "Receiving Yds",
+      "line": 30.0,
+      "projected": 30.5,
+      "model_over_prob": 0.507,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.794
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.663
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.351
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.217
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Tucker",
+      "player_id": "00-0038563",
+      "team": "LV",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.472
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Tucker",
+      "player_id": "00-0038563",
+      "team": "LV",
+      "market": "Anytime TD",
+      "model_prob": 0.165
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Nailor",
+      "player_id": "00-0037291",
+      "team": "LV",
+      "market": "Receiving Yds",
+      "line": 18.0,
+      "projected": 20.1,
+      "model_over_prob": 0.534,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.658
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.502
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.213
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Nailor",
+      "player_id": "00-0037291",
+      "team": "LV",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.5,
+      "model_over_prob": 0.61
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Nailor",
+      "player_id": "00-0037291",
+      "team": "LV",
+      "market": "Anytime TD",
+      "model_prob": 0.165
+    },
+    {
+      "section": "Receiving",
+      "player": "Jack Bech",
+      "player_id": "00-0040729",
+      "team": "LV",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 21.1,
+      "model_over_prob": 0.533,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.672
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.224
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Jack Bech",
+      "player_id": "00-0040729",
+      "team": "LV",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.8,
+      "model_over_prob": 0.57
+    },
+    {
+      "section": "Receiving",
+      "player": "Jack Bech",
+      "player_id": "00-0040729",
+      "team": "LV",
+      "market": "Anytime TD",
+      "model_prob": 0.121
+    },
+    {
+      "section": "Receiving",
+      "player": "Brock Bowers",
+      "player_id": "00-0039338",
+      "team": "LV",
+      "market": "Receiving Yds",
+      "line": 57.0,
+      "projected": 52.8,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.696
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.545
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.386
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.138
+        }
+      ]
+    },
+    {
+      "section": "Receiving",
+      "player": "Brock Bowers",
+      "player_id": "00-0039338",
+      "team": "LV",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.2,
+      "model_over_prob": 0.434
+    },
+    {
+      "section": "Receiving",
+      "player": "Brock Bowers",
+      "player_id": "00-0039338",
+      "team": "LV",
+      "market": "Anytime TD",
+      "model_prob": 0.372
+    }
+  ],
+  "graded": false,
+  "actual": null
+}

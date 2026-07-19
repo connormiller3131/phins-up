@@ -195,6 +195,57 @@
     color:var(--text-dim);
     font-style:italic;
   }
+  .matchup{cursor:pointer;}
+  .matchup .expand-hint{
+    font-family:var(--mono);
+    font-size:9.5px;
+    font-weight:400;
+    color:var(--text-dim);
+    text-transform:none;
+    letter-spacing:0;
+    margin-left:8px;
+    vertical-align:middle;
+    opacity:0;
+    transition:opacity .15s;
+  }
+  .matchup:hover .expand-hint{opacity:1;}
+  .final-badge{
+    display:inline-block;
+    margin-left:8px;
+    color:var(--text);
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1px 5px;
+    font-weight:700;
+    letter-spacing:.04em;
+  }
+  .back-to-games{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--blue);
+    cursor:pointer;
+    margin-bottom:12px;
+    display:inline-block;
+  }
+  #games.focus-mode .game{display:none;}
+  #games.focus-mode .game.focused{display:block;}
+  .result-box{margin-top:10px;}
+  .result-box:empty{margin-top:0;}
+  .result-summary{
+    font-family:var(--mono);
+    font-size:12px;
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    margin-top:10px;
+  }
+  .result-summary .pick{font-weight:600;}
+  .result-summary .pick.correct{color:var(--green);}
+  .result-summary .pick.wrong{color:var(--red);}
+  .prop-hit{color:var(--green);font-weight:600;}
+  .prop-miss{color:var(--red);font-weight:600;}
   .hold-track{
     width:120px;height:5px;border-radius:3px;background:var(--line);
     margin-top:5px;overflow:hidden;
@@ -652,15 +703,17 @@ function renderGames(week){
     const hasCurrent = pHomeCurrent !== null && pHomeCurrent !== undefined;
     const valueTag = `<span class="value-tag" title="Model win % beats this side's pregame fair %">GOOD VALUE</span>`;
 
+    card.dataset.gameIdx = idx;
     card.innerHTML = `
       <div class="game-top">
         <div>
-          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}</div>
-          <div class="kickoff">${fmtKickoffLine(g)}</div>
+          <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus(${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">click to focus</span></div>
+          <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
           <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}</div>
         </div>
       </div>
       ${!hasOdds ? '<div class="no-odds-note">No market line posted yet for this game -- showing model projection only.</div>' : ''}
+      <div class="result-box" id="result-box-${idx}"></div>
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -701,6 +754,7 @@ function renderGames(week){
       ${propsTable(g.props)}
     `;
     root.appendChild(card);
+    if(g.already_played) loadGameResult(DATA.season, selectedWeek, g, idx);
 
     ["away","home"].forEach(side=>{
       const input = card.querySelector(`input[data-side="${side}"]`);
@@ -722,6 +776,59 @@ function renderGames(week){
   document.getElementById("foot").innerHTML =
     `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
     `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. Yardage props show a ladder of lines in steps of 10 around the player's trailing average. There is no free source of real historical player-prop odds, so those lines are projections, not market lines -- the exception is Anytime TD, which pulls a real DraftKings price for the current week only (per-event odds pulls cost API credits, and books don't post props for future weeks yet anyway). <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against that real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+}
+
+function toggleGameFocus(idx){
+  const root = document.getElementById("games");
+  const card = root.querySelector(`.game[data-game-idx="${idx}"]`);
+  if(!card) return;
+  const alreadyFocused = card.classList.contains("focused");
+  root.querySelectorAll(".game").forEach(c => c.classList.remove("focused"));
+  root.classList.remove("focus-mode");
+  const existingBack = document.getElementById("back-to-games");
+  if(existingBack) existingBack.remove();
+  if(alreadyFocused) return; // clicking the same game again un-focuses
+
+  card.classList.add("focused");
+  root.classList.add("focus-mode");
+  const back = document.createElement("div");
+  back.id = "back-to-games";
+  back.className = "back-to-games";
+  back.textContent = "← Back to all games";
+  back.onclick = () => toggleGameFocus(idx);
+  root.parentNode.insertBefore(back, root);
+  card.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+async function loadGameResult(season, week, g, idx){
+  const el = document.getElementById(`result-box-${idx}`);
+  if(!el) return;
+  const fname = `nfl_${season}_wk${String(week).padStart(2,'0')}_${g.awayAbbr}_${g.homeAbbr}.json`;
+  let snap;
+  try{
+    const r = await fetch(`results/${fname}`);
+    if(!r.ok) return; // no snapshot for this game (wasn't the current week when it was played)
+    snap = await r.json();
+  }catch(e){ return; }
+  if(!snap.graded || !snap.actual) return;
+
+  const a = snap.actual;
+  const modelCls = a.model_correct ? "correct" : "wrong";
+  const marketHtml = a.market_pick
+    ? ` &middot; Market picked <span class="pick ${a.market_correct?'correct':'wrong'}">${a.market_pick}</span> (${a.market_correct?'correct':'wrong'})`
+    : "";
+  const propRows = (snap.props_graded||[]).filter(p => p.hit !== null && p.hit !== undefined).map(p => {
+    const val = p.market === "Anytime TD" ? (p.actual_scored ? "scored" : "no TD") : p.actual_value;
+    return `<div class="prop-stat-row"><span class="prop-stat-label">${p.player} — ${p.market}</span><span class="${p.hit?'prop-hit':'prop-miss'}">${p.hit?'HIT':'MISS'}</span><span class="p-exp">actual: ${val}</span></div>`;
+  }).join("");
+
+  el.innerHTML = `
+    <div class="result-summary">
+      <b>FINAL: ${g.awayAbbr} ${a.away_score} — ${a.home_score} ${g.homeAbbr}</b><br>
+      Model picked <span class="pick ${modelCls}">${a.model_pick}</span> (${a.model_correct?'correct':'wrong'})${marketHtml}
+      ${propRows ? `<div style="margin-top:8px;">${propRows}</div>` : ""}
+    </div>
+  `;
 }
 
 renderGames();

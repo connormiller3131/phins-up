@@ -154,6 +154,9 @@
     border-top:1px dashed var(--line);
   }
   .parlay-empty{margin-bottom:18px;}
+  .parlay-hr{border-color:var(--amber);}
+  .parlay-hr .parlay-title{color:var(--amber);}
+  .parlay-hr .parlay-leg-edge{color:var(--amber);}
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -251,18 +254,22 @@
   }
   .matchup{cursor:pointer;}
   .matchup .expand-hint{
+    display:inline-block;
     font-family:var(--mono);
     font-size:9.5px;
-    font-weight:400;
+    font-weight:600;
     color:var(--text-dim);
     text-transform:none;
     letter-spacing:0;
     margin-left:8px;
     vertical-align:middle;
-    opacity:0;
-    transition:opacity .15s;
+    padding:3px 8px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:var(--panel-alt);
+    transition:color .15s,border-color .15s;
   }
-  .matchup:hover .expand-hint{opacity:1;}
+  .matchup:hover .expand-hint{color:var(--green);border-color:var(--green);}
   .final-badge{
     display:inline-block;
     margin-left:8px;
@@ -282,8 +289,8 @@
     margin-bottom:12px;
     display:inline-block;
   }
-  #games.focus-mode .game{display:none;}
-  #games.focus-mode .game.focused{display:block;}
+  #games.focus-mode .game, #mlb-games.focus-mode .game{display:none;}
+  #games.focus-mode .game.focused, #mlb-games.focus-mode .game.focused{display:block;}
   .result-box{margin-top:10px;}
   .result-box:empty{margin-top:0;}
   .result-summary{
@@ -785,6 +792,28 @@ function fmtKickoffLine(g){
 // an actual market number to compare against are eligible; pure model
 // projections (no market line) can't have a known edge, so they're excluded
 // rather than guessed at.
+//
+// Moneylines tend to have real odds far more often than props do (props
+// need per-event pulls we can only afford for a handful of games), so a
+// pure top-4-by-edge ranking tends to fill up with moneylines alone. Cap
+// moneylines at 2 of the 4 slots so props get a real shot at the parlay
+// whenever any qualify, instead of being crowded out just because
+// moneyline edges are more plentiful.
+function selectMixedLegs(allLegs, maxMoneylines=2, total=4){
+  const moneylines = allLegs.filter(l => l.market === 'Moneyline').sort((a,b) => b.edge - a.edge);
+  const others = allLegs.filter(l => l.market !== 'Moneyline').sort((a,b) => b.edge - a.edge);
+  const picked = moneylines.slice(0, maxMoneylines);
+  for(const l of others){
+    if(picked.length >= total) break;
+    picked.push(l);
+  }
+  for(const l of moneylines.slice(maxMoneylines)){
+    if(picked.length >= total) break;
+    picked.push(l);
+  }
+  return picked.sort((a,b) => b.edge - a.edge);
+}
+
 function collectNflParlayLegs(games){
   const legs = [];
   games.forEach(g => {
@@ -800,12 +829,16 @@ function collectNflParlayLegs(games){
       if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
     });
   });
-  return legs.sort((a,b) => b.edge - a.edge).slice(0, 4);
+  return selectMixedLegs(legs);
 }
 
-function parlayCardHtml(legs, sport){
+function parlayCardHtml(legs, sport, opts){
+  opts = opts || {};
+  const title = opts.title || 'SUGGESTED PARLAY';
+  const accentClass = opts.accentClass || '';
+  const note = opts.note || `model's highest-edge picks vs. real market prices, not just the most likely to win -- ${legs.length} of 4 legs have real odds to compare against`;
   if(!legs.length){
-    return `<div class="placeholder parlay-empty">No real market lines to compare against yet for ${sport} -- suggested parlay needs at least one leg with a real price behind it (not just a model projection). Check back once DraftKings has posted more.</div>`;
+    return `<div class="placeholder parlay-empty">${opts.emptyText || `No real market lines to compare against yet for ${sport} -- suggested parlay needs at least one leg with a real price behind it (not just a model projection). Check back once DraftKings has posted more.`}</div>`;
   }
   const combinedProb = legs.reduce((p, l) => p * l.prob, 1);
   const rows = legs.map(l => `
@@ -817,8 +850,8 @@ function parlayCardHtml(legs, sport){
     </div>
   `).join("");
   return `
-    <div class="parlay-card">
-      <div class="parlay-title">SUGGESTED PARLAY <span class="props-sample-tag">(model's highest-edge picks vs. real market prices, not just the most likely to win -- ${legs.length} of 4 legs have real odds to compare against)</span></div>
+    <div class="parlay-card ${accentClass}">
+      <div class="parlay-title">${title} <span class="props-sample-tag">(${note})</span></div>
       ${rows}
       <div class="parlay-combined">Combined probability (assuming independence, which overstates it in practice): <b>${pct(combinedProb)}</b></div>
       <div class="p-exp" style="margin-top:4px;">Not betting advice -- ranked by the model's own edge estimate, which can be wrong.</div>
@@ -860,7 +893,7 @@ function renderGames(week){
     card.innerHTML = `
       <div class="game-top">
         <div>
-          <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus(${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">click to focus</span></div>
+          <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
           <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}</div>
         </div>
@@ -931,24 +964,25 @@ function renderGames(week){
     `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 }
 
-function toggleGameFocus(idx){
-  const root = document.getElementById("games");
+function toggleGameFocus(rootId, idx){
+  const root = document.getElementById(rootId);
   const card = root.querySelector(`.game[data-game-idx="${idx}"]`);
   if(!card) return;
+  const backId = rootId + "-back-to-games";
   const alreadyFocused = card.classList.contains("focused");
   root.querySelectorAll(".game").forEach(c => c.classList.remove("focused"));
   root.classList.remove("focus-mode");
-  const existingBack = document.getElementById("back-to-games");
+  const existingBack = document.getElementById(backId);
   if(existingBack) existingBack.remove();
   if(alreadyFocused) return; // clicking the same game again un-focuses
 
   card.classList.add("focused");
   root.classList.add("focus-mode");
   const back = document.createElement("div");
-  back.id = "back-to-games";
+  back.id = backId;
   back.className = "back-to-games";
   back.textContent = "← Back to all games";
-  back.onclick = () => toggleGameFocus(idx);
+  back.onclick = () => toggleGameFocus(rootId, idx);
   root.parentNode.insertBefore(back, root);
   card.scrollIntoView({behavior:"smooth", block:"start"});
 }
@@ -1144,6 +1178,20 @@ function collectMlbParlayLegs(games){
       if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime HR'});
     });
   });
+  return selectMixedLegs(legs);
+}
+
+// A dedicated HR-only special (3-4 legs), separate from the mixed parlay
+// above -- same real-edge-vs-DK-price ranking, just scoped to Anytime HR.
+function collectHrSpecialLegs(games){
+  const legs = [];
+  games.forEach(g => {
+    (g.props||[]).forEach(p => {
+      if(p.market !== "Anytime HR" || p.dk_implied_prob == null) return;
+      const edge = p.model_prob - p.dk_implied_prob;
+      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`, market: 'Anytime HR'});
+    });
+  });
   return legs.sort((a,b) => b.edge - a.edge).slice(0, 4);
 }
 
@@ -1158,18 +1206,25 @@ function renderMLBGames(){
     ` Generated ${MLB_DATA.generated_at}.`;
 
   const root = document.getElementById("mlb-games");
-  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(MLB_DATA.games), 'MLB');
+  const hrLegs = collectHrSpecialLegs(MLB_DATA.games);
+  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(MLB_DATA.games), 'MLB')
+    + parlayCardHtml(hrLegs, 'MLB', {
+        title: 'HR SPECIAL', accentClass: 'parlay-hr',
+        note: `highest-edge Anytime HR picks vs. real DK prices -- ${hrLegs.length} of 4 legs found`,
+        emptyText: 'No real DraftKings HR prices to compare against yet -- HR special needs at least one Anytime HR price to grade an edge against. Check back once DraftKings has posted more.',
+      });
 
   MLB_DATA.games.forEach((g, idx) => {
     const card = document.createElement("div");
     card.className = "game";
+    card.dataset.gameIdx = idx;
     const m = g.market;
     const fairHome = m && m.mlHome!=null && m.mlAway!=null ? noVigProb(m.mlHome, m.mlAway) : null;
 
     card.innerHTML = `
       <div class="game-top">
         <div>
-          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
+          <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('mlb-games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
           <div class="now-line" id="mlb-nowline-${idx}"></div>
         </div>

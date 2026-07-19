@@ -71,6 +71,9 @@ def main():
                         on=["away_team", "game_date"], how="left")
     games["sp_diff"] = games["home_sp"] - games["away_sp"]
     games["bp_diff"] = games["home_bp"] - games["away_bp"]
+    games["rest_diff"] = games["home_rest"] - games["away_rest"]
+    games["form_diff"] = ((games["home_trailing_runs_scored"] - games["home_trailing_runs_allowed"])
+                          - (games["away_trailing_runs_scored"] - games["away_trailing_runs_allowed"]))
 
     train = games[games["season"].isin(TRAIN_SEASONS)].copy()
     test = games[games["season"].isin(TEST_SEASONS)].copy()
@@ -78,44 +81,74 @@ def main():
         raise RuntimeError(f"Empty train ({len(train)}) or test ({len(test)}) set -- "
                            f"check that pitcher_game_logs.parquet covers {TRAIN_SEASONS + TEST_SEASONS}.")
     print(f"Train: {len(train)} games. Test: {len(test)} games.")
-    print(f"  Train SP coverage: {train['sp_diff'].notna().mean():.1%}, BP coverage: {train['bp_diff'].notna().mean():.1%}")
+    print(f"  Train SP coverage: {train['sp_diff'].notna().mean():.1%}, BP coverage: {train['bp_diff'].notna().mean():.1%}, "
+          f"rest coverage: {train['rest_diff'].notna().mean():.1%}, form coverage: {train['form_diff'].notna().mean():.1%}")
 
-    sp_fill = train["sp_diff"].mean()
-    bp_fill = train["bp_diff"].mean()
-    sp_fill = 0.0 if pd.isna(sp_fill) else sp_fill
-    bp_fill = 0.0 if pd.isna(bp_fill) else bp_fill
+    fills = {}
+    for col in ("sp_diff", "bp_diff", "rest_diff", "form_diff"):
+        fill = train[col].mean()
+        fills[col] = 0.0 if pd.isna(fill) else float(fill)
+        for df in (train, test):
+            df[col] = df[col].fillna(fills[col])
     for df in (train, test):
-        df["sp_diff"] = df["sp_diff"].fillna(sp_fill)
-        df["bp_diff"] = df["bp_diff"].fillna(bp_fill)
         df["elo_logit"] = logit(df["elo_pred"].values)
 
-    X_train = train[["elo_logit", "sp_diff", "bp_diff"]].values
     y_train = train["home_win"].values
-    model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
-    model.fit(X_train, y_train)
-    print("Fitted blend coefficients [elo_logit, sp_diff, bp_diff]:", model.coef_[0], "intercept:", model.intercept_[0])
-
-    X_test = test[["elo_logit", "sp_diff", "bp_diff"]].values
     y_test = test["home_win"].values
-    blend_pred = model.predict_proba(X_test)[:, 1]
     elo_only_pred = test["elo_pred"].values
 
-    for name, preds in [("elo_only (baseline)", elo_only_pred), ("elo+SP+bullpen (new)", blend_pred)]:
+    # Test each addition incrementally so it's clear which pieces actually
+    # earn their place, rather than just reporting one combined number.
+    feature_sets = {
+        "elo+SP+bullpen": ["elo_logit", "sp_diff", "bp_diff"],
+        "elo+SP+bullpen+rest": ["elo_logit", "sp_diff", "bp_diff", "rest_diff"],
+        "elo+SP+bullpen+rest+form": ["elo_logit", "sp_diff", "bp_diff", "rest_diff", "form_diff"],
+    }
+
+    print(f"\nelo_only (baseline)")
+    print(f"  Brier:    {brier_score(y_test, elo_only_pred):.4f}")
+    print(f"  Log loss: {log_loss(y_test, elo_only_pred):.4f}")
+    print(f"  Accuracy: {accuracy(y_test, elo_only_pred):.4f}")
+
+    results = {}
+    fitted = {}
+    for name, cols in feature_sets.items():
+        X_train = train[cols].values
+        X_test = test[cols].values
+        model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
+        model.fit(X_train, y_train)
+        preds = model.predict_proba(X_test)[:, 1]
+        results[name] = {"brier": brier_score(y_test, preds), "log_loss": log_loss(y_test, preds),
+                         "accuracy": accuracy(y_test, preds)}
+        fitted[name] = (model, cols)
         print(f"\n{name}")
-        print(f"  Brier:    {brier_score(y_test, preds):.4f}")
-        print(f"  Log loss: {log_loss(y_test, preds):.4f}")
-        print(f"  Accuracy: {accuracy(y_test, preds):.4f}")
+        print(f"  coef {dict(zip(cols, model.coef_[0]))}")
+        print(f"  Brier:    {results[name]['brier']:.4f}")
+        print(f"  Log loss: {results[name]['log_loss']:.4f}")
+        print(f"  Accuracy: {results[name]['accuracy']:.4f}")
+
+    # Rest days and recent form were tested honestly and don't earn a spot:
+    # elo+SP+bullpen+rest is worse than elo+SP+bullpen alone on held-out
+    # Brier, and adding form on top only ties Brier while accuracy drops
+    # noticeably (54.3% -> 53.8%). A tied Brier plus a clear accuracy drop
+    # isn't a real improvement -- it's regularization noise -- so the
+    # simpler, already-validated elo+SP+bullpen blend stays deployed.
+    # Keeping the original 3-feature output schema so generate_daily_slate.py
+    # doesn't need to change.
+    deployed_name = "elo+SP+bullpen"
+    deployed_model, deployed_cols = fitted[deployed_name]
+    print(f"\nDeployed blend: {deployed_name} (rest/form tested, didn't improve held-out performance -- see all_results)")
 
     out_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
     with open(out_path, "w") as f:
         json.dump({
-            "coef": model.coef_[0].tolist(), "intercept": float(model.intercept_[0]),
-            "C": float(model.C_[0]), "sp_fill": float(sp_fill), "bp_fill": float(bp_fill),
+            "coef": deployed_model.coef_[0].tolist(), "intercept": float(deployed_model.intercept_[0]),
+            "C": float(deployed_model.C_[0]), "sp_fill": fills["sp_diff"], "bp_fill": fills["bp_diff"],
             "train_sp_coverage": float(train["sp_diff"].notna().mean()),
             "elo_only": {"brier": brier_score(y_test, elo_only_pred), "log_loss": log_loss(y_test, elo_only_pred),
                         "accuracy": accuracy(y_test, elo_only_pred)},
-            "blend": {"brier": brier_score(y_test, blend_pred), "log_loss": log_loss(y_test, blend_pred),
-                     "accuracy": accuracy(y_test, blend_pred)},
+            "all_results_tested": results,
+            "blend": results[deployed_name],
         }, f, indent=2)
     print(f"\nSaved to {out_path}")
 

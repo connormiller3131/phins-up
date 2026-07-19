@@ -44,13 +44,18 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, season_re
 
 
 def fit_elo_hyperparams(train_df: pd.DataFrame):
+    """Grid search, widened after the original grid's best fit landed on 3 of
+    4 hyperparameters sitting right at the edge of their search range (K=4,
+    the smallest tried; scale=350, the largest; season_regression=0.5, the
+    smallest) -- a sign the true optimum was outside what the grid allowed,
+    not that those boundary values were actually best."""
     from pipeline.common.metrics import log_loss
 
     best = None
-    for k in (4, 6, 8, 10, 14, 18, 24):
-        for home_adv in (0, 10, 20, 30, 40):
-            for scale in (200, 250, 300, 350):
-                for season_regression in (0.5, 0.65, 0.8, 0.9):
+    for k in (0.5, 1, 1.5, 2, 3, 4, 6, 8, 10, 14, 18, 24):
+        for home_adv in (0, 10, 20, 30, 40, 50, 60):
+            for scale in (150, 200, 250, 300, 350, 400, 450, 500, 600):
+                for season_regression in (0.1, 0.2, 0.3, 0.4, 0.5, 0.65, 0.8, 0.9):
                     preds = run_elo(train_df, k=k, home_adv=home_adv, scale=scale,
                                     season_regression=season_regression)
                     ll = log_loss(train_df["home_win"], preds)

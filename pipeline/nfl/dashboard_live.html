@@ -114,6 +114,46 @@
     padding:16px 18px;
     margin-bottom:14px;
   }
+  .parlay-card{
+    background:var(--panel);
+    border:1px solid var(--green);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:18px;
+  }
+  .parlay-title{
+    font-family:var(--disp);
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:var(--green);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .parlay-leg{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    padding:6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .parlay-leg:last-of-type{border-bottom:none;}
+  .parlay-leg-label{font-weight:600;color:var(--text);min-width:140px;}
+  .parlay-leg-market{color:var(--text-dim);min-width:90px;}
+  .parlay-leg-edge{color:var(--green);font-weight:600;}
+  .parlay-leg-prob{color:var(--blue);margin-left:auto;}
+  .parlay-combined{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px dashed var(--line);
+  }
+  .parlay-empty{margin-bottom:18px;}
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -725,6 +765,53 @@ function fmtKickoffLine(g){
   return parts.join(' · ');
 }
 
+// "Best" means highest real edge vs. a real market price, not highest raw
+// probability -- a 95% favorite priced at -2000 has no value, and doesn't
+// belong in a suggested parlay just because it's "likely." Only legs with
+// an actual market number to compare against are eligible; pure model
+// projections (no market line) can't have a known edge, so they're excluded
+// rather than guessed at.
+function collectNflParlayLegs(games){
+  const legs = [];
+  games.forEach(g => {
+    if(g.already_played) return;
+    if(g.market_home_prob != null){
+      const homeEdge = g.elo_home_prob - g.market_home_prob;
+      if(homeEdge > 0) legs.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
+      else if(-homeEdge > 0) legs.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+    }
+    (g.props||[]).forEach(p => {
+      if(p.market !== "Anytime TD" || p.dk_implied_prob == null) return;
+      const edge = p.model_prob - p.dk_implied_prob;
+      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
+    });
+  });
+  return legs.sort((a,b) => b.edge - a.edge).slice(0, 4);
+}
+
+function parlayCardHtml(legs, sport){
+  if(!legs.length){
+    return `<div class="placeholder parlay-empty">No real market lines to compare against yet for ${sport} -- suggested parlay needs at least one leg with a real price behind it (not just a model projection). Check back once DraftKings has posted more.</div>`;
+  }
+  const combinedProb = legs.reduce((p, l) => p * l.prob, 1);
+  const rows = legs.map(l => `
+    <div class="parlay-leg">
+      <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
+      <span class="parlay-leg-market">${l.market}</span>
+      <span class="parlay-leg-edge">+${(l.edge*100).toFixed(1)}% edge</span>
+      <span class="parlay-leg-prob">${pct(l.prob)}</span>
+    </div>
+  `).join("");
+  return `
+    <div class="parlay-card">
+      <div class="parlay-title">SUGGESTED PARLAY <span class="props-sample-tag">(model's highest-edge picks vs. real market prices, not just the most likely to win -- ${legs.length} of 4 legs have real odds to compare against)</span></div>
+      ${rows}
+      <div class="parlay-combined">Combined probability (assuming independence, which overstates it in practice): <b>${pct(combinedProb)}</b></div>
+      <div class="p-exp" style="margin-top:4px;">Not betting advice -- ranked by the model's own edge estimate, which can be wrong.</div>
+    </div>
+  `;
+}
+
 function renderGames(week){
   const selectedWeek = week || DATA.current_week;
   const weekData = DATA.weeks[String(selectedWeek)];
@@ -742,6 +829,8 @@ function renderGames(week){
     root.innerHTML = `<div class="placeholder">No games found for week ${selectedWeek}.</div>`;
     return;
   }
+
+  root.innerHTML = parlayCardHtml(collectNflParlayLegs(weekData.games), 'NFL');
 
   weekData.games.forEach((g, idx) => {
     const card = document.createElement("div");
@@ -1025,18 +1114,37 @@ async function loadBvP(idx){
   body.innerHTML = rows || '<span class="p-exp">No batter/pitcher matchup data available.</span>';
 }
 
+function collectMlbParlayLegs(games){
+  const legs = [];
+  games.forEach(g => {
+    const m = g.market;
+    if(m && m.mlHome!=null && m.mlAway!=null){
+      const fairHome = noVigProb(m.mlHome, m.mlAway);
+      const homeEdge = g.elo_home_prob - fairHome;
+      if(homeEdge > 0) legs.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
+      else if(-homeEdge > 0) legs.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+    }
+    (g.props||[]).forEach(p => {
+      if(p.market !== "Anytime HR" || p.dk_implied_prob == null) return;
+      const edge = p.model_prob - p.dk_implied_prob;
+      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime HR'});
+    });
+  });
+  return legs.sort((a,b) => b.edge - a.edge).slice(0, 4);
+}
+
 function renderMLBGames(){
   document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
   const ep = MLB_DATA.elo_params;
   document.getElementById('mlb-meta').textContent =
     `Model basis: team Elo fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression})` +
     (MLB_DATA.pitcher_blend_used
-      ? `, blended with real starting-pitcher and bullpen strength (Statcast run-value, trailing 6 starts / 10 relief outings) via a logistic regression fit on 2024-2025 and validated out-of-sample on 2026: Brier 0.249&rarr;0.248, log loss 0.690&rarr;0.689 vs. team-Elo alone -- a real but modest gain, consistent with bullpens and game-to-game variance diluting a starter's influence on a single game's outcome.`
+      ? `, blended with real starting-pitcher/bullpen strength (Statcast run-value), team offense quality (Statcast est_woba, PA-weighted), and a same-division flag via a logistic regression fit on 2024-2025 and validated out-of-sample on 2026: Brier 0.2486&rarr;0.2474, log loss 0.6904&rarr;0.6878 vs. team-Elo alone -- offense quality was the single biggest piece of that gain.`
       : `. Pitcher/bullpen blend not available this run -- showing team-only Elo.`) +
     ` Generated ${MLB_DATA.generated_at}.`;
 
   const root = document.getElementById("mlb-games");
-  root.innerHTML = "";
+  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(MLB_DATA.games), 'MLB');
 
   MLB_DATA.games.forEach((g, idx) => {
     const card = document.createElement("div");

@@ -45,7 +45,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
-from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
+from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, current_bullpen_arms
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
@@ -424,6 +424,22 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
     return entries
 
 
+def bullpen_arm_entries(team, n=4):
+    """Informational only, no line or odds: there's no "probable reliever"
+    the way there's a probable starter (bullpen usage is a live, matchup-
+    driven decision), so projecting a betting line for someone who may not
+    even appear isn't sound. Just the team's most-used relievers recently
+    and their real trailing counting stats."""
+    entries = []
+    for arm in current_bullpen_arms(team, n=n):
+        entries.append({"section": "Pitching", "market": "Bullpen Arm", "player": arm["player_display_name"],
+                        "player_id": arm["player_id"], "team": team, "appearances": arm["appearances"],
+                        "outs_recorded": arm["outs_recorded"], "strikeouts": arm["strikeouts"],
+                        "walks_allowed": arm["walks_allowed"], "hits_allowed": arm["hits_allowed"],
+                        "runs_allowed": arm["runs_allowed"], "avg_run_value": arm["avg_run_value"]})
+    return entries
+
+
 def main():
     target_date, raw_games = get_slate_schedule()
     slate = parse_slate(raw_games)
@@ -489,6 +505,9 @@ def main():
             props += pitcher_props_for_team(g["home_probable_pitcher"]["id"], g["home_team"], g["away_team"], pitcher_models)
         if g["away_probable_pitcher"]:
             props += pitcher_props_for_team(g["away_probable_pitcher"]["id"], g["away_team"], g["home_team"], pitcher_models)
+
+        props += bullpen_arm_entries(g["home_team"])
+        props += bullpen_arm_entries(g["away_team"])
 
         elo_home = float(elo_preds[i])
         market = g["market"]

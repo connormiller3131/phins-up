@@ -1032,10 +1032,25 @@ function hrAdvice(p){
   return {label:"PASS", cls:"no", note:`${(edge*100).toFixed(1)}% edge vs DK`};
 }
 
+function fmtInnings(outs){
+  if(outs==null) return '—';
+  return `${Math.floor(outs/3)}.${outs%3}`;
+}
+
 function mlbPropStatRow(p){
   const dkNote = p.dk_over!=null
     ? `<span class="count-chip">DK ${p.dk_line!=null ? p.dk_line+' ' : ''}<b>${fmtOdds(p.dk_over)}</b>${p.dk_under!=null ? ' / '+fmtOdds(p.dk_under) : ''}</span>`
     : "";
+  if(p.market === "Bullpen Arm"){
+    // No line, no odds, no model probability -- there's no "probable
+    // reliever" pregame, bullpen usage is decided live. Just real recent
+    // numbers so you know who's actually been getting the ball.
+    return `<div class="prop-stat-row">
+      <span class="prop-stat-label">Recent usage</span>
+      <span class="count-chip">${p.appearances} G, ${fmtInnings(p.outs_recorded)} IP</span>
+      <span class="p-exp">${p.strikeouts} K, ${p.walks_allowed} BB, ${p.hits_allowed} H, ${p.runs_allowed} R &middot; run value ${p.avg_run_value>=0?'+':''}${p.avg_run_value}/appearance</span>
+    </div>`;
+  }
   if(p.market === "Anytime HR"){
     const advice = hrAdvice(p);
     return `<div class="prop-stat-row">

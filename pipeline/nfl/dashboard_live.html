@@ -1102,6 +1102,7 @@ renderMLBGames();
 
 // ---- Live scores: fetched client-side from MLB's free Stats API (CORS-open),
 // so scores stay current even though this page is only rebuilt once a day.
+const mlbGameStatus = {};
 async function updateMLBScores(){
   if(!MLB_DATA.date || !MLB_DATA.games.length) return;
   let apiGames = [];
@@ -1127,6 +1128,7 @@ async function updateMLBScores(){
         candidates[0]);
     }
     const st = match.status.abstractGameState;
+    mlbGameStatus[idx] = st;
     const aS = match.teams.away.score, hS = match.teams.home.score;
     const ls = match.linescore || {};
     if(st==='Live'){
@@ -1183,12 +1185,16 @@ async function updateMLBLiveStats(){
       line = await lineResp.json();
     }catch(e){ continue; } // transient network failure: leave everything as-is
 
-    const off = line.offense || {};
     if(nowEl){
-      const parts = [];
-      if(off.pitcher) parts.push(`Now pitching: <b>${off.pitcher.fullName}</b>`);
-      if(off.batter) parts.push(`Now batting: <b>${off.batter.fullName}</b>`);
-      nowEl.innerHTML = parts.join(' &middot; ');
+      if(mlbGameStatus[idx] === 'Final'){
+        nowEl.innerHTML = ''; // no "now batting/pitching" once the game is over
+      } else {
+        const off = line.offense || {};
+        const parts = [];
+        if(off.pitcher) parts.push(`Now pitching: <b>${off.pitcher.fullName}</b>`);
+        if(off.batter) parts.push(`Now batting: <b>${off.batter.fullName}</b>`);
+        nowEl.innerHTML = parts.join(' &middot; ');
+      }
     }
 
     const homeStarters = confirmedStarterIds(box.teams && box.teams.home);

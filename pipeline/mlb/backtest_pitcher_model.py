@@ -74,11 +74,16 @@ def main():
 
     train = games[games["season"].isin(TRAIN_SEASONS)].copy()
     test = games[games["season"].isin(TEST_SEASONS)].copy()
+    if len(train) == 0 or len(test) == 0:
+        raise RuntimeError(f"Empty train ({len(train)}) or test ({len(test)}) set -- "
+                           f"check that pitcher_game_logs.parquet covers {TRAIN_SEASONS + TEST_SEASONS}.")
     print(f"Train: {len(train)} games. Test: {len(test)} games.")
     print(f"  Train SP coverage: {train['sp_diff'].notna().mean():.1%}, BP coverage: {train['bp_diff'].notna().mean():.1%}")
 
     sp_fill = train["sp_diff"].mean()
     bp_fill = train["bp_diff"].mean()
+    sp_fill = 0.0 if pd.isna(sp_fill) else sp_fill
+    bp_fill = 0.0 if pd.isna(bp_fill) else bp_fill
     for df in (train, test):
         df["sp_diff"] = df["sp_diff"].fillna(sp_fill)
         df["bp_diff"] = df["bp_diff"].fillna(bp_fill)

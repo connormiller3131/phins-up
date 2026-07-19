@@ -1,13 +1,17 @@
-"""Generate REAL projections for an upcoming, not-yet-played NFL week:
+"""Generate REAL projections for the NFL season, all weeks:
 - Elo win probability, ratings carried forward from all completed games
-  through the fitted hyperparameters (no re-fitting on the future week).
-- Real posted opening market lines (moneyline/spread/total), already present
-  in nflverse schedules for the upcoming season.
+  through the fitted hyperparameters (no re-fitting on future weeks).
+- Real posted opening market lines (moneyline/spread/total) where already
+  posted in nflverse schedules -- null for weeks too far out for books to
+  have priced yet, same null-handling pattern used everywhere else.
 - Player props for each team's current depth-chart starters (QB/RB1/WR1),
   using their actual current trailing rate vs. the opponent defense's actual
-  current trailing allowed-rate, fit on the FULL historical dataset (the
-  target week is genuinely in the future, so there's no leakage to guard
-  against the way there is in a backtest).
+  current trailing allowed-rate, fit ONCE on the full historical dataset and
+  reused across every week (every target week is in the future relative to
+  that fit, so there's no leakage to guard against the way there is in a
+  backtest).
+- Game metadata: stadium, location, weekday/kickoff time, and a primetime
+  (TNF/SNF/MNF) flag, all already present in nflverse schedules.
 """
 import sys
 import pathlib
@@ -58,38 +62,85 @@ def team_names():
     return dict(zip(t["team_abbr"], t["team_name"]))
 
 
-def get_target_week_schedule(target_season, target_week):
+def get_season_schedule(target_season):
     import nflreadpy as nfl
     sched = nfl.load_schedules(seasons=[target_season]).to_pandas()
-    wk = sched[sched["week"] == target_week].copy()
-    wk["market_home_prob_raw_away"] = moneyline_to_prob(wk["away_moneyline"].values)
-    wk["market_home_prob_raw_home"] = moneyline_to_prob(wk["home_moneyline"].values)
-    overround = wk["market_home_prob_raw_away"] + wk["market_home_prob_raw_home"]
-    wk["market_home_prob"] = wk["market_home_prob_raw_home"] / overround
-    return wk
+    sched = sched[sched["game_type"] == "REG"].copy()
+    sched["market_home_prob_raw_away"] = moneyline_to_prob(sched["away_moneyline"].values)
+    sched["market_home_prob_raw_home"] = moneyline_to_prob(sched["home_moneyline"].values)
+    overround = sched["market_home_prob_raw_away"] + sched["market_home_prob_raw_home"]
+    sched["market_home_prob"] = sched["market_home_prob_raw_home"] / overround
+    return sched
 
 
-def elo_predictions_for_target(games_df, target_wk):
+def primetime_label(weekday, gametime):
+    """TNF/SNF/MNF badge from the day of week + kickoff time. gametime is a
+    24h 'HH:MM' local-to-stadium string in nflverse schedules."""
+    if not weekday or not gametime:
+        return None
+    try:
+        hour = int(str(gametime).split(":")[0])
+    except (ValueError, IndexError):
+        hour = None
+    if weekday == "Thursday":
+        return "TNF"
+    if weekday == "Monday":
+        return "MNF"
+    if weekday == "Sunday" and hour is not None and hour >= 18:
+        return "SNF"
+    return None
+
+
+def elo_predictions_for_season(games_df, season_sched):
+    """Run Elo once across completed history + every future game in the
+    season schedule (chronologically appended), returning predictions
+    aligned to season_sched's row order."""
     with open(ROOT / "notebooks_out" / "nfl_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
 
     future_rows = pd.DataFrame({
-        "season": target_wk["season"].values,
-        "week": target_wk["week"].values,
-        "home_team": target_wk["home_team"].values,
-        "away_team": target_wk["away_team"].values,
+        "season": season_sched["season"].values,
+        "week": season_sched["week"].values,
+        "home_team": season_sched["home_team"].values,
+        "away_team": season_sched["away_team"].values,
         "margin": np.nan,
         "home_win": np.nan,
-        "location": target_wk["location"].values,
-        "home_rest": target_wk["home_rest"].values,
-        "away_rest": target_wk["away_rest"].values,
+        "location": season_sched["location"].values,
+        "home_rest": season_sched["home_rest"].values,
+        "away_rest": season_sched["away_rest"].values,
     })
+    # only rows not already completed belong in the "future" tail; completed
+    # games from this same season (shouldn't normally happen pre-kickoff,
+    # but keep it correct if this runs mid-season) are already in games_df.
+    already_played_keys = set(zip(games_df["season"], games_df["week"], games_df["home_team"], games_df["away_team"]))
+    future_rows = future_rows[~future_rows.apply(
+        lambda r: (r["season"], r["week"], r["home_team"], r["away_team"]) in already_played_keys, axis=1)]
+
     cols = ["season", "week", "home_team", "away_team", "margin", "home_win", "location", "home_rest", "away_rest"]
     combined = pd.concat([games_df[cols], future_rows], ignore_index=True)
     preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
                     rest_adv=elo_params.get("rest_adv", 0.0), season_regression=elo_params.get("season_regression", 0.75))
+
     n_future = len(future_rows)
-    return preds[-n_future:], elo_params
+    future_preds = dict(zip(
+        zip(future_rows["season"], future_rows["week"], future_rows["home_team"], future_rows["away_team"]),
+        preds[-n_future:] if n_future else [],
+    ))
+    # completed games in this season already have a real outcome-based prob
+    # from the main Elo run; for a pre-season page these won't exist yet.
+    played_mask = games_df["season"] == season_sched["season"].iloc[0]
+    played_preds = {}
+    if played_mask.any():
+        played_idx = np.where(played_mask.values)[0]
+        for idx in played_idx:
+            row = games_df.iloc[idx]
+            played_preds[(row["season"], row["week"], row["home_team"], row["away_team"])] = preds[idx]
+
+    out = []
+    for row in season_sched.itertuples(index=False):
+        key = (row.season, row.week, row.home_team, row.away_team)
+        out.append(future_preds.get(key, played_preds.get(key)))
+    return out, elo_params
 
 
 def get_starters(target_season):
@@ -109,23 +160,31 @@ def get_starters(target_season):
     return starters, latest_dt
 
 
-def fit_and_project_yardage(stat_col, positions, player_id, opp_team, env):
+def prepare_yardage_model(stat_col, positions):
+    """Fit the RidgeCV model ONCE on full history. It doesn't depend on which
+    target week we're projecting, so every game/week reuses this same fit."""
     hist = build_prop_table(stat_col, positions)
     model = RidgeCV(alphas=np.logspace(-1, 3, 25))
     model.fit(hist[FEATURES].values, hist["actual"].values)
-    resid_std = float(np.std(hist["actual"].values - model.predict(hist[FEATURES].values)))
+    resid_std = max(float(np.std(hist["actual"].values - model.predict(hist[FEATURES].values))), 1e-6)
+    return {
+        "model": model, "resid_std": resid_std,
+        "own": player_current_trailing(stat_col, positions),
+        "defense": defense_current_trailing(stat_col, positions),
+    }
 
-    own = player_current_trailing(stat_col, positions)
-    defense = defense_current_trailing(stat_col, positions)
+
+def project_yardage(prep, player_id, opp_team, env):
+    own, defense = prep["own"], prep["defense"]
     if player_id not in own.index or opp_team not in defense.index:
         return None
 
     own_avg = float(own.loc[player_id, "current_avg"])
     opp_avg = float(defense.loc[opp_team])
     feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
-    pred_mean = float(model.predict(feat_row)[0])
+    pred_mean = float(prep["model"].predict(feat_row)[0])
     line = round(own_avg * 2) / 2
-    over_prob = float(yardage_over_prob(pred_mean, max(resid_std, 1e-6), line))
+    over_prob = float(yardage_over_prob(pred_mean, prep["resid_std"], line))
     return {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(over_prob, 3),
         "player_display_name": own.loc[player_id, "player_display_name"],
@@ -133,49 +192,55 @@ def fit_and_project_yardage(stat_col, positions, player_id, opp_team, env):
     }
 
 
-def fit_and_project_td(player_id, opp_team, env):
+def prepare_td_model():
     hist = build_prop_table("anytime_td", ["RB", "WR", "TE"])
     model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
     model.fit(hist[FEATURES].values, hist["actual"].values)
+    return {
+        "model": model,
+        "own": player_current_trailing("anytime_td", ["RB", "WR", "TE"]),
+        "defense": defense_current_trailing("anytime_td", ["RB", "WR", "TE"]),
+    }
 
-    own = player_current_trailing("anytime_td", ["RB", "WR", "TE"])
-    defense = defense_current_trailing("anytime_td", ["RB", "WR", "TE"])
+
+def project_td(prep, player_id, opp_team, env):
+    own, defense = prep["own"], prep["defense"]
     if player_id not in own.index or opp_team not in defense.index:
         return None
 
     own_avg = float(own.loc[player_id, "current_avg"])
     opp_avg = float(defense.loc[opp_team])
     feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
-    prob = float(model.predict_proba(feat_row)[:, 1][0])
+    prob = float(prep["model"].predict_proba(feat_row)[:, 1][0])
     return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
 
 
-def build_props_for_team(team, opp_team, starters, env):
+def build_props_for_team(team, opp_team, starters, env, models):
     entries = []
     picks = starters.get(team, {})
 
     if "QB" in picks:
-        r = fit_and_project_yardage("passing_yards", ["QB"], picks["QB"], opp_team, env)
+        r = project_yardage(models["qb"], picks["QB"], opp_team, env)
         if r:
             entries.append({"player": r["player_display_name"], "team": team, "market": "Passing Yds",
                              "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
 
     if "RB" in picks:
-        r = fit_and_project_yardage("rushing_yards", ["RB"], picks["RB"], opp_team, env)
+        r = project_yardage(models["rb"], picks["RB"], opp_team, env)
         if r:
             entries.append({"player": r["player_display_name"], "team": team, "market": "Rushing Yds",
                              "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
-        t = fit_and_project_td(picks["RB"], opp_team, env)
+        t = project_td(models["td"], picks["RB"], opp_team, env)
         if t:
             entries.append({"player": r["player_display_name"] if r else None, "team": team, "market": "Anytime TD",
                              "model_prob": t["model_prob"]})
 
     if "WR" in picks:
-        r = fit_and_project_yardage("receiving_yards", ["WR", "TE"], picks["WR"], opp_team, env)
+        r = project_yardage(models["wr"], picks["WR"], opp_team, env)
         if r:
             entries.append({"player": r["player_display_name"], "team": team, "market": "Receiving Yds",
                              "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
-        t = fit_and_project_td(picks["WR"], opp_team, env)
+        t = project_td(models["td"], picks["WR"], opp_team, env)
         if t:
             entries.append({"player": r["player_display_name"] if r else None, "team": team, "market": "Anytime TD",
                              "model_prob": t["model_prob"]})
@@ -199,57 +264,85 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--season", type=int, default=None, help="Override auto-detected target season")
-    parser.add_argument("--week", type=int, default=None, help="Override auto-detected target week")
     args = parser.parse_args()
 
-    if args.season is not None and args.week is not None:
-        target_season, target_week = args.season, args.week
+    if args.season is not None:
+        target_season = args.season
+        current_week = 1
     else:
-        target_season, target_week = detect_target_week()
+        target_season, current_week = detect_target_week()
 
     names = team_names()
     games_df = load_games()
-    target_wk = get_target_week_schedule(target_season, target_week)
-    print(f"Target: {target_season} week {target_week} -- {len(target_wk)} games")
+    season_sched = get_season_schedule(target_season)
+    all_weeks = sorted(season_sched["week"].unique().tolist())
+    print(f"Season {target_season}: generating weeks {all_weeks[0]}-{all_weeks[-1]}, current={current_week}")
 
-    elo_preds, elo_params = elo_predictions_for_target(games_df, target_wk)
+    elo_preds, elo_params = elo_predictions_for_season(games_df, season_sched)
     starters, depth_chart_dt = get_starters(target_season)
-    print(f"Depth charts as of {depth_chart_dt}")
+    print(f"Depth charts as of {depth_chart_dt}", flush=True)
     temp_fill, wind_fill = env_fill_values(games_df)
 
-    games_out = []
-    for i, row in enumerate(target_wk.itertuples(index=False)):
-        away, home = row.away_team, row.home_team
-        away_env = build_env(row, temp_fill, wind_fill, row.away_rest)
-        home_env = build_env(row, temp_fill, wind_fill, row.home_rest)
-        props = build_props_for_team(away, home, starters, away_env) + build_props_for_team(home, away, starters, home_env)
-        games_out.append({
-            "awayAbbr": away, "homeAbbr": home,
-            "awayName": names.get(away, away), "homeName": names.get(home, home),
-            "gameday": row.gameday,
-            "spread_line": row.spread_line, "total_line": row.total_line,
-            "mlAway": int(row.away_moneyline), "mlHome": int(row.home_moneyline),
-            "market_home_prob": round(float(row.market_home_prob), 4),
-            "elo_home_prob": round(float(elo_preds[i]), 4),
-            "roof": row.roof if pd.notna(row.roof) else None, "away_rest": int(row.away_rest), "home_rest": int(row.home_rest),
-            "props": props,
-        })
-        print(f"  {away} @ {home}: market_home={row.market_home_prob:.3f} elo_home={elo_preds[i]:.3f} props={len(props)}")
+    print("Fitting prop models (once, reused across all weeks)...", flush=True)
+    prop_models = {
+        "qb": prepare_yardage_model("passing_yards", ["QB"]),
+        "rb": prepare_yardage_model("rushing_yards", ["RB"]),
+        "wr": prepare_yardage_model("receiving_yards", ["WR", "TE"]),
+        "td": prepare_td_model(),
+    }
+    print("Prop models ready.", flush=True)
+
+    weeks_out = {}
+    for week in all_weeks:
+        week_rows = season_sched[season_sched["week"] == week].reset_index(drop=True)
+        week_elo = [elo_preds[i] for i in season_sched.index[season_sched["week"] == week]]
+
+        games_out = []
+        for i, row in enumerate(week_rows.itertuples(index=False)):
+            away, home = row.away_team, row.home_team
+            already_played = pd.notna(getattr(row, "home_score", None))
+
+            props = []
+            if not already_played:
+                away_env = build_env(row, temp_fill, wind_fill, row.away_rest)
+                home_env = build_env(row, temp_fill, wind_fill, row.home_rest)
+                props = (build_props_for_team(away, home, starters, away_env, prop_models)
+                         + build_props_for_team(home, away, starters, home_env, prop_models))
+
+            elo_p = week_elo[i]
+            games_out.append({
+                "awayAbbr": away, "homeAbbr": home,
+                "awayName": names.get(away, away), "homeName": names.get(home, home),
+                "gameday": row.gameday, "weekday": row.weekday, "gametime": row.gametime,
+                "primetime": primetime_label(row.weekday, row.gametime),
+                "stadium": row.stadium if pd.notna(row.stadium) else None,
+                "location": row.location if pd.notna(row.location) else None,
+                "spread_line": row.spread_line if pd.notna(row.spread_line) else None,
+                "total_line": row.total_line if pd.notna(row.total_line) else None,
+                "mlAway": int(row.away_moneyline) if pd.notna(row.away_moneyline) else None,
+                "mlHome": int(row.home_moneyline) if pd.notna(row.home_moneyline) else None,
+                "market_home_prob": round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None,
+                "elo_home_prob": round(float(elo_p), 4) if elo_p is not None else None,
+                "roof": row.roof if pd.notna(row.roof) else None,
+                "away_rest": int(row.away_rest) if pd.notna(row.away_rest) else None,
+                "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,
+                "props": props,
+            })
+        weeks_out[str(week)] = {"games": games_out}
+        print(f"  week {week}: {len(games_out)} games, "
+              f"{sum(1 for g in games_out if g['market_home_prob'] is not None)} with market odds", flush=True)
 
     payload = {
-        "season": target_season, "week": target_week,
+        "season": target_season, "current_week": current_week,
         "elo_params": elo_params,
         "depth_chart_as_of": str(depth_chart_dt),
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
-        "games": games_out,
+        "weeks": weeks_out,
     }
     out_path = DATA_DIR / "dashboard_current_week.json"
     with open(out_path, "w") as f:
         json.dump(payload, f, indent=2)
-    archive_path = DATA_DIR / f"dashboard_{target_season}_week{target_week}.json"
-    with open(archive_path, "w") as f:
-        json.dump(payload, f, indent=2)
-    print(f"\nWrote {out_path} (and archived to {archive_path})")
+    print(f"\nWrote {out_path}")
 
 
 if __name__ == "__main__":

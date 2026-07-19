@@ -33,7 +33,7 @@ def main():
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         f.write(out)
-    print(f"Built {OUT_PATH} -- NFL season {nfl_data['season']} week {nfl_data['week']}, MLB date {mlb_data['date']}")
+    print(f"Built {OUT_PATH} -- NFL season {nfl_data['season']} current week {nfl_data['current_week']}, MLB date {mlb_data['date']}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>THE HOLD — NFL Weekly Projections</title>
+<title>Phins Up — NFL &amp; MLB Weekly Projections</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   :root{
@@ -149,6 +149,51 @@
     font-size:18px;
     font-weight:600;
     display:block;
+  }
+  .primetime-badge{
+    display:inline-block;
+    margin-left:8px;
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.05em;
+    color:var(--bg);
+    background:var(--amber);
+    padding:2px 6px;
+    border-radius:4px;
+    vertical-align:middle;
+  }
+  .venue-line{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:2px;
+  }
+  .week-select-wrap{
+    margin-bottom:14px;
+  }
+  .week-select-wrap label{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    margin-right:8px;
+  }
+  .week-select-wrap select{
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:13px;
+    border-radius:6px;
+    padding:6px 10px;
+  }
+  .no-odds-note{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    font-style:italic;
   }
   .hold-track{
     width:120px;height:5px;border-radius:3px;background:var(--line);
@@ -326,7 +371,7 @@
   <div id="tab-nfl" class="tab-panel active">
   <header>
     <p class="eyebrow" id="eyebrow"></p>
-    <h1>THE <span>HOLD</span></h1>
+    <h1>PHINS <span>UP</span></h1>
     <p class="sub">Real upcoming games, real posted opening lines, and a real fitted model — no hand-typed ratings or guessed constants. "Model %" is the Elo rating from the backtested pipeline, carried forward through every completed game into this week. Edit "Your %" if you know something the model doesn't.</p>
     <div class="metabar">
       <span class="dot"></span>
@@ -337,6 +382,11 @@
       <b id="elo-meta"></b>
     </div>
   </header>
+
+  <div class="week-select-wrap">
+    <label for="week-select">Week</label>
+    <select id="week-select" onchange="renderGames(parseInt(this.value,10))"></select>
+  </div>
 
   <div class="legend">
     <span><i class="sw" style="background:var(--green)"></i>Edge for you &ge; 3%</span>
@@ -352,7 +402,7 @@
   <div id="tab-mlb" class="tab-panel">
   <header>
     <p class="eyebrow" id="mlb-eyebrow"></p>
-    <h1>THE <span>HOLD</span></h1>
+    <h1>PHINS <span>UP</span></h1>
     <p class="sub">Same pipeline as NFL: an Elo rating fit and backtested on real 2023-2025 game results (pybaseball), carried forward daily. Player props use each team's probable starting pitcher (real, from MLB's schedule feed) and the 3 batters with the most recent playing time per team — we don't have a confirmed daily lineup source, so that's a proxy for "everyday player," not a locked-in lineup.</p>
     <div class="metabar">
       <span class="dot"></span>
@@ -373,7 +423,7 @@
   <div id="tab-nhl" class="tab-panel">
     <header>
       <p class="eyebrow">NHL</p>
-      <h1>THE <span>HOLD</span></h1>
+      <h1>PHINS <span>UP</span></h1>
     </header>
     <div class="placeholder">
       <b>Not built yet.</b> Same story as MLB — comes after it.
@@ -396,6 +446,7 @@ const MLB_DATA = __MLB_DATA_JSON__;
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
 function fmtSpread(s, isHome){
+  if(s===null || s===undefined) return "—";
   const v = isHome ? s : -s;
   return (v>0?"+":"") + v;
 }
@@ -437,28 +488,56 @@ function propsTable(props){
   `;
 }
 
-function renderGames(){
-  document.getElementById('eyebrow').textContent = `NFL · Week ${DATA.week} · ${DATA.season} Season`;
+const WEEK_NUMS = Object.keys(DATA.weeks).map(Number).sort((a,b)=>a-b);
+
+function populateWeekSelect(selected){
+  const sel = document.getElementById('week-select');
+  sel.innerHTML = WEEK_NUMS.map(w =>
+    `<option value="${w}" ${w===selected?'selected':''}>Week ${w}${w===DATA.current_week?' (current)':''}</option>`
+  ).join('');
+}
+
+function fmtKickoffLine(g){
+  const parts = [];
+  if(g.weekday || g.gameday) parts.push([g.weekday, g.gameday].filter(Boolean).join(', '));
+  if(g.gametime) parts.push(g.gametime + ' local');
+  return parts.join(' · ');
+}
+
+function renderGames(week){
+  const selectedWeek = week || DATA.current_week;
+  const weekData = DATA.weeks[String(selectedWeek)];
+  populateWeekSelect(selectedWeek);
+
+  document.getElementById('eyebrow').textContent = `NFL · Week ${selectedWeek} · ${DATA.season} Season`;
   const ep = DATA.elo_params;
   document.getElementById('elo-meta').textContent =
-    `Model basis: Elo rating fit on 2019-2024 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, rest-day edge=${ep.rest_adv} pts/day, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since into this week. Backtested out-of-sample on all of 2025: Brier 0.221, 65.5% accuracy (market: 0.211 Brier, 65.9%). Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate.`;
+    `Model basis: Elo rating fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, rest-day edge=${ep.rest_adv} pts/day, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since into this week. Backtested out-of-sample: Brier 0.221, 65.5% accuracy (market: 0.211 Brier, 65.9%). Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate. Weeks beyond what books have priced yet show model-only projections -- no market line to compare against until DraftKings posts one.`;
 
   const root = document.getElementById("games");
   root.innerHTML = "";
 
-  DATA.games.forEach((g, idx) => {
+  if(!weekData || !weekData.games.length){
+    root.innerHTML = `<div class="placeholder">No games found for week ${selectedWeek}.</div>`;
+    return;
+  }
+
+  weekData.games.forEach((g, idx) => {
     const card = document.createElement("div");
     card.className = "game";
 
     const pHomeRaw = g.market_home_prob;
+    const hasOdds = pHomeRaw !== null && pHomeRaw !== undefined;
 
     card.innerHTML = `
       <div class="game-top">
         <div>
-          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
-          <div class="kickoff">${g.gameday}</div>
+          <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}</div>
+          <div class="kickoff">${fmtKickoffLine(g)}</div>
+          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}</div>
         </div>
       </div>
+      ${!hasOdds ? '<div class="no-odds-note">No market line posted yet for this game -- showing model projection only.</div>' : ''}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -472,7 +551,7 @@ function renderGames(){
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${pct(1-pHomeRaw)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
@@ -484,7 +563,7 @@ function renderGames(){
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${pct(pHomeRaw)}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
@@ -493,7 +572,7 @@ function renderGames(){
           </div>
         </div>
       </div>
-      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${g.total_line}</b></div>
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b></div>
       ${propsTable(g.props)}
     `;
     root.appendChild(card);
@@ -501,10 +580,10 @@ function renderGames(){
     ["away","home"].forEach(side=>{
       const input = card.querySelector(`input[data-side="${side}"]`);
       const tag = card.querySelector(`[data-tag="${idx}-${side}"]`);
-      const fairP = side==="home" ? pHomeRaw : 1-pHomeRaw;
+      const fairP = hasOdds ? (side==="home" ? pHomeRaw : 1-pHomeRaw) : null;
       function update(){
         const yourP = parseFloat(input.value)/100;
-        const edge = isNaN(yourP) ? null : (yourP - fairP);
+        const edge = (isNaN(yourP) || fairP===null) ? null : (yourP - fairP);
         const c = edgeColor(edge);
         tag.style.background = c.bg;
         tag.style.color = c.fg;
@@ -516,7 +595,7 @@ function renderGames(){
   });
 
   document.getElementById("foot").innerHTML =
-    `<b>Fair win %</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Model win %</b> is our Elo rating, fit and backtested on 2019-2024 (see prior results), then carried forward through every real completed game since. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus Fair %. ` +
+    `<b>Fair win %</b> is the real no-vig probability from this week's actual posted opening moneylines, where books have posted one yet — for weeks further out, this and the edge tag show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus Fair %. ` +
     `<b>Player props:</b> each team's current depth-chart starter (QB / RB1 / WR1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. There is no free source of real historical (or current) player-prop odds, so the "line" shown is the player's own trailing average, used only so Model % has something to compare against — treat it as a projection, not a market line. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 }
 
@@ -638,7 +717,7 @@ function renderMLBGames(){
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
-      ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Total</span><b>${m.total_line}</b></div>` : ""}
+      ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
       <div id="mlb-live-${idx}"></div>

@@ -169,6 +169,20 @@
     color:var(--text-dim);
     margin-top:2px;
   }
+  .now-line{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--amber);
+    margin-top:4px;
+  }
+  .now-line:empty{margin-top:0;}
+  .live-line{
+    margin-left:6px;
+    font-family:var(--mono);
+    font-size:9.5px;
+    font-weight:400;
+    color:var(--blue);
+  }
   .week-select-wrap{
     margin-bottom:14px;
   }
@@ -925,7 +939,7 @@ function mlbPropsBySection(props){
     });
     const playerBlocks = Array.from(byPlayer.values()).map(pl => `
       <details class="prop-player"${pl.pid!=null ? ` data-pid="${pl.pid}"` : ''}>
-        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span><span class="lineup-flag"></span></summary>
+        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span><span class="live-line"></span><span class="lineup-flag"></span></summary>
         ${pl.rows.map(mlbPropStatRow).join("")}
       </details>
     `).join("");
@@ -959,6 +973,58 @@ function fmtGameTime(iso){
   return d.toLocaleString('en-US', {weekday:'short', hour:'numeric', minute:'2-digit', timeZoneName:'short'});
 }
 
+function bvpSection(g, idx){
+  const hasBatters = (g.props||[]).some(p => p.section === "Batting" && p.player_id != null);
+  if(!hasBatters || (!g.awayProbablePitcherId && !g.homeProbablePitcherId)) return "";
+  return `
+    <details class="props-toggle" id="mlb-bvp-${idx}" ontoggle="if(this.open) loadBvP(${idx})">
+      <summary>Batter vs Pitcher <span class="props-sample-tag">(real career stats vs. today's probable starter, fetched live from MLB on expand)</span></summary>
+      <div id="mlb-bvp-body-${idx}"><span class="p-exp">Loading…</span></div>
+    </details>
+  `;
+}
+
+const bvpLoaded = new Set();
+async function loadBvP(idx){
+  if(bvpLoaded.has(idx)) return;
+  bvpLoaded.add(idx);
+  const g = MLB_DATA.games[idx];
+  const body = document.getElementById(`mlb-bvp-body-${idx}`);
+  if(!g || !body) return;
+
+  const pitcherName = new Map([[g.awayProbablePitcherId, g.awayProbablePitcher], [g.homeProbablePitcherId, g.homeProbablePitcher]]);
+  const uniqBatters = new Map();
+  (g.props||[]).forEach(p => {
+    if(p.section === "Batting" && p.player_id != null && !uniqBatters.has(p.player_id)){
+      uniqBatters.set(p.player_id, {name: p.player, team: p.team});
+    }
+  });
+
+  const fetches = Array.from(uniqBatters.entries()).map(([pid, info]) => {
+    const oppPid = info.team === g.homeAbbr ? g.awayProbablePitcherId : (info.team === g.awayAbbr ? g.homeProbablePitcherId : null);
+    if(!oppPid) return Promise.resolve(null);
+    return fetch(`https://statsapi.mlb.com/api/v1/people/${pid}/stats?stats=vsPlayer&opposingPlayerId=${oppPid}&group=hitting`)
+      .then(r => r.json())
+      .then(data => ({info, oppPid, data}))
+      .catch(() => ({info, oppPid, data: null}));
+  });
+
+  let results;
+  try{ results = await Promise.all(fetches); }catch(e){ body.innerHTML = '<span class="p-exp">Live matchup data unavailable right now.</span>'; return; }
+
+  const rows = results.filter(Boolean).map(({info, oppPid, data}) => {
+    const pName = pitcherName.get(oppPid) || "—";
+    const split = data && data.stats && data.stats[0] && data.stats[0].splits && data.stats[0].splits[0];
+    const stat = split && split.stat;
+    if(!stat || !stat.atBats){
+      return `<div class="prop-stat-row"><span class="prop-stat-label">${info.name} <span class="p-team">${info.team}</span></span><span class="p-exp">vs ${pName}: no history</span></div>`;
+    }
+    return `<div class="prop-stat-row"><span class="prop-stat-label">${info.name} <span class="p-team">${info.team}</span></span><span class="count-chip">${stat.hits}-for-${stat.atBats} <b>${stat.avg}</b></span><span class="p-exp">${stat.homeRuns} HR, ${stat.strikeOuts} K, ${stat.baseOnBalls} BB vs ${pName}</span></div>`;
+  }).join("");
+
+  body.innerHTML = rows || '<span class="p-exp">No batter/pitcher matchup data available.</span>';
+}
+
 function renderMLBGames(){
   document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
   const ep = MLB_DATA.elo_params;
@@ -983,6 +1049,7 @@ function renderMLBGames(){
         <div>
           <div class="matchup">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}</div>
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
+          <div class="now-line" id="mlb-nowline-${idx}"></div>
         </div>
         <div class="hold-badge" id="mlb-score-${idx}"></div>
       </div>
@@ -1013,7 +1080,7 @@ function renderMLBGames(){
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
-      <div id="mlb-live-${idx}"></div>
+      ${bvpSection(g, idx)}
     `;
     root.appendChild(card);
   });
@@ -1076,29 +1143,10 @@ async function updateMLBScores(){
 updateMLBScores();
 setInterval(updateMLBScores, 60000);
 
-// ---- Live batter/pitcher stats: separate dropdown per game, fetched
-// client-side (same free keyless API as the scores) so it reflects the
-// actual live box score -- including who's currently up/on the mound --
-// independent of the once/twice-daily site rebuild.
-function mlbLiveStatsTable(nowLine, rows){
-  const body = rows.map(r => `<tr>
-    <td>${r.name} <span class="p-team">${r.team}</span></td>
-    <td>${r.role}</td>
-    <td>${r.line}</td>
-    <td class="${r.statusCls}">${r.statusText}</td>
-  </tr>`).join("");
-  return `
-    <details class="props-toggle">
-      <summary>Live Batter/Pitcher Stats <span class="props-sample-tag">(fetched live from MLB, updates every 60s)</span></summary>
-      ${nowLine ? `<div class="h2h-note" style="border-top:none;padding-top:0;margin-top:6px;">${nowLine}</div>` : ""}
-      <table class="props-table">
-        <thead><tr><th>Player</th><th>Role</th><th>Live line</th><th>Lineup</th></tr></thead>
-        <tbody>${body}</tbody>
-      </table>
-    </details>
-  `;
-}
-
+// ---- Live batter/pitcher stats: injected directly into each player's own
+// collapsible prop block (fetched client-side, same free keyless API as the
+// scores), plus a small "now batting/now pitching" line on the game card.
+// Independent of the once/twice-daily site rebuild.
 const CONFIRMED_ORDER_SLOTS = new Set(['100','200','300','400','500','600','700','800','900']);
 function confirmedStarterIds(sideBox){
   const ids = new Set();
@@ -1112,9 +1160,9 @@ function confirmedStarterIds(sideBox){
 async function updateMLBLiveStats(){
   for(let idx=0; idx<MLB_DATA.games.length; idx++){
     const g = MLB_DATA.games[idx];
-    const el = document.getElementById('mlb-live-'+idx);
-    const card = el ? el.closest('.game') : null;
-    if(!el || !g.gamePk) continue;
+    const nowEl = document.getElementById('mlb-nowline-'+idx);
+    const card = nowEl ? nowEl.closest('.game') : null;
+    if(!card || !g.gamePk) continue;
 
     // Unique players referenced in this game's props (dedup by player_id).
     const uniq = new Map();
@@ -1133,58 +1181,39 @@ async function updateMLBLiveStats(){
       ]);
       box = await boxResp.json();
       line = await lineResp.json();
-    }catch(e){ continue; } // transient network failure: leave dropdown as-is
+    }catch(e){ continue; } // transient network failure: leave everything as-is
 
-    let nowLine = "";
     const off = line.offense || {};
-    if(off.batter || off.pitcher){
+    if(nowEl){
       const parts = [];
       if(off.pitcher) parts.push(`Now pitching: <b>${off.pitcher.fullName}</b>`);
       if(off.batter) parts.push(`Now batting: <b>${off.batter.fullName}</b>`);
-      nowLine = parts.join(' &middot; ');
+      nowEl.innerHTML = parts.join(' &middot; ');
     }
 
     const homeStarters = confirmedStarterIds(box.teams && box.teams.home);
     const awayStarters = confirmedStarterIds(box.teams && box.teams.away);
 
-    const rows = [];
     for(const [pid, info] of uniq){
+      const propRow = card.querySelector(`.prop-player[data-pid="${pid}"]`);
+      if(!propRow) continue;
+
       const side = info.team===g.homeAbbr ? 'home' : (info.team===g.awayAbbr ? 'away' : null);
       const p = side && box.teams && box.teams[side] ? box.teams[side].players['ID'+pid] : null;
-      let stat = null;
-      if(p){
-        stat = info.role==='P' ? p.stats?.pitching : p.stats?.batting;
-      }
+      const stat = p ? (info.role==='P' ? p.stats?.pitching : p.stats?.batting) : null;
       const played = stat && (info.role==='P' ? stat.inningsPitched && stat.inningsPitched!=='0.0' : (stat.atBats||0)>0 || (stat.baseOnBalls||0)>0 || (stat.hitByPitch||0)>0);
 
-      let statusText = "", statusCls = "";
+      const liveEl = propRow.querySelector('.live-line');
+      if(liveEl) liveEl.textContent = played ? (stat.summary || '') : '';
+
       if(info.role==='B'){
         const starters = side==='home' ? homeStarters : awayStarters;
         const lineupPosted = starters.size > 0;
-        if(!lineupPosted){ statusText = "Lineup TBD"; statusCls = ""; }
-        else if(starters.has(pid)){ statusText = "&#10003; Starting"; statusCls = "hit"; }
-        else { statusText = "NOT starting"; statusCls = "miss"; }
-
-        // Also flag it right on the Player Props table row, not just this
-        // dropdown -- only show the warning case inline to avoid clutter.
-        if(card){
-          const propRow = card.querySelector(`.prop-player[data-pid="${pid}"]`);
-          if(propRow){
-            const flagEl = propRow.querySelector('.lineup-flag');
-            if(flagEl) flagEl.innerHTML = (lineupPosted && !starters.has(pid))
-              ? '<span class="miss">&#9888; NOT in today\'s lineup</span>' : '';
-          }
-        }
+        const flagEl = propRow.querySelector('.lineup-flag');
+        if(flagEl) flagEl.innerHTML = (lineupPosted && !starters.has(pid))
+          ? '<span class="miss">&#9888; NOT in today\'s lineup</span>' : '';
       }
-
-      rows.push({
-        name: info.name, team: info.team, role: info.role==='P' ? 'Pitcher' : 'Batter',
-        line: played ? (stat.summary || '—') : '<span style="color:var(--text-dim)">Pregame / not yet up</span>',
-        statusText, statusCls,
-      });
     }
-
-    el.innerHTML = mlbLiveStatsTable(nowLine, rows);
   }
 }
 updateMLBLiveStats();

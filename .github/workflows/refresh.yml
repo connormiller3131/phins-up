@@ -75,10 +75,30 @@ jobs:
       - name: Build static site
         run: python pipeline/nfl/build_static_site.py
 
+      # main can move forward while this ~30-40min pipeline is running (a
+      # manual code push, another workflow run), which makes a plain `git
+      # push` fail with a rejected non-fast-forward -- this happened for
+      # real once a manual push landed mid-run. docs/index.html and
+      # docs/results/ are fully regenerated every run (not incrementally
+      # patched), so there's no real content to reconcile on a collision:
+      # retry by re-basing the commit onto whatever is newest and pushing
+      # again, rather than just failing.
       - name: Commit and push updated site
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/results/
-          git diff --quiet --cached || git commit -m "Auto-refresh NFL + MLB projections"
-          git push
+          for i in 1 2 3 4 5; do
+            git add docs/index.html docs/results/
+            if git diff --quiet --cached; then
+              echo "Nothing to commit."
+              break
+            fi
+            git commit -m "Auto-refresh NFL + MLB projections"
+            git fetch origin main
+            if git push origin main; then
+              break
+            fi
+            echo "Push rejected (remote moved), retrying on top of the latest main..."
+            git reset --soft origin/main
+            sleep 5
+          done

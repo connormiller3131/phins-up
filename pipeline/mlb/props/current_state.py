@@ -48,11 +48,11 @@ def batter_opponent_current_trailing(stat_col):
     return _current_trailing_defense(df, stat_col)
 
 
-def pitcher_current_trailing():
+def pitcher_current_trailing(stat_col: str = "strikeouts"):
     df = pd.read_parquet(DATA_DIR / "pitcher_game_logs.parquet")
-    return _current_trailing(df, "strikeouts")
+    return _current_trailing(df, stat_col)
 
 
-def pitcher_opponent_current_trailing():
+def pitcher_opponent_current_trailing(stat_col: str = "strikeouts"):
     df = pd.read_parquet(DATA_DIR / "pitcher_game_logs.parquet")
-    return _current_trailing_defense(df, "strikeouts")
+    return _current_trailing_defense(df, stat_col)

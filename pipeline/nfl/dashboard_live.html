@@ -537,7 +537,7 @@
   <header>
     <p class="eyebrow" id="mlb-eyebrow"></p>
     <h1>PHINS <span>UP</span></h1>
-    <p class="sub">Same pipeline as NFL: an Elo rating fit and backtested on real 2023-2025 game results (pybaseball), carried forward daily. Player props use each team's probable starting pitcher (real, from MLB's schedule feed) and the 3 batters with the most recent playing time per team — we don't have a confirmed daily lineup source, so that's a proxy for "everyday player," not a locked-in lineup.</p>
+    <p class="sub">Same pipeline as NFL: an Elo rating fit and backtested on real 2023-2025 game results (pybaseball), carried forward daily. Player props cover each team's probable starting pitcher and full 9-batter lineup by recent playing time — we don't have a confirmed daily lineup source, so that's a proxy for "everyday player," not a locked-in batting order. Batting: Hits, Total Bases, Walks, RBI, Anytime HR. Pitching: Strikeouts, Hits/Walks/Runs Allowed, Outs Recorded.</p>
     <div class="metabar">
       <span class="dot"></span>
       <b id="mlb-meta"></b>
@@ -834,43 +834,69 @@ async function loadGameResult(season, week, g, idx){
 renderGames();
 
 // ============ MLB ============
-function propFairOver(over, under){
-  if(over==null || under==null) return null;
-  const ip = (o) => o < 0 ? (-o)/(-o+100) : 100/(o+100);
-  const pO = ip(over), pU = ip(under);
-  return pO / (pO + pU);
+function hrAdvice(p){
+  // Same edge-vs-real-DK-price tiers as NFL's Anytime TD grading.
+  if(p.dk_implied_prob == null){
+    return {label:"RISKY", cls:"risky", note:"no DK line posted yet"};
+  }
+  const edge = p.model_prob - p.dk_implied_prob;
+  if(edge >= 0.05) return {label:"TAKE", cls:"good", note:`+${(edge*100).toFixed(1)}% edge vs DK`};
+  if(edge >= 0) return {label:"MAYBE", cls:"decent", note:`+${(edge*100).toFixed(1)}% edge vs DK`};
+  return {label:"PASS", cls:"no", note:`${(edge*100).toFixed(1)}% edge vs DK`};
 }
 
-function mlbPropRow(p, hasDK){
-  const dkCell = hasDK ? (
-    p.dk_over!=null
-      ? `<td>O ${fmtOdds(p.dk_over)}${p.dk_under!=null ? ' / U '+fmtOdds(p.dk_under) : ''}
-         <span class="p-exp">${p.dk_under!=null ? 'fair '+pct(propFairOver(p.dk_over,p.dk_under))+' over' : ''}</span></td>`
-      : `<td><span class="p-exp">—</span></td>`
-  ) : "";
-  const pidAttr = p.player_id!=null ? ` data-pid="${p.player_id}"` : "";
-  const nameCell = `${p.player} <span class="p-team">${p.team}</span><span class="lineup-flag"></span>`;
+function mlbPropStatRow(p){
+  const dkNote = p.dk_over!=null
+    ? `<span class="count-chip">DK ${p.dk_line!=null ? p.dk_line+' ' : ''}<b>${fmtOdds(p.dk_over)}</b>${p.dk_under!=null ? ' / '+fmtOdds(p.dk_under) : ''}</span>`
+    : "";
   if(p.market === "Anytime HR"){
-    return `<tr${pidAttr}>
-      <td>${nameCell}</td>
-      <td>Anytime HR</td>
-      <td>${p.dk_line!=null ? p.dk_line : '—'}</td>
-      ${dkCell}
-      <td class="p-model">${pct(p.model_prob)}</td>
-    </tr>`;
+    const advice = hrAdvice(p);
+    return `<div class="prop-stat-row">
+      <span class="prop-stat-label">Anytime HR</span>
+      <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
+      ${dkNote}
+    </div>`;
   }
-  return `<tr${pidAttr}>
-    <td>${nameCell}</td>
-    <td>${p.market}</td>
-    <td>${p.line}</td>
-    ${dkCell}
-    <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
-  </tr>`;
+  if(p.ladder && p.ladder.length){
+    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
+    return `<div class="prop-stat-row">
+      <span class="prop-stat-label">${p.market}</span>
+      <span class="ladder">${chips}</span>
+      <span class="p-exp">proj ${p.projected}</span>
+      ${dkNote}
+    </div>`;
+  }
+  return `<div class="prop-stat-row">
+    <span class="prop-stat-label">${p.market}</span>
+    <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
+    <span class="p-exp">proj ${p.projected}</span>
+    ${dkNote}
+  </div>`;
+}
+
+function mlbPropsBySection(props){
+  const sections = ["Batting", "Pitching"];
+  return sections.map(sec => {
+    const secProps = (props||[]).filter(p => p.section === sec);
+    if(!secProps.length) return "";
+    const byPlayer = new Map();
+    secProps.forEach(p => {
+      const key = p.player + "|" + p.team;
+      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, pid:p.player_id, rows:[]});
+      byPlayer.get(key).rows.push(p);
+    });
+    const playerBlocks = Array.from(byPlayer.values()).map(pl => `
+      <div class="prop-player"${pl.pid!=null ? ` data-pid="${pl.pid}"` : ''}>
+        <div class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="lineup-flag"></span></div>
+        ${pl.rows.map(mlbPropStatRow).join("")}
+      </div>
+    `).join("");
+    return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
+  }).join("");
 }
 
 function mlbPropsTable(props, combo, featured){
   const hasDK = !!featured;
-  const rows = (props||[]).map(p => mlbPropRow(p, hasDK)).join("");
   const comboHtml = combo ? `
     <div class="h2h-note" style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;">
       SPECIAL — ${combo.player_a} (${pct(combo.prob_a)}) or ${combo.player_b} (${pct(combo.prob_b)}) to homer:
@@ -878,15 +904,12 @@ function mlbPropsTable(props, combo, featured){
     </div>` : "";
   if(!props || !props.length) return comboHtml;
   const tag = hasDK
-    ? '(FEATURED — real DraftKings lines &amp; odds; model % re-aimed at the DK line)'
-    : '(probable pitcher + top-3 recent batters per team — line = trailing average)';
+    ? '(FEATURED — real DraftKings lines &amp; odds on some props; Anytime HR graded against the real price)'
+    : '(probable pitcher + full lineup by recent playing time — line = trailing average)';
   return `
     <details class="props-toggle" ${hasDK ? 'open' : ''}>
       <summary>Player Props ${hasDK ? '<span style="color:var(--green)">★</span>' : ''} <span class="props-sample-tag">${tag}</span></summary>
-      <table class="props-table">
-        <thead><tr><th>Player</th><th>Market</th><th>Line</th>${hasDK ? '<th>DK Odds</th>' : ''}<th>Model %</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
+      ${mlbPropsBySection(props)}
       ${comboHtml}
     </details>
   `;
@@ -938,14 +961,14 @@ function renderMLBGames(){
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.awayProbablePitcher || "—"}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlAway : null)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(1-fairHome) : "—"}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(1-fairHome) : "—"}</b>${g.good_value_away ? `<span class="value-tag" title="Model win % beats the market fair %">GOOD VALUE</span>` : ''}</div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
         </div>
         <div class="side">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.homeProbablePitcher || "—"}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlHome : null)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(fairHome) : "—"}</b></div>
+          <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(fairHome) : "—"}</b>${g.good_value_home ? `<span class="value-tag" title="Model win % beats the market fair %">GOOD VALUE</span>` : ''}</div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
@@ -958,9 +981,9 @@ function renderMLBGames(){
   });
 
   document.getElementById("mlb-foot").innerHTML =
-    `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons including the 60-game 2020 season) and backtested out-of-sample on every 2026 game played so far -- Brier 0.249, 54.3% accuracy, essentially tied with a market-favorite baseline. MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound. ` +
-    `<b>Player props:</b> the probable starting pitcher (real, from MLB's own schedule feed) gets a strikeouts projection; each team's 3 batters with the most recent plate-appearance volume among currently active roster players get hits/total-bases/anytime-HR projections -- filtered against each team's real active 26-man roster so injured/inactive players (e.g. someone on the IL) don't show up, but it's still a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
-    `<b>★ Featured game:</b> the day's most competitive matchup also shows real DraftKings prop lines and over/under prices (with the no-vig fair %), and its Model % is recomputed against DK's actual line rather than the trailing-average proxy. Only one game gets this because per-game prop-odds API calls are expensive on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
+    `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>GOOD VALUE</b> flags a side where Model win % beats that market fair %. <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons including the 60-game 2020 season) and backtested out-of-sample on every 2026 game played so far -- Brier 0.249, 54.3% accuracy, essentially tied with a market-favorite baseline. MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound. ` +
+    `<b>Player props:</b> each probable starting pitcher (real, from MLB's own schedule feed) and each team's full 9-batter lineup by recent plate-appearance volume among currently active roster players -- filtered against each team's real active 26-man roster so injured/inactive players (e.g. someone on the IL) don't show up, but it's still a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and Runs/Hits/Walks Allowed are derived from Statcast's play-by-play score deltas (verified exactly against a real box score before shipping); Outs Recorded is real innings pitched in disguise. Stolen bases and earned-run splits aren't included -- Statcast's pitch-level feed doesn't reliably attribute the former to a specific player, and the earned/unearned distinction requires official-scorer judgment we can't derive from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
+    `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices for markets that have a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs), and Model % is recomputed against DK's actual line rather than the trailing-average proxy where available. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds because per-game prop-odds API calls cost credits per market on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
     `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting/pitching and every shown player's actual in-game line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
 }
 
@@ -1059,7 +1082,7 @@ async function updateMLBLiveStats(){
     const uniq = new Map();
     (g.props||[]).forEach(p => {
       if(p.player_id!=null && !uniq.has(p.player_id)){
-        uniq.set(p.player_id, {name: p.player, team: p.team, role: p.market==='Pitcher Strikeouts' ? 'P' : 'B'});
+        uniq.set(p.player_id, {name: p.player, team: p.team, role: p.section==='Pitching' ? 'P' : 'B'});
       }
     });
     if(uniq.size===0) continue;
@@ -1107,7 +1130,7 @@ async function updateMLBLiveStats(){
         // Also flag it right on the Player Props table row, not just this
         // dropdown -- only show the warning case inline to avoid clutter.
         if(card){
-          const propRow = card.querySelector(`tr[data-pid="${pid}"]`);
+          const propRow = card.querySelector(`.prop-player[data-pid="${pid}"]`);
           if(propRow){
             const flagEl = propRow.querySelector('.lineup-flag');
             if(flagEl) flagEl.innerHTML = (lineupPosted && !starters.has(pid))

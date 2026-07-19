@@ -53,15 +53,15 @@ def _build(df, stat_col):
 
 
 def build_batter_prop_table(stat_col: str):
-    """stat_col in {hits, total_bases, home_runs, strikeouts}"""
+    """stat_col in {hits, total_bases, home_runs, strikeouts, walks, rbi}"""
     df = pd.read_parquet(DATA_DIR / "batter_game_logs.parquet")
     return _build(df, stat_col)
 
 
-def build_pitcher_prop_table():
-    """Pitcher strikeouts."""
+def build_pitcher_prop_table(stat_col: str = "strikeouts"):
+    """stat_col in {strikeouts, hits_allowed, walks_allowed, runs_allowed, outs_recorded}"""
     df = pd.read_parquet(DATA_DIR / "pitcher_game_logs.parquet")
-    return _build(df, "strikeouts")
+    return _build(df, stat_col)
 
 
 if __name__ == "__main__":

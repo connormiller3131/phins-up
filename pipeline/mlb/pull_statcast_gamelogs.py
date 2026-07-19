@@ -2,15 +2,32 @@
 three tables (keeping peak memory bounded instead of holding 2-3 full
 seasons of raw pitch data at once):
 
-1. batter_game_logs -- hits/TB/HR/K + est_woba (quality of contact, from
-   Statcast's own expected-outcome model) per batter per game.
-2. pitcher_game_logs -- strikeouts/batters_faced + run_value (sum of
-   delta_pitcher_run_exp, Statcast's context-neutral run-expectancy
-   contribution -- positive is good for the pitcher, confirmed empirically:
-   a home run is about -1.7, a strikeout about +0.22) per pitcher per game,
-   plus an is_starter flag (the pitcher with the most batters faced for
-   that team that game -- an approximation that can misfire on true
-   bullpen/opener games, a known simplification).
+1. batter_game_logs -- hits/TB/HR/K/walks/RBI + est_woba (quality of
+   contact, from Statcast's own expected-outcome model) per batter per
+   game. RBI is approximated as post_bat_score - bat_score per plate
+   appearance (the batting team's score change on that specific play,
+   clipped at 0) -- verified exactly against a real box score (Trevor
+   Story 3 RBI, Marcell Ozuna 1 RBI) before being trusted here. Stolen
+   bases are NOT included: Statcast's pitch-level feed only records them
+   in free-text play descriptions attached to an unrelated batter's PA,
+   not as a structured, reliably attributable field.
+2. pitcher_game_logs -- strikeouts/hits_allowed/walks_allowed/runs_allowed
+   /outs_recorded/batters_faced + run_value (sum of delta_pitcher_run_exp,
+   Statcast's context-neutral run-expectancy contribution -- positive is
+   good for the pitcher, confirmed empirically: a home run is about -1.7,
+   a strikeout about +0.22) per pitcher per game, plus an is_starter flag
+   (the pitcher with the most batters faced for that team that game -- an
+   approximation that can misfire on true bullpen/opener games, a known
+   simplification). runs_allowed is post_bat_score - bat_score (NOT
+   fld_score -- the fielding team's own score doesn't move when they
+   allow a run, an easy sign error caught by validating against a real
+   game before shipping); it's total runs, not earned runs (earned/
+   unearned requires official-scorer judgment on errors that isn't
+   derivable from pitch-level data). outs_recorded comes from mapping each
+   PA-ending event to its out count (most outs=1, double plays=2, etc.).
+   Both verified exactly against a real box score (Bryce Elder: 3 runs,
+   6 hits, 3 BB, 16 outs = 5.1 IP; Garrett Crochet: 1 run, 5 hits, 2 BB,
+   21 outs = 7.0 IP).
 3. pitcher_pitch_profile -- monthly per-pitcher-per-pitch-type velocity/
    movement/usage, the raw ingredient for a pitcher "signature".
 4. batter_vs_hand_logs -- hits/TB/HR/K per batter per game, split by the
@@ -36,6 +53,12 @@ DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 HIT_TB = {"single": 1, "double": 2, "triple": 3, "home_run": 4}
+WALK_EVENTS = {"walk", "intent_walk"}
+OUT_EVENTS = {
+    "field_out": 1, "strikeout": 1, "force_out": 1, "sac_fly": 1, "sac_bunt": 1,
+    "fielders_choice_out": 1, "strikeout_double_play": 2, "double_play": 2,
+    "grounded_into_double_play": 2, "sac_fly_double_play": 2, "triple_play": 3,
+}
 
 TODAY = datetime.date.today()
 SEASON_MONTHS = []
@@ -83,20 +106,29 @@ def aggregate_chunk(df):
     pa["tb"] = pa["events"].map(HIT_TB).fillna(0).astype(int)
     pa["is_hr"] = (pa["events"] == "home_run").astype(int)
     pa["is_k"] = pa["events"].str.contains("strikeout", na=False).astype(int)
+    pa["is_bb"] = pa["events"].isin(WALK_EVENTS).astype(int)
+    # RBI/runs-allowed are both the batting team's score change on this PA
+    # (post_bat_score - bat_score); credited to the batter for RBI and to
+    # the pitcher for runs allowed. NOT fld_score -- the fielding team's own
+    # score doesn't move when they allow a run, confirmed by validating
+    # against a real box score before shipping (see module docstring).
+    pa["runs_this_pa"] = (pa["post_bat_score"] - pa["bat_score"]).clip(lower=0)
+    pa["outs_this_pa"] = pa["events"].map(OUT_EVENTS).fillna(0).astype(int)
 
     batter_game = (
         pa.groupby(["game_pk", "game_date", "batter", "batter_team", "batter_opp"])
         .agg(hits=("is_hit", "sum"), total_bases=("tb", "sum"), home_runs=("is_hr", "sum"),
-             strikeouts=("is_k", "sum"), pa_count=("is_hit", "size"),
-             est_woba=("estimated_woba_using_speedangle", "mean"))
+             strikeouts=("is_k", "sum"), walks=("is_bb", "sum"), rbi=("runs_this_pa", "sum"),
+             pa_count=("is_hit", "size"), est_woba=("estimated_woba_using_speedangle", "mean"))
         .reset_index()
         .rename(columns={"batter": "player_id", "batter_team": "team", "batter_opp": "opponent_team"})
     )
 
     pitcher_game = (
         pa.groupby(["game_pk", "game_date", "pitcher", "batter_opp", "batter_team"])
-        .agg(strikeouts=("is_k", "sum"), batters_faced=("is_k", "size"),
-             run_value=("delta_pitcher_run_exp", "sum"))
+        .agg(strikeouts=("is_k", "sum"), hits_allowed=("is_hit", "sum"), walks_allowed=("is_bb", "sum"),
+             runs_allowed=("runs_this_pa", "sum"), outs_recorded=("outs_this_pa", "sum"),
+             batters_faced=("is_k", "size"), run_value=("delta_pitcher_run_exp", "sum"))
         .reset_index()
         .rename(columns={"pitcher": "player_id", "batter_opp": "team", "batter_team": "opponent_team"})
     )

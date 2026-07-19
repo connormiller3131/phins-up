@@ -329,6 +329,73 @@
   .props-table .p-exp{color:var(--text-dim);font-size:10px;}
   .lineup-flag{margin-left:6px;font-family:var(--mono);font-size:9.5px;font-weight:600;}
 
+  .prop-section{margin-top:14px;}
+  .prop-section:first-child{margin-top:2px;}
+  .prop-section-title{
+    font-family:var(--disp);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--line);
+    padding-bottom:4px;
+    margin-bottom:8px;
+  }
+  .prop-player{
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .prop-player:last-child{border-bottom:none;}
+  .prop-player-name{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .prop-player-name .p-team{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px;}
+  .prop-stat-row{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:11px;
+    padding:3px 0;
+  }
+  .prop-stat-label{color:var(--text-dim);min-width:96px;}
+  .ladder{display:flex;flex-wrap:wrap;gap:5px;}
+  .ladder-chip{
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 7px;
+    font-size:10.5px;
+    color:var(--text-dim);
+    white-space:nowrap;
+  }
+  .ladder-chip b{color:var(--blue);font-weight:600;}
+  .count-chip{
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 7px;
+    font-size:10.5px;
+    white-space:nowrap;
+  }
+  .count-chip b{color:var(--blue);font-weight:600;}
+  .td-chip{
+    background:var(--amber-dim);
+    border:1px solid var(--amber);
+    border-radius:5px;
+    padding:2px 8px;
+    font-size:10.5px;
+    color:var(--amber);
+    font-weight:600;
+    white-space:nowrap;
+  }
+
   .placeholder{
     background:var(--panel);
     border:1px dashed var(--line);
@@ -457,33 +524,55 @@ function edgeColor(edge){
   return {bg:"var(--amber-dim)", fg:"var(--amber)"};
 }
 
-function propRow(p){
+function propStatRow(p){
   if(p.market === "Anytime TD"){
-    return `<tr>
-      <td>${p.player} <span class="p-team">${p.team}</span></td>
-      <td>Anytime TD</td>
-      <td>—</td>
-      <td class="p-model">${pct(p.model_prob)}</td>
-    </tr>`;
+    return `<div class="prop-stat-row">
+      <span class="prop-stat-label">Anytime TD</span>
+      <span class="td-chip">${pct(p.model_prob)}</span>
+    </div>`;
   }
-  return `<tr>
-    <td>${p.player} <span class="p-team">${p.team}</span></td>
-    <td>${p.market}</td>
-    <td>${p.line}</td>
-    <td class="p-model">${pct(p.model_over_prob)} over <span class="p-exp">(proj ${p.projected})</span></td>
-  </tr>`;
+  if(p.ladder && p.ladder.length){
+    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
+    return `<div class="prop-stat-row">
+      <span class="prop-stat-label">${p.market}</span>
+      <span class="ladder">${chips}</span>
+      <span class="p-exp">proj ${p.projected}</span>
+    </div>`;
+  }
+  return `<div class="prop-stat-row">
+    <span class="prop-stat-label">${p.market}</span>
+    <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
+    <span class="p-exp">proj ${p.projected}</span>
+  </div>`;
+}
+
+function propsBySection(props){
+  const sections = ["Passing", "Rushing", "Receiving"];
+  return sections.map(sec => {
+    const secProps = props.filter(p => p.section === sec);
+    if(!secProps.length) return "";
+    const byPlayer = new Map();
+    secProps.forEach(p => {
+      const key = p.player + "|" + p.team;
+      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, rows:[]});
+      byPlayer.get(key).rows.push(p);
+    });
+    const playerBlocks = Array.from(byPlayer.values()).map(pl => `
+      <div class="prop-player">
+        <div class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span></div>
+        ${pl.rows.map(propStatRow).join("")}
+      </div>
+    `).join("");
+    return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
+  }).join("");
 }
 
 function propsTable(props){
   if(!props || !props.length) return "";
-  const rows = props.map(propRow).join("");
   return `
     <details class="props-toggle">
-      <summary>Player Props <span class="props-sample-tag">(current depth-chart starters — line = trailing average, see footer)</span></summary>
-      <table class="props-table">
-        <thead><tr><th>Player</th><th>Market</th><th>Line</th><th>Model %</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
+      <summary>Player Props <span class="props-sample-tag">(full starting offense, current depth chart — line = trailing average, see footer)</span></summary>
+      ${propsBySection(props)}
     </details>
   `;
 }

@@ -143,26 +143,48 @@ def elo_predictions_for_season(games_df, season_sched):
     return out, elo_params
 
 
+STARTER_DEPTH = {"QB": 1, "RB": 2, "WR": 3, "TE": 1}  # how many ranks deep to pull per position
+
+
 def get_starters(target_season):
+    """Full starting-offense depth chart per team: QB1, RB1-2, WR1-3, TE1."""
     import nflreadpy as nfl
     dc = nfl.load_depth_charts(seasons=[target_season]).to_pandas()
     latest_dt = dc["dt"].max()
     dc = dc[dc["dt"] == latest_dt]
 
-    starters = {}  # team -> {"QB": gsis_id, "RB": gsis_id, "WR": gsis_id}
+    starters = {}  # team -> {"QB": [gsis_id], "RB": [gsis_id, ...], "WR": [...], "TE": [...]}
     for team, grp in dc.groupby("team"):
         picks = {}
-        for pos in ("QB", "RB", "WR"):
-            row = grp[(grp["pos_abb"] == pos) & (grp["pos_rank"] == 1)]
-            if len(row) and pd.notna(row.iloc[0]["gsis_id"]):
-                picks[pos] = row.iloc[0]["gsis_id"]
+        for pos, depth in STARTER_DEPTH.items():
+            rows = grp[(grp["pos_abb"] == pos) & (grp["pos_rank"] <= depth)].sort_values("pos_rank")
+            ids = [r.gsis_id for r in rows.itertuples(index=False) if pd.notna(r.gsis_id)]
+            if ids:
+                picks[pos] = ids
         starters[team] = picks
     return starters, latest_dt
 
 
-def prepare_yardage_model(stat_col, positions):
-    """Fit the RidgeCV model ONCE on full history. It doesn't depend on which
-    target week we're projecting, so every game/week reuses this same fit."""
+YARDAGE_LADDER_OFFSETS = (-20, -10, 0, 10, 20)
+
+
+def yardage_ladder(pred_mean, resid_std, own_avg):
+    """Lines in steps of 10 around the player's current trailing average,
+    e.g. 190/200/210/220/230 for a receiver averaging ~207 yds/game."""
+    base = max(round(own_avg / 10) * 10, 10)
+    ladder = []
+    for off in YARDAGE_LADDER_OFFSETS:
+        line = base + off
+        if line <= 0:
+            continue
+        ladder.append({"line": float(line), "over_prob": round(float(yardage_over_prob(pred_mean, resid_std, line)), 3)})
+    return ladder
+
+
+def prepare_count_model(stat_col, positions):
+    """Fit a RidgeCV model ONCE on full history for any continuous/count stat
+    (yards, completions, attempts, carries, receptions...). Doesn't depend on
+    the target week, so every game/week across the whole season reuses it."""
     hist = build_prop_table(stat_col, positions)
     model = RidgeCV(alphas=np.logspace(-1, 3, 25))
     model.fit(hist[FEATURES].values, hist["actual"].values)
@@ -174,22 +196,27 @@ def prepare_yardage_model(stat_col, positions):
     }
 
 
-def project_yardage(prep, player_id, opp_team, env):
+def project_count(prep, player_id, opp_team, env, with_ladder=False):
     own, defense = prep["own"], prep["defense"]
     if player_id not in own.index or opp_team not in defense.index:
         return None
 
     own_avg = float(own.loc[player_id, "current_avg"])
     opp_avg = float(defense.loc[opp_team])
+    if pd.isna(own_avg) or pd.isna(opp_avg):
+        return None  # fewer than MIN_GAMES of trailing history (rookie/deep backup) -- no basis to project
     feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
     pred_mean = float(prep["model"].predict(feat_row)[0])
     line = round(own_avg * 2) / 2
     over_prob = float(yardage_over_prob(pred_mean, prep["resid_std"], line))
-    return {
+    out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(over_prob, 3),
         "player_display_name": own.loc[player_id, "player_display_name"],
         "games_played": int(own.loc[player_id, "games_played"]),
     }
+    if with_ladder:
+        out["ladder"] = yardage_ladder(pred_mean, prep["resid_std"], own_avg)
+    return out
 
 
 def prepare_td_model():
@@ -210,42 +237,73 @@ def project_td(prep, player_id, opp_team, env):
 
     own_avg = float(own.loc[player_id, "current_avg"])
     opp_avg = float(defense.loc[opp_team])
+    if pd.isna(own_avg) or pd.isna(opp_avg):
+        return None
     feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
     prob = float(prep["model"].predict_proba(feat_row)[:, 1][0])
     return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
+
+
+def _prop_entry(section, market, team, r, ladder=False):
+    e = {"section": section, "player": r["player_display_name"], "team": team, "market": market,
+         "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]}
+    if ladder and r.get("ladder"):
+        e["ladder"] = r["ladder"]
+    return e
+
+
+def _td_entry(section, team, player_name, t):
+    return {"section": section, "player": player_name, "team": team, "market": "Anytime TD", "model_prob": t["model_prob"]}
 
 
 def build_props_for_team(team, opp_team, starters, env, models):
     entries = []
     picks = starters.get(team, {})
 
-    if "QB" in picks:
-        r = project_yardage(models["qb"], picks["QB"], opp_team, env)
+    for qb_id in picks.get("QB", []):
+        r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append({"player": r["player_display_name"], "team": team, "market": "Passing Yds",
-                             "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
+            entries.append(_prop_entry("Passing", "Passing Yds", team, r, ladder=True))
+        rt = project_count(models["passing_tds"], qb_id, opp_team, env)
+        if rt:
+            entries.append(_prop_entry("Passing", "Passing TDs", team, rt))
+        rc = project_count(models["completions"], qb_id, opp_team, env)
+        if rc:
+            entries.append(_prop_entry("Passing", "Completions", team, rc))
+        ra = project_count(models["attempts"], qb_id, opp_team, env)
+        if ra:
+            entries.append(_prop_entry("Passing", "Pass Attempts", team, ra))
 
-    if "RB" in picks:
-        r = project_yardage(models["rb"], picks["RB"], opp_team, env)
+    for rb_id in picks.get("RB", []):
+        r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append({"player": r["player_display_name"], "team": team, "market": "Rushing Yds",
-                             "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
-        t = project_td(models["td"], picks["RB"], opp_team, env)
-        if t:
-            entries.append({"player": r["player_display_name"] if r else None, "team": team, "market": "Anytime TD",
-                             "model_prob": t["model_prob"]})
+            entries.append(_prop_entry("Rushing", "Rushing Yds", team, r, ladder=True))
+        rc = project_count(models["carries"], rb_id, opp_team, env)
+        if rc:
+            entries.append(_prop_entry("Rushing", "Carries", team, rc))
+        t = project_td(models["td"], rb_id, opp_team, env)
+        if t and r:
+            entries.append(_td_entry("Rushing", team, r["player_display_name"], t))
+        rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True)
+        if rr:
+            entries.append(_prop_entry("Receiving", "Receiving Yds", team, rr, ladder=True))
+        rec = project_count(models["receptions"], rb_id, opp_team, env)
+        if rec:
+            entries.append(_prop_entry("Receiving", "Receptions", team, rec))
 
-    if "WR" in picks:
-        r = project_yardage(models["wr"], picks["WR"], opp_team, env)
-        if r:
-            entries.append({"player": r["player_display_name"], "team": team, "market": "Receiving Yds",
-                             "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]})
-        t = project_td(models["td"], picks["WR"], opp_team, env)
-        if t:
-            entries.append({"player": r["player_display_name"] if r else None, "team": team, "market": "Anytime TD",
-                             "model_prob": t["model_prob"]})
+    for wrte_pos in ("WR", "TE"):
+        for pid in picks.get(wrte_pos, []):
+            r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True)
+            if r:
+                entries.append(_prop_entry("Receiving", "Receiving Yds", team, r, ladder=True))
+            rec = project_count(models["receptions"], pid, opp_team, env)
+            if rec:
+                entries.append(_prop_entry("Receiving", "Receptions", team, rec))
+            t = project_td(models["td"], pid, opp_team, env)
+            if t and r:
+                entries.append(_td_entry("Receiving", team, r["player_display_name"], t))
 
-    return [e for e in entries if e.get("player")]
+    return entries
 
 
 def env_fill_values(games_df):
@@ -285,9 +343,14 @@ def main():
 
     print("Fitting prop models (once, reused across all weeks)...", flush=True)
     prop_models = {
-        "qb": prepare_yardage_model("passing_yards", ["QB"]),
-        "rb": prepare_yardage_model("rushing_yards", ["RB"]),
-        "wr": prepare_yardage_model("receiving_yards", ["WR", "TE"]),
+        "passing_yards": prepare_count_model("passing_yards", ["QB"]),
+        "passing_tds": prepare_count_model("passing_tds", ["QB"]),
+        "completions": prepare_count_model("completions", ["QB"]),
+        "attempts": prepare_count_model("attempts", ["QB"]),
+        "rushing_yards": prepare_count_model("rushing_yards", ["RB"]),
+        "carries": prepare_count_model("carries", ["RB"]),
+        "receiving_yards": prepare_count_model("receiving_yards", ["RB", "WR", "TE"]),
+        "receptions": prepare_count_model("receptions", ["RB", "WR", "TE"]),
         "td": prepare_td_model(),
     }
     print("Prop models ready.", flush=True)

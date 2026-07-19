@@ -29,6 +29,7 @@ from pipeline.nfl.elo_model import run_elo
 from pipeline.nfl.props.prop_data import build_prop_table
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
 from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
+from pipeline.nfl.props.nfl_td_odds import attach_td_odds
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from scipy.stats import norm
 
@@ -391,6 +392,14 @@ def main():
                 "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,
                 "props": props,
             })
+        if week == current_week:
+            try:
+                attach_td_odds(games_out, names)
+                n_with_td = sum(1 for g in games_out for p in g["props"] if p["market"] == "Anytime TD" and "dk_odds" in p)
+                print(f"  week {week}: attached real DK TD odds to {n_with_td} player props", flush=True)
+            except Exception as e:
+                print(f"  week {week}: TD odds attach failed, continuing without them: {e}", flush=True)
+
         weeks_out[str(week)] = {"games": games_out}
         print(f"  week {week}: {len(games_out)} games, "
               f"{sum(1 for g in games_out if g['market_home_prob'] is not None)} with market odds", flush=True)

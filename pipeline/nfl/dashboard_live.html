@@ -526,9 +526,11 @@ function edgeColor(edge){
 
 function propStatRow(p){
   if(p.market === "Anytime TD"){
+    const dk = p.dk_odds!=null ? `<span class="count-chip">DK <b>${fmtOdds(p.dk_odds)}</b></span>` : "";
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">Anytime TD</span>
       <span class="td-chip">${pct(p.model_prob)}</span>
+      ${dk}
     </div>`;
   }
   if(p.ladder && p.ladder.length){

@@ -34,6 +34,8 @@ jobs:
         run: python pipeline/nfl/backtest_win_prob.py
 
       - name: Generate current-week NFL projections
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python pipeline/nfl/generate_current_week.py
 
       # NOTE: these two MLB pulls currently re-pull the FULL 2024-present

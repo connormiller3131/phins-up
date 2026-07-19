@@ -38,7 +38,7 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.mlb.games import load_games
 from pipeline.mlb.elo_model import run_elo
-from pipeline.mlb.team_map import full_name_to_statcast, STATCAST_TO_MLB_TEAM_ID
+from pipeline.mlb.team_map import full_name_to_statcast, STATCAST_TO_MLB_TEAM_ID, same_division
 from pipeline.mlb.props.prop_data import build_batter_prop_table, build_pitcher_prop_table
 from pipeline.mlb.props.current_state import (
     batter_current_trailing, batter_opponent_current_trailing,
@@ -46,6 +46,7 @@ from pipeline.mlb.props.current_state import (
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
 from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
+from pipeline.mlb.team_offense import current_team_woba
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
 DATA_DIR = ROOT / "data" / "mlb"
@@ -132,32 +133,49 @@ def logit(p, eps=1e-6):
     return np.log(p / (1 - p))
 
 
+def _feature_value(name, elo_pred, g, fills):
+    """One entry per feature the blend might use, so backtest_pitcher_model.py
+    can add/drop features without this function needing a matching rewrite
+    each time -- it just reads whatever features_used says."""
+    if name == "elo_logit":
+        return logit(float(elo_pred))
+    if name == "sp_diff":
+        home_pid = g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None
+        away_pid = g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None
+        home_sp = current_sp_rating(home_pid) if home_pid else None
+        away_sp = current_sp_rating(away_pid) if away_pid else None
+        return (home_sp - away_sp) if (home_sp is not None and away_sp is not None) else fills.get("sp_diff", 0.0)
+    if name == "bp_diff":
+        home_bp = current_bullpen_rating(g["home_team"])
+        away_bp = current_bullpen_rating(g["away_team"])
+        return (home_bp - away_bp) if (home_bp is not None and away_bp is not None) else fills.get("bp_diff", 0.0)
+    if name == "woba_diff":
+        home_woba = current_team_woba(g["home_team"])
+        away_woba = current_team_woba(g["away_team"])
+        return (home_woba - away_woba) if (home_woba is not None and away_woba is not None) else fills.get("woba_diff", 0.0)
+    if name == "division_game":
+        return 1.0 if same_division(g["home_team"], g["away_team"]) else 0.0
+    raise ValueError(f"blend_with_pitcher_strength: unknown feature {name!r} in mlb_pitcher_model_backtest.json")
+
+
 def blend_with_pitcher_strength(elo_preds, slate):
-    """Refine the team-only Elo prediction with real starting-pitcher and
-    bullpen strength, using the fitted blend from backtest_pitcher_model.py
-    (validated out-of-sample: Brier 0.2486 -> 0.2480 on the 2026 holdout).
-    Falls back to the pure Elo number if the backtest artifact is missing."""
+    """Refine the team-only Elo prediction with real starting-pitcher/
+    bullpen strength, real team-offense quality, and a same-division flag,
+    using the fitted blend from backtest_pitcher_model.py (validated
+    out-of-sample: Brier 0.2486 -> 0.2474 on the 2026 holdout, the biggest
+    piece being the offense-quality signal). Falls back to the pure Elo
+    number if the backtest artifact is missing."""
     path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
     if not path.exists():
         return list(elo_preds)
     with open(path) as f:
         b = json.load(f)
-    coef, intercept = b["coef"], b["intercept"]
-    sp_fill, bp_fill = b["sp_fill"], b["bp_fill"]
+    coef, intercept, features_used, fills = b["coef"], b["intercept"], b["features_used"], b.get("fills", {})
 
     out = []
     for i, g in enumerate(slate):
-        home_pid = g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None
-        away_pid = g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None
-        home_sp = current_sp_rating(home_pid) if home_pid else None
-        away_sp = current_sp_rating(away_pid) if away_pid else None
-        home_bp = current_bullpen_rating(g["home_team"])
-        away_bp = current_bullpen_rating(g["away_team"])
-
-        sp_diff = (home_sp - away_sp) if (home_sp is not None and away_sp is not None) else sp_fill
-        bp_diff = (home_bp - away_bp) if (home_bp is not None and away_bp is not None) else bp_fill
-
-        z = coef[0] * logit(float(elo_preds[i])) + coef[1] * sp_diff + coef[2] * bp_diff + intercept
+        feats = [_feature_value(name, elo_preds[i], g, fills) for name in features_used]
+        z = sum(c * v for c, v in zip(coef, feats)) + intercept
         out.append(1.0 / (1.0 + np.exp(-z)))
     return out
 

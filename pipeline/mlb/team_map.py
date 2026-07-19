@@ -50,3 +50,20 @@ STATCAST_TO_MLB_TEAM_ID = {
     "BAL": 110, "BOS": 111, "CHC": 112, "CIN": 113, "CLE": 114, "COL": 115,
     "DET": 116, "HOU": 117, "KC": 118, "LAD": 119, "WSH": 120, "NYM": 121,
 }
+
+
+# Real, fixed 2025-current division alignment (Statcast abbreviations).
+# Used as a win-probability model feature (division_game) -- backtested to
+# improve held-out Brier and accuracy before being deployed.
+DIVISIONS = {
+    "NYY": "AL East", "BOS": "AL East", "TOR": "AL East", "BAL": "AL East", "TB": "AL East",
+    "CLE": "AL Central", "MIN": "AL Central", "KC": "AL Central", "CWS": "AL Central", "DET": "AL Central",
+    "HOU": "AL West", "SEA": "AL West", "TEX": "AL West", "LAA": "AL West", "ATH": "AL West",
+    "ATL": "NL East", "PHI": "NL East", "NYM": "NL East", "MIA": "NL East", "WSH": "NL East",
+    "MIL": "NL Central", "CHC": "NL Central", "STL": "NL Central", "CIN": "NL Central", "PIT": "NL Central",
+    "LAD": "NL West", "SD": "NL West", "AZ": "NL West", "SF": "NL West", "COL": "NL West",
+}
+
+
+def same_division(team_a: str, team_b: str) -> bool:
+    return DIVISIONS.get(team_a) == DIVISIONS.get(team_b)

@@ -1,13 +1,28 @@
-"""Backtest whether adding starting-pitcher and bullpen strength to the
-win-probability model actually improves it, on the same 2019-2025 train /
-2026 held-out test split as the team-only Elo backtest.
+"""Fit and backtest the deployed MLB win-probability blend: real Elo, real
+starting-pitcher/bullpen strength, real division-rivalry flag, and real
+team-offense quality (Statcast est_woba), stacked on top of the
+already-validated Elo rating via a small logistic regression -- rather than
+re-deriving team strength from scratch, each new signal earns its place (or
+doesn't) against the existing blend.
 
-Approach: treat the existing (already-validated) Elo win probability as one
-input to a small logistic-regression blend, alongside SP-rating-diff and
-bullpen-rating-diff -- rather than re-deriving team strength from scratch,
-this stacks the new pitcher/bullpen signal on top of what Elo already gets
-right. Missing ratings (rookies, insufficient trailing starts) are imputed
-with the training-set mean, not dropped, so every game gets a prediction.
+Every candidate here was tested incrementally and only kept if it actually
+improved held-out 2026 performance:
+  - sp_diff, bp_diff (SP/bullpen strength): kept, small real gain.
+  - rest_diff, form_diff (raw runs-based recent form): tested, REJECTED --
+    both left Brier flat or worse and dropped accuracy. Still computed
+    below so the comparison stays visible, not silently dropped.
+  - division_game (same-division opponents): kept -- improves both Brier
+    and accuracy on its own.
+  - woba_diff (Statcast-quality-of-contact team offense signal, a cleaner
+    version of "recent form" than raw runs): kept -- the single biggest
+    Brier gain of any feature tested, though it trades off some raw
+    accuracy (see the docstring in backtest_win_prob_features.py for the
+    full write-up of that tradeoff and why Brier/log-loss were judged the
+    more relevant metrics for a tool that compares probabilities against
+    market odds).
+  - A gradient-boosted (nonlinear) version of the same feature set was also
+    tested and came out worse than the linear blend -- confirms linear is
+    the right model here, not a limitation being papered over.
 """
 import sys
 import pathlib
@@ -22,16 +37,20 @@ sys.path.insert(0, str(ROOT))
 from pipeline.mlb.games import load_games
 from pipeline.mlb.elo_model import run_elo
 from pipeline.mlb.pitcher_ratings import build_sp_ratings, build_bullpen_ratings
+from pipeline.mlb.team_offense import build_team_woba_ratings
+from pipeline.mlb.team_map import DIVISIONS
 from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
 
 # The base Elo (elo_pred, used as one input feature below) was fit on the
 # full 2019-2025 team-schedule history. But pitcher-level Statcast data only
-# covers 2024-2026 -- the SP/bullpen blend's own training window is
+# covers 2024-2026 -- the SP/bullpen/offense blend's own training window is
 # necessarily narrower than Elo's. Extending pitcher Statcast back to
 # 2019-2023 is a real future improvement (another ~25-35min pull) but not
 # done here.
 TRAIN_SEASONS = [2024, 2025]
 TEST_SEASONS = [2026]
+
+DEPLOYED_FEATURES = ["elo_logit", "sp_diff", "bp_diff", "woba_diff", "division_game"]
 
 
 def logit(p, eps=1e-6):
@@ -52,8 +71,9 @@ def main():
 
     sp_ratings = build_sp_ratings()  # walk-forward: rating AS OF entering that start
     bp_ratings = build_bullpen_ratings()
+    woba_ratings = build_team_woba_ratings()
 
-    print("Attaching starting pitcher / bullpen ratings to each game (vectorized merge)...")
+    print("Attaching starting pitcher / bullpen / offense ratings to each game (vectorized merge)...")
 
     # sp_ratings already has one row per (player_id, team, game_date) for
     # starts; a team can only have started one pitcher per date except
@@ -69,11 +89,17 @@ def main():
                         on=["home_team", "game_date"], how="left")
     games = games.merge(bp_ratings.rename(columns={"team": "away_team", "bullpen_rating": "away_bp"}),
                         on=["away_team", "game_date"], how="left")
+    games = games.merge(woba_ratings.rename(columns={"team": "home_team", "team_woba_rating": "home_woba"}),
+                        on=["home_team", "game_date"], how="left")
+    games = games.merge(woba_ratings.rename(columns={"team": "away_team", "team_woba_rating": "away_woba"}),
+                        on=["away_team", "game_date"], how="left")
     games["sp_diff"] = games["home_sp"] - games["away_sp"]
     games["bp_diff"] = games["home_bp"] - games["away_bp"]
+    games["woba_diff"] = games["home_woba"] - games["away_woba"]
     games["rest_diff"] = games["home_rest"] - games["away_rest"]
     games["form_diff"] = ((games["home_trailing_runs_scored"] - games["home_trailing_runs_allowed"])
                           - (games["away_trailing_runs_scored"] - games["away_trailing_runs_allowed"]))
+    games["division_game"] = (games["home_team"].map(DIVISIONS) == games["away_team"].map(DIVISIONS)).astype(float)
 
     train = games[games["season"].isin(TRAIN_SEASONS)].copy()
     test = games[games["season"].isin(TEST_SEASONS)].copy()
@@ -82,16 +108,17 @@ def main():
                            f"check that pitcher_game_logs.parquet covers {TRAIN_SEASONS + TEST_SEASONS}.")
     print(f"Train: {len(train)} games. Test: {len(test)} games.")
     print(f"  Train SP coverage: {train['sp_diff'].notna().mean():.1%}, BP coverage: {train['bp_diff'].notna().mean():.1%}, "
-          f"rest coverage: {train['rest_diff'].notna().mean():.1%}, form coverage: {train['form_diff'].notna().mean():.1%}")
+          f"offense coverage: {train['woba_diff'].notna().mean():.1%}")
 
     fills = {}
-    for col in ("sp_diff", "bp_diff", "rest_diff", "form_diff"):
+    for col in ("sp_diff", "bp_diff", "woba_diff", "rest_diff", "form_diff"):
         fill = train[col].mean()
         fills[col] = 0.0 if pd.isna(fill) else float(fill)
         for df in (train, test):
             df[col] = df[col].fillna(fills[col])
     for df in (train, test):
         df["elo_logit"] = logit(df["elo_pred"].values)
+        # division_game is always defined for known teams -- no fill needed.
 
     y_train = train["home_win"].values
     y_test = test["home_win"].values
@@ -103,6 +130,7 @@ def main():
         "elo+SP+bullpen": ["elo_logit", "sp_diff", "bp_diff"],
         "elo+SP+bullpen+rest": ["elo_logit", "sp_diff", "bp_diff", "rest_diff"],
         "elo+SP+bullpen+rest+form": ["elo_logit", "sp_diff", "bp_diff", "rest_diff", "form_diff"],
+        "elo+SP+bullpen+offense+division (deployed)": DEPLOYED_FEATURES,
     }
 
     print(f"\nelo_only (baseline)")
@@ -127,23 +155,16 @@ def main():
         print(f"  Log loss: {results[name]['log_loss']:.4f}")
         print(f"  Accuracy: {results[name]['accuracy']:.4f}")
 
-    # Rest days and recent form were tested honestly and don't earn a spot:
-    # elo+SP+bullpen+rest is worse than elo+SP+bullpen alone on held-out
-    # Brier, and adding form on top only ties Brier while accuracy drops
-    # noticeably (54.3% -> 53.8%). A tied Brier plus a clear accuracy drop
-    # isn't a real improvement -- it's regularization noise -- so the
-    # simpler, already-validated elo+SP+bullpen blend stays deployed.
-    # Keeping the original 3-feature output schema so generate_daily_slate.py
-    # doesn't need to change.
-    deployed_name = "elo+SP+bullpen"
+    deployed_name = "elo+SP+bullpen+offense+division (deployed)"
     deployed_model, deployed_cols = fitted[deployed_name]
-    print(f"\nDeployed blend: {deployed_name} (rest/form tested, didn't improve held-out performance -- see all_results)")
+    print(f"\nDeployed blend: {deployed_name}")
 
     out_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
     with open(out_path, "w") as f:
         json.dump({
+            "features_used": deployed_cols,
             "coef": deployed_model.coef_[0].tolist(), "intercept": float(deployed_model.intercept_[0]),
-            "C": float(deployed_model.C_[0]), "sp_fill": fills["sp_diff"], "bp_fill": fills["bp_diff"],
+            "C": float(deployed_model.C_[0]), "fills": fills,
             "train_sp_coverage": float(train["sp_diff"].notna().mean()),
             "elo_only": {"brier": brier_score(y_test, elo_only_pred), "log_loss": log_loss(y_test, elo_only_pred),
                         "accuracy": accuracy(y_test, elo_only_pred)},

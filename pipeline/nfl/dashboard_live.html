@@ -386,14 +386,30 @@
   }
   .count-chip b{color:var(--blue);font-weight:600;}
   .td-chip{
-    background:var(--amber-dim);
-    border:1px solid var(--amber);
     border-radius:5px;
     padding:2px 8px;
     font-size:10.5px;
-    color:var(--amber);
     font-weight:600;
     white-space:nowrap;
+    cursor:default;
+  }
+  .td-chip.td-good{background:var(--green-dim);border:1px solid var(--green);color:var(--green);}
+  .td-chip.td-decent{background:var(--amber-dim);border:1px solid var(--amber);color:var(--amber);}
+  .td-chip.td-risky{background:var(--panel-alt);border:1px solid var(--blue);color:var(--blue);}
+  .td-chip.td-no{background:var(--red-dim);border:1px solid var(--red);color:var(--red);}
+  .value-tag{
+    display:inline-block;
+    margin-left:6px;
+    font-family:var(--mono);
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:var(--green);
+    background:var(--green-dim);
+    border:1px solid var(--green);
+    border-radius:4px;
+    padding:1px 5px;
+    vertical-align:middle;
   }
 
   .placeholder{
@@ -524,12 +540,25 @@ function edgeColor(edge){
   return {bg:"var(--amber-dim)", fg:"var(--amber)"};
 }
 
+function tdAdvice(p){
+  // Edge vs. DK's posted price -- graded green/yellow/red. No DK line yet
+  // means no market to confirm the model against, so it's a neutral "risky".
+  if(p.dk_implied_prob == null){
+    return {label:"RISKY", cls:"risky", note:"no DK line posted yet"};
+  }
+  const edge = p.model_prob - p.dk_implied_prob;
+  if(edge >= 0.05) return {label:"TAKE", cls:"good", note:`+${(edge*100).toFixed(1)}% edge vs DK`};
+  if(edge >= 0) return {label:"MAYBE", cls:"decent", note:`+${(edge*100).toFixed(1)}% edge vs DK`};
+  return {label:"PASS", cls:"no", note:`${(edge*100).toFixed(1)}% edge vs DK`};
+}
+
 function propStatRow(p){
   if(p.market === "Anytime TD"){
     const dk = p.dk_odds!=null ? `<span class="count-chip">DK <b>${fmtOdds(p.dk_odds)}</b></span>` : "";
+    const advice = tdAdvice(p);
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">Anytime TD</span>
-      <span class="td-chip">${pct(p.model_prob)}</span>
+      <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
       ${dk}
     </div>`;
   }
@@ -619,6 +648,9 @@ function renderGames(week){
 
     const pHomeRaw = g.market_home_prob;
     const hasOdds = pHomeRaw !== null && pHomeRaw !== undefined;
+    const pHomeCurrent = g.current_market_home_prob;
+    const hasCurrent = pHomeCurrent !== null && pHomeCurrent !== undefined;
+    const valueTag = `<span class="value-tag" title="Model win % beats this side's pregame fair %">GOOD VALUE</span>`;
 
     card.innerHTML = `
       <div class="game-top">
@@ -642,7 +674,8 @@ function renderGames(week){
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b>${g.good_value_away ? valueTag : ''}</div>
+          <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(1-pHomeCurrent) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
@@ -654,7 +687,8 @@ function renderGames(week){
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
           <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
-          <div class="stat-line"><span>Fair win %</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b>${g.good_value_home ? valueTag : ''}</div>
+          <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(pHomeCurrent) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
@@ -686,8 +720,8 @@ function renderGames(week){
   });
 
   document.getElementById("foot").innerHTML =
-    `<b>Fair win %</b> is the real no-vig probability from this week's actual posted opening moneylines, where books have posted one yet — for weeks further out, this and the edge tag show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus Fair %. ` +
-    `<b>Player props:</b> each team's current depth-chart starter (QB / RB1 / WR1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. There is no free source of real historical (or current) player-prop odds, so the "line" shown is the player's own trailing average, used only so Model % has something to compare against — treat it as a projection, not a market line. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+    `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
+    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. Yardage props show a ladder of lines in steps of 10 around the player's trailing average. There is no free source of real historical player-prop odds, so those lines are projections, not market lines -- the exception is Anytime TD, which pulls a real DraftKings price for the current week only (per-event odds pulls cost API credits, and books don't post props for future weeks yet anyway). <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against that real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 }
 
 renderGames();

@@ -29,7 +29,7 @@ from pipeline.nfl.elo_model import run_elo
 from pipeline.nfl.props.prop_data import build_prop_table
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
 from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
-from pipeline.nfl.props.nfl_td_odds import attach_td_odds
+from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from scipy.stats import norm
 
@@ -356,6 +356,10 @@ def main():
     }
     print("Prop models ready.", flush=True)
 
+    print("Fetching current DraftKings game lines (one bulk call)...", flush=True)
+    odds_map = fetch_current_week_odds_map(names)
+    print(f"DK current lines available for {len(odds_map)} games.", flush=True)
+
     weeks_out = {}
     for week in all_weeks:
         week_rows = season_sched[season_sched["week"] == week].reset_index(drop=True)
@@ -374,6 +378,16 @@ def main():
                          + build_props_for_team(home, away, starters, home_env, prop_models))
 
             elo_p = week_elo[i]
+            market_home_prob = round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None
+            elo_home_prob = round(float(elo_p), 4) if elo_p is not None else None
+
+            # "Good value" (pregame odds only, per spec): does the model's win
+            # probability for a side beat that side's own pregame fair %?
+            good_value_home = good_value_away = None
+            if market_home_prob is not None and elo_home_prob is not None:
+                good_value_home = elo_home_prob > market_home_prob
+                good_value_away = (1 - elo_home_prob) > (1 - market_home_prob)
+
             games_out.append({
                 "awayAbbr": away, "homeAbbr": home,
                 "awayName": names.get(away, away), "homeName": names.get(home, home),
@@ -385,16 +399,20 @@ def main():
                 "total_line": row.total_line if pd.notna(row.total_line) else None,
                 "mlAway": int(row.away_moneyline) if pd.notna(row.away_moneyline) else None,
                 "mlHome": int(row.home_moneyline) if pd.notna(row.home_moneyline) else None,
-                "market_home_prob": round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None,
-                "elo_home_prob": round(float(elo_p), 4) if elo_p is not None else None,
+                "market_home_prob": market_home_prob,
+                "good_value_home": good_value_home,
+                "good_value_away": good_value_away,
+                "elo_home_prob": elo_home_prob,
                 "roof": row.roof if pd.notna(row.roof) else None,
                 "away_rest": int(row.away_rest) if pd.notna(row.away_rest) else None,
                 "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,
                 "props": props,
             })
+
+        attach_current_lines(games_out, names, odds_map)
         if week == current_week:
             try:
-                attach_td_odds(games_out, names)
+                attach_td_odds(games_out, names, odds_map)
                 n_with_td = sum(1 for g in games_out for p in g["props"] if p["market"] == "Anytime TD" and "dk_odds" in p)
                 print(f"  week {week}: attached real DK TD odds to {n_with_td} player props", flush=True)
             except Exception as e:

@@ -1,9 +1,14 @@
-"""Real DraftKings anytime-TD odds via The Odds API, attached to the current
-week's games only (not the full season) -- per-event player-prop pulls cost
-API credits per call, and books don't post player props until close to
-kickoff anyway, so pulling this for future weeks would just waste credits on
-empty responses. Fails soft: if ODDS_API_KEY isn't set, or DK hasn't posted
-TD props for a game yet, that game's props simply get no odds attached."""
+"""Real DraftKings odds via The Odds API, for two things:
+1. "Current" game moneylines -- a cheap bulk call, attached to every week
+   the book has actually posted a line for (may or may not extend past what
+   nflverse's own opening-line data covers).
+2. Real anytime-TD player-prop odds -- an expensive per-event call, so this
+   is restricted to the CURRENT week only. Books don't post player props
+   until close to kickoff anyway, so pulling this for future weeks would
+   just spend credits on empty responses.
+Fails soft at every stage: if ODDS_API_KEY isn't set, or DK hasn't posted a
+line yet, the affected fields are simply left unattached rather than
+breaking the run."""
 import sys
 import pathlib
 
@@ -15,31 +20,59 @@ from pipeline.common.odds_api import get_game_odds, get_event_player_props
 SPORT_KEY = "americanfootball_nfl"
 
 
-def _event_ids_by_team_pair(names):
-    """Bulk call (cheap) to find each upcoming game's Odds API event ID,
-    keyed by (away full name, home full name)."""
+def _implied_prob(american_odds):
+    return (-american_odds) / (-american_odds + 100) if american_odds < 0 else 100 / (american_odds + 100)
+
+
+def fetch_current_week_odds_map(names):
+    """One bulk call (cheap, a few credits for the whole slate) for DK's
+    current h2h game lines. Returns {(away_full_name, home_full_name):
+    {"event_id":..., "mlAway":..., "mlHome":...}}, empty dict on any failure."""
     try:
         events = get_game_odds(SPORT_KEY, markets="h2h")
     except Exception as e:
-        print(f"[nfl_td_odds] bulk odds call failed, skipping TD odds: {e}")
+        print(f"[nfl_td_odds] bulk odds call failed, skipping current-line + TD odds: {e}")
         return {}
-    return {(ev["away_team"], ev["home_team"]): ev["id"] for ev in events}
+
+    out = {}
+    for ev in events:
+        dk = next((b for b in ev.get("bookmakers", []) if b.get("key") == "draftkings"), None)
+        ml_away = ml_home = None
+        if dk:
+            for mkt in dk.get("markets", []):
+                if mkt.get("key") != "h2h":
+                    continue
+                for outcome in mkt.get("outcomes", []):
+                    if outcome["name"] == ev["away_team"]:
+                        ml_away = int(outcome["price"])
+                    elif outcome["name"] == ev["home_team"]:
+                        ml_home = int(outcome["price"])
+        out[(ev["away_team"], ev["home_team"])] = {"event_id": ev["id"], "mlAway": ml_away, "mlHome": ml_home}
+    return out
 
 
-def attach_td_odds(games_out, names):
-    """Mutates games_out in place: for each game's Anytime TD prop entries,
-    adds a "dk_odds" field (American odds int) where DraftKings has posted a
-    line for that player, matched by name. Games/players without a posted
-    line are left untouched."""
-    by_pair = _event_ids_by_team_pair(names)
-    if not by_pair:
-        return games_out
-
+def attach_current_lines(games_out, names, odds_map):
+    """Cheap -- safe to call for every week. Adds current_mlAway/current_mlHome
+    /current_market_home_prob where DraftKings has a live line posted."""
     for g in games_out:
-        away_full = names.get(g["awayAbbr"], g["awayAbbr"])
-        home_full = names.get(g["homeAbbr"], g["homeAbbr"])
-        event_id = by_pair.get((away_full, home_full))
-        if not event_id:
+        key = (names.get(g["awayAbbr"], g["awayAbbr"]), names.get(g["homeAbbr"], g["homeAbbr"]))
+        match = odds_map.get(key)
+        if not match or match["mlAway"] is None or match["mlHome"] is None:
+            continue
+        pa, ph = _implied_prob(match["mlAway"]), _implied_prob(match["mlHome"])
+        g["current_mlAway"] = match["mlAway"]
+        g["current_mlHome"] = match["mlHome"]
+        g["current_market_home_prob"] = round(ph / (pa + ph), 4)
+
+
+def attach_td_odds(games_out, names, odds_map):
+    """Expensive -- only call this for the current week. For each game's
+    Anytime TD prop entries, adds a "dk_odds" field where DraftKings has
+    posted a line for that player, matched by name."""
+    for g in games_out:
+        key = (names.get(g["awayAbbr"], g["awayAbbr"]), names.get(g["homeAbbr"], g["homeAbbr"]))
+        match = odds_map.get(key)
+        if not match:
             continue
 
         td_props = [p for p in g["props"] if p["market"] == "Anytime TD"]
@@ -47,7 +80,7 @@ def attach_td_odds(games_out, names):
             continue
 
         try:
-            event_odds = get_event_player_props(SPORT_KEY, event_id, markets="player_anytime_td")
+            event_odds = get_event_player_props(SPORT_KEY, match["event_id"], markets="player_anytime_td")
         except Exception as e:
             print(f"[nfl_td_odds] event odds call failed for {g['awayAbbr']}@{g['homeAbbr']}: {e}")
             continue
@@ -67,5 +100,4 @@ def attach_td_odds(games_out, names):
         for p in td_props:
             if p["player"] in dk_by_player:
                 p["dk_odds"] = dk_by_player[p["player"]]
-
-    return games_out
+                p["dk_implied_prob"] = round(_implied_prob(dk_by_player[p["player"]]), 4)

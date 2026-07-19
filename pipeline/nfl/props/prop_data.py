@@ -14,7 +14,8 @@ MIN_GAMES = 3
 def _load_base():
     ps = pl.read_parquet(DATA_DIR / "player_stats.parquet").to_pandas()
     sched = pl.read_parquet(DATA_DIR / "schedules.parquet").select(
-        ["game_id", "gameday", "home_team", "away_team", "roof", "temp", "wind", "home_rest", "away_rest"]
+        ["game_id", "gameday", "home_team", "away_team", "roof", "temp", "wind", "home_rest", "away_rest",
+         "spread_line", "total_line"]
     ).to_pandas()
     sched["game_date"] = pd.to_datetime(sched["gameday"])
     ps = ps.merge(sched, on="game_id", how="inner")
@@ -32,6 +33,20 @@ def _load_base():
     wind_fill = ps.loc[outdoor, "wind"].median()
     ps["temp"] = np.where(ps["is_dome"] == 1, 70.0, ps["temp"].fillna(temp_fill))
     ps["wind"] = np.where(ps["is_dome"] == 1, 0.0, ps["wind"].fillna(wind_fill))
+
+    # Real Vegas implied team total (spread_line: positive means the HOME team
+    # is favored by that many points, verified against a real historical
+    # blowout -- DAL home vs MIA away, spread_line=22.0, DAL won 31-6 -- before
+    # trusting the sign). This is the same signal real sportsbooks lean on
+    # heavily to set player-prop lines (a team implied for 30 throws/runs more
+    # than one implied for 17), and it costs nothing extra: nflverse bakes real
+    # historical opening lines into the schedule data already pulled.
+    is_home = ps["team"] == ps["home_team"]
+    home_implied = ps["total_line"] / 2 + ps["spread_line"] / 2
+    away_implied = ps["total_line"] / 2 - ps["spread_line"] / 2
+    ps["implied_team_total"] = np.where(is_home, home_implied, away_implied)
+    implied_fill = ps["implied_team_total"].median()
+    ps["implied_team_total"] = ps["implied_team_total"].fillna(implied_fill)
     return ps
 
 
@@ -71,7 +86,7 @@ def build_prop_table(stat_col: str, positions: list[str]):
     keep = [
         "player_id", "player_display_name", "position", "team", "opponent_team",
         "season", "week", "game_date", stat_col, "own_trailing_avg", "opp_allowed_trailing_avg",
-        "is_dome", "temp", "wind", "own_rest",
+        "is_dome", "temp", "wind", "own_rest", "implied_team_total",
     ]
     out = ps[keep].rename(columns={stat_col: "actual"})
     out = out.dropna(subset=["own_trailing_avg", "opp_allowed_trailing_avg"]).reset_index(drop=True)

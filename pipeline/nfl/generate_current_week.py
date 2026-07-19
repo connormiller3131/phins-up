@@ -207,7 +207,7 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
     opp_avg = float(defense.loc[opp_team])
     if pd.isna(own_avg) or pd.isna(opp_avg):
         return None  # fewer than MIN_GAMES of trailing history (rookie/deep backup) -- no basis to project
-    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
+    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]]
     pred_mean = float(prep["model"].predict(feat_row)[0])
     line = round(own_avg * 2) / 2
     over_prob = float(yardage_over_prob(pred_mean, prep["resid_std"], line))
@@ -241,7 +241,7 @@ def project_td(prep, player_id, opp_team, env):
     opp_avg = float(defense.loc[opp_team])
     if pd.isna(own_avg) or pd.isna(opp_avg):
         return None
-    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"]]]
+    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]]
     prob = float(prep["model"].predict_proba(feat_row)[:, 1][0])
     return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
 
@@ -311,14 +311,23 @@ def build_props_for_team(team, opp_team, starters, env, models):
 
 def env_fill_values(games_df):
     outdoor = games_df[games_df["roof"].isin(["outdoors", "open"])]
-    return float(outdoor["temp"].median()), float(outdoor["wind"].median())
+    is_home = games_df["home_team"].notna()  # every row has a home team; just for the np.where below
+    home_implied = games_df["total_line"] / 2 + games_df["spread_line"] / 2
+    away_implied = games_df["total_line"] / 2 - games_df["spread_line"] / 2
+    implied_fill = float(pd.concat([home_implied, away_implied]).median())
+    return float(outdoor["temp"].median()), float(outdoor["wind"].median()), implied_fill
 
 
-def build_env(row, temp_fill, wind_fill, own_rest):
+def build_env(row, temp_fill, wind_fill, own_rest, is_home, implied_fill):
     is_dome = 1.0 if row.roof in ("dome", "closed") else 0.0
     temp = 70.0 if is_dome else (temp_fill if pd.isna(row.temp) else float(row.temp))
     wind = 0.0 if is_dome else (wind_fill if pd.isna(row.wind) else float(row.wind))
-    return {"is_dome": is_dome, "temp": temp, "wind": wind, "own_rest": float(own_rest)}
+    if pd.isna(row.total_line) or pd.isna(row.spread_line):
+        implied_team_total = implied_fill
+    else:
+        implied_team_total = float(row.total_line) / 2 + (float(row.spread_line) / 2 if is_home else -float(row.spread_line) / 2)
+    return {"is_dome": is_dome, "temp": temp, "wind": wind, "own_rest": float(own_rest),
+            "implied_team_total": implied_team_total}
 
 
 def snapshot_path(season, week, away, home):
@@ -380,7 +389,7 @@ def main():
     elo_preds, elo_params = elo_predictions_for_season(games_df, season_sched)
     starters, depth_chart_dt = get_starters(target_season)
     print(f"Depth charts as of {depth_chart_dt}", flush=True)
-    temp_fill, wind_fill = env_fill_values(games_df)
+    temp_fill, wind_fill, implied_fill = env_fill_values(games_df)
 
     print("Fitting prop models (once, reused across all weeks)...", flush=True)
     prop_models = {
@@ -412,8 +421,8 @@ def main():
 
             props = []
             if not already_played:
-                away_env = build_env(row, temp_fill, wind_fill, row.away_rest)
-                home_env = build_env(row, temp_fill, wind_fill, row.home_rest)
+                away_env = build_env(row, temp_fill, wind_fill, row.away_rest, is_home=False, implied_fill=implied_fill)
+                home_env = build_env(row, temp_fill, wind_fill, row.home_rest, is_home=True, implied_fill=implied_fill)
                 props = (build_props_for_team(away, home, starters, away_env, prop_models)
                          + build_props_for_team(home, away, starters, home_env, prop_models))
 

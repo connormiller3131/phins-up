@@ -403,9 +403,22 @@
     font-size:12px;
     font-weight:600;
     color:var(--text);
-    margin-bottom:6px;
+    cursor:pointer;
+    user-select:none;
+    list-style:none;
   }
+  .prop-player[open] .prop-player-name{margin-bottom:6px;}
+  .prop-player-name::-webkit-details-marker{display:none;}
+  .prop-player-name::before{
+    content:'▸';
+    display:inline-block;
+    width:12px;
+    color:var(--text-dim);
+    font-size:10px;
+  }
+  .prop-player[open] .prop-player-name::before{content:'▾';}
   .prop-player-name .p-team{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px;}
+  .prop-player-name .p-count{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:6px;}
   .prop-stat-row{
     display:flex;
     align-items:center;
@@ -462,6 +475,17 @@
     padding:1px 5px;
     vertical-align:middle;
   }
+  .source-badge{
+    font-family:var(--mono);
+    font-size:8.5px;
+    font-weight:700;
+    letter-spacing:.03em;
+    border-radius:3px;
+    padding:1px 4px;
+    white-space:nowrap;
+  }
+  .source-badge.source-dk{color:var(--green);background:var(--green-dim);border:1px solid var(--green);}
+  .source-badge.source-model{color:var(--text-dim);background:var(--panel-alt);border:1px solid var(--line);}
 
   .placeholder{
     background:var(--panel);
@@ -591,6 +615,16 @@ function edgeColor(edge){
   return {bg:"var(--amber-dim)", fg:"var(--amber)"};
 }
 
+function sourceBadge(p){
+  // Be explicit about what a number actually is: a real market line pulled
+  // from DraftKings, or our own model's estimate (trailing production run
+  // through the projection model) -- never label the latter like a
+  // sportsbook line, since it isn't one.
+  return p.dk_line != null
+    ? `<span class="source-badge source-dk" title="Real DraftKings line, pulled at generation time">DK LINE</span>`
+    : `<span class="source-badge source-model" title="Our model's own estimate -- not a market line, no sportsbook has priced this">MODEL EST.</span>`;
+}
+
 function tdAdvice(p){
   // Edge vs. DK's posted price -- graded green/yellow/red. No DK line yet
   // means no market to confirm the model against, so it's a neutral "risky".
@@ -617,12 +651,14 @@ function propStatRow(p){
     const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
+      ${sourceBadge(p)}
       <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
     </div>`;
   }
   return `<div class="prop-stat-row">
     <span class="prop-stat-label">${p.market}</span>
+    ${sourceBadge(p)}
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
   </div>`;
@@ -640,10 +676,10 @@ function propsBySection(props){
       byPlayer.get(key).rows.push(p);
     });
     const playerBlocks = Array.from(byPlayer.values()).map(pl => `
-      <div class="prop-player">
-        <div class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span></div>
+      <details class="prop-player">
+        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span></summary>
         ${pl.rows.map(propStatRow).join("")}
-      </div>
+      </details>
     `).join("");
     return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
   }).join("");
@@ -775,7 +811,7 @@ function renderGames(week){
 
   document.getElementById("foot").innerHTML =
     `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
-    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates), not hand-typed per-game averages. Yardage props show a ladder of lines in steps of 10 around the player's trailing average. There is no free source of real historical player-prop odds, so those lines are projections, not market lines -- the exception is Anytime TD, which pulls a real DraftKings price for the current week only (per-event odds pulls cost API credits, and books don't post props for future weeks yet anyway). <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against that real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 }
 
 function toggleGameFocus(idx){
@@ -861,6 +897,7 @@ function mlbPropStatRow(p){
     const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
+      ${sourceBadge(p)}
       <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
       ${dkNote}
@@ -868,6 +905,7 @@ function mlbPropStatRow(p){
   }
   return `<div class="prop-stat-row">
     <span class="prop-stat-label">${p.market}</span>
+    ${sourceBadge(p)}
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
     ${dkNote}
@@ -886,10 +924,10 @@ function mlbPropsBySection(props){
       byPlayer.get(key).rows.push(p);
     });
     const playerBlocks = Array.from(byPlayer.values()).map(pl => `
-      <div class="prop-player"${pl.pid!=null ? ` data-pid="${pl.pid}"` : ''}>
-        <div class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="lineup-flag"></span></div>
+      <details class="prop-player"${pl.pid!=null ? ` data-pid="${pl.pid}"` : ''}>
+        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span><span class="lineup-flag"></span></summary>
         ${pl.rows.map(mlbPropStatRow).join("")}
-      </div>
+      </details>
     `).join("");
     return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
   }).join("");
@@ -983,7 +1021,7 @@ function renderMLBGames(){
   document.getElementById("mlb-foot").innerHTML =
     `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>GOOD VALUE</b> flags a side where Model win % beats that market fair %. <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons including the 60-game 2020 season) and backtested out-of-sample on every 2026 game played so far -- Brier 0.249, 54.3% accuracy, essentially tied with a market-favorite baseline. MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound. ` +
     `<b>Player props:</b> each probable starting pitcher (real, from MLB's own schedule feed) and each team's full 9-batter lineup by recent plate-appearance volume among currently active roster players -- filtered against each team's real active 26-man roster so injured/inactive players (e.g. someone on the IL) don't show up, but it's still a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and Runs/Hits/Walks Allowed are derived from Statcast's play-by-play score deltas (verified exactly against a real box score before shipping); Outs Recorded is real innings pitched in disguise. Stolen bases and earned-run splits aren't included -- Statcast's pitch-level feed doesn't reliably attribute the former to a specific player, and the earned/unearned distinction requires official-scorer judgment we can't derive from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
-    `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices for markets that have a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs), and Model % is recomputed against DK's actual line rather than the trailing-average proxy where available. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds because per-game prop-odds API calls cost credits per market on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
+    `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices for markets that have a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs), and Model % is recomputed against DK's actual line where available -- a <b>DK LINE</b> badge marks those; everything else carries a <b>MODEL EST.</b> badge and is our own trailing-average-based projection, never dressed up to look like a real market number. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds because per-game prop-odds API calls cost credits per market on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
     `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting/pitching and every shown player's actual in-game line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
 }
 

@@ -9,7 +9,7 @@ from scipy.stats import norm
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 
 
-FEATURES = ["own_trailing_avg", "opp_allowed_trailing_avg", "is_dome", "temp", "wind", "own_rest"]
+FEATURES = ["own_trailing_avg", "opp_allowed_trailing_avg", "is_dome", "temp", "wind", "own_rest", "implied_team_total"]
 
 
 def walk_forward_yardage(df: pd.DataFrame, test_seasons: list[int]):

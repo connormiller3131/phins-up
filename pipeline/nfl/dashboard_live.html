@@ -473,6 +473,20 @@
   .prop-player[open] .prop-player-name::before{content:'▾';}
   .prop-player-name .p-team{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px;}
   .prop-player-name .p-count{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:6px;}
+  .live-only-tag{
+    display:inline-block;
+    margin-left:6px;
+    font-family:var(--mono);
+    font-size:8.5px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--blue);
+    background:var(--panel-alt);
+    border:1px solid var(--blue);
+    border-radius:3px;
+    padding:1px 4px;
+    text-transform:uppercase;
+  }
   .prop-stat-row{
     display:flex;
     align-items:center;
@@ -1267,6 +1281,38 @@ function confirmedStarterIds(sideBox){
   return ids;
 }
 
+// Creates a player block on demand for someone with no pregame prop (a
+// relief pitcher who's actually entered the game -- there's no "probable
+// reliever" concept pregame, bullpen usage is a live, matchup-driven
+// decision -- or a confirmed lineup batter our top-9-by-recent-PA proxy
+// didn't happen to pick). Idempotent: returns the existing block on later
+// 60s cycles instead of duplicating it.
+function ensurePlayerBlock(card, sectionTitle, pid, name, team){
+  const existing = card.querySelector(`.prop-player[data-pid="${pid}"]`);
+  if(existing) return existing;
+
+  const detailsEl = card.querySelector('.props-toggle');
+  if(!detailsEl) return null;
+  let sectionEl = Array.from(detailsEl.querySelectorAll('.prop-section'))
+    .find(s => s.querySelector('.prop-section-title')?.textContent === sectionTitle);
+  if(!sectionEl){
+    sectionEl = document.createElement('div');
+    sectionEl.className = 'prop-section';
+    sectionEl.innerHTML = `<div class="prop-section-title">${sectionTitle}</div>`;
+    detailsEl.appendChild(sectionEl);
+  }
+
+  const block = document.createElement('details');
+  block.className = 'prop-player';
+  block.dataset.pid = pid;
+  block.innerHTML = `
+    <summary class="prop-player-name">${name} <span class="p-team">${team}</span><span class="live-only-tag">live only, no pregame prop</span><span class="live-line"></span><span class="lineup-flag"></span></summary>
+    <div class="prop-stat-row"><span class="p-exp">No pregame model projection for this player.</span></div>
+  `;
+  sectionEl.appendChild(block);
+  return block;
+}
+
 async function updateMLBLiveStats(){
   for(let idx=0; idx<MLB_DATA.games.length; idx++){
     const g = MLB_DATA.games[idx];
@@ -1326,6 +1372,49 @@ async function updateMLBLiveStats(){
         const flagEl = propRow.querySelector('.lineup-flag');
         if(flagEl) flagEl.innerHTML = (lineupPosted && !starters.has(pid))
           ? '<span class="miss">&#9888; NOT in today\'s lineup</span>' : '';
+      }
+    }
+
+    // Confirmed lineup batters the pregame top-9-by-recent-PA proxy didn't
+    // happen to pick -- use the REAL posted lineup once MLB has one, same
+    // data source as the "NOT in today's lineup" flag above.
+    for(const side of ['home','away']){
+      const starters = side==='home' ? homeStarters : awayStarters;
+      const teamAbbr = side==='home' ? g.homeAbbr : g.awayAbbr;
+      const sideBox = box.teams && box.teams[side];
+      if(!sideBox || !sideBox.players) continue;
+      for(const pid of starters){
+        if(uniq.has(pid)) continue;
+        const p = sideBox.players['ID'+pid];
+        if(!p) continue;
+        const block = ensurePlayerBlock(card, 'Batting', pid, p.person.fullName, teamAbbr);
+        if(!block) continue;
+        const stat = p.stats && p.stats.batting;
+        const played = stat && ((stat.atBats||0)>0 || (stat.baseOnBalls||0)>0 || (stat.hitByPitch||0)>0);
+        const liveEl = block.querySelector('.live-line');
+        if(liveEl) liveEl.textContent = played ? (stat.summary || '') : '';
+        const flagEl = block.querySelector('.lineup-flag');
+        if(flagEl) flagEl.innerHTML = '<span class="hit">&#10003; Confirmed starter</span>';
+      }
+    }
+
+    // Relief pitchers who've actually entered the game -- no "probable
+    // reliever" pregame, bullpen usage is a live, matchup-driven decision,
+    // so this is necessarily live-only, discovered from the box score's
+    // own list of pitchers who've appeared.
+    for(const side of ['home','away']){
+      const teamAbbr = side==='home' ? g.homeAbbr : g.awayAbbr;
+      const sideBox = box.teams && box.teams[side];
+      if(!sideBox || !sideBox.pitchers || !sideBox.players) continue;
+      for(const pid of sideBox.pitchers){
+        if(uniq.has(pid)) continue;
+        const p = sideBox.players['ID'+pid];
+        const stat = p && p.stats && p.stats.pitching;
+        if(!stat || !stat.inningsPitched || stat.inningsPitched==='0.0') continue; // hasn't actually pitched yet
+        const block = ensurePlayerBlock(card, 'Pitching', pid, p.person.fullName, teamAbbr);
+        if(!block) continue;
+        const liveEl = block.querySelector('.live-line');
+        if(liveEl) liveEl.textContent = stat.summary || '';
       }
     }
   }

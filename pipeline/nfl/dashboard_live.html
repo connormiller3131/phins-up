@@ -1297,6 +1297,15 @@ function collectMlbParlayLegs(games){
       const isHr = p.market === "Anytime HR";
       const modelP = isHr ? p.model_prob : p.model_over_prob;
       if(modelP == null) return;
+      // A "0+" line (own trailing average low enough to round down to 0)
+      // is nearly guaranteed for almost any batter over a full game's worth
+      // of plate appearances, regardless of actual skill -- it inflates
+      // probability for weak/low-volume hitters specifically rather than
+      // surfacing a real, differentiated pick. Real DK lines don't offer
+      // this either (0.5 is the standard "at least one" line); this only
+      // shows up in our own model_over_prob computation. Excluding it drops
+      // straight to real, meaningful lines (1+ total bases, etc).
+      if(!isHr && (p.line == null || p.line <= 0)) return;
       const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
       if(p.dk_implied_prob != null){
         const edge = modelP - p.dk_implied_prob;

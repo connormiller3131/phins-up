@@ -72,16 +72,29 @@ def current_bullpen_rating(team):
     return float(team_game.tail(BP_WINDOW).mean())
 
 
-def current_bullpen_arms(team, n=4):
+def current_bullpen_arms(team, n=4, active_ids=None):
     """The team's most-frequently-used relief pitchers recently (a real,
     ranked-by-actual-usage proxy for "who's likely to appear" -- there's no
     "probable reliever" the way there's a probable starter, since bullpen
     usage is a live, matchup-driven decision made during the game), each
     with their own trailing counting stats. Informational only -- no lines,
     no odds, just real recent numbers, since there's no sound basis to
-    project a betting line for someone who may not even appear."""
+    project a betting line for someone who may not even appear.
+
+    Recent appearance history alone isn't enough to know who's actually
+    available now -- a pitcher who was heavily used last month may since
+    have been traded away or placed on administrative leave (both real
+    cases this surfaced: a traded-away reliever and one under investigation
+    still showing up here from raw usage counts). `active_ids`, when given,
+    is the team's real current 26-man active roster (same source and same
+    fail-open-if-the-fetch-failed treatment as the batter side in
+    generate_daily_slate.top_batters_for_team) -- anyone not on it is
+    filtered out before ranking by usage, not after, so a departed player
+    never crowds out someone who's actually still on the team."""
     df = _load_pitchers()
     bp = df[(~df["is_starter"]) & (df["team"] == team)].sort_values("game_date")
+    if active_ids is not None:
+        bp = bp[bp["player_id"].isin(active_ids)]
     if bp.empty:
         return []
 

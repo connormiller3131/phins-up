@@ -845,16 +845,25 @@ function parlayCardHtml(legs, sport, opts){
     <div class="parlay-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
       <span class="parlay-leg-market">${l.market}</span>
-      <span class="parlay-leg-edge">+${(l.edge*100).toFixed(1)}% edge</span>
+      <span class="parlay-leg-edge">${l.edge != null
+        ? `+${(l.edge*100).toFixed(1)}% edge`
+        : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this player to grade an edge against">MODEL EST.</span>`}</span>
       <span class="parlay-leg-prob">${pct(l.prob)}</span>
     </div>
   `).join("");
+  const anyReal = legs.some(l => l.edge != null);
+  const anyModelOnly = legs.some(l => l.edge == null);
+  const rankingNote = anyReal && anyModelOnly
+    ? "ranked by real edge where DraftKings has posted a price, model probability where it hasn't -- either can be wrong"
+    : anyReal
+      ? "ranked by the model's own edge estimate, which can be wrong"
+      : "ranked by the model's own probability estimate, not graded against a real price -- can be wrong";
   return `
     <div class="parlay-card ${accentClass}">
       <div class="parlay-title">${title} <span class="props-sample-tag">(${note})</span></div>
       ${rows}
       <div class="parlay-combined">Combined probability (assuming independence, which overstates it in practice): <b>${pct(combinedProb)}</b></div>
-      <div class="p-exp" style="margin-top:4px;">Not betting advice -- ranked by the model's own edge estimate, which can be wrong.</div>
+      <div class="p-exp" style="margin-top:4px;">Not betting advice -- ${rankingNote}.</div>
     </div>
   `;
 }
@@ -1199,15 +1208,29 @@ function collectMlbParlayLegs(games){
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay
 // above -- same real-edge-vs-DK-price ranking, just scoped to Anytime HR.
 function collectHrSpecialLegs(games){
-  const legs = [];
+  // DraftKings only prices ~2 games' worth of player props per refresh (Odds
+  // API credit limit), so most days there's no real Anytime HR price to grade
+  // an edge against at all -- rather than sit empty, real-edge legs (when
+  // they exist) still take priority, but the remaining slots fill with the
+  // model's own highest-probability picks, clearly marked as model-only
+  // (not a fabricated edge) via a null `edge`, same honesty pattern as the
+  // DK LINE / MODEL EST. badge used elsewhere.
+  const real = [], modelOnly = [];
   games.forEach(g => {
     (g.props||[]).forEach(p => {
-      if(p.market !== "Anytime HR" || p.dk_implied_prob == null) return;
-      const edge = p.model_prob - p.dk_implied_prob;
-      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`, market: 'Anytime HR'});
+      if(p.market !== "Anytime HR") return;
+      const sub = `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`;
+      if(p.dk_implied_prob != null){
+        const edge = p.model_prob - p.dk_implied_prob;
+        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR'});
+      } else {
+        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR'});
+      }
     });
   });
-  return legs.sort((a,b) => b.edge - a.edge).slice(0, 4);
+  real.sort((a,b) => b.edge - a.edge);
+  modelOnly.sort((a,b) => b.prob - a.prob);
+  return real.concat(modelOnly).slice(0, 4);
 }
 
 function renderMLBGames(){
@@ -1222,11 +1245,14 @@ function renderMLBGames(){
 
   const root = document.getElementById("mlb-games");
   const hrLegs = collectHrSpecialLegs(MLB_DATA.games);
+  const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   root.innerHTML = parlayCardHtml(collectMlbParlayLegs(MLB_DATA.games), 'MLB')
     + parlayCardHtml(hrLegs, 'MLB', {
         title: 'HR SPECIAL', accentClass: 'parlay-hr',
-        note: `highest-edge Anytime HR picks vs. real DK prices -- ${hrLegs.length} of 4 legs found`,
-        emptyText: 'No real DraftKings HR prices to compare against yet -- HR special needs at least one Anytime HR price to grade an edge against. Check back once DraftKings has posted more.',
+        note: hrRealCount
+          ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
+          : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
+        emptyText: 'No Anytime HR projections available yet for today\'s slate. Check back once the model has run.',
       });
 
   MLB_DATA.games.forEach((g, idx) => {

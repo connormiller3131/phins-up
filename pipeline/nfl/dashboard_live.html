@@ -1398,6 +1398,8 @@ function renderMLBGames(selectedDate){
         <div class="hold-badge" id="mlb-score-${selectedDate}-${idx}">${finalScoreBadge}</div>
       </div>
 
+      ${boxScoreSection(selectedDate, g, idx)}
+
       <div class="prob-bar-wrap">
         <div class="prob-bar">
           <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
@@ -1423,7 +1425,6 @@ function renderMLBGames(selectedDate){
       </div>
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
-      ${boxScoreSection(selectedDate, g, idx)}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
       ${bvpSection(selectedDate, g, idx)}
     `;
@@ -1580,9 +1581,17 @@ async function updateMLBLiveStats(){
       if(mlbGameStatus[idx] === 'Final'){
         nowEl.innerHTML = ''; // no "now batting/pitching" once the game is over
       } else {
+        // linescore.offense/.defense each track their own team's "batter"
+        // and "pitcher" independently, not a real matchup pairing --
+        // offense.pitcher is a stale/self-referential field (the batting
+        // team's OWN pitcher, not who's actually on the mound facing them),
+        // confirmed against MLB's authoritative currentPlay.matchup. The
+        // correct current pitcher is defense.pitcher; offense.batter is
+        // already correct as-is.
         const off = line.offense || {};
+        const def = line.defense || {};
         const parts = [];
-        if(off.pitcher) parts.push(`Now pitching: <b>${off.pitcher.fullName}</b>`);
+        if(def.pitcher) parts.push(`Now pitching: <b>${def.pitcher.fullName}</b>`);
         if(off.batter) parts.push(`Now batting: <b>${off.batter.fullName}</b>`);
         nowEl.innerHTML = parts.join(' &middot; ');
       }

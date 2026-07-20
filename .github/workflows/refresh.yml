@@ -113,3 +113,17 @@ jobs:
             git reset --soft origin/main
             sleep 5
           done
+
+      # Cloudflare Pages becomes the real hosting -- faster/more reliable
+      # CDN than GitHub Pages, and we hit a real GitHub Pages deploy 503
+      # once already. Kept alongside the git push above (not replacing it)
+      # during the transition so GitHub Pages still works as a fallback
+      # until Cloudflare's been verified in production for a while.
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: phins-up
+          directory: docs
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

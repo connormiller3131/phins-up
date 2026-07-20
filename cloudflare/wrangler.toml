@@ -1,0 +1,12 @@
+# Deploy with: wrangler deploy (from inside this cloudflare/ directory)
+# Requires: npm install -g wrangler, then `wrangler login` once.
+# After first deploy, set the secret (never put the real token in this file):
+#   wrangler secret put GH_PAT
+name = "phins-up-refresh-trigger"
+main = "refresh-trigger-worker.js"
+compatibility_date = "2024-01-01"
+
+# Same two times as .github/workflows/refresh.yml's own (now-redundant but
+# harmless to leave in place) schedule trigger -- 2am and 11am ET in UTC.
+[triggers]
+crons = ["0 6 * * *", "0 15 * * *"]

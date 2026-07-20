@@ -252,6 +252,26 @@
     color:var(--text-dim);
     font-style:italic;
   }
+  .box-score-wrap{overflow-x:auto;}
+  .box-score-table{
+    border-collapse:collapse;
+    font-family:var(--mono);
+    font-size:12px;
+    white-space:nowrap;
+  }
+  .box-score-table th, .box-score-table td{
+    padding:4px 8px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .box-score-table th{color:var(--text-dim);font-weight:400;}
+  .box-score-table td:first-child, .box-score-table th:first-child{
+    text-align:left;
+    position:sticky;
+    left:0;
+    background:var(--panel);
+  }
+  .box-score-table td.rhe{font-weight:600;border-left:2px solid var(--line);}
   .matchup{cursor:pointer;}
   .matchup .expand-hint{
     display:inline-block;
@@ -1140,6 +1160,66 @@ function fmtGameTime(iso){
   return d.toLocaleString('en-US', {weekday:'short', hour:'numeric', minute:'2-digit', timeZoneName:'short'});
 }
 
+function boxScoreSection(date, g, idx){
+  if(!g.gamePk) return "";
+  return `
+    <details class="props-toggle" id="mlb-box-${date}-${idx}" ontoggle="if(this.open) loadBoxScore('${date}', ${idx})">
+      <summary>Box Score <span class="props-sample-tag">(innings, runs, hits, errors -- fetched live from MLB on expand)</span></summary>
+      <div id="mlb-box-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
+    </details>
+  `;
+}
+
+const boxScoreLoaded = new Set();
+async function loadBoxScore(date, idx){
+  const key = `${date}_${idx}`;
+  if(boxScoreLoaded.has(key)) return;
+  boxScoreLoaded.add(key);
+  const g = MLB_DATA.days[date] && MLB_DATA.days[date].games[idx];
+  const body = document.getElementById(`mlb-box-body-${date}-${idx}`);
+  if(!g || !body) return;
+
+  let line;
+  try{
+    const r = await fetch(`https://statsapi.mlb.com/api/v1/game/${g.gamePk}/linescore`);
+    line = await r.json();
+  }catch(e){
+    body.innerHTML = '<span class="p-exp">Box score unavailable right now.</span>';
+    return;
+  }
+
+  const innings = line.innings || [];
+  if(!innings.length){
+    body.innerHTML = '<span class="p-exp">Game hasn\'t started yet -- no box score to show.</span>';
+    return;
+  }
+
+  const nCols = Math.max(line.scheduledInnings || 0, innings.length, 9);
+  const inningNums = Array.from({length: nCols}, (_, i) => i + 1);
+
+  const rowFor = (side, abbr) => {
+    const cells = inningNums.map(n => {
+      const inn = innings.find(i => i.num === n);
+      const val = inn && inn[side] ? inn[side].runs : null;
+      return `<td>${val==null ? '' : val}</td>`;
+    }).join('');
+    const totals = line.teams && line.teams[side];
+    return `<tr><td>${abbr}</td>${cells}<td class="rhe">${totals ? totals.runs : '—'}</td><td class="rhe">${totals ? totals.hits : '—'}</td><td class="rhe">${totals ? totals.errors : '—'}</td></tr>`;
+  };
+
+  body.innerHTML = `
+    <div class="box-score-wrap">
+      <table class="box-score-table">
+        <thead><tr><th></th>${inningNums.map(n => `<th>${n}</th>`).join('')}<th class="rhe">R</th><th class="rhe">H</th><th class="rhe">E</th></tr></thead>
+        <tbody>
+          ${rowFor('away', g.awayAbbr)}
+          ${rowFor('home', g.homeAbbr)}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 function bvpSection(date, g, idx){
   const hasBatters = (g.props||[]).some(p => p.section === "Batting" && p.player_id != null);
   if(!hasBatters || (!g.awayProbablePitcherId && !g.homeProbablePitcherId)) return "";
@@ -1343,6 +1423,7 @@ function renderMLBGames(selectedDate){
       </div>
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
+      ${boxScoreSection(selectedDate, g, idx)}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
       ${bvpSection(selectedDate, g, idx)}
     `;

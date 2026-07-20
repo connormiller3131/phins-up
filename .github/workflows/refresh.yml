@@ -114,20 +114,21 @@ jobs:
             sleep 5
           done
 
-      # Cloudflare Pages becomes the real hosting -- faster/more reliable
-      # CDN than GitHub Pages, and we hit a real GitHub Pages deploy 503
-      # once already. Kept alongside the git push above (not replacing it)
-      # during the transition so GitHub Pages still works as a fallback
-      # until Cloudflare's been verified in production for a while.
-      # Calls wrangler directly instead of the cloudflare/pages-action
-      # GitHub Action -- that action calls the older, classic Pages
-      # Projects API, which returned "Project not found" against this
-      # project (its workers.dev subdomain -- not pages.dev -- indicates
-      # it actually landed on Cloudflare's newer unified Workers platform).
-      # This is the exact command that already deployed successfully by
-      # hand through Cloudflare's own build system.
-      - name: Deploy to Cloudflare Pages
+      # Cloudflare becomes the real hosting -- faster/more reliable CDN than
+      # GitHub Pages, and we hit a real GitHub Pages deploy 503 once already.
+      # Kept alongside the git push above (not replacing it) during the
+      # transition so GitHub Pages still works as a fallback until
+      # Cloudflare's been verified in production for a while.
+      #
+      # `wrangler pages deploy` (and the cloudflare/pages-action GitHub
+      # Action, tried first) both target the classic Pages Projects API,
+      # which returned "The Pages project 'phins-up' does not exist" --
+      # wrangler's own error pointed out this project is actually a Worker
+      # (its serving domain is workers.dev, not pages.dev), Cloudflare's
+      # newer unified static-hosting platform, deployed via `wrangler
+      # deploy` reading the repo-root wrangler.toml's [assets] block.
+      - name: Deploy to Cloudflare
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx wrangler pages deploy docs --project-name=phins-up
+        run: npx wrangler deploy

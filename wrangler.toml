@@ -1,0 +1,11 @@
+# Deploys docs/ as a Cloudflare Worker with static assets (Cloudflare's
+# current recommended way to serve a static site -- classic "Pages
+# Projects" is being superseded by this). No JS entry point needed for a
+# pure static-asset worker.
+#
+# Deploy: npx wrangler deploy (from the repo root)
+name = "phins-up"
+compatibility_date = "2024-01-01"
+
+[assets]
+directory = "./docs"

@@ -47,7 +47,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
-from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, current_bullpen_arms
+from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
@@ -493,25 +493,6 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
     return entries
 
 
-def bullpen_arm_entries(team, active_ids, n=4):
-    """Informational only, no line or odds: there's no "probable reliever"
-    the way there's a probable starter (bullpen usage is a live, matchup-
-    driven decision), so projecting a betting line for someone who may not
-    even appear isn't sound. Just the team's most-used relievers recently
-    and their real trailing counting stats -- filtered against the team's
-    real current active roster (active_ids), same as the batter lineup
-    below, so someone who's since been traded away or is on administrative
-    leave doesn't still show up on recent-usage numbers alone."""
-    entries = []
-    for arm in current_bullpen_arms(team, n=n, active_ids=active_ids):
-        entries.append({"section": "Pitching", "market": "Bullpen Arm", "player": arm["player_display_name"],
-                        "player_id": arm["player_id"], "team": team, "appearances": arm["appearances"],
-                        "outs_recorded": arm["outs_recorded"], "strikeouts": arm["strikeouts"],
-                        "walks_allowed": arm["walks_allowed"], "hits_allowed": arm["hits_allowed"],
-                        "runs_allowed": arm["runs_allowed"], "avg_run_value": arm["avg_run_value"]})
-    return entries
-
-
 def build_day_payload(date, games, elo_params, pitcher_blend_used, finalized):
     return {
         "date": date, "weekday": datetime.date.fromisoformat(date).strftime("%A"),
@@ -614,9 +595,6 @@ def main(today=None):
             props += pitcher_props_for_team(g["home_probable_pitcher"]["id"], g["home_team"], g["away_team"], pitcher_models)
         if g["away_probable_pitcher"]:
             props += pitcher_props_for_team(g["away_probable_pitcher"]["id"], g["away_team"], g["home_team"], pitcher_models)
-
-        props += bullpen_arm_entries(g["home_team"], active_rosters.get(g["home_team"]))
-        props += bullpen_arm_entries(g["away_team"], active_rosters.get(g["away_team"]))
 
         elo_home = float(elo_preds[i])
         market = g["market"]

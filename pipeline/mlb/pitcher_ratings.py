@@ -13,13 +13,10 @@ The *_current_* functions are unshifted, for live/future predictions.
 import pathlib
 import pandas as pd
 
-from pipeline.mlb.player_names import get_name_lookup
-
 DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 
 SP_WINDOW, SP_MIN = 6, 3     # trailing starts
 BP_WINDOW, BP_MIN = 10, 5    # trailing relief appearances (team-level)
-BP_ARM_LOOKBACK = 15         # trailing relief appearances per pitcher, for individual arm stats
 
 
 def _load_pitchers():
@@ -70,54 +67,3 @@ def current_bullpen_rating(team):
     if len(team_game) < BP_MIN:
         return None
     return float(team_game.tail(BP_WINDOW).mean())
-
-
-def current_bullpen_arms(team, n=4, active_ids=None):
-    """The team's most-frequently-used relief pitchers recently (a real,
-    ranked-by-actual-usage proxy for "who's likely to appear" -- there's no
-    "probable reliever" the way there's a probable starter, since bullpen
-    usage is a live, matchup-driven decision made during the game), each
-    with their own trailing counting stats. Informational only -- no lines,
-    no odds, just real recent numbers, since there's no sound basis to
-    project a betting line for someone who may not even appear.
-
-    Recent appearance history alone isn't enough to know who's actually
-    available now -- a pitcher who was heavily used last month may since
-    have been traded away or placed on administrative leave (both real
-    cases this surfaced: a traded-away reliever and one under investigation
-    still showing up here from raw usage counts). `active_ids`, when given,
-    is the team's real current 26-man active roster (same source and same
-    fail-open-if-the-fetch-failed treatment as the batter side in
-    generate_daily_slate.top_batters_for_team) -- anyone not on it is
-    filtered out before ranking by usage, not after, so a departed player
-    never crowds out someone who's actually still on the team."""
-    df = _load_pitchers()
-    bp = df[(~df["is_starter"]) & (df["team"] == team)].sort_values("game_date")
-    if active_ids is not None:
-        bp = bp[bp["player_id"].isin(active_ids)]
-    if bp.empty:
-        return []
-
-    # Rank arms by recent appearance count (most-used = most likely to see
-    # the mound again), using only each pitcher's own trailing appearances.
-    recent = bp.groupby("player_id").tail(BP_ARM_LOOKBACK)
-    counts = bp["player_id"].value_counts()
-    top_ids = counts.head(n).index.tolist()
-
-    names = get_name_lookup()
-    out = []
-    for pid in top_ids:
-        arm = recent[recent["player_id"] == pid].tail(BP_ARM_LOOKBACK)
-        name_row = names[names["player_id"] == pid]
-        name = name_row["player_display_name"].iloc[0] if len(name_row) else f"Player {pid}"
-        out.append({
-            "player_id": int(pid), "player_display_name": name,
-            "appearances": int(len(arm)),
-            "outs_recorded": int(arm["outs_recorded"].sum()),
-            "strikeouts": int(arm["strikeouts"].sum()),
-            "walks_allowed": int(arm["walks_allowed"].sum()),
-            "hits_allowed": int(arm["hits_allowed"].sum()),
-            "runs_allowed": int(arm["runs_allowed"].sum()),
-            "avg_run_value": round(float(arm["run_value"].mean()), 3),
-        })
-    return out

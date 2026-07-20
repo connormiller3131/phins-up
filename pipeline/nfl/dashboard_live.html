@@ -824,12 +824,25 @@ function fmtKickoffLine(g){
 // pure top-4-by-edge ranking tends to fill up with moneylines alone. Cap
 // moneylines at 2 of the 4 slots so props get a real shot at the parlay
 // whenever any qualify, instead of being crowded out just because
-// moneyline edges are more plentiful.
-function selectMixedLegs(allLegs, maxMoneylines=2, total=4){
-  const moneylines = allLegs.filter(l => l.market === 'Moneyline').sort((a,b) => b.edge - a.edge);
-  const others = allLegs.filter(l => l.market !== 'Moneyline').sort((a,b) => b.edge - a.edge);
+// moneyline edges are more plentiful. Moneylines themselves are never
+// backfilled from model-only data -- one bulk odds call covers the whole
+// slate, so a real-edge moneyline is either there or it isn't. Props are
+// scarcer (only ~2 games/refresh get real prop odds at all), so if there
+// aren't enough real-edge props to fill the reserved slots, modelOnlyLegs
+// (ranked by probability, no fabricated edge, marked MODEL EST. same as
+// HR Special) fills the gap instead of quietly falling back to more
+// moneylines -- otherwise "props get a real shot" above is theoretical on
+// most days.
+function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4){
+  const moneylines = realLegs.filter(l => l.market === 'Moneyline').sort((a,b) => b.edge - a.edge);
+  const others = realLegs.filter(l => l.market !== 'Moneyline').sort((a,b) => b.edge - a.edge);
+  const modelOnly = modelOnlyLegs.slice().sort((a,b) => b.prob - a.prob);
   const picked = moneylines.slice(0, maxMoneylines);
   for(const l of others){
+    if(picked.length >= total) break;
+    picked.push(l);
+  }
+  for(const l of modelOnly){
     if(picked.length >= total) break;
     picked.push(l);
   }
@@ -837,7 +850,9 @@ function selectMixedLegs(allLegs, maxMoneylines=2, total=4){
     if(picked.length >= total) break;
     picked.push(l);
   }
-  return picked.sort((a,b) => b.edge - a.edge);
+  const withEdge = picked.filter(l => l.edge != null).sort((a,b) => b.edge - a.edge);
+  const withoutEdge = picked.filter(l => l.edge == null).sort((a,b) => b.prob - a.prob);
+  return withEdge.concat(withoutEdge);
 }
 
 function collectNflParlayLegs(games){
@@ -855,14 +870,17 @@ function collectNflParlayLegs(games){
       if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
     });
   });
-  return selectMixedLegs(legs);
+  return selectMixedLegs(legs, []);
 }
 
 function parlayCardHtml(legs, sport, opts){
   opts = opts || {};
   const title = opts.title || 'SUGGESTED PARLAY';
   const accentClass = opts.accentClass || '';
-  const note = opts.note || `model's highest-edge picks vs. real market prices, not just the most likely to win -- ${legs.length} of 4 legs have real odds to compare against`;
+  const realCount = legs.filter(l => l.edge != null).length;
+  const note = opts.note || (realCount === legs.length
+    ? `model's highest-edge picks vs. real market prices, not just the most likely to win -- ${legs.length} of 4 legs have real odds to compare against`
+    : `${realCount} legs backed by a real edge vs. a real market price, ${legs.length - realCount} model-only where no real price is posted yet -- not just the most likely to win`);
   if(!legs.length){
     return `<div class="placeholder parlay-empty">${opts.emptyText || `No real market lines to compare against yet for ${sport} -- suggested parlay needs at least one leg with a real price behind it (not just a model projection). Check back once DraftKings has posted more.`}</div>`;
   }
@@ -1067,25 +1085,10 @@ function hrAdvice(p){
   return {label:"PASS", cls:"no", note:`${(edge*100).toFixed(1)}% edge vs DK`};
 }
 
-function fmtInnings(outs){
-  if(outs==null) return '—';
-  return `${Math.floor(outs/3)}.${outs%3}`;
-}
-
 function mlbPropStatRow(p){
   const dkNote = p.dk_over!=null
     ? `<span class="count-chip">DK ${p.dk_line!=null ? p.dk_line+' ' : ''}<b>${fmtOdds(p.dk_over)}</b>${p.dk_under!=null ? ' / '+fmtOdds(p.dk_under) : ''}</span>`
     : "";
-  if(p.market === "Bullpen Arm"){
-    // No line, no odds, no model probability -- there's no "probable
-    // reliever" pregame, bullpen usage is decided live. Just real recent
-    // numbers so you know who's actually been getting the ball.
-    return `<div class="prop-stat-row">
-      <span class="prop-stat-label">Recent usage</span>
-      <span class="count-chip">${p.appearances} G, ${fmtInnings(p.outs_recorded)} IP</span>
-      <span class="p-exp">${p.strikeouts} K, ${p.walks_allowed} BB, ${p.hits_allowed} H, ${p.runs_allowed} R &middot; run value ${p.avg_run_value>=0?'+':''}${p.avg_run_value}/appearance</span>
-    </div>`;
-  }
   if(p.market === "Anytime HR"){
     const advice = hrAdvice(p);
     return `<div class="prop-stat-row">
@@ -1274,22 +1277,36 @@ async function loadBvP(date, idx){
 }
 
 function collectMlbParlayLegs(games){
-  const legs = [];
+  // Every prop market (not just Anytime HR) is eligible now -- Hits, Total
+  // Bases, Walks, RBI, Pitcher Strikeouts/etc. all get real DK odds on the
+  // same featured games Anytime HR does, so restricting to one market
+  // starved the "props get a real shot" cap above of anything to actually
+  // fill with. Real-edge props still take priority; model-only props (no
+  // real DK price posted) fill remaining prop slots before falling back to
+  // extra moneylines, same pattern as HR Special.
+  const real = [], modelOnly = [];
   games.forEach(g => {
     const m = g.market;
     if(m && m.mlHome!=null && m.mlAway!=null){
       const fairHome = noVigProb(m.mlHome, m.mlAway);
       const homeEdge = g.elo_home_prob - fairHome;
-      if(homeEdge > 0) legs.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
-      else if(-homeEdge > 0) legs.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+      if(homeEdge > 0) real.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
+      else if(-homeEdge > 0) real.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
     }
     (g.props||[]).forEach(p => {
-      if(p.market !== "Anytime HR" || p.dk_implied_prob == null) return;
-      const edge = p.model_prob - p.dk_implied_prob;
-      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime HR'});
+      const isHr = p.market === "Anytime HR";
+      const modelP = isHr ? p.model_prob : p.model_over_prob;
+      if(modelP == null) return;
+      const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
+      if(p.dk_implied_prob != null){
+        const edge = modelP - p.dk_implied_prob;
+        if(edge > 0) real.push({edge, prob: modelP, label: p.player, sub, market: p.market});
+      } else {
+        modelOnly.push({edge: null, prob: modelP, label: p.player, sub, market: p.market});
+      }
     });
   });
-  return selectMixedLegs(legs);
+  return selectMixedLegs(real, modelOnly);
 }
 
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay
@@ -1641,26 +1658,6 @@ async function updateMLBLiveStats(){
         if(liveEl) liveEl.textContent = played ? (stat.summary || '') : '';
         const flagEl = block.querySelector('.lineup-flag');
         if(flagEl) flagEl.innerHTML = '<span class="hit">&#10003; Confirmed starter</span>';
-      }
-    }
-
-    // Relief pitchers who've actually entered the game -- no "probable
-    // reliever" pregame, bullpen usage is a live, matchup-driven decision,
-    // so this is necessarily live-only, discovered from the box score's
-    // own list of pitchers who've appeared.
-    for(const side of ['home','away']){
-      const teamAbbr = side==='home' ? g.homeAbbr : g.awayAbbr;
-      const sideBox = box.teams && box.teams[side];
-      if(!sideBox || !sideBox.pitchers || !sideBox.players) continue;
-      for(const pid of sideBox.pitchers){
-        if(uniq.has(pid)) continue;
-        const p = sideBox.players['ID'+pid];
-        const stat = p && p.stats && p.stats.pitching;
-        if(!stat || !stat.inningsPitched || stat.inningsPitched==='0.0') continue; // hasn't actually pitched yet
-        const block = ensurePlayerBlock(card, 'Pitching', pid, p.person.fullName, teamAbbr);
-        if(!block) continue;
-        const liveEl = block.querySelector('.live-line');
-        if(liveEl) liveEl.textContent = stat.summary || '';
       }
     }
   }

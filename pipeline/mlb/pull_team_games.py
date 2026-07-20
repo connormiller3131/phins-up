@@ -13,7 +13,15 @@ pb.cache.enable()
 DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+# Completed seasons never change once final, so each one is scraped exactly
+# once and cached to its own file forever after (the cache dir is persisted
+# across CI runs via actions/cache -- see .github/workflows/refresh.yml).
+# Only the current season is live and gets re-pulled in full every run.
+CACHE_DIR = DATA_DIR / "team_games_by_season"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
 SEASONS = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]  # 2020 is the 60-game COVID season
+CURRENT_SEASON = SEASONS[-1]
 
 TEAMS_BY_SEASON = {
     season: [
@@ -29,6 +37,14 @@ TEAMS_BY_SEASON = {
 def main():
     rows = []
     for season in SEASONS:
+        cache_file = CACHE_DIR / f"{season}.parquet"
+        if season != CURRENT_SEASON and cache_file.exists():
+            season_df = pd.read_parquet(cache_file)
+            rows.append(season_df)
+            print(f"season {season}: reused cached scrape ({len(season_df)} rows) -- season is final, never re-pulled")
+            continue
+
+        season_rows = []
         for team in TEAMS_BY_SEASON[season]:
             try:
                 df = pb.schedule_and_record(season, team)
@@ -38,8 +54,15 @@ def main():
             df = df.copy()
             df["season"] = season
             df["team"] = team
-            rows.append(df)
+            season_rows.append(df)
             time.sleep(0.5)  # be polite to baseball-reference
+        season_df = pd.concat(season_rows, ignore_index=True)
+        if season != CURRENT_SEASON:
+            # Only cache seasons that are actually over -- the current season
+            # is re-pulled fresh every run regardless, so caching it would
+            # just be a stale copy nothing ever reads.
+            season_df.to_parquet(cache_file)
+        rows.append(season_df)
         print(f"season {season}: pulled {len(TEAMS_BY_SEASON[season])} teams")
 
     all_games = pd.concat(rows, ignore_index=True)

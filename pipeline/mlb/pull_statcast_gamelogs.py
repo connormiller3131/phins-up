@@ -52,6 +52,15 @@ pb.cache.enable()
 DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+# A calendar month that has fully elapsed will never get new Statcast rows,
+# so its (already game-level-aggregated, not raw pitch data -- keeps the
+# cache small) output is pulled once and cached forever after (persisted
+# across CI runs via actions/cache -- see .github/workflows/refresh.yml).
+# The current, still-in-progress month is always re-pulled and re-aggregated
+# fresh every run.
+CACHE_DIR = DATA_DIR / "statcast_by_month"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
 HIT_TB = {"single": 1, "double": 2, "triple": 3, "home_run": 4}
 WALK_EVENTS = {"walk", "intent_walk"}
 OUT_EVENTS = {
@@ -153,9 +162,37 @@ def add_starter_flag(pitchers):
     return pitchers
 
 
+def _cache_paths(month_key):
+    return {
+        "batters": CACHE_DIR / f"{month_key}_batters.parquet",
+        "pitchers": CACHE_DIR / f"{month_key}_pitchers.parquet",
+        "profile": CACHE_DIR / f"{month_key}_profile.parquet",
+        "hand": CACHE_DIR / f"{month_key}_hand.parquet",
+    }
+
+
 def main():
     batter_chunks, pitcher_chunks, profile_chunks, hand_chunks = [], [], [], []
     for start, end in SEASON_MONTHS:
+        month_key = start[:7]
+        month_complete = datetime.date.fromisoformat(end) < TODAY
+        paths = _cache_paths(month_key)
+
+        if month_complete and all(p.exists() for p in paths.values()):
+            b = pd.read_parquet(paths["batters"])
+            p_df = pd.read_parquet(paths["pitchers"])
+            profile = pd.read_parquet(paths["profile"])
+            h = pd.read_parquet(paths["hand"])
+            if len(b):
+                batter_chunks.append(b)
+                pitcher_chunks.append(p_df)
+                hand_chunks.append(h)
+            if len(profile):
+                profile_chunks.append(profile)
+            print(f"{month_key}: reused cached aggregates ({len(b)} batter-games, {len(p_df)} pitcher-games) "
+                  f"-- month is over, never re-pulled")
+            continue
+
         print(f"Pulling {start} to {end}...")
         try:
             raw = pb.statcast(start_dt=start, end_dt=end, verbose=False)
@@ -164,15 +201,25 @@ def main():
             continue
 
         profile = aggregate_pitch_profile(raw)
+        b, p_df, h = aggregate_chunk(raw)
+
+        if month_complete:
+            # Cache game-level aggregates only (not raw pitch data) to keep
+            # the persisted cache small; write empty frames for months with
+            # no games (e.g. deep off-season) so they're not re-pulled either.
+            (b if b is not None else pd.DataFrame()).to_parquet(paths["batters"])
+            (p_df if p_df is not None else pd.DataFrame()).to_parquet(paths["pitchers"])
+            (profile if profile is not None else pd.DataFrame()).to_parquet(paths["profile"])
+            (h if h is not None else pd.DataFrame()).to_parquet(paths["hand"])
+
         if profile is not None:
             profile_chunks.append(profile)
 
-        b, p, h = aggregate_chunk(raw)
         if b is not None:
             batter_chunks.append(b)
-            pitcher_chunks.append(p)
+            pitcher_chunks.append(p_df)
             hand_chunks.append(h)
-            print(f"  -> {len(b)} batter-games, {len(p)} pitcher-games, "
+            print(f"  -> {len(b)} batter-games, {len(p_df)} pitcher-games, "
                   f"{len(profile) if profile is not None else 0} pitch-profile rows, "
                   f"{len(h)} batter-vs-hand rows")
         del raw

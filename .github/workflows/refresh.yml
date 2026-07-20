@@ -47,14 +47,25 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python pipeline/nfl/generate_current_week.py
 
-      # NOTE: these two MLB pulls currently re-pull the FULL 2024-present
-      # history every run (team schedules via 30x Baseball-Reference scrapes,
-      # plus month-by-month Statcast). That's a real inefficiency -- it only
-      # needs to grow by one day's worth of games -- but the daily runtime
-      # cost is acceptable for now (public repos get unlimited Actions
-      # minutes) and correctness matters more than efficiency here. Worth
-      # revisiting: switch to incremental pulls that only fetch new games
-      # since the last run.
+      # Completed MLB seasons/months never change, so both pull scripts cache
+      # their per-season / per-month output to data/mlb/ and skip re-pulling
+      # anything already finished -- only the current season (team schedule)
+      # and current month (Statcast) are re-fetched live every run. This
+      # cache has to survive between runs (a fresh checkout has none of it),
+      # so it's restored here and saved back at the end of the job. Using
+      # github.run_id as the save key (with a plain prefix as the restore
+      # key) means every run saves a new cache entry seeded from the most
+      # recent one -- the standard pattern for a cache that keeps growing.
+      - name: Restore MLB historical-pull cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/mlb/team_games_by_season
+            data/mlb/statcast_by_month
+          key: mlb-data-cache-${{ github.run_id }}
+          restore-keys: |
+            mlb-data-cache-
+
       - name: Pull latest MLB team schedule/results
         run: python pipeline/mlb/pull_team_games.py
 

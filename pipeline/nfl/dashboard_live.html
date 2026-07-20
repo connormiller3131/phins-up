@@ -52,6 +52,13 @@
     margin-right:14px;
   }
   .tabnav button.active{color:var(--text);border-bottom-color:var(--green);}
+  .site-author{
+    margin-left:auto;
+    align-self:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+  }
   .tab-panel{display:none;}
   .tab-panel.active{display:block;}
 
@@ -619,6 +626,7 @@
     <button id="tabbtn-nfl" class="active" onclick="showTab('nfl')">NFL</button>
     <button id="tabbtn-mlb" onclick="showTab('mlb')">MLB</button>
     <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
+    <span class="site-author">By Connor Miller</span>
   </div>
 
   <div id="tab-nfl" class="tab-panel active">

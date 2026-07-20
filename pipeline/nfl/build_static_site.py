@@ -23,8 +23,7 @@ def main():
         with open(MLB_DATA_PATH, encoding="utf-8") as f:
             mlb_data = json.load(f)
     else:
-        mlb_data = {"date": None, "elo_params": {"k": None, "home_adv": None, "scale": None},
-                    "generated_at": None, "games": []}
+        mlb_data = {"week_start": None, "week_end": None, "today": None, "generated_at": None, "days": {}}
 
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         tmpl = f.read()
@@ -33,7 +32,8 @@ def main():
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         f.write(out)
-    print(f"Built {OUT_PATH} -- NFL season {nfl_data['season']} current week {nfl_data['current_week']}, MLB date {mlb_data['date']}")
+    print(f"Built {OUT_PATH} -- NFL season {nfl_data['season']} current week {nfl_data['current_week']}, "
+          f"MLB week {mlb_data.get('week_start')} to {mlb_data.get('week_end')} (today={mlb_data.get('today')})")
 
 
 if __name__ == "__main__":

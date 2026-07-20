@@ -1,4 +1,6 @@
-"""Generate REAL projections for the next day's MLB slate:
+"""Generate REAL projections for every day of the current Monday-Sunday week
+(not just "today"), so the dashboard can offer a day picker the same way the
+NFL tab offers a week picker:
 - Elo win probability, ratings carried forward from all completed games,
   blended with real starting-pitcher/bullpen strength.
 - Real DraftKings game-line odds (moneyline/run-line/total) via The Odds API.
@@ -50,6 +52,7 @@ from pipeline.mlb.team_offense import current_team_woba
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 
 DATA_DIR = ROOT / "data" / "mlb"
+RESULTS_DIR = ROOT / "docs" / "results"
 
 BATTER_COUNT_STATS = {
     "hits": "Hits", "total_bases": "Total Bases", "walks": "Walks", "rbi": "RBI",
@@ -73,22 +76,23 @@ PROP_MARKET_KEYS = {
 }
 
 
-def get_slate_schedule(max_days_ahead=5):
-    for offset in range(max_days_ahead):
-        d = (datetime.date.today() + datetime.timedelta(days=offset)).isoformat()
-        resp = requests.get(
-            "https://statsapi.mlb.com/api/v1/schedule",
-            params={"sportId": 1, "date": d, "hydrate": "probablePitcher"},
-            timeout=15,
-        )
-        resp.raise_for_status()
-        dates = resp.json().get("dates", [])
-        if dates and dates[0]["games"]:
-            return d, dates[0]["games"]
-    raise RuntimeError("No MLB games found in the next several days.")
+def get_slate_schedule_for_date(target_date):
+    """Real games (if any) scheduled for one specific date -- unlike the old
+    scan-forward-from-today version, this can be called for any past, present,
+    or future date and just returns [] on a genuine off day (All-Star break
+    Monday, etc.) rather than raising, since a week-long slate has to keep
+    going even if one day in it has nothing scheduled."""
+    resp = requests.get(
+        "https://statsapi.mlb.com/api/v1/schedule",
+        params={"sportId": 1, "date": target_date, "hydrate": "probablePitcher"},
+        timeout=15,
+    )
+    resp.raise_for_status()
+    dates = resp.json().get("dates", [])
+    return dates[0]["games"] if dates else []
 
 
-def parse_slate(raw_games):
+def parse_slate(raw_games, target_date):
     out = []
     for g in raw_games:
         away, home = g["teams"]["away"], g["teams"]["home"]
@@ -99,6 +103,7 @@ def parse_slate(raw_games):
             print(f"  skip game, unmapped team: {e}")
             continue
         out.append({
+            "target_date": target_date,
             "away_name": away["team"]["name"], "home_name": home["team"]["name"],
             "away_team": away_abbr, "home_team": home_abbr,
             "away_probable_pitcher": away.get("probablePitcher"),
@@ -107,6 +112,70 @@ def parse_slate(raw_games):
             "game_pk": g.get("gamePk"),
         })
     return out
+
+
+def week_dates(today=None):
+    """The 7 ISO dates of the Monday-Sunday week containing `today` (real
+    calendar today by default). Recomputes to a new Monday exactly once
+    `today` crosses into the next week -- no special-casing "the Monday 2am
+    refresh" needed, since that's just the first run each week where this
+    naturally shifts."""
+    today = today or datetime.date.today()
+    monday = today - datetime.timedelta(days=today.weekday())
+    return [(monday + datetime.timedelta(days=i)).isoformat() for i in range(7)]
+
+
+def snapshot_path(target_date):
+    return RESULTS_DIR / f"mlb_{target_date}.json"
+
+
+def load_finalized_snapshot(target_date):
+    path = snapshot_path(target_date)
+    if not path.exists():
+        return None
+    with open(path, encoding="utf-8") as f:
+        snap = json.load(f)
+    return snap if snap.get("finalized") else None
+
+
+def write_snapshot(target_date, day_payload):
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    with open(snapshot_path(target_date), "w", encoding="utf-8") as f:
+        json.dump(day_payload, f, indent=2)
+
+
+def attach_final_scores(games_out, games_df, target_date):
+    """Patches real final scores + already_played onto a day's games once
+    that day is over, matched from the real Baseball-Reference pull
+    (load_games(), which already has final scores for every completed game).
+    Doubleheaders can put two games with the same (date, home, away) pair on
+    the board, so this disambiguates by within-day occurrence order (same
+    cumcount trick games.py already uses for rest/form joins) rather than a
+    plain merge, which would silently duplicate or misattribute a row."""
+    day_results = games_df[games_df["game_date"] == pd.Timestamp(target_date)]
+    if day_results.empty:
+        for g in games_out:
+            g["already_played"], g["away_score"], g["home_score"] = False, None, None
+        return
+
+    day_results = day_results.copy()
+    day_results["_occ"] = day_results.groupby(["home_team", "away_team"]).cumcount()
+    by_pair = {}
+    for row in day_results.itertuples(index=False):
+        by_pair.setdefault((row.home_team, row.away_team), []).append(row)
+
+    seen_occ = {}
+    for g in games_out:
+        key = (g["homeAbbr"], g["awayAbbr"])
+        occ = seen_occ.get(key, 0)
+        seen_occ[key] = occ + 1
+        matches = by_pair.get(key, [])
+        row = matches[occ] if occ < len(matches) else None
+        if row is None:
+            g["already_played"], g["away_score"], g["home_score"] = False, None, None
+        else:
+            g["already_played"] = True
+            g["away_score"], g["home_score"] = int(row.away_score), int(row.home_score)
 
 
 def elo_predictions(games_df, slate):
@@ -440,16 +509,53 @@ def bullpen_arm_entries(team, n=4):
     return entries
 
 
-def main():
-    target_date, raw_games = get_slate_schedule()
-    slate = parse_slate(raw_games)
-    print(f"Target date: {target_date} -- {len(slate)} games")
+def build_day_payload(date, games, elo_params, pitcher_blend_used, finalized):
+    return {
+        "date": date, "weekday": datetime.date.fromisoformat(date).strftime("%A"),
+        "finalized": finalized,
+        "elo_params": elo_params, "pitcher_blend_used": pitcher_blend_used,
+        "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "games": games,
+    }
+
+
+def main(today=None):
+    """`today` is an override point for tests -- real runs always take the
+    default (real `datetime.date.today()`); nothing about normal operation
+    (including the `python generate_daily_slate.py` CLI entry point below)
+    ever passes it."""
+    today = today or datetime.date.today()
+    today_iso = today.isoformat()
+    dates = week_dates(today)
+    print(f"Week: {dates[0]} to {dates[-1]} (today={today_iso})")
 
     games_df = load_games()
-    team_elo_preds, elo_params = elo_predictions(games_df, slate)
+    pitcher_model_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
+    pitcher_blend_used = pitcher_model_path.exists()
+
+    days_out = {}
+    combined_slate = []
+    for d in dates:
+        if d < today_iso:
+            snap = load_finalized_snapshot(d)
+            if snap is not None:
+                days_out[d] = snap
+                print(f"  {d}: reused finalized snapshot ({len(snap['games'])} games) -- day is over, never regenerated")
+                continue
+        raw_games = get_slate_schedule_for_date(d)
+        combined_slate.extend(parse_slate(raw_games, d))
+        print(f"  {d}: {len(raw_games)} games scheduled" + (" (needs finalizing -- past day with no snapshot yet)" if d < today_iso else ""))
+
+    if not combined_slate:
+        # Every day this week was already finalized (e.g. rerun same day) --
+        # nothing left to generate, just write out what we loaded.
+        _write_week_payload(dates, today_iso, days_out)
+        return
+
+    team_elo_preds, elo_params = elo_predictions(games_df, combined_slate)
     print("Blending in starting-pitcher + bullpen strength...")
-    elo_preds = blend_with_pitcher_strength(team_elo_preds, slate)
-    attach_market_odds(slate)
+    elo_preds = blend_with_pitcher_strength(team_elo_preds, combined_slate)
+    attach_market_odds(combined_slate)
 
     print("Fitting batter prop models on full historical data...")
     batter_models = {}
@@ -477,12 +583,12 @@ def main():
             "own": pitcher_current_trailing(stat_key), "opp": pitcher_opponent_current_trailing(stat_key),
         }
 
-    team_abbrs = sorted({g["home_team"] for g in slate} | {g["away_team"] for g in slate})
-    print(f"Fetching active rosters for {len(team_abbrs)} teams...")
+    team_abbrs = sorted({g["home_team"] for g in combined_slate} | {g["away_team"] for g in combined_slate})
+    print(f"Fetching active rosters for {len(team_abbrs)} teams (shared across every day this run touches)...")
     active_rosters = {abbr: get_active_roster_ids(abbr) for abbr in team_abbrs}
 
     games_out = []
-    for i, g in enumerate(slate):
+    for i, g in enumerate(combined_slate):
         home_batters = top_batters_for_team(pa_own, g["home_team"], active_rosters.get(g["home_team"]))
         away_batters = top_batters_for_team(pa_own, g["away_team"], active_rosters.get(g["away_team"]))
 
@@ -517,6 +623,7 @@ def main():
             good_value_away = (1 - elo_home) > (1 - market["home_fair_prob"])
 
         games_out.append({
+            "target_date": g["target_date"],
             "awayAbbr": g["away_team"], "homeAbbr": g["home_team"],
             "awayName": g["away_name"], "homeName": g["home_name"],
             "gameDatetime": g["game_datetime"],
@@ -533,22 +640,46 @@ def main():
             "hr_combo": combo,
             "props": props,
         })
-        print(f"  {g['away_team']} @ {g['home_team']}: model_home={elo_preds[i]:.3f} (team-only elo={team_elo_preds[i]:.3f}) market={'yes' if g['market'] else 'no'} props={len(props)}")
+        print(f"  {g['target_date']} {g['away_team']} @ {g['home_team']}: model_home={elo_preds[i]:.3f} "
+              f"(team-only elo={team_elo_preds[i]:.3f}) market={'yes' if g['market'] else 'no'} props={len(props)}")
 
+    # Pooled across every day generated this run, not per day -- each
+    # per-event props call costs real Odds API credits, so a full week still
+    # only spends the same handful of credits per refresh a single day did,
+    # just picked from a bigger pool of not-yet-started candidates.
     attach_featured_prop_odds(games_out, limit=int(os.environ.get("FEATURED_PROPS_LIMIT", "2")))
 
-    pitcher_model_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
-    pitcher_blend_used = pitcher_model_path.exists()
+    # Group once up front -- games_out gets mutated (target_date deleted)
+    # below, so re-filtering the same list per date after that would break.
+    by_date = {}
+    for g in games_out:
+        by_date.setdefault(g["target_date"], []).append(g)
+
+    for d, day_games in sorted(by_date.items()):
+        attach_final_scores(day_games, games_df, d)
+        for g in day_games:
+            del g["target_date"]
+        finalized = d < today_iso
+        day_payload = build_day_payload(d, day_games, elo_params, pitcher_blend_used, finalized)
+        if finalized:
+            write_snapshot(d, day_payload)
+            print(f"  {d}: finalized and snapshotted ({len(day_games)} games, real final scores attached)")
+        days_out[d] = day_payload
+
+    _write_week_payload(dates, today_iso, days_out)
+
+
+def _write_week_payload(dates, today_iso, days_out):
     payload = {
-        "date": target_date, "elo_params": elo_params,
-        "pitcher_blend_used": pitcher_blend_used,
+        "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
-        "games": games_out,
+        "days": days_out,
     }
     out_path = DATA_DIR / "dashboard_current_slate.json"
     with open(out_path, "w") as f:
         json.dump(payload, f, indent=2)
-    print(f"\nWrote {out_path}")
+    total_games = sum(len(day["games"]) for day in days_out.values())
+    print(f"\nWrote {out_path} -- {len(days_out)} days, {total_games} total games")
 
 
 if __name__ == "__main__":

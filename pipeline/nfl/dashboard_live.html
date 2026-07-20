@@ -643,6 +643,11 @@
     </div>
   </header>
 
+  <div class="week-select-wrap">
+    <label for="mlb-day-select">Day</label>
+    <select id="mlb-day-select" onchange="renderMLBGames(this.value)"></select>
+  </div>
+
   <div class="legend">
     <span><i class="sw" style="background:var(--text-dim)"></i>Fair % — real DraftKings moneyline, where posted</span>
     <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
@@ -675,6 +680,7 @@ function showTab(name){
 
 const DATA = __DATA_JSON__;
 const MLB_DATA = __MLB_DATA_JSON__;
+const MLB_WEEK_DAYS = Object.keys(MLB_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
@@ -1134,23 +1140,24 @@ function fmtGameTime(iso){
   return d.toLocaleString('en-US', {weekday:'short', hour:'numeric', minute:'2-digit', timeZoneName:'short'});
 }
 
-function bvpSection(g, idx){
+function bvpSection(date, g, idx){
   const hasBatters = (g.props||[]).some(p => p.section === "Batting" && p.player_id != null);
   if(!hasBatters || (!g.awayProbablePitcherId && !g.homeProbablePitcherId)) return "";
   return `
-    <details class="props-toggle" id="mlb-bvp-${idx}" ontoggle="if(this.open) loadBvP(${idx})">
+    <details class="props-toggle" id="mlb-bvp-${date}-${idx}" ontoggle="if(this.open) loadBvP('${date}', ${idx})">
       <summary>Batter vs Pitcher <span class="props-sample-tag">(real career stats vs. today's probable starter, fetched live from MLB on expand)</span></summary>
-      <div id="mlb-bvp-body-${idx}"><span class="p-exp">Loading…</span></div>
+      <div id="mlb-bvp-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
     </details>
   `;
 }
 
 const bvpLoaded = new Set();
-async function loadBvP(idx){
-  if(bvpLoaded.has(idx)) return;
-  bvpLoaded.add(idx);
-  const g = MLB_DATA.games[idx];
-  const body = document.getElementById(`mlb-bvp-body-${idx}`);
+async function loadBvP(date, idx){
+  const key = `${date}_${idx}`;
+  if(bvpLoaded.has(key)) return;
+  bvpLoaded.add(key);
+  const g = MLB_DATA.days[date] && MLB_DATA.days[date].games[idx];
+  const body = document.getElementById(`mlb-bvp-body-${date}-${idx}`);
   if(!g || !body) return;
 
   const pitcherName = new Map([[g.awayProbablePitcherId, g.awayProbablePitcher], [g.homeProbablePitcherId, g.homeProbablePitcher]]);
@@ -1233,43 +1240,82 @@ function collectHrSpecialLegs(games){
   return real.concat(modelOnly).slice(0, 4);
 }
 
-function renderMLBGames(){
-  document.getElementById('mlb-eyebrow').textContent = `MLB · ${MLB_DATA.date}`;
-  const ep = MLB_DATA.elo_params;
+function populateMlbDaySelect(selected){
+  const sel = document.getElementById('mlb-day-select');
+  if(!sel) return;
+  sel.innerHTML = MLB_WEEK_DAYS.map(d => {
+    const day = MLB_DATA.days[d];
+    const label = `${day.weekday}, ${fmtShortDate(d)}`;
+    return `<option value="${d}" ${d===selected?'selected':''}>${label}${d===MLB_DATA.today?' (today)':''}</option>`;
+  }).join('');
+}
+
+function fmtShortDate(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  return new Date(y, m-1, d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+function renderMLBGames(selectedDate){
+  selectedDate = selectedDate || MLB_DATA.today;
+  populateMlbDaySelect(selectedDate);
+
+  const dayData = MLB_DATA.days[selectedDate];
+  const root = document.getElementById("mlb-games");
+  if(!dayData){
+    document.getElementById('mlb-eyebrow').textContent = 'MLB';
+    document.getElementById('mlb-meta').textContent = 'No data available for this day yet.';
+    root.innerHTML = `<div class="placeholder">No games found for ${selectedDate}.</div>`;
+    document.getElementById("mlb-foot").innerHTML = '';
+    return;
+  }
+
+  const isToday = selectedDate === MLB_DATA.today;
+  document.getElementById('mlb-eyebrow').textContent = `MLB · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : ''}`;
+  const ep = dayData.elo_params;
   document.getElementById('mlb-meta').textContent =
     `Model basis: team Elo fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression})` +
-    (MLB_DATA.pitcher_blend_used
+    (dayData.pitcher_blend_used
       ? `, blended with real starting-pitcher/bullpen strength (Statcast run-value), team offense quality (Statcast est_woba, PA-weighted), and a same-division flag via a logistic regression fit on 2024-2025 and validated out-of-sample on 2026: Brier 0.2486&rarr;0.2474, log loss 0.6904&rarr;0.6878 vs. team-Elo alone -- offense quality was the single biggest piece of that gain.`
       : `. Pitcher/bullpen blend not available this run -- showing team-only Elo.`) +
-    ` Generated ${MLB_DATA.generated_at}.`;
+    ` Generated ${dayData.generated_at}.` +
+    (!isToday ? ` ${dayData.finalized ? 'This day is over -- final results shown, frozen at generation time, never rewritten.' : 'Future day -- model-only projection, no live odds/lineups posted this far out yet.'}` : '');
 
-  const root = document.getElementById("mlb-games");
-  const hrLegs = collectHrSpecialLegs(MLB_DATA.games);
+  if(!dayData.games.length){
+    root.innerHTML = `<div class="placeholder">No MLB games scheduled for ${selectedDate}.</div>`;
+    document.getElementById("mlb-foot").innerHTML = '';
+    return;
+  }
+
+  const hrLegs = collectHrSpecialLegs(dayData.games);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
-  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(MLB_DATA.games), 'MLB')
+  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB')
     + parlayCardHtml(hrLegs, 'MLB', {
         title: 'HR SPECIAL', accentClass: 'parlay-hr',
         note: hrRealCount
           ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
           : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
-        emptyText: 'No Anytime HR projections available yet for today\'s slate. Check back once the model has run.',
+        emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
       });
 
-  MLB_DATA.games.forEach((g, idx) => {
+  dayData.games.forEach((g, idx) => {
     const card = document.createElement("div");
     card.className = "game";
     card.dataset.gameIdx = idx;
     const m = g.market;
     const fairHome = m && m.mlHome!=null && m.mlAway!=null ? noVigProb(m.mlHome, m.mlAway) : null;
 
+    const finalScoreBadge = g.already_played
+      ? `FINAL<span class="pct">${g.awayAbbr} ${g.away_score} – ${g.homeAbbr} ${g.home_score}</span>`
+      : (isToday ? '' : '<span style="color:var(--text-dim)">Scheduled</span>');
+
     card.innerHTML = `
       <div class="game-top">
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('mlb-games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
-          <div class="now-line" id="mlb-nowline-${idx}"></div>
+          <div class="now-line" id="mlb-nowline-${selectedDate}-${idx}"></div>
         </div>
-        <div class="hold-badge" id="mlb-score-${idx}"></div>
+        <div class="hold-badge" id="mlb-score-${selectedDate}-${idx}">${finalScoreBadge}</div>
       </div>
 
       <div class="prob-bar-wrap">
@@ -1298,7 +1344,7 @@ function renderMLBGames(){
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
-      ${bvpSection(g, idx)}
+      ${bvpSection(selectedDate, g, idx)}
     `;
     root.appendChild(card);
   });
@@ -1322,16 +1368,25 @@ renderMLBGames();
 // so scores stay current even though this page is only rebuilt once a day.
 const mlbGameStatus = {};
 async function updateMLBScores(){
-  if(!MLB_DATA.date || !MLB_DATA.games.length) return;
+  // Always targets MLB_DATA.today specifically, never whatever day is
+  // currently selected in the dropdown -- past days already have a frozen
+  // final score baked in at generation time, and future days haven't
+  // started, so live polling only ever makes sense for today. The date-
+  // scoped element ids below (mlb-score-{date}-{idx}) only exist in the DOM
+  // when today happens to be the day currently on screen; on any other day
+  // this simply finds nothing and no-ops, which is what we want.
+  const today = MLB_DATA.today;
+  const todayData = today && MLB_DATA.days[today];
+  if(!todayData || !todayData.games.length) return;
   let apiGames = [];
   try{
-    const r = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${MLB_DATA.date}&hydrate=linescore`);
+    const r = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${today}&hydrate=linescore`);
     const data = await r.json();
     apiGames = (data.dates && data.dates[0]) ? data.dates[0].games : [];
   }catch(e){ return; } // transient network failure: keep whatever is shown
 
-  MLB_DATA.games.forEach((g, idx) => {
-    const el = document.getElementById('mlb-score-'+idx);
+  todayData.games.forEach((g, idx) => {
+    const el = document.getElementById(`mlb-score-${today}-${idx}`);
     if(!el) return;
     // Match by team names; doubleheaders share a team pair, so disambiguate
     // by closest scheduled start time.
@@ -1410,9 +1465,14 @@ function ensurePlayerBlock(card, sectionTitle, pid, name, team){
 }
 
 async function updateMLBLiveStats(){
-  for(let idx=0; idx<MLB_DATA.games.length; idx++){
-    const g = MLB_DATA.games[idx];
-    const nowEl = document.getElementById('mlb-nowline-'+idx);
+  // Same "today only" scoping as updateMLBScores above -- always reads
+  // MLB_DATA.today's own games, and the date-scoped mlb-nowline-{date}-{idx}
+  // id only exists in the DOM when today is the day currently rendered.
+  const today = MLB_DATA.today;
+  const todayGames = (today && MLB_DATA.days[today] && MLB_DATA.days[today].games) || [];
+  for(let idx=0; idx<todayGames.length; idx++){
+    const g = todayGames[idx];
+    const nowEl = document.getElementById(`mlb-nowline-${today}-${idx}`);
     const card = nowEl ? nowEl.closest('.game') : null;
     if(!card || !g.gamePk) continue;
 

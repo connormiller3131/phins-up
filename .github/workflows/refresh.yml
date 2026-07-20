@@ -3,7 +3,7 @@ name: Refresh projections
 on:
   schedule:
     - cron: "0 6 * * *"    # 2am ET (EDT, UTC-4) -- GitHub cron is fixed UTC, so this reads as 1am once EST (winter, UTC-5) kicks in
-    - cron: "0 16 * * *"   # noon ET (EDT, UTC-4) -- reads as 11am once EST kicks in
+    - cron: "0 15 * * *"   # 11am ET (EDT, UTC-4) -- reads as 10am once EST kicks in
   workflow_dispatch: {}     # lets you trigger a run manually from the Actions tab
 
 permissions:

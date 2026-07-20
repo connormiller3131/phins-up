@@ -889,10 +889,10 @@ function parlayCardHtml(legs, sport, opts){
     <div class="parlay-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
       <span class="parlay-leg-market">${l.market}</span>
-      <span class="parlay-leg-edge">${l.edge != null
-        ? `+${(l.edge*100).toFixed(1)}% edge`
-        : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this player to grade an edge against">MODEL EST.</span>`}</span>
-      <span class="parlay-leg-prob">${pct(l.prob)}</span>
+      <span class="parlay-leg-edge">${l.edge != null ? `+${(l.edge*100).toFixed(1)}% edge` : ''}</span>
+      <span class="parlay-leg-prob">${l.edge == null
+        ? `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this player to grade an edge against">MODEL EST.</span> `
+        : ''}${pct(l.prob)}</span>
     </div>
   `).join("");
   const anyReal = legs.some(l => l.edge != null);

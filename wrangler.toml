@@ -16,6 +16,13 @@ compatibility_date = "2024-01-01"
 [assets]
 directory = "./docs"
 binding = "ASSETS"
+# By default Cloudflare serves a matching static asset directly and never
+# invokes the attached Worker script at all -- confirmed this the hard way:
+# site-worker.js's Cache-Control override wasn't showing up on ANY request,
+# even a fresh workers.dev one with otherwise-correct (non-stale) content.
+# This forces every request through the script first so it can actually
+# rewrite the response header.
+run_worker_first = true
 
 # phinsup.net was bought directly through Cloudflare (already on Cloudflare's
 # own nameservers), so this attaches it as a custom domain automatically on

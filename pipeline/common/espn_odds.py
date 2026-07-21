@@ -1,15 +1,24 @@
-"""Free, unauthenticated fallback source for real game-line odds
-(moneyline/run-line-or-spread/total), via ESPN's public site API. Used only
-to fill in whatever attach_market_odds's primary DraftKings-via-The-Odds-API
-call couldn't price -- confirmed real case: every single MLB game came back
-with a null moneyline on a refresh, which is what happens when that bulk
-call throws entirely (almost certainly a credit-quota exhaustion, since MLB
-also spends per-event player-prop credits twice a day), not a per-game gap.
-ESPN's scoreboard/summary endpoints have no visible request quota, so this
-removes that whole failure mode for game lines specifically. It can't
-replace The Odds API outright: attach_featured_prop_odds still needs the
-event_id that call returns to fetch player props from that same account.
-"""
+"""Free, unauthenticated wrapper around ESPN's public site API, covering two
+unrelated gaps in this pipeline:
+
+- Fallback game-line odds (moneyline/run-line-or-spread/total). Used only to
+  fill in whatever attach_market_odds's primary DraftKings-via-The-Odds-API
+  call couldn't price -- confirmed real case: every single MLB game came
+  back with a null moneyline on a refresh, which is what happens when that
+  bulk call throws entirely (almost certainly a credit-quota exhaustion,
+  since MLB also spends per-event player-prop credits twice a day), not a
+  per-game gap. It can't replace The Odds API outright: attach_featured_prop_odds
+  still needs the event_id that call returns to fetch player props from
+  that same account.
+
+- Confirmed starting lineups, with real batting order, once each team has
+  posted theirs -- ESPN's per-event summary carries this well before first
+  pitch in practice (confirmed against a still-STATUS_SCHEDULED game ~1.5
+  hours out that already had all 9 real starters posted). This replaces
+  this pipeline's previous "no confirmed lineup source" gap, where the
+  starting 9 batters were only ever a proxy (top 9 by trailing PA volume).
+
+Both endpoints have no visible request quota."""
 import requests
 
 BASE_URL = "https://site.api.espn.com/apis/site/v2/sports"
@@ -63,3 +72,25 @@ def get_event_odds(sport_key, event_id):
         "mlHome": home_ml, "mlAway": away_ml,
         "run_line_home": entry.get("spread"), "total_line": entry.get("overUnder"),
     }
+
+
+def get_confirmed_lineup(sport_key, event_id):
+    """The real starting 9-batter lineup + batting order for one event, once
+    posted. Returns {'home': [...], 'away': [...]} (each a list of {'name',
+    'bat_order'} in batting order) or None if ESPN doesn't have it yet.
+    ESPN's own athlete ids are a different id space from this repo's MLBAM
+    player_id (Statcast/pybaseball convention) -- callers need to resolve
+    `name` against their own player lookup, not treat the id as usable."""
+    resp = requests.get(f"{BASE_URL}/{SPORT_PATHS[sport_key]}/summary", params={"event": event_id}, timeout=15)
+    resp.raise_for_status()
+    out = {}
+    for side in resp.json().get("rosters", []):
+        home_away = side.get("homeAway")
+        lineup = [
+            {"name": p["athlete"]["fullName"], "bat_order": p["batOrder"]}
+            for p in side.get("roster", [])
+            if p.get("starter") and p.get("batOrder") is not None
+        ]
+        if lineup:
+            out[home_away] = sorted(lineup, key=lambda x: x["bat_order"])
+    return out or None

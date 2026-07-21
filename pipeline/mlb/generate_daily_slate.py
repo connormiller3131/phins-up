@@ -5,9 +5,10 @@ NFL tab offers a week picker:
   blended with real starting-pitcher/bullpen strength.
 - Real DraftKings game-line odds (moneyline/run-line/total) via The Odds API.
 - Player props for each team's probable starting pitcher and the full
-  9-player lineup by recent plate-appearance volume (a proxy for "everyday
-  player" -- we don't have a confirmed lineup source), sectioned into
-  Batting and Pitching:
+  9-player lineup -- ESPN's real confirmed starting lineup when it's been
+  posted by generation time, falling back to a proxy (top 9 by recent
+  plate-appearance volume) for whichever games it isn't posted for yet --
+  sectioned into Batting and Pitching:
     Batting: Hits, Total Bases, Walks, RBI, Anytime HR
     Pitching: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed,
               Outs Recorded
@@ -53,6 +54,7 @@ from pipeline.common.odds_api import get_game_odds, get_event_player_props
 from pipeline.common.espn_odds import (
     get_scoreboard_events as get_espn_scoreboard_events,
     get_event_odds as get_espn_event_odds,
+    get_confirmed_lineup as get_espn_confirmed_lineup,
 )
 
 DATA_DIR = ROOT / "data" / "mlb"
@@ -368,6 +370,48 @@ def attach_espn_fallback_odds(slate):
             print(f"  ESPN odds fallback used: {g['away_team']} @ {g['home_team']} ({d})")
 
 
+def attach_espn_lineups(slate):
+    """Real confirmed starting lineups (with true batting order) from
+    ESPN's public per-event summary, once each team has posted theirs --
+    usually a few hours before first pitch, but not guaranteed to be posted
+    yet for every game by the time this runs (a run several hours before a
+    night game's first pitch, for instance). Returns a dict keyed by
+    (target_date, away_team, home_team) -> {'home': [...], 'away': [...]};
+    a game simply has no entry if ESPN doesn't have a lineup for it yet --
+    callers should treat that exactly like "not posted yet" and fall back
+    to the existing PA-volume proxy, not treat it as an error."""
+    events_by_date = {}
+    out = {}
+    for g in slate:
+        d = g["target_date"]
+        if d not in events_by_date:
+            try:
+                events = get_espn_scoreboard_events("baseball_mlb", d)
+            except Exception as e:
+                print(f"  ESPN scoreboard unavailable for lineups on {d}: {e}")
+                events = []
+            lookup = {}
+            for e in events:
+                try:
+                    h, a = full_name_to_statcast(e["home_name"]), full_name_to_statcast(e["away_name"])
+                except KeyError:
+                    continue
+                lookup[(a, h)] = e["event_id"]
+            events_by_date[d] = lookup
+
+        event_id = events_by_date[d].get((g["away_team"], g["home_team"]))
+        if not event_id:
+            continue
+        try:
+            lineup = get_espn_confirmed_lineup("baseball_mlb", event_id)
+        except Exception as e:
+            print(f"  ESPN lineup fetch failed for {g['away_team']}@{g['home_team']}: {e}")
+            continue
+        if lineup:
+            out[(d, g["away_team"], g["home_team"])] = lineup
+    return out
+
+
 def _norm_name(name):
     """Accent-insensitive lowercase match key (DK strips accents: Jose Ramirez).
     A missing/non-string name (e.g. a real gap in a name lookup upstream)
@@ -508,10 +552,37 @@ def get_active_roster_ids(team_abbr):
         return None  # fail open: don't filter if the roster call itself breaks
 
 
-def top_batters_for_team(pa_own, team, active_ids, n=9):
-    """Full lineup by recent plate-appearance volume. No confirmed daily
-    lineup source (same caveat as before), so this is a proxy for "everyday
-    player" -- 9 players covers a real lineup, not just the top few bats."""
+def match_confirmed_lineup(pa_own, team, espn_lineup):
+    """Resolves ESPN's real starting lineup (names only -- ESPN's athlete
+    ids are a different id space from our own MLBAM player_id) to our own
+    player_id via name matching against just this team's own trailing data,
+    not the whole league -- confines the match to ~20 real candidates so an
+    accented-name or nickname mismatch can't accidentally match a
+    same-named player on a different team. Preserves ESPN's batting order."""
+    team_players = pa_own[pa_own["team"] == team]
+    by_name = {_norm_name(name): pid for pid, name in team_players["player_display_name"].items()}
+    matched = []
+    for entry in espn_lineup:
+        pid = by_name.get(_norm_name(entry["name"]))
+        if pid is not None:
+            matched.append(pid)
+    return matched
+
+
+def top_batters_for_team(pa_own, team, active_ids, confirmed_lineup=None, n=9):
+    """Prefers ESPN's real confirmed starting lineup when it's already
+    posted by generation time; falls back to a proxy (top n by recent
+    plate-appearance volume) for whichever games it isn't posted for yet."""
+    if confirmed_lineup:
+        matched = match_confirmed_lineup(pa_own, team, confirmed_lineup)
+        # A couple of misses (a call-up too new for our own trailing data,
+        # a name-format mismatch) still leaves a real lineup that's more
+        # accurate than the proxy; too many misses means something's wrong
+        # with the match itself (wrong team, stale data), safer to fall
+        # back to the proxy entirely rather than ship a half-real lineup.
+        if len(matched) >= 7:
+            return matched
+
     team_players = pa_own[pa_own["team"] == team]
     if active_ids is not None:
         team_players = team_players[team_players.index.isin(active_ids)]
@@ -637,10 +708,18 @@ def main(today=None):
     print(f"Fetching active rosters for {len(team_abbrs)} teams (shared across every day this run touches)...")
     active_rosters = {abbr: get_active_roster_ids(abbr) for abbr in team_abbrs}
 
+    print("Fetching ESPN confirmed lineups where posted...")
+    espn_lineups = attach_espn_lineups(combined_slate)
+    print(f"  confirmed lineups found for {len(espn_lineups)}/{len(combined_slate)} games "
+          f"(rest fall back to the PA-volume proxy)")
+
     games_out = []
     for i, g in enumerate(combined_slate):
-        home_batters = top_batters_for_team(pa_own, g["home_team"], active_rosters.get(g["home_team"]))
-        away_batters = top_batters_for_team(pa_own, g["away_team"], active_rosters.get(g["away_team"]))
+        game_lineups = espn_lineups.get((g["target_date"], g["away_team"], g["home_team"])) or {}
+        home_batters = top_batters_for_team(
+            pa_own, g["home_team"], active_rosters.get(g["home_team"]), game_lineups.get("home"))
+        away_batters = top_batters_for_team(
+            pa_own, g["away_team"], active_rosters.get(g["away_team"]), game_lineups.get("away"))
 
         home_props, home_best_hr = batter_props_for_team(
             g["home_team"], g["away_team"], home_batters, batter_models, hr_model, hr_own, hr_opp)

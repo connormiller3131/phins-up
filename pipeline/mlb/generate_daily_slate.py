@@ -50,6 +50,10 @@ from pipeline.mlb.props.prop_models import FEATURES, over_prob
 from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
+from pipeline.common.espn_odds import (
+    get_scoreboard_events as get_espn_scoreboard_events,
+    get_event_odds as get_espn_event_odds,
+)
 
 DATA_DIR = ROOT / "data" / "mlb"
 RESULTS_DIR = ROOT / "docs" / "results"
@@ -309,6 +313,61 @@ def attach_market_odds(slate):
             slate_game["market"]["home_fair_prob"] = round(ph / (pa + ph), 4)
 
 
+def attach_espn_fallback_odds(slate):
+    """ESPN's public odds have no credit/quota limit (unlike The Odds API),
+    so anything attach_market_odds couldn't price -- confirmed real case:
+    every game in a refresh came back with a null moneyline at once, which
+    is what happens when that bulk call throws entirely (almost certainly a
+    credit-quota exhaustion, since MLB also spends per-event player-prop
+    credits twice a day), not a per-game gap -- gets a second, free attempt
+    here instead of silently staying blank. Only fills gaps; never
+    overwrites odds attach_market_odds already found, since the event_id it
+    captured there is still needed by attach_featured_prop_odds (ESPN's own
+    event ids are a different id space and can't be used for that call)."""
+    needs_odds = [g for g in slate if not g.get("market") or g["market"].get("mlHome") is None]
+    if not needs_odds:
+        return
+
+    for d in sorted({g["target_date"] for g in needs_odds}):
+        try:
+            events = get_espn_scoreboard_events("baseball_mlb", d)
+        except Exception as e:
+            print(f"  ESPN odds fallback unavailable for {d}: {e}")
+            continue
+
+        by_pair = {}
+        for e in events:
+            try:
+                h, a = full_name_to_statcast(e["home_name"]), full_name_to_statcast(e["away_name"])
+            except KeyError:
+                continue
+            by_pair[(a, h)] = e
+
+        for g in needs_odds:
+            if g["target_date"] != d:
+                continue
+            event = by_pair.get((g["away_team"], g["home_team"]))
+            if not event:
+                continue
+            try:
+                odds = get_espn_event_odds("baseball_mlb", event["event_id"])
+            except Exception as e:
+                print(f"  ESPN event-odds fetch failed for {g['away_team']}@{g['home_team']}: {e}")
+                continue
+            if not odds:
+                continue
+            market = g.get("market") or {}
+            market.setdefault("mlHome", odds["mlHome"])
+            market.setdefault("mlAway", odds["mlAway"])
+            market.setdefault("run_line_home", odds.get("run_line_home"))
+            market.setdefault("total_line", odds.get("total_line"))
+            if market.get("mlHome") is not None and market.get("mlAway") is not None and "home_fair_prob" not in market:
+                pa, ph = _implied_prob(market["mlAway"]), _implied_prob(market["mlHome"])
+                market["home_fair_prob"] = round(ph / (pa + ph), 4)
+            g["market"] = market
+            print(f"  ESPN odds fallback used: {g['away_team']} @ {g['home_team']} ({d})")
+
+
 def _norm_name(name):
     """Accent-insensitive lowercase match key (DK strips accents: Jose Ramirez).
     A missing/non-string name (e.g. a real gap in a name lookup upstream)
@@ -546,6 +605,7 @@ def main(today=None):
     print("Blending in starting-pitcher + bullpen strength...")
     elo_preds = blend_with_pitcher_strength(team_elo_preds, combined_slate)
     attach_market_odds(combined_slate)
+    attach_espn_fallback_odds(combined_slate)
 
     print("Fitting batter prop models on full historical data...")
     batter_models = {}

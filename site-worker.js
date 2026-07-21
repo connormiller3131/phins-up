@@ -15,13 +15,6 @@ export default {
     const response = await env.ASSETS.fetch(request);
     const headers = new Headers(response.headers);
     headers.set("Cache-Control", "no-cache, no-store, must-revalidate");
-    // Temporary diagnostic -- an unmistakable marker no Cloudflare default
-    // could produce, to prove definitively whether this script is even
-    // running at all (multiple prior fixes deployed with zero visible
-    // effect, need to isolate "worker not running" from "something else is
-    // still caching regardless of what the worker sets"). Remove once the
-    // caching issue is confirmed resolved.
-    headers.set("X-Debug-Worker-Ran", "v1");
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
   },
 };

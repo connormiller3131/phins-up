@@ -310,8 +310,14 @@ def attach_market_odds(slate):
 
 
 def _norm_name(name):
-    """Accent-insensitive lowercase match key (DK strips accents: Jose Ramirez)."""
+    """Accent-insensitive lowercase match key (DK strips accents: Jose Ramirez).
+    A missing/non-string name (e.g. a real gap in a name lookup upstream)
+    used to crash unicodedata.normalize and take down the whole run --
+    this is the one function every prop funnels through, so it's worth
+    guarding here directly rather than trusting every caller to never pass
+    one through."""
     import unicodedata
+    name = str(name) if name is not None else ""
     return "".join(c for c in unicodedata.normalize("NFD", name) if not unicodedata.combining(c)).lower().strip()
 
 

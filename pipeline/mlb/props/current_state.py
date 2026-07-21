@@ -5,7 +5,7 @@ that hasn't been played yet."""
 import pathlib
 import pandas as pd
 
-from pipeline.mlb.player_names import get_name_lookup
+from pipeline.mlb.player_names import get_name_lookup, fetch_names_for_ids
 from pipeline.mlb.props.prop_data import WINDOW, MIN_GAMES
 
 DATA_DIR = pathlib.Path(__file__).resolve().parents[3] / "data" / "mlb"
@@ -14,6 +14,21 @@ DATA_DIR = pathlib.Path(__file__).resolve().parents[3] / "data" / "mlb"
 def _current_trailing(df, stat_col):
     names = get_name_lookup()
     df = df.merge(names, on="player_id", how="left")
+    # A player_id missing from Chadwick's register (real gap, confirmed --
+    # not a caching issue -- for recent callups it hasn't caught up to yet)
+    # left-joins to NaN here; that NaN used to flow straight into props as
+    # p["player"] with no guard, which crashed _norm_name (unicodedata.
+    # normalize on a float) and took down the whole pipeline. Filled from
+    # MLB's own Stats API first (real name, same ID space, no gaps); only
+    # falls back to a placeholder for the rare id neither source has.
+    missing = df["player_display_name"].isna()
+    if missing.any():
+        missing_ids = df.loc[missing, "player_id"].unique()
+        api_names = fetch_names_for_ids(missing_ids)
+        df.loc[missing, "player_display_name"] = df.loc[missing, "player_id"].map(api_names)
+        still_missing = df["player_display_name"].isna()
+        if still_missing.any():
+            df.loc[still_missing, "player_display_name"] = df.loc[still_missing, "player_id"].apply(lambda pid: f"Player {pid}")
     df = df.sort_values(["player_id", "game_date"])
     df["current_avg"] = df.groupby("player_id")[stat_col].transform(
         lambda s: s.rolling(window=WINDOW, min_periods=MIN_GAMES).mean()

@@ -1001,6 +1001,7 @@ function renderGames(week){
       </div>
       <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b></div>
       ${propsTable(g.props)}
+      ${nflSameGameParlaySection(g, idx)}
     `;
     root.appendChild(card);
     if(g.already_played) loadGameResult(DATA.season, selectedWeek, g, idx);
@@ -1374,7 +1375,7 @@ function mlbPrevDateStr(dateStr){
 // Same idea as the cross-game Suggested Parlay, scoped to just this one
 // game's own props -- no moneyline here (this is specifically a same-game
 // PROP parlay), real-edge legs still take priority over model-only ones.
-function collectSameGameParlayLegs(g){
+function collectMlbSameGameParlayLegs(g){
   const real = [], modelOnly = [];
   (g.props||[]).forEach(p => {
     const isHr = p.market === "Anytime HR";
@@ -1392,13 +1393,46 @@ function collectSameGameParlayLegs(g){
   return selectMixedLegs(real, modelOnly);
 }
 
-function sameGameParlaySection(date, g, idx){
-  const legs = collectSameGameParlayLegs(g);
+function mlbSameGameParlaySection(date, g, idx){
+  const legs = collectMlbSameGameParlayLegs(g);
   if(!legs.length) return "";
   return `
     <details class="props-toggle" id="mlb-sgp-${date}-${idx}">
       <summary>Same Game Parlay</summary>
       ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp'})}
+    </details>
+  `;
+}
+
+// NFL counterpart -- same shape, but the only market that ever carries a
+// real DK price is Anytime TD (yardage props are model-only, no per-market
+// odds pull for those), so most legs here will be MODEL EST. unless this
+// game happens to be one of the ~2/week that got real TD odds.
+function collectNflSameGameParlayLegs(g){
+  const real = [], modelOnly = [];
+  (g.props||[]).forEach(p => {
+    const isTd = p.market === "Anytime TD";
+    const modelP = isTd ? p.model_prob : p.model_over_prob;
+    if(modelP == null) return;
+    if(!isTd && (p.line == null || p.line <= 0)) return;
+    const sub = isTd ? p.team : `${p.team} · ${p.line}+`;
+    if(p.dk_implied_prob != null){
+      const edge = modelP - p.dk_implied_prob;
+      if(edge > 0) real.push({edge, prob: modelP, label: p.player, sub, market: p.market});
+    } else {
+      modelOnly.push({edge: null, prob: modelP, label: p.player, sub, market: p.market});
+    }
+  });
+  return selectMixedLegs(real, modelOnly);
+}
+
+function nflSameGameParlaySection(g, idx){
+  const legs = collectNflSameGameParlayLegs(g);
+  if(!legs.length) return "";
+  return `
+    <details class="props-toggle" id="nfl-sgp-${idx}">
+      <summary>Same Game Parlay</summary>
+      ${parlayCardHtml(legs, 'NFL', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp'})}
     </details>
   `;
 }
@@ -1511,7 +1545,7 @@ function renderMLBGames(selectedDate){
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
-      ${sameGameParlaySection(selectedDate, g, idx)}
+      ${mlbSameGameParlaySection(selectedDate, g, idx)}
       ${bvpSection(selectedDate, g, idx)}
     `;
     root.appendChild(card);

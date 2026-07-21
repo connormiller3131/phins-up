@@ -13,6 +13,20 @@ name = "phinsup"
 main = "site-worker.js"
 compatibility_date = "2024-01-01"
 
+# phinsup.net was bought directly through Cloudflare (already on Cloudflare's
+# own nameservers), so this attaches it as a custom domain automatically on
+# every deploy -- no manual dashboard step or external DNS change needed.
+# MUST be a top-level key, not nested under [assets] -- a real deploy warned
+# "Unexpected fields found in assets field: routes" when this was placed
+# after the [assets] section below, meaning TOML silently scoped it into
+# that table instead of applying it as a real route. Likely explains why the
+# custom domain kept serving stale content no matter what: its binding
+# probably wasn't being correctly re-applied on later deploys at all.
+routes = [
+  { pattern = "phinsup.net", custom_domain = true },
+  { pattern = "www.phinsup.net", custom_domain = true },
+]
+
 [assets]
 directory = "./docs"
 binding = "ASSETS"
@@ -23,11 +37,3 @@ binding = "ASSETS"
 # This forces every request through the script first so it can actually
 # rewrite the response header.
 run_worker_first = true
-
-# phinsup.net was bought directly through Cloudflare (already on Cloudflare's
-# own nameservers), so this attaches it as a custom domain automatically on
-# every deploy -- no manual dashboard step or external DNS change needed.
-routes = [
-  { pattern = "phinsup.net", custom_domain = true },
-  { pattern = "www.phinsup.net", custom_domain = true },
-]

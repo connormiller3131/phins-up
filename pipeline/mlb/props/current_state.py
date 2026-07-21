@@ -10,18 +10,11 @@ from pipeline.mlb.props.prop_data import WINDOW, MIN_GAMES
 
 DATA_DIR = pathlib.Path(__file__).resolve().parents[3] / "data" / "mlb"
 
-# A player whose most recent logged game is older than this gets dropped from
-# props entirely -- confirmed real case: Tyler Locklear's only rows in our
-# data are from a 2025-08/09 Diamondbacks stint (nearly a year stale relative
-# to a mid-2026 refresh), yet the rolling window still produced a confident
-# "current" projection from them because nothing checked *when* those games
-# were. A rolling average is only a legitimate "current form" signal if the
-# player has actually played recently; a stale prior-season stint (long
-# layoff, demotion, or our own data pull simply not having ingested a brand
-# new call-up's last couple of games yet) should not be presented with the
-# same confidence as someone in today's lineup. 25 days covers a full 15-day
-# IL stint plus a real buffer for legitimately-current bench bats, while
-# still catching gaps of months.
+# A gap longer than this between a player's own consecutive logged games
+# starts a new "stint" (see below); a player whose current stint's last game
+# is older than this relative to the freshest game in the whole dataset gets
+# dropped entirely. 25 days covers a full 15-day IL stint plus a real buffer
+# for legitimately-current bench bats, while still catching gaps of months.
 STALE_DAYS = 25
 
 
@@ -44,16 +37,36 @@ def _current_trailing(df, stat_col):
         if still_missing.any():
             df.loc[still_missing, "player_display_name"] = df.loc[still_missing, "player_id"].apply(lambda pid: f"Player {pid}")
     df = df.sort_values(["player_id", "game_date"])
+
+    # The rolling window below counts *games*, not days -- with no gap
+    # awareness, a player's last WINDOW logged rows can silently span a
+    # demotion or a return from a stint over a year earlier. Confirmed real
+    # case: Tyler Locklear has 2 genuine 2026 games in our data, but the
+    # rolling window pooled them with games from his 2025-08/09 Diamondbacks
+    # stint to clear MIN_GAMES, producing a confident "current form" number
+    # built mostly from year-old at-bats -- the previous fix here (a plain
+    # "is the latest game stale" check) missed this because his latest game
+    # genuinely isn't stale; the problem is what got blended behind it.
+    # Segmenting on gaps > STALE_DAYS between a player's own consecutive
+    # games isolates just their current stint (this also naturally resets at
+    # every real season boundary, since that gap always exceeds STALE_DAYS),
+    # so MIN_GAMES requires genuine recent volume, not games borrowed from a
+    # different stint.
+    gap_days = df.groupby("player_id")["game_date"].diff().dt.days
+    df["new_stint"] = gap_days.isna() | (gap_days > STALE_DAYS)
+    df["stint_id"] = df.groupby("player_id")["new_stint"].cumsum()
+    last_stint_id = df.groupby("player_id")["stint_id"].transform("max")
+    df = df[df["stint_id"] == last_stint_id]
+
     df["current_avg"] = df.groupby("player_id")[stat_col].transform(
         lambda s: s.rolling(window=WINDOW, min_periods=MIN_GAMES).mean()
     )
     df["games_played"] = df.groupby("player_id").cumcount() + 1
     latest = df.sort_values("game_date").groupby("player_id").tail(1)
-    # Measured against the data's own most recent game, not real-world
-    # "today" -- the nightly pull normally lags a few days behind, and
-    # penalizing every player for that pipeline lag would be a different bug,
-    # not a fix. This only catches genuine staleness relative to whatever's
-    # actually fresh in the dataset right now.
+    # Belt-and-suspenders: also drop anyone whose current stint's last game
+    # is itself stale relative to the freshest game in the whole dataset --
+    # covers someone who simply hasn't played at all recently (e.g. a
+    # current, undeclared injury), where there's no newer stint to speak of.
     as_of = df["game_date"].max()
     latest = latest[(as_of - latest["game_date"]).dt.days <= STALE_DAYS]
     return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "games_played"]]

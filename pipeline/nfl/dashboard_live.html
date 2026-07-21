@@ -843,36 +843,29 @@ function fmtKickoffLine(g){
 // HR Special) fills the gap instead of quietly falling back to more
 // moneylines -- otherwise "props get a real shot" above is theoretical on
 // most days.
-// lockRatio=true is the cross-game Suggested Parlay's "always exactly 2 ML +
-// 2 props" mode -- it never backfills props with a 3rd/4th moneyline just
-// because too few props qualified, and never lets props spill past their
-// reserved 2 slots just because extra moneylines were available. A day with
-// too few qualifying legs of one type just shows fewer total legs rather
-// than breaking the fixed ratio. Same-game callers (no moneyline concept at
-// all) rely on the old flexible fill-to-`total` behavior, so they don't pass
-// this and are unaffected.
-function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4, lockRatio=false){
+// A strict "always exactly 2 ML + 2 props" lock was tried here and reverted
+// -- on a day short on real/model-only props (as MLB currently is most days),
+// it left the parlay sitting at 2 total legs instead of a full 4. Back to the
+// flexible fill: moneylines capped at maxMoneylines first, then real props,
+// then model-only props, then (if props still can't fill the remaining
+// slots) extra moneylines beyond the cap -- so the parlay reliably reaches
+// `total` legs whenever enough real data exists anywhere, prop or moneyline.
+function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4){
   const moneylines = realLegs.filter(l => l.market === 'Moneyline').sort((a,b) => b.edge - a.edge);
   const others = realLegs.filter(l => l.market !== 'Moneyline').sort((a,b) => b.edge - a.edge);
   const modelOnly = modelOnlyLegs.slice().sort((a,b) => b.prob - a.prob);
   const picked = moneylines.slice(0, maxMoneylines);
-  const propCap = lockRatio ? (total - maxMoneylines) : total;
-  let propCount = 0;
   for(const l of others){
-    if(propCount >= propCap || picked.length >= total) break;
+    if(picked.length >= total) break;
     picked.push(l);
-    propCount++;
   }
   for(const l of modelOnly){
-    if(propCount >= propCap || picked.length >= total) break;
+    if(picked.length >= total) break;
     picked.push(l);
-    propCount++;
   }
-  if(!lockRatio){
-    for(const l of moneylines.slice(maxMoneylines)){
-      if(picked.length >= total) break;
-      picked.push(l);
-    }
+  for(const l of moneylines.slice(maxMoneylines)){
+    if(picked.length >= total) break;
+    picked.push(l);
   }
   const withEdge = picked.filter(l => l.edge != null).sort((a,b) => b.edge - a.edge);
   const withoutEdge = picked.filter(l => l.edge == null).sort((a,b) => b.prob - a.prob);
@@ -882,11 +875,10 @@ function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4, l
 function collectNflParlayLegs(games){
   // Anytime TD only gets a real DK price on a handful of games a week (same
   // per-event credit limit as MLB's featured props) -- most weeks that means
-  // zero real-edge TD candidates at all. Without a model-only fallback here,
-  // a locked "2 ML + 2 props" parlay would collapse to just 2 legs on any
-  // week without real TD odds yet. Mirrors collectMlbParlayLegs's real/
-  // model-only split so the 2 reserved prop slots can still fill with the
-  // model's own highest-probability TD picks, clearly badged MODEL EST.
+  // zero real-edge TD candidates at all. Mirrors collectMlbParlayLegs's real/
+  // model-only split so remaining slots can still fill with the model's own
+  // highest-probability TD picks (clearly badged MODEL EST.) before falling
+  // back to extra moneylines.
   const real = [], modelOnly = [];
   games.forEach(g => {
     if(g.already_played) return;
@@ -905,7 +897,7 @@ function collectNflParlayLegs(games){
       }
     });
   });
-  return selectMixedLegs(real, modelOnly, 2, 4, true);
+  return selectMixedLegs(real, modelOnly);
 }
 
 function parlayCardHtml(legs, sport, opts){
@@ -1351,7 +1343,7 @@ function collectMlbParlayLegs(games){
       }
     });
   });
-  return selectMixedLegs(real, modelOnly, 2, 4, true);
+  return selectMixedLegs(real, modelOnly);
 }
 
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay

@@ -843,22 +843,36 @@ function fmtKickoffLine(g){
 // HR Special) fills the gap instead of quietly falling back to more
 // moneylines -- otherwise "props get a real shot" above is theoretical on
 // most days.
-function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4){
+// lockRatio=true is the cross-game Suggested Parlay's "always exactly 2 ML +
+// 2 props" mode -- it never backfills props with a 3rd/4th moneyline just
+// because too few props qualified, and never lets props spill past their
+// reserved 2 slots just because extra moneylines were available. A day with
+// too few qualifying legs of one type just shows fewer total legs rather
+// than breaking the fixed ratio. Same-game callers (no moneyline concept at
+// all) rely on the old flexible fill-to-`total` behavior, so they don't pass
+// this and are unaffected.
+function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4, lockRatio=false){
   const moneylines = realLegs.filter(l => l.market === 'Moneyline').sort((a,b) => b.edge - a.edge);
   const others = realLegs.filter(l => l.market !== 'Moneyline').sort((a,b) => b.edge - a.edge);
   const modelOnly = modelOnlyLegs.slice().sort((a,b) => b.prob - a.prob);
   const picked = moneylines.slice(0, maxMoneylines);
+  const propCap = lockRatio ? (total - maxMoneylines) : total;
+  let propCount = 0;
   for(const l of others){
-    if(picked.length >= total) break;
+    if(propCount >= propCap || picked.length >= total) break;
     picked.push(l);
+    propCount++;
   }
   for(const l of modelOnly){
-    if(picked.length >= total) break;
+    if(propCount >= propCap || picked.length >= total) break;
     picked.push(l);
+    propCount++;
   }
-  for(const l of moneylines.slice(maxMoneylines)){
-    if(picked.length >= total) break;
-    picked.push(l);
+  if(!lockRatio){
+    for(const l of moneylines.slice(maxMoneylines)){
+      if(picked.length >= total) break;
+      picked.push(l);
+    }
   }
   const withEdge = picked.filter(l => l.edge != null).sort((a,b) => b.edge - a.edge);
   const withoutEdge = picked.filter(l => l.edge == null).sort((a,b) => b.prob - a.prob);
@@ -866,21 +880,32 @@ function selectMixedLegs(realLegs, modelOnlyLegs=[], maxMoneylines=2, total=4){
 }
 
 function collectNflParlayLegs(games){
-  const legs = [];
+  // Anytime TD only gets a real DK price on a handful of games a week (same
+  // per-event credit limit as MLB's featured props) -- most weeks that means
+  // zero real-edge TD candidates at all. Without a model-only fallback here,
+  // a locked "2 ML + 2 props" parlay would collapse to just 2 legs on any
+  // week without real TD odds yet. Mirrors collectMlbParlayLegs's real/
+  // model-only split so the 2 reserved prop slots can still fill with the
+  // model's own highest-probability TD picks, clearly badged MODEL EST.
+  const real = [], modelOnly = [];
   games.forEach(g => {
     if(g.already_played) return;
     if(g.market_home_prob != null){
       const homeEdge = g.elo_home_prob - g.market_home_prob;
-      if(homeEdge > 0) legs.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
-      else if(-homeEdge > 0) legs.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+      if(homeEdge > 0) real.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
+      else if(-homeEdge > 0) real.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
     }
     (g.props||[]).forEach(p => {
-      if(p.market !== "Anytime TD" || p.dk_implied_prob == null) return;
-      const edge = p.model_prob - p.dk_implied_prob;
-      if(edge > 0) legs.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
+      if(p.market !== "Anytime TD" || p.model_prob == null) return;
+      if(p.dk_implied_prob != null){
+        const edge = p.model_prob - p.dk_implied_prob;
+        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
+      } else {
+        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD'});
+      }
     });
   });
-  return selectMixedLegs(legs, []);
+  return selectMixedLegs(real, modelOnly, 2, 4, true);
 }
 
 function parlayCardHtml(legs, sport, opts){
@@ -1326,7 +1351,7 @@ function collectMlbParlayLegs(games){
       }
     });
   });
-  return selectMixedLegs(real, modelOnly);
+  return selectMixedLegs(real, modelOnly, 2, 4, true);
 }
 
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay

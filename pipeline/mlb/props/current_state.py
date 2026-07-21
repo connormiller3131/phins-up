@@ -10,6 +10,20 @@ from pipeline.mlb.props.prop_data import WINDOW, MIN_GAMES
 
 DATA_DIR = pathlib.Path(__file__).resolve().parents[3] / "data" / "mlb"
 
+# A player whose most recent logged game is older than this gets dropped from
+# props entirely -- confirmed real case: Tyler Locklear's only rows in our
+# data are from a 2025-08/09 Diamondbacks stint (nearly a year stale relative
+# to a mid-2026 refresh), yet the rolling window still produced a confident
+# "current" projection from them because nothing checked *when* those games
+# were. A rolling average is only a legitimate "current form" signal if the
+# player has actually played recently; a stale prior-season stint (long
+# layoff, demotion, or our own data pull simply not having ingested a brand
+# new call-up's last couple of games yet) should not be presented with the
+# same confidence as someone in today's lineup. 25 days covers a full 15-day
+# IL stint plus a real buffer for legitimately-current bench bats, while
+# still catching gaps of months.
+STALE_DAYS = 25
+
 
 def _current_trailing(df, stat_col):
     names = get_name_lookup()
@@ -35,6 +49,13 @@ def _current_trailing(df, stat_col):
     )
     df["games_played"] = df.groupby("player_id").cumcount() + 1
     latest = df.sort_values("game_date").groupby("player_id").tail(1)
+    # Measured against the data's own most recent game, not real-world
+    # "today" -- the nightly pull normally lags a few days behind, and
+    # penalizing every player for that pipeline lag would be a different bug,
+    # not a fix. This only catches genuine staleness relative to whatever's
+    # actually fresh in the dataset right now.
+    as_of = df["game_date"].max()
+    latest = latest[(as_of - latest["game_date"]).dt.days <= STALE_DAYS]
     return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "games_played"]]
 
 

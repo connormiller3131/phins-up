@@ -1328,7 +1328,7 @@ function collectMlbParlayLegs(games){
 
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay
 // above -- same real-edge-vs-DK-price ranking, just scoped to Anytime HR.
-function collectHrSpecialLegs(games){
+function collectHrSpecialLegs(games, excludeIds){
   // DraftKings only prices ~2 games' worth of player props per refresh (Odds
   // API credit limit), so most days there's no real Anytime HR price to grade
   // an edge against at all -- rather than sit empty, real-edge legs (when
@@ -1336,22 +1336,37 @@ function collectHrSpecialLegs(games){
   // model's own highest-probability picks, clearly marked as model-only
   // (not a fabricated edge) via a null `edge`, same honesty pattern as the
   // DK LINE / MODEL EST. badge used elsewhere.
+  //
+  // Anytime HR probability is driven by a trailing 10-game home-run rate,
+  // which barely moves day to day -- a player on a real hot streak will
+  // legitimately keep ranking near the top for several consecutive days,
+  // making the list feel repetitive even though nothing's wrong with the
+  // data. excludeIds (yesterday's picks, reconstructed by the caller) skips
+  // them here rather than faking variety by touching the actual
+  // probabilities, so today's list surfaces the next-best real candidates.
+  excludeIds = excludeIds || new Set();
   const real = [], modelOnly = [];
   games.forEach(g => {
     (g.props||[]).forEach(p => {
-      if(p.market !== "Anytime HR") return;
+      if(p.market !== "Anytime HR" || excludeIds.has(p.player_id)) return;
       const sub = `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`;
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;
-        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR'});
+        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id});
       } else {
-        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR'});
+        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id});
       }
     });
   });
   real.sort((a,b) => b.edge - a.edge);
   modelOnly.sort((a,b) => b.prob - a.prob);
   return real.concat(modelOnly).slice(0, 4);
+}
+
+function mlbPrevDateStr(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0, 10);
 }
 
 function populateMlbDaySelect(selected){
@@ -1400,7 +1415,9 @@ function renderMLBGames(selectedDate){
     return;
   }
 
-  const hrLegs = collectHrSpecialLegs(dayData.games);
+  const prevDay = MLB_DATA.days[mlbPrevDateStr(selectedDate)];
+  const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
+  const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB')
     + parlayCardHtml(hrLegs, 'MLB', {

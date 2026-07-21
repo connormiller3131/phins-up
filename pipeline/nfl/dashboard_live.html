@@ -164,6 +164,8 @@
   .parlay-hr{border-color:var(--amber);}
   .parlay-hr .parlay-title{color:var(--amber);}
   .parlay-hr .parlay-leg-edge{color:var(--amber);}
+  .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
+  .parlay-sgp .parlay-title{color:var(--blue);}
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -1236,7 +1238,7 @@ function bvpSection(date, g, idx){
   if(!hasBatters || (!g.awayProbablePitcherId && !g.homeProbablePitcherId)) return "";
   return `
     <details class="props-toggle" id="mlb-bvp-${date}-${idx}" ontoggle="if(this.open) loadBvP('${date}', ${idx})">
-      <summary>Batter vs Pitcher <span class="props-sample-tag">(real career stats vs. today's probable starter, fetched live from MLB on expand)</span></summary>
+      <summary>Batter vs Pitcher History <span class="props-sample-tag">(real career stats vs. today's probable starter, fetched live from MLB on expand)</span></summary>
       <div id="mlb-bvp-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
     </details>
   `;
@@ -1369,6 +1371,38 @@ function mlbPrevDateStr(dateStr){
   return d.toISOString().slice(0, 10);
 }
 
+// Same idea as the cross-game Suggested Parlay, scoped to just this one
+// game's own props -- no moneyline here (this is specifically a same-game
+// PROP parlay), real-edge legs still take priority over model-only ones.
+function collectSameGameParlayLegs(g){
+  const real = [], modelOnly = [];
+  (g.props||[]).forEach(p => {
+    const isHr = p.market === "Anytime HR";
+    const modelP = isHr ? p.model_prob : p.model_over_prob;
+    if(modelP == null) return;
+    if(!isHr && (p.line == null || p.line <= 0)) return; // same degenerate-0+-line exclusion as the main parlay
+    const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
+    if(p.dk_implied_prob != null){
+      const edge = modelP - p.dk_implied_prob;
+      if(edge > 0) real.push({edge, prob: modelP, label: p.player, sub, market: p.market});
+    } else {
+      modelOnly.push({edge: null, prob: modelP, label: p.player, sub, market: p.market});
+    }
+  });
+  return selectMixedLegs(real, modelOnly);
+}
+
+function sameGameParlaySection(date, g, idx){
+  const legs = collectSameGameParlayLegs(g);
+  if(!legs.length) return "";
+  return `
+    <details class="props-toggle" id="mlb-sgp-${date}-${idx}">
+      <summary>Same Game Parlay</summary>
+      ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp'})}
+    </details>
+  `;
+}
+
 function populateMlbDaySelect(selected){
   const sel = document.getElementById('mlb-day-select');
   if(!sel) return;
@@ -1477,6 +1511,7 @@ function renderMLBGames(selectedDate){
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
+      ${sameGameParlaySection(selectedDate, g, idx)}
       ${bvpSection(selectedDate, g, idx)}
     `;
     root.appendChild(card);

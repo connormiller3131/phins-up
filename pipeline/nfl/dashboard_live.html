@@ -1313,6 +1313,7 @@ function collectMlbParlayLegs(games){
   // real DK price posted) fill remaining prop slots before falling back to
   // extra moneylines, same pattern as HR Special.
   const real = [], modelOnly = [];
+  const seenPropKeys = new Set();
   games.forEach(g => {
     const m = g.market;
     if(m && m.mlHome!=null && m.mlAway!=null){
@@ -1334,6 +1335,16 @@ function collectMlbParlayLegs(games){
       // shows up in our own model_over_prob computation. Excluding it drops
       // straight to real, meaningful lines (1+ total bases, etc).
       if(!isHr && (p.line == null || p.line <= 0)) return;
+      // A player can genuinely appear more than once across a day's games
+      // -- confirmed real case: a doubleheader, where the same player has
+      // an identical pregame projection for both games (the trailing
+      // average feeding it doesn't distinguish game 1 from game 2). Without
+      // this, the same player+market could take two of the parlay's four
+      // slots -- a correlated, low-value "pick" that also just looks like
+      // a bug. Keep only the first occurrence.
+      const dedupeKey = `${p.player_id}|${p.market}`;
+      if(seenPropKeys.has(dedupeKey)) return;
+      seenPropKeys.add(dedupeKey);
       const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
       if(p.dk_implied_prob != null){
         const edge = modelP - p.dk_implied_prob;
@@ -1366,9 +1377,11 @@ function collectHrSpecialLegs(games, excludeIds){
   // probabilities, so today's list surfaces the next-best real candidates.
   excludeIds = excludeIds || new Set();
   const real = [], modelOnly = [];
+  const seenIds = new Set(); // a doubleheader can list the same player twice across games -- keep one
   games.forEach(g => {
     (g.props||[]).forEach(p => {
-      if(p.market !== "Anytime HR" || excludeIds.has(p.player_id)) return;
+      if(p.market !== "Anytime HR" || excludeIds.has(p.player_id) || seenIds.has(p.player_id)) return;
+      seenIds.add(p.player_id);
       const sub = `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`;
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;

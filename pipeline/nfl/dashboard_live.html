@@ -956,9 +956,12 @@ function parlayCardHtml(legs, sport, opts){
   `;
 }
 
+let CURRENT_NFL_WEEK_DATA = null; // set below, read by loadNflBoxScore -- avoids threading week number through the inline ontoggle string
+
 function renderGames(week){
   const selectedWeek = week || DATA.current_week;
   const weekData = DATA.weeks[String(selectedWeek)];
+  CURRENT_NFL_WEEK_DATA = weekData;
   populateWeekSelect(selectedWeek);
 
   document.getElementById('eyebrow').textContent = `NFL · Week ${selectedWeek} · ${DATA.season} Season`;
@@ -997,6 +1000,7 @@ function renderGames(week){
       </div>
       ${!hasOdds ? '<div class="no-odds-note">No market line posted yet for this game -- showing model projection only.</div>' : ''}
       <div class="result-box" id="result-box-${idx}"></div>
+      ${nflBoxScoreSection(g, idx)}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -1039,6 +1043,7 @@ function renderGames(week){
     `;
     root.appendChild(card);
     if(g.already_played) loadGameResult(DATA.season, selectedWeek, g, idx);
+    if(g.gameday) loadNflBoxScore(idx);
 
     ["away","home"].forEach(side=>{
       const input = card.querySelector(`input[data-side="${side}"]`);
@@ -1228,8 +1233,8 @@ function fmtGameTime(iso){
 function boxScoreSection(date, g, idx){
   if(!g.gamePk) return "";
   return `
-    <details class="props-toggle" id="mlb-box-${date}-${idx}" ontoggle="if(this.open) loadBoxScore('${date}', ${idx})">
-      <summary>Box Score <span class="props-sample-tag">(innings, runs, hits, errors -- fetched live from MLB on expand)</span></summary>
+    <details class="props-toggle" open id="mlb-box-${date}-${idx}" ontoggle="if(this.open) loadBoxScore('${date}', ${idx})">
+      <summary>Box Score <span class="props-sample-tag">(innings, runs, hits, errors -- fetched live from MLB)</span></summary>
       <div id="mlb-box-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
     </details>
   `;
@@ -1283,6 +1288,125 @@ async function loadBoxScore(date, idx){
       </table>
     </div>
   `;
+}
+
+// NFL/NHL box scores use ESPN's public site API instead of MLB's -- there's
+// no equivalent free, CORS-open, keyless live API from either league itself
+// (api-web.nhle.com has no Access-Control-Allow-Origin header at all,
+// confirmed directly against a real response, so a browser blocks it for
+// client-side fetches even though server-side Python can reach it fine;
+// ESPN's site.api.espn.com sends `Access-Control-Allow-Origin: *` and
+// already returns clean quarter/period-by-period linescores straight from
+// its scoreboard endpoint, no extra per-game call needed). Team
+// abbreviations only need remapping for a handful of teams where ESPN's
+// convention differs from this project's own data source -- confirmed by
+// diffing full team lists, not guessed at.
+const ESPN_ABBR_RENAME = {
+  nfl: {LA: "LAR", WAS: "WSH"},
+  nhl: {LAK: "LA", NJD: "NJ", SJS: "SJ", TBL: "TB", UTA: "UTAH"},
+};
+
+async function fetchEspnLinescores(sportPath, dateStr, awayAbbr, homeAbbr, sportKey){
+  const rename = ESPN_ABBR_RENAME[sportKey] || {};
+  const espnAway = rename[awayAbbr] || awayAbbr;
+  const espnHome = rename[homeAbbr] || homeAbbr;
+  const resp = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${sportPath}/scoreboard?dates=${dateStr}`);
+  const data = await resp.json();
+  for(const e of (data.events || [])){
+    const comp = e.competitions && e.competitions[0];
+    if(!comp || !comp.competitors) continue;
+    const away = comp.competitors.find(c => c.homeAway === 'away');
+    const home = comp.competitors.find(c => c.homeAway === 'home');
+    if(away && home && away.team.abbreviation === espnAway && home.team.abbreviation === espnHome){
+      return {away, home};
+    }
+  }
+  return null;
+}
+
+function periodBoxScoreHtml(match, awayAbbr, homeAbbr, periodLabel, regulationPeriods){
+  const awayLines = match.away.linescores || [];
+  const homeLines = match.home.linescores || [];
+  if(!awayLines.length && !homeLines.length) return null;
+  const nCols = Math.max(awayLines.length, homeLines.length, regulationPeriods);
+  const periodNums = Array.from({length: nCols}, (_, i) => i + 1);
+  const rowFor = (lines, abbr, score) => {
+    const cells = periodNums.map(n => {
+      const ls = lines.find(l => l.period === n);
+      return `<td>${ls ? ls.displayValue : ''}</td>`;
+    }).join('');
+    return `<tr><td>${abbr}</td>${cells}<td class="rhe">${score ?? '—'}</td></tr>`;
+  };
+  return `
+    <div class="box-score-wrap">
+      <table class="box-score-table">
+        <thead><tr><th></th>${periodNums.map(n => `<th>${periodLabel(n)}</th>`).join('')}<th class="rhe">F</th></tr></thead>
+        <tbody>
+          ${rowFor(awayLines, awayAbbr, match.away.score)}
+          ${rowFor(homeLines, homeAbbr, match.home.score)}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function nflBoxScoreSection(g, idx){
+  if(!g.gameday) return "";
+  return `
+    <details class="props-toggle" open id="nfl-box-${idx}" ontoggle="if(this.open) loadNflBoxScore(${idx})">
+      <summary>Box Score <span class="props-sample-tag">(quarter-by-quarter score -- fetched live from ESPN)</span></summary>
+      <div id="nfl-box-body-${idx}"><span class="p-exp">Loading…</span></div>
+    </details>
+  `;
+}
+
+const nflBoxScoreLoaded = new Set();
+async function loadNflBoxScore(idx){
+  if(nflBoxScoreLoaded.has(idx)) return;
+  nflBoxScoreLoaded.add(idx);
+  const g = CURRENT_NFL_WEEK_DATA && CURRENT_NFL_WEEK_DATA.games[idx];
+  const body = document.getElementById(`nfl-box-body-${idx}`);
+  if(!g || !body) return;
+
+  let match;
+  try{
+    match = await fetchEspnLinescores('football/nfl', g.gameday.replace(/-/g, ''), g.awayAbbr, g.homeAbbr, 'nfl');
+  }catch(e){
+    body.innerHTML = '<span class="p-exp">Box score unavailable right now.</span>';
+    return;
+  }
+  const html = match && periodBoxScoreHtml(match, g.awayAbbr, g.homeAbbr, n => n <= 4 ? `Q${n}` : 'OT', 4);
+  body.innerHTML = html || '<span class="p-exp">Game hasn\'t started yet -- no box score to show.</span>';
+}
+
+function nhlBoxScoreSection(date, g, idx){
+  return `
+    <details class="props-toggle" open id="nhl-box-${date}-${idx}" ontoggle="if(this.open) loadNhlBoxScore('${date}', ${idx})">
+      <summary>Box Score <span class="props-sample-tag">(period-by-period score -- fetched live from ESPN)</span></summary>
+      <div id="nhl-box-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
+    </details>
+  `;
+}
+
+const nhlBoxScoreLoaded = new Set();
+async function loadNhlBoxScore(date, idx){
+  const key = `${date}_${idx}`;
+  if(nhlBoxScoreLoaded.has(key)) return;
+  nhlBoxScoreLoaded.add(key);
+  const dayData = NHL_DATA.days[date];
+  const g = dayData && dayData.games[idx];
+  const body = document.getElementById(`nhl-box-body-${date}-${idx}`);
+  if(!g || !body) return;
+
+  let match;
+  try{
+    match = await fetchEspnLinescores('hockey/nhl', date.replace(/-/g, ''), g.awayAbbr, g.homeAbbr, 'nhl');
+  }catch(e){
+    body.innerHTML = '<span class="p-exp">Box score unavailable right now.</span>';
+    return;
+  }
+  const html = match && periodBoxScoreHtml(match, g.awayAbbr, g.homeAbbr, n => n <= 3 ? `P${n}` : (n === 4 ? 'OT' : 'SO'), 3);
+  body.innerHTML = html || '<span class="p-exp">Game hasn\'t started yet -- no box score to show.</span>';
 }
 
 function bvpSection(date, g, idx){
@@ -1673,6 +1797,11 @@ function renderMLBGames(selectedDate){
       ${bvpSection(selectedDate, g, idx)}
     `;
     root.appendChild(card);
+    // The box score is now permanently visible (no longer a click-to-expand
+    // toggle), so load it immediately rather than relying on the `open`
+    // attribute's `ontoggle` firing on initial parse, which isn't reliable
+    // across browsers.
+    if(g.gamePk) loadBoxScore(selectedDate, idx);
   });
 
   document.getElementById("mlb-foot").innerHTML =
@@ -1748,6 +1877,7 @@ function renderNHLGames(selectedDate){
         </div>
         <div class="hold-badge">${finalScoreBadge}</div>
       </div>
+      ${nhlBoxScoreSection(selectedDate, g, idx)}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -1769,6 +1899,7 @@ function renderNHLGames(selectedDate){
       <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
     `;
     root.appendChild(card);
+    loadNhlBoxScore(selectedDate, idx);
   });
 
   document.getElementById("nhl-foot").innerHTML =

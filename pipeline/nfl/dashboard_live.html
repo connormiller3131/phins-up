@@ -1304,57 +1304,127 @@ async function loadBvP(date, idx){
   body.innerHTML = rows || '<span class="p-exp">No batter/pitcher matchup data available.</span>';
 }
 
-function collectMlbParlayLegs(games){
-  // Every prop market (not just Anytime HR) is eligible now -- Hits, Total
-  // Bases, Walks, RBI, Pitcher Strikeouts/etc. all get real DK odds on the
-  // same featured games Anytime HR does, so restricting to one market
-  // starved the "props get a real shot" cap above of anything to actually
-  // fill with. Real-edge props still take priority; model-only props (no
-  // real DK price posted) fill remaining prop slots before falling back to
-  // extra moneylines, same pattern as HR Special.
-  const real = [], modelOnly = [];
-  const seenPropKeys = new Set();
+// For a model-only prop with a ladder (Hits/Total Bases), prefers the
+// highest ladder rung that's still more-likely-than-not (>=50%) over the
+// near-certain base line -- a real bettor's "1.5+ Total Bases" reads like an
+// actual pick; the default 0.5+ rung is close to guaranteed for most
+// everyday hitters and reads as unrealistic filler (reported as such).
+// Naturally only bumps a genuinely strong hitter's projection up a rung --
+// a below-average bat's 1.5+ rung won't clear 50%, so it correctly stays at
+// 0.5+. Real DK lines (dk_implied_prob != null) are left untouched -- that's
+// an actual posted market line, not ours to override.
+function pickLine(p){
+  if(p.dk_implied_prob != null || !p.ladder || !p.ladder.length){
+    return {line: p.line, prob: p.model_over_prob};
+  }
+  // Only ever bumps UP from the base line -- a rung below it technically
+  // "clears 50%" more easily, but moving down is the wrong direction from
+  // what was asked (avoid defaulting to a near-lock 0.5+ every time); the
+  // base line itself is already the fallback when nothing higher clears a
+  // real threshold, so a strong hitter whose own base line is already 1.5
+  // isn't artificially downgraded to an easier 0.5 just because 0.5 clears
+  // 50% more comfortably.
+  const higher = p.ladder.filter(r => r.line > p.line).sort((a,b) => b.line - a.line);
+  const best = higher.find(r => r.over_prob >= 0.5);
+  return best ? {line: best.line, prob: best.over_prob} : {line: p.line, prob: p.model_over_prob};
+}
+
+// The single best candidate in one market across a pool of props (real-edge
+// candidates always outrank model-only; ties broken by edge/prob), skipping
+// anyone already used elsewhere in this parlay and the same degenerate-0+
+// line exclusion used everywhere else. Returns null if nothing qualifies.
+function bestPropInMarket(props, marketName, used){
+  const isHr = marketName === "Anytime HR";
+  let best = null;
+  props.forEach(p => {
+    if(p.market !== marketName || used.has(p.player_id)) return;
+    const modelP = isHr ? p.model_prob : p.model_over_prob;
+    if(modelP == null) return;
+    if(!isHr && (p.line == null || p.line <= 0)) return;
+    const chosen = isHr ? {line: null, prob: modelP} : pickLine(p);
+    const sub = isHr ? p.team : `${p.team} · ${chosen.line}+`;
+    const leg = p.dk_implied_prob != null
+      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id}
+      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id};
+    if(leg.edge != null && leg.edge <= 0) return; // a real price with no edge isn't a pick
+    if(!best) { best = leg; return; }
+    const bestIsReal = best.edge != null, legIsReal = leg.edge != null;
+    if(legIsReal !== bestIsReal){ if(legIsReal) best = leg; return; }
+    const legRank = legIsReal ? leg.edge : leg.prob, bestRank = bestIsReal ? best.edge : best.prob;
+    if(legRank > bestRank) best = leg;
+  });
+  return best;
+}
+
+// Mirrors how a real same-game/suggested parlay usually looks -- team
+// result(s), a homerun pick, a total-bases pick -- instead of a pure
+// edge-ranked assortment that could land on e.g. four near-lock 0.5+
+// singles (reported as unrealistic). Reserves up to 2 moneylines (the
+// cross-game caller can supply more than one game; the same-game caller
+// only ever has its own one game to draw from), 1 Anytime HR, and 1 Total
+// Bases, then fills any remaining slot with the next-best other prop.
+function buildRealisticParlay(games, opts){
+  opts = opts || {};
+  const legs = [];
+  const used = new Set();
+
+  const mlCandidates = [];
   games.forEach(g => {
     const m = g.market;
-    if(m && m.mlHome!=null && m.mlAway!=null){
+    if(m && m.mlHome != null && m.mlAway != null){
       const fairHome = noVigProb(m.mlHome, m.mlAway);
       const homeEdge = g.elo_home_prob - fairHome;
-      if(homeEdge > 0) real.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
-      else if(-homeEdge > 0) real.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
-    }
-    (g.props||[]).forEach(p => {
-      const isHr = p.market === "Anytime HR";
-      const modelP = isHr ? p.model_prob : p.model_over_prob;
-      if(modelP == null) return;
-      // A "0+" line (own trailing average low enough to round down to 0)
-      // is nearly guaranteed for almost any batter over a full game's worth
-      // of plate appearances, regardless of actual skill -- it inflates
-      // probability for weak/low-volume hitters specifically rather than
-      // surfacing a real, differentiated pick. Real DK lines don't offer
-      // this either (0.5 is the standard "at least one" line); this only
-      // shows up in our own model_over_prob computation. Excluding it drops
-      // straight to real, meaningful lines (1+ total bases, etc).
-      if(!isHr && (p.line == null || p.line <= 0)) return;
-      // A player can genuinely appear more than once across a day's games
-      // -- confirmed real case: a doubleheader, where the same player has
-      // an identical pregame projection for both games (the trailing
-      // average feeding it doesn't distinguish game 1 from game 2). Without
-      // this, the same player+market could take two of the parlay's four
-      // slots -- a correlated, low-value "pick" that also just looks like
-      // a bug. Keep only the first occurrence.
-      const dedupeKey = `${p.player_id}|${p.market}`;
-      if(seenPropKeys.has(dedupeKey)) return;
-      seenPropKeys.add(dedupeKey);
-      const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
-      if(p.dk_implied_prob != null){
-        const edge = modelP - p.dk_implied_prob;
-        if(edge > 0) real.push({edge, prob: modelP, label: p.player, sub, market: p.market});
-      } else {
-        modelOnly.push({edge: null, prob: modelP, label: p.player, sub, market: p.market});
+      if(homeEdge > 0) mlCandidates.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
+      else if(-homeEdge > 0) mlCandidates.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+      else {
+        const homeFav = g.elo_home_prob >= 0.5;
+        mlCandidates.push({edge: null, prob: homeFav ? g.elo_home_prob : 1-g.elo_home_prob,
+                            label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
+                            sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`, market: 'Moneyline'});
       }
-    });
+    } else if(opts.alwaysIncludeMoneyline){
+      // Same-game parlay: still include this game's own moneyline (model
+      // estimate) even with no real market posted yet, since a real same
+      // game parlay always has the team result as one of its legs.
+      const homeFav = g.elo_home_prob >= 0.5;
+      mlCandidates.push({edge: null, prob: homeFav ? g.elo_home_prob : 1-g.elo_home_prob,
+                          label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
+                          sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`, market: 'Moneyline'});
+    }
   });
-  return selectMixedLegs(real, modelOnly);
+  mlCandidates.sort((a,b) => {
+    const aReal = a.edge != null, bReal = b.edge != null;
+    if(aReal !== bReal) return aReal ? -1 : 1;
+    return (aReal ? b.edge - a.edge : b.prob - a.prob);
+  });
+  mlCandidates.slice(0, opts.maxMoneylines || 2).forEach(l => legs.push(l));
+
+  const allProps = games.flatMap(g => g.props || []);
+  const hr = bestPropInMarket(allProps, "Anytime HR", used);
+  if(hr){ legs.push(hr); used.add(hr.player_id); }
+  const tb = bestPropInMarket(allProps, "Total Bases", used);
+  if(tb){ legs.push(tb); used.add(tb.player_id); }
+
+  if(legs.length < 4){
+    const fillers = ["Hits", "RBI", "Walks"]
+      .map(mk => bestPropInMarket(allProps, mk, used))
+      .filter(Boolean);
+    fillers.sort((a,b) => {
+      const aReal = a.edge != null, bReal = b.edge != null;
+      if(aReal !== bReal) return aReal ? -1 : 1;
+      return (aReal ? b.edge - a.edge : b.prob - a.prob);
+    });
+    for(const f of fillers){
+      if(legs.length >= 4) break;
+      legs.push(f);
+      used.add(f.player_id);
+    }
+  }
+  return legs;
+}
+
+function collectMlbParlayLegs(games){
+  return buildRealisticParlay(games, {maxMoneylines: 2});
 }
 
 // A dedicated HR-only special (3-4 legs), separate from the mixed parlay
@@ -1403,24 +1473,11 @@ function mlbPrevDateStr(dateStr){
 }
 
 // Same idea as the cross-game Suggested Parlay, scoped to just this one
-// game's own props -- no moneyline here (this is specifically a same-game
-// PROP parlay), real-edge legs still take priority over model-only ones.
+// game -- but unlike the cross-game version, a real same-game parlay always
+// includes the game's own moneyline as one leg, so this always reserves one
+// (real edge if a market's posted, the model's own favorite otherwise).
 function collectMlbSameGameParlayLegs(g){
-  const real = [], modelOnly = [];
-  (g.props||[]).forEach(p => {
-    const isHr = p.market === "Anytime HR";
-    const modelP = isHr ? p.model_prob : p.model_over_prob;
-    if(modelP == null) return;
-    if(!isHr && (p.line == null || p.line <= 0)) return; // same degenerate-0+-line exclusion as the main parlay
-    const sub = isHr ? p.team : `${p.team} · ${p.line}+`;
-    if(p.dk_implied_prob != null){
-      const edge = modelP - p.dk_implied_prob;
-      if(edge > 0) real.push({edge, prob: modelP, label: p.player, sub, market: p.market});
-    } else {
-      modelOnly.push({edge: null, prob: modelP, label: p.player, sub, market: p.market});
-    }
-  });
-  return selectMixedLegs(real, modelOnly);
+  return buildRealisticParlay([g], {maxMoneylines: 1, alwaysIncludeMoneyline: true});
 }
 
 function mlbSameGameParlaySection(date, g, idx){
@@ -1429,7 +1486,8 @@ function mlbSameGameParlaySection(date, g, idx){
   return `
     <details class="props-toggle" id="mlb-sgp-${date}-${idx}">
       <summary>Same Game Parlay</summary>
-      ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp'})}
+      ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp',
+        note: "shaped like a real same-game parlay -- moneyline, best Anytime HR pick, best Total Bases pick, plus one more prop -- real edge preferred over model estimate wherever DraftKings has posted a price"})}
     </details>
   `;
 }
@@ -1517,7 +1575,9 @@ function renderMLBGames(selectedDate){
   const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
   const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
-  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB')
+  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
+      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Anytime HR pick, best Total Bases pick, plus one more prop -- real edge preferred over model estimate wherever DraftKings has posted a price"
+    })
     + parlayCardHtml(hrLegs, 'MLB', {
         title: 'HR SPECIAL', accentClass: 'parlay-hr',
         note: hrRealCount

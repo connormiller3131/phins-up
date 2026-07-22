@@ -110,6 +110,18 @@ def parse_slate(raw_games, target_date):
         except KeyError as e:
             print(f"  skip game, unmapped team: {e}")
             continue
+        # MLB's own schedule feed already carries the final score + game
+        # state for a completed game, same-day -- captured here directly
+        # rather than relying on a separate Baseball-Reference lookup
+        # (games.py's load_games(), still used elsewhere in this file for
+        # full season history) for "is this specific day's game over yet."
+        # Confirmed real case: a whole day's worth of games showed as
+        # not-yet-played for hours after they'd actually finished, because
+        # Baseball-Reference's own team schedule page hadn't posted the
+        # result yet at generation time (confirmed directly against the
+        # live page: it still showed the game as unplayed the following
+        # morning) -- MLB's own feed already had the final score.
+        is_final = g.get("status", {}).get("abstractGameState") == "Final"
         out.append({
             "target_date": target_date,
             "away_name": away["team"]["name"], "home_name": home["team"]["name"],
@@ -118,6 +130,9 @@ def parse_slate(raw_games, target_date):
             "home_probable_pitcher": home.get("probablePitcher"),
             "game_datetime": g.get("gameDate"),
             "game_pk": g.get("gamePk"),
+            "already_played": is_final,
+            "away_score": away.get("score") if is_final else None,
+            "home_score": home.get("score") if is_final else None,
         })
     return out
 
@@ -150,40 +165,6 @@ def write_snapshot(target_date, day_payload):
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     with open(snapshot_path(target_date), "w", encoding="utf-8") as f:
         json.dump(day_payload, f, indent=2)
-
-
-def attach_final_scores(games_out, games_df, target_date):
-    """Patches real final scores + already_played onto a day's games once
-    that day is over, matched from the real Baseball-Reference pull
-    (load_games(), which already has final scores for every completed game).
-    Doubleheaders can put two games with the same (date, home, away) pair on
-    the board, so this disambiguates by within-day occurrence order (same
-    cumcount trick games.py already uses for rest/form joins) rather than a
-    plain merge, which would silently duplicate or misattribute a row."""
-    day_results = games_df[games_df["game_date"] == pd.Timestamp(target_date)]
-    if day_results.empty:
-        for g in games_out:
-            g["already_played"], g["away_score"], g["home_score"] = False, None, None
-        return
-
-    day_results = day_results.copy()
-    day_results["_occ"] = day_results.groupby(["home_team", "away_team"]).cumcount()
-    by_pair = {}
-    for row in day_results.itertuples(index=False):
-        by_pair.setdefault((row.home_team, row.away_team), []).append(row)
-
-    seen_occ = {}
-    for g in games_out:
-        key = (g["homeAbbr"], g["awayAbbr"])
-        occ = seen_occ.get(key, 0)
-        seen_occ[key] = occ + 1
-        matches = by_pair.get(key, [])
-        row = matches[occ] if occ < len(matches) else None
-        if row is None:
-            g["already_played"], g["away_score"], g["home_score"] = False, None, None
-        else:
-            g["already_played"] = True
-            g["away_score"], g["home_score"] = int(row.away_score), int(row.home_score)
 
 
 def elo_predictions(games_df, slate):
@@ -785,6 +766,9 @@ def main(today=None):
             "good_value_away": good_value_away,
             "hr_combo": combo,
             "props": props,
+            "already_played": g["already_played"],
+            "away_score": g["away_score"],
+            "home_score": g["home_score"],
         })
         print(f"  {g['target_date']} {g['away_team']} @ {g['home_team']}: model_home={elo_preds[i]:.3f} "
               f"(team-only elo={team_elo_preds[i]:.3f}) market={'yes' if g['market'] else 'no'} props={len(props)}")
@@ -802,7 +786,6 @@ def main(today=None):
         by_date.setdefault(g["target_date"], []).append(g)
 
     for d, day_games in sorted(by_date.items()):
-        attach_final_scores(day_games, games_df, d)
         for g in day_games:
             del g["target_date"]
         finalized = d < today_iso

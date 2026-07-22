@@ -28,14 +28,18 @@ once and cached to its own file forever after (same convention, and same
 CI cache directory persistence, as MLB's pull_team_games.py) -- only the
 current (most recent) season is re-pulled in full every run, since that's
 the one that can still be mid-progress."""
+import sys
 import pathlib
 import time
 import requests
 import pandas as pd
 
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
 from pipeline.nhl.team_map import normalize_team
 
-DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "nhl"
+DATA_DIR = ROOT / "data" / "nhl"
 CACHE_DIR = DATA_DIR / "team_games_by_season"
 BASE_URL = "https://api-web.nhle.com/v1/schedule"
 

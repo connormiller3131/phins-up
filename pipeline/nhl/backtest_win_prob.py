@@ -5,6 +5,13 @@ including the COVID-truncated 2019-20 and the delayed, shortened, realigned
 2020-21. Held-out test: the entire 2024-25 season, completely unseen during
 fitting. Ratings carry forward chronologically through the full history
 into the test season, exactly as they do in live use.
+
+2025-26 (the most recently completed season, pulled after this test split
+was set) isn't part of either train or test here -- this script only
+validates that the hyperparameters generalize; the live generator separately
+runs Elo over the full history including 2025-26 to get today's real
+ratings, the same "validate on a split, then compute live ratings on
+everything" separation MLB/NFL both use.
 """
 import sys
 import pathlib

@@ -689,13 +689,28 @@
   </div>
 
   <div id="tab-nhl" class="tab-panel">
-    <header>
-      <p class="eyebrow">NHL</p>
-      <h1>PHINS <span>UP</span></h1>
-    </header>
-    <div class="placeholder">
-      <b>Not built yet.</b> NFL and MLB are live — NHL is next up.
+  <header>
+    <p class="eyebrow" id="nhl-eyebrow"></p>
+    <h1>PHINS <span>UP</span></h1>
+    <p class="sub">Same Elo architecture as NFL/MLB, fit and backtested on real 2018-2026 game results (api-web.nhle.com), carried forward daily. Phase 1 — model win probability only; no player props or real market odds wired up here yet.</p>
+    <div class="metabar">
+      <span class="dot"></span>
+      <b id="nhl-meta"></b>
     </div>
+  </header>
+
+  <div class="week-select-wrap">
+    <label for="nhl-day-select">Day</label>
+    <select id="nhl-day-select" onchange="renderNHLGames(this.value)"></select>
+  </div>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
+  </div>
+
+  <div id="nhl-games"></div>
+
+  <footer id="nhl-foot"></footer>
   </div>
 
 </div>
@@ -711,6 +726,8 @@ function showTab(name){
 const DATA = __DATA_JSON__;
 const MLB_DATA = __MLB_DATA_JSON__;
 const MLB_WEEK_DAYS = Object.keys(MLB_DATA.days || {}).sort();
+const NHL_DATA = __NHL_DATA_JSON__;
+const NHL_WEEK_DAYS = Object.keys(NHL_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
@@ -1655,6 +1672,93 @@ function noVigProb(mlHome, mlAway){
 }
 
 renderMLBGames();
+
+function populateNhlDaySelect(selected){
+  const sel = document.getElementById('nhl-day-select');
+  if(!sel) return;
+  sel.innerHTML = NHL_WEEK_DAYS.map(d => {
+    const day = NHL_DATA.days[d];
+    const label = `${day.weekday}, ${fmtShortDate(d)}`;
+    return `<option value="${d}" ${d===selected?'selected':''}>${label}${d===NHL_DATA.today?' (today)':''}</option>`;
+  }).join('');
+}
+
+// Phase 1 -- model win probability only, no player props or real market
+// odds yet (no per-player data pipeline built for NHL). Same day-picker
+// pattern as MLB (NHL plays close to daily too, unlike NFL's weekly slate).
+function renderNHLGames(selectedDate){
+  selectedDate = selectedDate || NHL_DATA.today;
+  populateNhlDaySelect(selectedDate);
+
+  const dayData = NHL_DATA.days[selectedDate];
+  const root = document.getElementById("nhl-games");
+  if(!dayData){
+    document.getElementById('nhl-eyebrow').textContent = 'NHL';
+    document.getElementById('nhl-meta').textContent = 'No data available for this day yet.';
+    root.innerHTML = `<div class="placeholder">No games found for ${selectedDate}.</div>`;
+    document.getElementById("nhl-foot").innerHTML = '';
+    return;
+  }
+
+  const isToday = selectedDate === NHL_DATA.today;
+  document.getElementById('nhl-eyebrow').textContent = `NHL · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : ''}`;
+  const ep = NHL_DATA.elo_params;
+  document.getElementById('nhl-meta').textContent = ep
+    ? `Model basis: team Elo fit on 2018-2023, validated out-of-sample on the full 2024-25 season (K=${ep.k}, home-ice=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression}). Ratings carried forward through every completed game since, including 2025-26. Generated ${dayData.generated_at}.`
+    : `Generated ${dayData.generated_at}.`;
+
+  if(!dayData.games.length){
+    root.innerHTML = `<div class="placeholder">No NHL games scheduled for ${selectedDate}.</div>`;
+    document.getElementById("nhl-foot").innerHTML = '';
+    return;
+  }
+
+  root.innerHTML = '';
+  dayData.games.forEach((g, idx) => {
+    const card = document.createElement("div");
+    card.className = "game";
+    card.dataset.gameIdx = idx;
+
+    const finalScoreBadge = g.already_played
+      ? `FINAL<span class="pct">${g.awayAbbr} ${g.away_score} – ${g.homeAbbr} ${g.home_score}</span>`
+      : (isToday ? '' : '<span style="color:var(--text-dim)">Scheduled</span>');
+
+    card.innerHTML = `
+      <div class="game-top">
+        <div>
+          <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('nhl-games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}<span class="expand-hint">🔍 Focus</span></div>
+          <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
+        </div>
+        <div class="hold-badge">${finalScoreBadge}</div>
+      </div>
+
+      <div class="prob-bar-wrap">
+        <div class="prob-bar">
+          <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
+          <div style="width:${g.elo_home_prob*100}%;background:var(--green)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
+        </div>
+      </div>
+
+      <div class="rowgrid">
+        <div class="side">
+          <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+        </div>
+        <div class="side">
+          <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+        </div>
+      </div>
+      <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
+    `;
+    root.appendChild(card);
+  });
+
+  document.getElementById("nhl-foot").innerHTML =
+    `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. No real DraftKings odds or player props are wired up yet for NHL -- that's a real, its own future phase of this pipeline, not left out to hide anything.`;
+}
+
+renderNHLGames();
 
 // ---- Live scores: fetched client-side from MLB's free Stats API (CORS-open),
 // so scores stay current even though this page is only rebuilt once a day.

@@ -83,6 +83,26 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python pipeline/mlb/generate_daily_slate.py
 
+      # Same per-season caching convention as MLB's above -- completed NHL
+      # seasons never change, so only the current season is re-pulled live
+      # every run.
+      - name: Restore NHL historical-pull cache
+        uses: actions/cache@v4
+        with:
+          path: data/nhl/team_games_by_season
+          key: nhl-data-cache-${{ github.run_id }}
+          restore-keys: |
+            nhl-data-cache-
+
+      - name: Pull latest NHL game results
+        run: python pipeline/nhl/pull_games.py
+
+      - name: Fit/backtest NHL win-probability model
+        run: python pipeline/nhl/backtest_win_prob.py
+
+      - name: Generate current-slate NHL projections
+        run: python pipeline/nhl/generate_current_slate.py
+
       - name: Build static site
         run: python pipeline/nfl/build_static_site.py
 

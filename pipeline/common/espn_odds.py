@@ -48,6 +48,7 @@ def get_scoreboard_events(sport_key, date_iso=None):
             "event_id": e["id"],
             "home_name": home["team"]["displayName"],
             "away_name": away["team"]["displayName"],
+            "commence_time": e.get("date"),
         })
     return out
 

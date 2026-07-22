@@ -242,6 +242,35 @@ def _implied_prob(american_odds):
     return (-american_odds) / (-american_odds + 100) if american_odds < 0 else 100 / (american_odds + 100)
 
 
+def _build_market_dict(odds_game):
+    if not odds_game or not odds_game.get("bookmakers"):
+        return None
+    dk = odds_game["bookmakers"][0]
+    markets = {m["key"]: m for m in dk["markets"]}
+    ml_home = ml_away = run_line_home = total_line = None
+    if "h2h" in markets:
+        for o in markets["h2h"]["outcomes"]:
+            if o["name"] == odds_game["home_team"]:
+                ml_home = o["price"]
+            elif o["name"] == odds_game["away_team"]:
+                ml_away = o["price"]
+    if "spreads" in markets:
+        for o in markets["spreads"]["outcomes"]:
+            if o["name"] == odds_game["home_team"]:
+                run_line_home = o["point"]
+    if "totals" in markets:
+        total_line = markets["totals"]["outcomes"][0].get("point")
+    market = {
+        "mlHome": ml_home, "mlAway": ml_away,
+        "run_line_home": run_line_home, "total_line": total_line,
+        "event_id": odds_game.get("id"), "commence_time": odds_game.get("commence_time"),
+    }
+    if ml_home is not None and ml_away is not None:
+        pa, ph = _implied_prob(ml_away), _implied_prob(ml_home)
+        market["home_fair_prob"] = round(ph / (pa + ph), 4)
+    return market
+
+
 def attach_market_odds(slate):
     try:
         odds_data = get_game_odds("baseball_mlb")
@@ -252,8 +281,8 @@ def attach_market_odds(slate):
         return
 
     # A team pair can appear more than once in a day (doubleheaders), so keep
-    # every match per pair and pick the closest commence_time per slate game
-    # rather than a plain dict overwrite (which would silently drop one game).
+    # every real odds listing per pair rather than a plain dict overwrite
+    # (which would silently drop one game).
     by_pair = {}
     for g in odds_data:
         try:
@@ -262,40 +291,63 @@ def attach_market_odds(slate):
             continue
         by_pair.setdefault((a, h), []).append(g)
 
+    # Group the SLATE side by pair too -- a doubleheader means 2 slate games
+    # sharing one (away, home) key. Confirmed real bug: The Odds API can
+    # post only ONE real listing for a doubleheader (the provider doesn't
+    # always carry both games separately), and matching each slate game
+    # independently against the same candidate list let both games grab the
+    # same single real odds entry, showing identical prices for two
+    # genuinely different games (different starting pitchers, different
+    # game times). Candidates are now consumed at most once each, matched to
+    # whichever remaining slate game's own kickoff time is closest -- any
+    # slate game left over once real candidates run out gets market=None
+    # instead of reusing someone else's real price.
+    slate_by_pair = {}
     for slate_game in slate:
-        candidates = by_pair.get((slate_game["away_team"], slate_game["home_team"]), [])
-        odds_game = None
-        if len(candidates) == 1:
-            odds_game = candidates[0]
-        elif len(candidates) > 1 and slate_game.get("game_datetime"):
-            target = pd.Timestamp(slate_game["game_datetime"])
-            odds_game = min(candidates, key=lambda g: abs(pd.Timestamp(g["commence_time"]) - target))
-        if not odds_game or not odds_game.get("bookmakers"):
-            slate_game["market"] = None
-            continue
-        dk = odds_game["bookmakers"][0]
-        markets = {m["key"]: m for m in dk["markets"]}
-        ml_home = ml_away = run_line_home = total_line = None
-        if "h2h" in markets:
-            for o in markets["h2h"]["outcomes"]:
-                if o["name"] == odds_game["home_team"]:
-                    ml_home = o["price"]
-                elif o["name"] == odds_game["away_team"]:
-                    ml_away = o["price"]
-        if "spreads" in markets:
-            for o in markets["spreads"]["outcomes"]:
-                if o["name"] == odds_game["home_team"]:
-                    run_line_home = o["point"]
-        if "totals" in markets:
-            total_line = markets["totals"]["outcomes"][0].get("point")
-        slate_game["market"] = {
-            "mlHome": ml_home, "mlAway": ml_away,
-            "run_line_home": run_line_home, "total_line": total_line,
-            "event_id": odds_game.get("id"), "commence_time": odds_game.get("commence_time"),
-        }
-        if ml_home is not None and ml_away is not None:
-            pa, ph = _implied_prob(ml_away), _implied_prob(ml_home)
-            slate_game["market"]["home_fair_prob"] = round(ph / (pa + ph), 4)
+        slate_by_pair.setdefault((slate_game["away_team"], slate_game["home_team"]), []).append(slate_game)
+
+    for pair, slate_games in slate_by_pair.items():
+        candidates = list(by_pair.get(pair, []))
+        ordered = sorted(slate_games, key=lambda g: g.get("game_datetime") or "")
+        for slate_game in ordered:
+            odds_game = None
+            if len(candidates) == 1 and not slate_game.get("game_datetime"):
+                odds_game = candidates.pop(0)
+            elif candidates and slate_game.get("game_datetime"):
+                target = pd.Timestamp(slate_game["game_datetime"])
+                idx = min(range(len(candidates)),
+                          key=lambda i: abs(pd.Timestamp(candidates[i]["commence_time"]) - target))
+                odds_game = candidates.pop(idx)
+            slate_game["market"] = _build_market_dict(odds_game)
+
+
+def _match_espn_event(candidates, slate_game):
+    """Picks the best-matching ESPN event for one slate game out of a pool
+    of candidates sharing the same (away, home) pair, removing it from the
+    pool (candidates is mutated in place) so a doubleheader's second game
+    can't also grab the event its first game already claimed. Confirmed
+    real bug this fixes: two slate games sharing a pair (a doubleheader)
+    were each looked up independently against the same candidate pool, so
+    both could land on the identical single event when only one was
+    genuinely available -- showing identical odds/lineup for two actually
+    different games (different starting pitchers, different game times).
+    Matched by closest commence_time to the slate game's own kickoff;
+    falls back to the sole remaining candidate only when there's exactly
+    one and no kickoff time to compare against."""
+    if not candidates:
+        return None
+    if len(candidates) == 1 and not slate_game.get("game_datetime"):
+        return candidates.pop(0)
+    if slate_game.get("game_datetime"):
+        target = pd.Timestamp(slate_game["game_datetime"])
+
+        def _gap(e):
+            ct = e.get("commence_time")
+            return abs(pd.Timestamp(ct) - target) if ct else pd.Timedelta.max
+
+        idx = min(range(len(candidates)), key=lambda i: _gap(candidates[i]))
+        return candidates.pop(idx)
+    return None
 
 
 def attach_espn_fallback_odds(slate):
@@ -326,12 +378,12 @@ def attach_espn_fallback_odds(slate):
                 h, a = full_name_to_statcast(e["home_name"]), full_name_to_statcast(e["away_name"])
             except KeyError:
                 continue
-            by_pair[(a, h)] = e
+            by_pair.setdefault((a, h), []).append(e)
 
-        for g in needs_odds:
-            if g["target_date"] != d:
-                continue
-            event = by_pair.get((g["away_team"], g["home_team"]))
+        day_games = sorted((g for g in needs_odds if g["target_date"] == d),
+                            key=lambda g: g.get("game_datetime") or "")
+        for g in day_games:
+            event = _match_espn_event(by_pair.get((g["away_team"], g["home_team"]), []), g)
             if not event:
                 continue
             try:
@@ -362,10 +414,14 @@ def attach_espn_lineups(slate):
     (target_date, away_team, home_team) -> {'home': [...], 'away': [...]};
     a game simply has no entry if ESPN doesn't have a lineup for it yet --
     callers should treat that exactly like "not posted yet" and fall back
-    to the existing PA-volume proxy, not treat it as an error."""
+    to the existing PA-volume proxy, not treat it as an error. Processes
+    games in kickoff order within each date and consumes each ESPN event at
+    most once (_match_espn_event) so a doubleheader's two games don't both
+    end up matched to the same single event -- confirmed real bug: without
+    this, both games could fetch the identical lineup."""
     events_by_date = {}
     out = {}
-    for g in slate:
+    for g in sorted(slate, key=lambda g: (g["target_date"], g.get("game_datetime") or "")):
         d = g["target_date"]
         if d not in events_by_date:
             try:
@@ -379,14 +435,14 @@ def attach_espn_lineups(slate):
                     h, a = full_name_to_statcast(e["home_name"]), full_name_to_statcast(e["away_name"])
                 except KeyError:
                     continue
-                lookup[(a, h)] = e["event_id"]
+                lookup.setdefault((a, h), []).append(e)
             events_by_date[d] = lookup
 
-        event_id = events_by_date[d].get((g["away_team"], g["home_team"]))
-        if not event_id:
+        event = _match_espn_event(events_by_date[d].get((g["away_team"], g["home_team"]), []), g)
+        if not event:
             continue
         try:
-            lineup = get_espn_confirmed_lineup("baseball_mlb", event_id)
+            lineup = get_espn_confirmed_lineup("baseball_mlb", event["event_id"])
         except Exception as e:
             print(f"  ESPN lineup fetch failed for {g['away_team']}@{g['home_team']}: {e}")
             continue

@@ -4,11 +4,13 @@ NFL tab offers a week picker:
 - Elo win probability, ratings carried forward from all completed games,
   blended with real starting-pitcher/bullpen strength.
 - Real DraftKings game-line odds (moneyline/run-line/total) via The Odds API.
-- Player props for each team's probable starting pitcher and the full
-  9-player lineup -- ESPN's real confirmed starting lineup when it's been
-  posted by generation time, falling back to a proxy (top 9 by recent
-  plate-appearance volume) for whichever games it isn't posted for yet --
-  sectioned into Batting and Pitching:
+- Player props for each team's probable starting pitcher and every hitter
+  on the real active 26-man roster (not just a top-9 guess) -- confirmed
+  starters, when ESPN has posted a real lineup by generation time, are
+  ordered first in their real batting order and flagged "confirmed_starter";
+  the rest of the roster's hitters follow, sorted by recent plate-appearance
+  volume, so a bench bat or platoon partner is still shown, just not
+  presented as if they're starting -- sectioned into Batting and Pitching:
     Batting: Hits, Total Bases, Walks, RBI, Anytime HR
     Pitching: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed,
               Outs Recorded
@@ -569,32 +571,48 @@ def match_confirmed_lineup(pa_own, team, espn_lineup):
     return matched
 
 
-def top_batters_for_team(pa_own, team, active_ids, confirmed_lineup=None, n=9):
-    """Prefers ESPN's real confirmed starting lineup when it's already
-    posted by generation time; falls back to a proxy (top n by recent
-    plate-appearance volume) for whichever games it isn't posted for yet."""
-    if confirmed_lineup:
-        matched = match_confirmed_lineup(pa_own, team, confirmed_lineup)
-        # A couple of misses (a call-up too new for our own trailing data,
-        # a name-format mismatch) still leaves a real lineup that's more
-        # accurate than the proxy; too many misses means something's wrong
-        # with the match itself (wrong team, stale data), safer to fall
-        # back to the proxy entirely rather than ship a half-real lineup.
-        if len(matched) >= 7:
-            return matched
+def top_batters_for_team(pa_own, team, active_ids, confirmed_lineup=None):
+    """Every hitter on the real active 26-man roster with enough trailing
+    history to project -- previously capped at a top-9 proxy (or ESPN's
+    9-player confirmed lineup), which meant real bench bats and platoon
+    partners never got shown at all, and a bettor had no way to tell "not
+    shown because inactive" from "not shown because we only display 9".
+    Confirmed starters (when ESPN has posted a real lineup, matched via
+    match_confirmed_lineup) come first, in their real batting order; every
+    other active hitter follows, sorted by trailing plate-appearance volume
+    as a loose "how likely to play" signal, not a hard cutoff. No separate
+    pitcher-exclusion step is needed: batter_game_logs.parquet (and hence
+    pa_own) only ever contains real batting appearances, so a pure pitcher
+    on the active roster simply never shows up here -- confirmed against
+    real data, not assumed.
 
+    Returns (ordered_player_ids, confirmed_starter_ids)."""
     team_players = pa_own[pa_own["team"] == team]
     if active_ids is not None:
         team_players = team_players[team_players.index.isin(active_ids)]
-    team_players = team_players.sort_values("current_avg", ascending=False)
-    return team_players.head(n).index.tolist()
+
+    confirmed_ids = []
+    if confirmed_lineup:
+        matched = match_confirmed_lineup(pa_own, team, confirmed_lineup)
+        # A couple of misses (a call-up too new for our own trailing data, a
+        # name-format mismatch) still leaves a real lineup that's more
+        # trustworthy than nothing; too many misses means something's wrong
+        # with the match itself, safer to not mark any of it "confirmed."
+        if len(matched) >= 7:
+            confirmed_ids = [pid for pid in matched if pid in team_players.index]
+
+    rest = team_players[~team_players.index.isin(confirmed_ids)].sort_values(
+        "current_avg", ascending=False).index.tolist()
+    return confirmed_ids + rest, set(confirmed_ids)
 
 
-def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, hr_own, hr_opp):
+def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, hr_own, hr_opp, confirmed_ids=None):
+    confirmed_ids = confirmed_ids or set()
     entries = []
     hr_candidates = []
 
     for pid in player_ids:
+        is_starter = pid in confirmed_ids
         name = None
         for stat_key, market_label in BATTER_COUNT_STATS.items():
             r = project_count_stat(stat_key, batter_models[stat_key], pid, opp_team)
@@ -603,6 +621,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
                                  "market": market_label, "line": r["line"], "projected": r["projected"],
                                  "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
+                                 "confirmed_starter": is_starter,
                                  **({"ladder": r["ladder"]} if "ladder" in r else {})})
 
         if pid in hr_own.index and opp_team in hr_opp.index:
@@ -611,7 +630,8 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 name = name or hr_own.loc[pid, "player_display_name"]
                 hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
-                                 "market": "Anytime HR", "model_prob": round(hr_prob, 3)})
+                                 "market": "Anytime HR", "model_prob": round(hr_prob, 3),
+                                 "confirmed_starter": is_starter})
                 hr_candidates.append((name, hr_prob))
 
     best_hr = max(hr_candidates, key=lambda x: x[1]) if hr_candidates else None
@@ -716,15 +736,15 @@ def main(today=None):
     games_out = []
     for i, g in enumerate(combined_slate):
         game_lineups = espn_lineups.get((g["target_date"], g["away_team"], g["home_team"])) or {}
-        home_batters = top_batters_for_team(
+        home_batters, home_confirmed = top_batters_for_team(
             pa_own, g["home_team"], active_rosters.get(g["home_team"]), game_lineups.get("home"))
-        away_batters = top_batters_for_team(
+        away_batters, away_confirmed = top_batters_for_team(
             pa_own, g["away_team"], active_rosters.get(g["away_team"]), game_lineups.get("away"))
 
         home_props, home_best_hr = batter_props_for_team(
-            g["home_team"], g["away_team"], home_batters, batter_models, hr_model, hr_own, hr_opp)
+            g["home_team"], g["away_team"], home_batters, batter_models, hr_model, hr_own, hr_opp, home_confirmed)
         away_props, away_best_hr = batter_props_for_team(
-            g["away_team"], g["home_team"], away_batters, batter_models, hr_model, hr_own, hr_opp)
+            g["away_team"], g["home_team"], away_batters, batter_models, hr_model, hr_own, hr_opp, away_confirmed)
 
         props = home_props + away_props
         combo = None

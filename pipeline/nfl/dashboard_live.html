@@ -1163,21 +1163,38 @@ function mlbPropStatRow(p){
 
 function mlbPropsBySection(props){
   const sections = ["Batting", "Pitching"];
+  // A pregame version of the same "confirmed"/"NOT in lineup" flag the live
+  // in-game poll (updateMLBLiveStats) already fills in from MLB's own live
+  // boxscore -- this one comes from ESPN's advance-posted lineup at
+  // generation time, hours earlier, and gets naturally overwritten by the
+  // live version once that's available (same element, same classes). Only
+  // shown for Batting, and only when ESPN actually had a lineup posted for
+  // this game (i.e. at least one confirmed_starter:true exists) -- with no
+  // real lineup posted yet, every hitter would otherwise wrongly show as
+  // "not confirmed."
+  const anyConfirmed = (props||[]).some(p => p.section === "Batting" && p.confirmed_starter === true);
   return sections.map(sec => {
     const secProps = (props||[]).filter(p => p.section === sec);
     if(!secProps.length) return "";
     const byPlayer = new Map();
     secProps.forEach(p => {
       const key = p.player + "|" + p.team;
-      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, pid:p.player_id, rows:[]});
+      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, pid:p.player_id, confirmed:p.confirmed_starter, rows:[]});
       byPlayer.get(key).rows.push(p);
     });
-    const playerBlocks = Array.from(byPlayer.values()).map(pl => `
+    const playerBlocks = Array.from(byPlayer.values()).map(pl => {
+      const pregameFlag = (sec === "Batting" && anyConfirmed)
+        ? (pl.confirmed
+            ? '<span class="hit">&#10003; Confirmed starter</span>'
+            : '<span class="miss">&#9888; Not in today\'s confirmed lineup</span>')
+        : '';
+      return `
       <details class="prop-player"${pl.pid!=null ? ` data-pid="${pl.pid}"` : ''}>
-        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span><span class="live-line"></span><span class="lineup-flag"></span></summary>
+        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span><span class="live-line"></span><span class="lineup-flag">${pregameFlag}</span></summary>
         ${pl.rows.map(mlbPropStatRow).join("")}
       </details>
-    `).join("");
+    `;
+    }).join("");
     return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
   }).join("");
 }
@@ -1192,7 +1209,7 @@ function mlbPropsTable(props, combo, featured){
   if(!props || !props.length) return comboHtml;
   const tag = hasDK
     ? '(FEATURED — real DraftKings lines &amp; odds on some props; Anytime HR graded against the real price)'
-    : '(probable pitcher + full lineup by recent playing time — line = trailing average)';
+    : '(probable pitcher + every hitter on the active 26-man roster, confirmed starters first — line = trailing average)';
   return `
     <details class="props-toggle" ${hasDK ? 'open' : ''}>
       <summary>Player Props ${hasDK ? '<span style="color:var(--green)">★</span>' : ''} <span class="props-sample-tag">${tag}</span></summary>
@@ -1660,7 +1677,7 @@ function renderMLBGames(selectedDate){
 
   document.getElementById("mlb-foot").innerHTML =
     `<b>Fair win %</b> is the real no-vig probability from DraftKings' current moneyline, where posted (some games don't have lines yet at generation time). <b>GOOD VALUE</b> flags a side where Model win % beats that market fair %. <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons including the 60-game 2020 season) and backtested out-of-sample on every 2026 game played so far -- Brier 0.249, 54.3% accuracy, essentially tied with a market-favorite baseline. MLB single-game outcomes are inherently much harder to predict than NFL's, mainly because team-level Elo doesn't yet account for which starting pitcher is on the mound. ` +
-    `<b>Player props:</b> each probable starting pitcher (real, from MLB's own schedule feed) and each team's full 9-batter lineup by recent plate-appearance volume among currently active roster players -- filtered against each team's real active 26-man roster so injured/inactive players (e.g. someone on the IL) don't show up, but it's still a recent-usage proxy, not a confirmed today's lineup, since we don't have a free lineup source. Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and Runs/Hits/Walks Allowed are derived from Statcast's play-by-play score deltas (verified exactly against a real box score before shipping); Outs Recorded is real innings pitched in disguise. Stolen bases and earned-run splits aren't included -- Statcast's pitch-level feed doesn't reliably attribute the former to a specific player, and the earned/unearned distinction requires official-scorer judgment we can't derive from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
+    `<b>Player props:</b> each probable starting pitcher (real, from MLB's own schedule feed) and every hitter on each team's real active 26-man roster (injured/inactive players don't show up). When ESPN has posted a real starting lineup by generation time, those 9 batters are shown first, in their real batting order, badged <span class="hit" style="font-family:var(--mono);font-size:9.5px;">&#10003; Confirmed starter</span> -- everyone else on the roster follows, sorted by recent plate-appearance volume, badged <span class="miss" style="font-family:var(--mono);font-size:9.5px;">&#9888; Not in today's confirmed lineup</span> so a bench bat or platoon partner is still shown, just not presented as if they're starting. If ESPN hasn't posted a lineup yet, no badges show at all rather than guessing. That pregame badge gets replaced by MLB's own live confirmed lineup once available (see Live Batter/Pitcher Stats below). Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and Runs/Hits/Walks Allowed are derived from Statcast's play-by-play score deltas (verified exactly against a real box score before shipping); Outs Recorded is real innings pitched in disguise. Stolen bases and earned-run splits aren't included -- Statcast's pitch-level feed doesn't reliably attribute the former to a specific player, and the earned/unearned distinction requires official-scorer judgment we can't derive from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data (real production vs. the opponent's real allowed rate), same architecture as NFL. Tested and did not deploy: matching batters against pitchers by real Statcast pitch-style clusters (not just handedness) made total-bases and home-run projections measurably worse in backtesting, not better -- too few at-bats per style bucket to trust. The anytime-HR "either/or" special multiplies each player's individual model probability assuming independence, which slightly overstates it in practice. ` +
     `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices for markets that have a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs), and Model % is recomputed against DK's actual line where available -- a <b>DK LINE</b> badge marks those; everything else carries a <b>MODEL EST.</b> badge and is our own trailing-average-based projection, never dressed up to look like a real market number. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds because per-game prop-odds API calls cost credits per market on the free tier; odds are a snapshot from the last site refresh (~twice daily), not live -- the odds API key can't be exposed in a public page the way the keyless scores feed can. ` +
     `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting/pitching and every shown player's actual in-game line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
 }

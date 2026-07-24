@@ -37,3 +37,14 @@ binding = "ASSETS"
 # This forces every request through the script first so it can actually
 # rewrite the response header.
 run_worker_first = true
+# Without this, an unmatched path (e.g. /mlb, a client-side route from
+# dashboard_live.html's own URL router) came back as a real 307 redirect to
+# "/" straight from Cloudflare's asset-serving layer -- confirmed directly
+# against a real response -- which happens BEFORE site-worker.js's own
+# fetch handler even runs, so its "catch a 404, retry with index.html"
+# logic never got a chance to fire; the browser just followed the redirect
+# and lost the path, dropping back to the default (NFL) tab on any refresh
+# of a deep link. This is Cloudflare's own documented setting for exactly
+# this SPA-routing case: serve index.html directly for any unmatched path,
+# no redirect, URL stays as the visitor typed/bookmarked it.
+not_found_handling = "single-page-application"

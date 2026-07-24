@@ -725,8 +725,7 @@ function showTab(name){
   // if this call came from applyRouteFromLocation() restoring a fuller path
   // like "/mlb/monday", the sport segment already matches, so leave the day
   // half of the path alone instead of clobbering it back to just "/mlb".
-  const currentSport = location.pathname.split('/').filter(Boolean)[0];
-  if(currentSport !== name) updateUrl('/' + name);
+  if(routeParts().sport !== name) updateUrl('/' + name);
 }
 
 const DATA = __DATA_JSON__;
@@ -2122,15 +2121,36 @@ setInterval(updateMLBLiveStats, 60000);
 
 // ---- URL routing: /nfl[/week{N}], /mlb[/{weekday-or-ISO-date}],
 // /nhl[/{weekday-or-ISO-date}] -- client-side only, since this is a static
-// single-page site. The hosting layer (site-worker.js for the Cloudflare
-// custom domain, docs/404.html for GitHub Pages) serves this same page for
-// any path under the domain, so a direct or bookmarked deep link still
-// loads this page; this script then reads location.pathname once on load
-// (and on back/forward navigation) and switches to whatever it names,
-// silently falling back to the default view for anything it doesn't
-// recognize rather than erroring.
+// single-page site. The hosting layer (wrangler.toml's
+// not_found_handling = "single-page-application" for the Cloudflare custom
+// domain, docs/404.html for GitHub Pages) serves this same page for any
+// path under the domain, so a direct or bookmarked deep link still loads
+// this page; this script then reads location.pathname once on load (and on
+// back/forward navigation) and switches to whatever it names, silently
+// falling back to the default view for anything it doesn't recognize
+// rather than erroring.
+//
+// routeParts() finds the sport segment wherever it actually falls in the
+// path rather than assuming it's always parts[0] -- confirmed real case:
+// GitHub Pages serves this site under /phins-up/, so location.pathname is
+// "/phins-up/mlb" there, not "/mlb" like the custom domain; reading the
+// first segment blindly picked up "phins-up" as "the sport" and silently
+// fell through to the default NFL view every time. Whatever comes before
+// the sport segment (if anything) is treated as a fixed base path and
+// preserved on every URL update.
+const ROUTE_SPORTS = ['nfl', 'mlb', 'nhl'];
+function routeParts(){
+  const parts = location.pathname.split('/').filter(Boolean);
+  const idx = parts.findIndex(p => ROUTE_SPORTS.includes(p.toLowerCase()));
+  return {
+    base: idx > 0 ? '/' + parts.slice(0, idx).join('/') : '',
+    sport: idx >= 0 ? parts[idx].toLowerCase() : null,
+    sub: idx >= 0 ? parts[idx + 1] : null,
+  };
+}
+
 function updateUrl(path){
-  if(window.history && history.pushState) history.pushState(null, '', path);
+  if(window.history && history.pushState) history.pushState(null, '', routeParts().base + path);
 }
 
 function parseWeekSegment(seg){
@@ -2145,25 +2165,24 @@ function findDaySegment(daysObj, seg){
 }
 
 function applyRouteFromLocation(){
-  const parts = location.pathname.split('/').filter(Boolean);
-  if(!parts.length) return;
-  const sport = parts[0].toLowerCase();
+  const {sport, sub} = routeParts();
+  if(!sport) return;
   if(sport === 'nfl'){
     showTab('nfl');
-    if(parts[1]){
-      const wk = parseWeekSegment(parts[1]);
+    if(sub){
+      const wk = parseWeekSegment(sub);
       if(wk != null && DATA.weeks[String(wk)]) renderGames(wk);
     }
   } else if(sport === 'mlb'){
     showTab('mlb');
-    if(parts[1]){
-      const day = findDaySegment(MLB_DATA.days || {}, parts[1]);
+    if(sub){
+      const day = findDaySegment(MLB_DATA.days || {}, sub);
       if(day) renderMLBGames(day);
     }
   } else if(sport === 'nhl'){
     showTab('nhl');
-    if(parts[1]){
-      const day = findDaySegment(NHL_DATA.days || {}, parts[1]);
+    if(sub){
+      const day = findDaySegment(NHL_DATA.days || {}, sub);
       if(day) renderNHLGames(day);
     }
   }

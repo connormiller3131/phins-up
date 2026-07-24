@@ -697,6 +697,8 @@
     <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
   </div>
 
+  <div id="mlb-track-record-wrap"></div>
+
   <div id="mlb-games"></div>
 
   <footer id="mlb-foot"></footer>
@@ -1646,25 +1648,52 @@ function collectHrSpecialLegs(games, excludeIds){
   return real.concat(modelOnly).slice(0, 3);
 }
 
-// Same shape as grade_props.py's own console report (the per-market
-// Brier/accuracy table already run standalone against every finalized
-// snapshot) -- this is that same grading logic, client-side, against every
-// player prop with a real actual attached (not just the day's picked
-// parlay legs, which is a much smaller and cherry-picked sample). A count
-// prop is "correct" when the side the model favored (over/under its line)
-// matches which side the real stat actually landed on; Anytime HR is
-// correct when the model's >=50% yes/no call matched whether the player
-// actually homered. Scoped to this week's finalized days, since that's all
-// this page's data ever holds (older weeks' snapshot files exist on disk
-// but were never embedded in the page payload).
-function mlbTrackRecordHtml(){
-  const days = MLB_WEEK_DAYS.map(d => MLB_DATA.days[d]).filter(d => d && d.finalized && d.games && d.games.length);
-  if(!days.length){
-    return `<div class="placeholder parlay-empty">No finalized MLB days yet this week to show a track record for.</div>`;
-  }
+// Same grading logic as grade_props.py's own console report (Brier score,
+// not just raw accuracy) -- run client-side against every finalized day
+// ever produced, not just the currently-loaded week. Raw accuracy alone is
+// misleading for a lopsided market like Anytime HR: with a real HR rate
+// around 11%, always guessing "no" scores ~89% accuracy on its own, with
+// zero actual skill -- confirmed this is exactly what was happening here,
+// not a grading bug. Brier score (mean squared error between the model's
+// own probability and the real 0/1 outcome) doesn't have that blind spot,
+// and showing the naive "always guess the common side" baseline accuracy
+// right next to the model's own makes the gap (or lack of one) obvious
+// instead of hiding behind a big-looking percentage.
+let MLB_TRACK_RECORD_CACHE = null;
+
+async function loadMlbTrackRecord(){
+  if(MLB_TRACK_RECORD_CACHE) return MLB_TRACK_RECORD_CACHE;
+  let dates = [];
+  try{
+    const r = await fetch('results/mlb_index.json');
+    if(r.ok) dates = (await r.json()).dates || [];
+  }catch(e){ /* no manifest yet -- treat as no history */ }
+
   const byMarket = {};
-  days.forEach(day => {
-    day.games.forEach(g => {
+  for(const d of dates){
+    let day;
+    try{
+      const r = await fetch(`results/mlb_${d}.json`);
+      if(!r.ok) continue;
+      day = await r.json();
+    }catch(e){ continue; }
+    (day.games || []).forEach(g => {
+      // Moneyline: same 0/1-event framing as a prop's over/under, just with
+      // "home team wins" as the event and the model's own elo_home_prob as
+      // its probability -- lets the game-level win-probability model sit in
+      // the same accuracy/Brier table as the player props instead of being
+      // left out of the Track Record entirely.
+      if(g.already_played && g.home_score != null && g.away_score != null && g.elo_home_prob != null){
+        const homeWin = g.home_score > g.away_score ? 1 : 0;
+        const modelProb = g.elo_home_prob;
+        const predictedWin = modelProb >= 0.5 ? 1 : 0;
+        const b = byMarket['Moneyline'] || (byMarket['Moneyline'] = {n: 0, correct: 0, actualOverSum: 0, modelProbSum: 0, brierSum: 0});
+        b.n++;
+        b.correct += (homeWin === predictedWin) ? 1 : 0;
+        b.actualOverSum += homeWin;
+        b.modelProbSum += modelProb;
+        b.brierSum += (modelProb - homeWin) ** 2;
+      }
       (g.props || []).forEach(p => {
         if(p.actual == null) return;
         const isHr = p.market === 'Anytime HR';
@@ -1672,40 +1701,60 @@ function mlbTrackRecordHtml(){
         if(modelProb == null || (!isHr && (p.line == null || p.line <= 0))) return;
         const actualOver = (isHr ? p.actual > 0 : p.actual > p.line) ? 1 : 0;
         const predictedOver = modelProb >= 0.5 ? 1 : 0;
-        const b = byMarket[p.market] || (byMarket[p.market] = {n: 0, correct: 0, actualOverSum: 0, modelProbSum: 0});
+        const b = byMarket[p.market] || (byMarket[p.market] = {n: 0, correct: 0, actualOverSum: 0, modelProbSum: 0, brierSum: 0});
         b.n++;
         b.correct += (actualOver === predictedOver) ? 1 : 0;
         b.actualOverSum += actualOver;
         b.modelProbSum += modelProb;
+        b.brierSum += (modelProb - actualOver) ** 2;
       });
     });
-  });
+  }
+  MLB_TRACK_RECORD_CACHE = {byMarket, dates};
+  return MLB_TRACK_RECORD_CACHE;
+}
+
+function mlbTrackRecordTableHtml(byMarket, dates){
   const markets = Object.keys(byMarket).sort();
   if(!markets.length){
-    return `<div class="placeholder parlay-empty">No graded props yet this week.</div>`;
+    return `<div class="placeholder parlay-empty">No graded MLB props yet -- check back once a day has finished.</div>`;
   }
-  let totalN = 0, totalCorrect = 0;
+  let totalN = 0, totalCorrect = 0, totalBrier = 0;
   const rows = markets.map(mk => {
     const b = byMarket[mk];
-    totalN += b.n; totalCorrect += b.correct;
-    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n, avgProb = b.modelProbSum / b.n;
+    totalN += b.n; totalCorrect += b.correct; totalBrier += b.brierSum;
+    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n, avgProb = b.modelProbSum / b.n, brier = b.brierSum / b.n;
+    // The naive "always guess whichever side actually happened more often"
+    // baseline -- a market where the model's own accuracy barely beats this
+    // has little real skill above just knowing the base rate.
+    const baseline = Math.max(actualRate, 1 - actualRate);
+    const actualLabel = mk === 'Moneyline' ? 'actual home win' : 'actual-over';
     return `
       <div class="track-record-row">
         <span class="track-record-market">${mk}</span>
         <span class="track-record-n">n=${b.n}</span>
         <span class="track-record-acc">${(acc*100).toFixed(0)}% accuracy</span>
-        <span class="p-exp">actual-over ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
+        <span class="p-exp">(baseline ${(baseline*100).toFixed(0)}%) &middot; Brier ${brier.toFixed(3)} &middot; ${actualLabel} ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
       </div>
     `;
   }).join('');
-  const overallAcc = totalCorrect / totalN;
+  const overallAcc = totalCorrect / totalN, overallBrier = totalBrier / totalN;
+  const range = dates.length ? `${fmtShortDate(dates[0])}–${fmtShortDate(dates[dates.length-1])}` : '';
   return `
     <details class="props-toggle" id="mlb-track-record">
-      <summary>Track Record <span class="props-sample-tag">(${totalN} props graded this week &middot; ${(overallAcc*100).toFixed(0)}% accuracy overall)</span></summary>
+      <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy &middot; Brier ${overallBrier.toFixed(3)})</span></summary>
       <div class="track-record-table">${rows}</div>
-      <div class="p-exp" style="margin-top:6px;">Every player prop with a real result this week, not just the day's picked parlay legs -- "accuracy" is whether the side the model favored (over/under the line, or yes/no for Anytime HR) matched reality; "actual-over" is how often the real stat actually beat the line; "avg model" is the model's average confidence on the side it favored. A market sitting near 50% accuracy is closer to a coin flip than a real edge -- shown honestly either way, small-sample this early in the week.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs -- Moneyline uses the model's own home-win probability graded against real final scores, same table as the props. "Accuracy" is whether the side the model favored (home/away, over/under the line, or yes/no for Anytime HR) matched reality; "baseline" is the accuracy you'd get by always guessing whichever side actually happens more often for that market, with zero model skill -- a market whose accuracy sits close to baseline (like Anytime HR, where "always guess no" alone scores ~89-90% given how rare a home run actually is) isn't showing real edge, no matter how high the raw percentage looks. Brier score (lower is better, 0=perfect, 0.25=coin flip on a 50/50 line) is the more honest single number since it doesn't have that blind spot.</div>
     </details>
   `;
+}
+
+async function renderMlbTrackRecord(){
+  const wrap = document.getElementById('mlb-track-record-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = `<div class="placeholder">Loading track record...</div>`;
+  const {byMarket, dates} = await loadMlbTrackRecord();
+  wrap.innerHTML = mlbTrackRecordTableHtml(byMarket, dates);
 }
 
 function mlbPrevDateStr(dateStr){
@@ -1826,8 +1875,7 @@ function renderMLBGames(selectedDate){
           ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
           : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
         emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
-      })
-    + mlbTrackRecordHtml();
+      });
 
   dayData.games.forEach((g, idx) => {
     const card = document.createElement("div");
@@ -1905,6 +1953,7 @@ function noVigProb(mlHome, mlAway){
 }
 
 renderMLBGames();
+renderMlbTrackRecord();
 
 function populateNhlDaySelect(selected){
   const sel = document.getElementById('nhl-day-select');

@@ -31,6 +31,7 @@ NFL tab offers a week picker:
 import os
 import sys
 import pathlib
+import glob
 import json
 import datetime
 import numpy as np
@@ -171,6 +172,23 @@ def write_snapshot(target_date, day_payload):
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     with open(snapshot_path(target_date), "w", encoding="utf-8") as f:
         json.dump(day_payload, f, indent=2)
+
+
+def write_results_index():
+    """A small manifest of every finalized MLB day snapshot on disk, so the
+    frontend's all-time Track Record view can fetch each real result file
+    (results/mlb_{date}.json, same static path loadGameResult already fetches
+    for NFL) without needing a directory listing -- static hosting (GitHub
+    Pages / Cloudflare) can't give it one. Rewritten fresh every run from
+    whatever's actually on disk, so it naturally covers every day ever
+    finalized since this feature shipped, not just the current week."""
+    dates = sorted(
+        pathlib.Path(p).stem.replace("mlb_", "")
+        for p in glob.glob(str(RESULTS_DIR / "mlb_*.json"))
+        if pathlib.Path(p).name != "mlb_index.json"
+    )
+    with open(RESULTS_DIR / "mlb_index.json", "w", encoding="utf-8") as f:
+        json.dump({"dates": dates}, f, indent=2)
 
 
 def attach_prop_actuals(day_games):
@@ -829,6 +847,7 @@ def main(today=None):
     if not combined_slate:
         # Every day this week was already finalized (e.g. rerun same day) --
         # nothing left to generate, just write out what we loaded.
+        write_results_index()
         _write_week_payload(dates, today_iso, days_out)
         return
 
@@ -958,6 +977,7 @@ def main(today=None):
             print(f"  {d}: finalized and snapshotted ({len(day_games)} games, real final scores + prop actuals attached)")
         days_out[d] = day_payload
 
+    write_results_index()
     _write_week_payload(dates, today_iso, days_out)
 
 

@@ -119,7 +119,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for i in 1 2 3 4 5; do
-            git add docs/index.html docs/results/
+            git add docs/index.html docs/404.html docs/results/
             if git diff --quiet --cached; then
               echo "Nothing to commit."
               break

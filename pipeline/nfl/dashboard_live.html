@@ -648,7 +648,7 @@
 
   <div class="week-select-wrap">
     <label for="week-select">Week</label>
-    <select id="week-select" onchange="renderGames(parseInt(this.value,10))"></select>
+    <select id="week-select" onchange="renderGames(parseInt(this.value,10)); updateUrl('/nfl/week'+this.value)"></select>
   </div>
 
   <div class="legend">
@@ -675,7 +675,7 @@
 
   <div class="week-select-wrap">
     <label for="mlb-day-select">Day</label>
-    <select id="mlb-day-select" onchange="renderMLBGames(this.value)"></select>
+    <select id="mlb-day-select" onchange="renderMLBGames(this.value); updateUrl('/mlb/'+this.value)"></select>
   </div>
 
   <div class="legend">
@@ -701,7 +701,7 @@
 
   <div class="week-select-wrap">
     <label for="nhl-day-select">Day</label>
-    <select id="nhl-day-select" onchange="renderNHLGames(this.value)"></select>
+    <select id="nhl-day-select" onchange="renderNHLGames(this.value); updateUrl('/nhl/'+this.value)"></select>
   </div>
 
   <div class="legend">
@@ -721,6 +721,12 @@ function showTab(name){
     document.getElementById('tab-'+t).classList.toggle('active', t===name);
     document.getElementById('tabbtn-'+t).classList.toggle('active', t===name);
   });
+  // Only reset the URL to the bare "/name" when actually switching sport --
+  // if this call came from applyRouteFromLocation() restoring a fuller path
+  // like "/mlb/monday", the sport segment already matches, so leave the day
+  // half of the path alone instead of clobbering it back to just "/mlb".
+  const currentSport = location.pathname.split('/').filter(Boolean)[0];
+  if(currentSport !== name) updateUrl('/' + name);
 }
 
 const DATA = __DATA_JSON__;
@@ -1557,14 +1563,16 @@ function buildRealisticParlay(games, opts){
   });
   mlCandidates.slice(0, opts.maxMoneylines || 2).forEach(l => legs.push(l));
 
+  // Anytime HR is no longer a guaranteed slot here -- HR Special already
+  // covers home runs on its own, so forcing one into this parlay too was
+  // redundant. It can still show up below via the filler pool if it's
+  // genuinely the best remaining pick, just not reserved.
   const allProps = games.flatMap(g => g.props || []);
-  const hr = bestPropInMarket(allProps, "Anytime HR", used);
-  if(hr){ legs.push(hr); used.add(hr.player_id); }
   const tb = bestPropInMarket(allProps, "Total Bases", used);
   if(tb){ legs.push(tb); used.add(tb.player_id); }
 
   if(legs.length < 4){
-    const fillers = ["Hits", "RBI", "Walks"]
+    const fillers = ["Anytime HR", "Hits", "RBI", "Walks"]
       .map(mk => bestPropInMarket(allProps, mk, used))
       .filter(Boolean);
     fillers.sort((a,b) => {
@@ -1585,8 +1593,9 @@ function collectMlbParlayLegs(games){
   return buildRealisticParlay(games, {maxMoneylines: 2});
 }
 
-// A dedicated HR-only special (3-4 legs), separate from the mixed parlay
-// above -- same real-edge-vs-DK-price ranking, just scoped to Anytime HR.
+// A dedicated HR-only special (up to 3 legs), separate from the mixed
+// parlay above -- same real-edge-vs-DK-price ranking, just scoped to
+// Anytime HR.
 function collectHrSpecialLegs(games, excludeIds){
   // DraftKings only prices ~2 games' worth of player props per refresh (Odds
   // API credit limit), so most days there's no real Anytime HR price to grade
@@ -1621,7 +1630,7 @@ function collectHrSpecialLegs(games, excludeIds){
   });
   real.sort((a,b) => b.edge - a.edge);
   modelOnly.sort((a,b) => b.prob - a.prob);
-  return real.concat(modelOnly).slice(0, 4);
+  return real.concat(modelOnly).slice(0, 3);
 }
 
 function mlbPrevDateStr(dateStr){
@@ -1645,7 +1654,7 @@ function mlbSameGameParlaySection(date, g, idx){
     <details class="props-toggle" id="mlb-sgp-${date}-${idx}">
       <summary>Same Game Parlay</summary>
       ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp',
-        note: "shaped like a real same-game parlay -- moneyline, best Anytime HR pick, best Total Bases pick, plus one more prop -- real edge preferred over model estimate wherever DraftKings has posted a price"})}
+        note: "shaped like a real same-game parlay -- moneyline, best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"})}
     </details>
   `;
 }
@@ -1734,7 +1743,7 @@ function renderMLBGames(selectedDate){
   const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
-      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Anytime HR pick, best Total Bases pick, plus one more prop -- real edge preferred over model estimate wherever DraftKings has posted a price"
+      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"
     })
     + parlayCardHtml(hrLegs, 'MLB', {
         title: 'HR SPECIAL', accentClass: 'parlay-hr',
@@ -2109,6 +2118,57 @@ async function updateMLBLiveStats(){
 }
 updateMLBLiveStats();
 setInterval(updateMLBLiveStats, 60000);
+
+// ---- URL routing: /nfl[/week{N}], /mlb[/{weekday-or-ISO-date}],
+// /nhl[/{weekday-or-ISO-date}] -- client-side only, since this is a static
+// single-page site. The hosting layer (site-worker.js for the Cloudflare
+// custom domain, docs/404.html for GitHub Pages) serves this same page for
+// any path under the domain, so a direct or bookmarked deep link still
+// loads this page; this script then reads location.pathname once on load
+// (and on back/forward navigation) and switches to whatever it names,
+// silently falling back to the default view for anything it doesn't
+// recognize rather than erroring.
+function updateUrl(path){
+  if(window.history && history.pushState) history.pushState(null, '', path);
+}
+
+function parseWeekSegment(seg){
+  const m = /^week-?(\d+)$/i.exec(seg) || /^(\d+)$/.exec(seg);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+function findDaySegment(daysObj, seg){
+  if(daysObj[seg]) return seg;
+  const target = seg.toLowerCase();
+  return Object.keys(daysObj).find(d => (daysObj[d].weekday || '').toLowerCase() === target) || null;
+}
+
+function applyRouteFromLocation(){
+  const parts = location.pathname.split('/').filter(Boolean);
+  if(!parts.length) return;
+  const sport = parts[0].toLowerCase();
+  if(sport === 'nfl'){
+    showTab('nfl');
+    if(parts[1]){
+      const wk = parseWeekSegment(parts[1]);
+      if(wk != null && DATA.weeks[String(wk)]) renderGames(wk);
+    }
+  } else if(sport === 'mlb'){
+    showTab('mlb');
+    if(parts[1]){
+      const day = findDaySegment(MLB_DATA.days || {}, parts[1]);
+      if(day) renderMLBGames(day);
+    }
+  } else if(sport === 'nhl'){
+    showTab('nhl');
+    if(parts[1]){
+      const day = findDaySegment(NHL_DATA.days || {}, parts[1]);
+      if(day) renderNHLGames(day);
+    }
+  }
+}
+applyRouteFromLocation();
+window.addEventListener('popstate', applyRouteFromLocation);
 </script>
 </body>
 </html>

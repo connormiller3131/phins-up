@@ -4,7 +4,15 @@ Artifact version, this keeps the full <!DOCTYPE>/<html>/<head>/<body>
 document, since it's served directly by GitHub Pages rather than wrapped by
 the Artifact tool. MLB data is optional -- if it hasn't been generated yet
 (or the pull failed), the MLB tab just gets an empty slate rather than
-failing the whole build."""
+failing the whole build.
+
+Also writes an identical copy to docs/404.html -- GitHub Pages serves that
+file (with a 404 status, but the content still loads and runs) for any
+request path it doesn't recognize, which is exactly what a client-side
+route like /mlb/monday looks like to it. Keeping this as a byte-identical
+copy generated every run means it can never drift from index.html; the
+Cloudflare side of this (site-worker.js) solves the same problem its own
+way, since GitHub Pages' 404.html convention doesn't apply there."""
 import pathlib
 import json
 
@@ -14,6 +22,7 @@ MLB_DATA_PATH = ROOT / "data" / "mlb" / "dashboard_current_slate.json"
 NHL_DATA_PATH = ROOT / "data" / "nhl" / "dashboard_current_slate.json"
 TEMPLATE_PATH = ROOT / "pipeline" / "nfl" / "dashboard_live.html"
 OUT_PATH = ROOT / "docs" / "index.html"
+NOT_FOUND_PATH = ROOT / "docs" / "404.html"
 
 _EMPTY_DAY_SLATE = {"week_start": None, "week_end": None, "today": None, "generated_at": None, "days": {}}
 
@@ -42,6 +51,8 @@ def main():
                .replace("__NHL_DATA_JSON__", json.dumps(nhl_data)))
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
+        f.write(out)
+    with open(NOT_FOUND_PATH, "w", encoding="utf-8") as f:
         f.write(out)
     print(f"Built {OUT_PATH} -- NFL season {nfl_data['season']} current week {nfl_data['current_week']}, "
           f"MLB week {mlb_data.get('week_start')} to {mlb_data.get('week_end')} (today={mlb_data.get('today')}), "

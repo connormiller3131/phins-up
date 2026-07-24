@@ -93,6 +93,40 @@ def primetime_label(weekday, gametime):
     return None
 
 
+SCORING_WINDOW, SCORING_MIN_GAMES = 8, 3
+
+
+def current_team_scoring_rates(games_df):
+    """Each team's current trailing points-scored/points-allowed (last 8
+    games, min 3) -- a plain trailing-average-based projected total, same
+    honesty framing as MLB/NHL's version of this: not a competing
+    win-probability model and not separately backtested. games_df only
+    contains played games, so this naturally carries forward from last
+    season during the off-season, same as the deployed Elo ratings do."""
+    home = games_df[["game_date", "home_team", "home_score", "away_score"]].rename(
+        columns={"home_team": "team", "home_score": "scored", "away_score": "allowed"})
+    away = games_df[["game_date", "away_team", "away_score", "home_score"]].rename(
+        columns={"away_team": "team", "away_score": "scored", "home_score": "allowed"})
+    long = pd.concat([home, away], ignore_index=True).sort_values(["team", "game_date"])
+    long["trailing_scored"] = long.groupby("team")["scored"].transform(
+        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
+    long["trailing_allowed"] = long.groupby("team")["allowed"].transform(
+        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
+    latest = long.sort_values("game_date").groupby("team").tail(1)
+    return latest.set_index("team")[["trailing_scored", "trailing_allowed"]]
+
+
+def projected_total(rates, home_team, away_team):
+    if home_team not in rates.index or away_team not in rates.index:
+        return None
+    h, a = rates.loc[home_team], rates.loc[away_team]
+    if pd.isna(h["trailing_scored"]) or pd.isna(h["trailing_allowed"]) or pd.isna(a["trailing_scored"]) or pd.isna(a["trailing_allowed"]):
+        return None
+    home_exp = (h["trailing_scored"] + a["trailing_allowed"]) / 2
+    away_exp = (a["trailing_scored"] + h["trailing_allowed"]) / 2
+    return round(float(home_exp + away_exp), 1)
+
+
 def elo_predictions_for_season(games_df, season_sched):
     """Run Elo once across completed history + every future game in the
     season schedule (chronologically appended), returning predictions
@@ -382,6 +416,7 @@ def main():
 
     names = team_names()
     games_df = load_games()
+    scoring_rates = current_team_scoring_rates(games_df)
     season_sched = get_season_schedule(target_season)
     all_weeks = sorted(season_sched["week"].unique().tolist())
     print(f"Season {target_season}: generating weeks {all_weeks[0]}-{all_weeks[-1]}, current={current_week}")
@@ -446,6 +481,7 @@ def main():
                 "location": row.location if pd.notna(row.location) else None,
                 "spread_line": row.spread_line if pd.notna(row.spread_line) else None,
                 "total_line": row.total_line if pd.notna(row.total_line) else None,
+                "model_total_points": projected_total(scoring_rates, home, away),
                 "mlAway": int(row.away_moneyline) if pd.notna(row.away_moneyline) else None,
                 "mlHome": int(row.home_moneyline) if pd.notna(row.home_moneyline) else None,
                 "market_home_prob": market_home_prob,

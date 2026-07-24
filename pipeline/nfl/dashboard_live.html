@@ -1043,7 +1043,7 @@ function renderGames(week){
           </div>
         </div>
       </div>
-      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b></div>
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b>${g.model_total_points != null ? `<span class="p-exp">Projected: ${g.model_total_points}</span>` : ''}</div>
       ${propsTable(g.props)}
       ${nflSameGameParlaySection(g, idx)}
     `;
@@ -1799,7 +1799,7 @@ function renderMLBGames(selectedDate){
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
-      ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
+      ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b>${g.model_total_runs != null ? `<span class="p-exp">Projected: ${g.model_total_runs}</span>` : ''}</div>` : (g.model_total_runs != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Projected run total</span><b>${g.model_total_runs}</b></div>` : "")}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
       ${mlbSameGameParlaySection(selectedDate, g, idx)}
@@ -1905,6 +1905,7 @@ function renderNHLGames(selectedDate){
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
+      ${g.model_total_goals != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Projected goal total</span><b>${g.model_total_goals}</b></div>` : ''}
       <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
     `;
     root.appendChild(card);

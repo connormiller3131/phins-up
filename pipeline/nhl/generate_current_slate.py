@@ -78,6 +78,31 @@ def get_slate_for_date(target_date):
     return []
 
 
+def current_team_scoring_rates(games_df):
+    """Each team's latest known trailing goals-scored/goals-allowed (the
+    same columns games.py already computes, home_trailing_goals_scored
+    etc.) -- a plain trailing-average-based projected total, same honesty
+    framing as MLB's version of this: not a competing win-probability
+    model, not separately backtested."""
+    home = games_df[["game_date", "home_team", "home_trailing_goals_scored", "home_trailing_goals_allowed"]].rename(
+        columns={"home_team": "team", "home_trailing_goals_scored": "scored", "home_trailing_goals_allowed": "allowed"})
+    away = games_df[["game_date", "away_team", "away_trailing_goals_scored", "away_trailing_goals_allowed"]].rename(
+        columns={"away_team": "team", "away_trailing_goals_scored": "scored", "away_trailing_goals_allowed": "allowed"})
+    long = pd.concat([home, away], ignore_index=True).sort_values("game_date")
+    return long.groupby("team").tail(1).set_index("team")[["scored", "allowed"]]
+
+
+def projected_total(rates, home_team, away_team):
+    if home_team not in rates.index or away_team not in rates.index:
+        return None
+    h, a = rates.loc[home_team], rates.loc[away_team]
+    if pd.isna(h["scored"]) or pd.isna(h["allowed"]) or pd.isna(a["scored"]) or pd.isna(a["allowed"]):
+        return None
+    home_exp = (h["scored"] + a["allowed"]) / 2
+    away_exp = (a["scored"] + h["allowed"]) / 2
+    return round(float(home_exp + away_exp), 1)
+
+
 def elo_predictions(games_df, slate):
     with open(ROOT / "notebooks_out" / "nhl_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
@@ -139,6 +164,7 @@ def main(today=None):
 
     games_df = load_games()
     elo_preds, elo_params = elo_predictions(games_df, combined_slate)
+    scoring_rates = current_team_scoring_rates(games_df)
 
     by_date = {}
     for i, g in enumerate(combined_slate):
@@ -153,6 +179,7 @@ def main(today=None):
             "already_played": g["already_played"],
             "away_score": g["away_score"], "home_score": g["home_score"],
             "elo_home_prob": round(float(elo_preds[i]), 4),
+            "model_total_goals": projected_total(scoring_rates, g["home_team"], g["away_team"]),
         }
         by_date.setdefault(g["target_date"], []).append(out_game)
 

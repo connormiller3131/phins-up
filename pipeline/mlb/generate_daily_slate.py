@@ -167,6 +167,38 @@ def write_snapshot(target_date, day_payload):
         json.dump(day_payload, f, indent=2)
 
 
+def current_team_scoring_rates(games_df):
+    """Each team's latest known trailing runs-scored/runs-allowed (the same
+    columns games.py already computes for the Elo rest/form features,
+    home_trailing_runs_scored etc.) -- just the most recent row per team,
+    read back out as a simple team -> (scored, allowed) lookup for a
+    transparent, trailing-average-based projected total. Not a competing
+    win-probability model and not separately backtested -- same honesty
+    framing as any other plain trailing-average stat already shown
+    elsewhere (e.g. a prop's own trailing-average line), not dressed up as
+    validated the way the deployed Elo blend is."""
+    home = games_df[["game_date", "home_team", "home_trailing_runs_scored", "home_trailing_runs_allowed"]].rename(
+        columns={"home_team": "team", "home_trailing_runs_scored": "scored", "home_trailing_runs_allowed": "allowed"})
+    away = games_df[["game_date", "away_team", "away_trailing_runs_scored", "away_trailing_runs_allowed"]].rename(
+        columns={"away_team": "team", "away_trailing_runs_scored": "scored", "away_trailing_runs_allowed": "allowed"})
+    long = pd.concat([home, away], ignore_index=True).sort_values("game_date")
+    return long.groupby("team").tail(1).set_index("team")[["scored", "allowed"]]
+
+
+def projected_total(rates, home_team, away_team):
+    """Classic 'blend your own scoring rate with the opponent's allowed
+    rate' projection -- average of (home's own scoring, what away allows)
+    for the home side and the mirror for away, summed for a game total."""
+    if home_team not in rates.index or away_team not in rates.index:
+        return None
+    h, a = rates.loc[home_team], rates.loc[away_team]
+    if pd.isna(h["scored"]) or pd.isna(h["allowed"]) or pd.isna(a["scored"]) or pd.isna(a["allowed"]):
+        return None
+    home_exp = (h["scored"] + a["allowed"]) / 2
+    away_exp = (a["scored"] + h["allowed"]) / 2
+    return round(float(home_exp + away_exp), 1)
+
+
 def elo_predictions(games_df, slate):
     with open(ROOT / "notebooks_out" / "mlb_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
@@ -734,6 +766,7 @@ def main(today=None):
     elo_preds = blend_with_pitcher_strength(team_elo_preds, combined_slate)
     attach_market_odds(combined_slate)
     attach_espn_fallback_odds(combined_slate)
+    scoring_rates = current_team_scoring_rates(games_df)
 
     print("Fitting batter prop models on full historical data...")
     batter_models = {}
@@ -817,6 +850,7 @@ def main(today=None):
             "homeProbablePitcherId": g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
             "elo_home_prob": round(elo_home, 4),
             "team_elo_home_prob": round(float(team_elo_preds[i]), 4),
+            "model_total_runs": projected_total(scoring_rates, g["home_team"], g["away_team"]),
             "market": market,
             "good_value_home": good_value_home,
             "good_value_away": good_value_away,

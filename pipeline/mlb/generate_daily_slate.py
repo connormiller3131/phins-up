@@ -121,7 +121,13 @@ def parse_slate(raw_games, target_date):
         # result yet at generation time (confirmed directly against the
         # live page: it still showed the game as unplayed the following
         # morning) -- MLB's own feed already had the final score.
-        is_final = g.get("status", {}).get("abstractGameState") == "Final"
+        # detailedState, not abstractGameState -- MLB's feed sets
+        # abstractGameState to "Final" even for a postponed/rained-out game
+        # (confirmed directly: a real postponed PIT@NYY game on 2026-07-21
+        # had abstractGameState "Final" with detailedState "Postponed" and
+        # null scores), which was wrongly showing those as played 0-0.
+        # detailedState is "Final" only for a genuinely completed game.
+        is_final = g.get("status", {}).get("detailedState") == "Final"
         out.append({
             "target_date": target_date,
             "away_name": away["team"]["name"], "home_name": home["team"]["name"],
@@ -167,6 +173,47 @@ def write_snapshot(target_date, day_payload):
         json.dump(day_payload, f, indent=2)
 
 
+def attach_prop_actuals(day_games):
+    """Attach each prop's real actual stat value once its game is over, so
+    the frontend's Track Record view can grade Suggested Parlay / HR Special
+    picks against reality straight from the frozen snapshot -- no separate
+    live fetch needed. Reuses grade_props.py's exact field mapping (one
+    source of truth between the standalone grading tool and this inline
+    attachment, confirmed against a real completed game there already).
+    `actual` is left None for a player who didn't actually appear (0 PA/0
+    outs) -- same "did not play isn't a fair test" exclusion grade_props.py
+    already applies, not graded as a miss."""
+    from pipeline.mlb.grade_props import fetch_boxscore_stats, COUNT_FIELD, PLAYED_FIELD
+
+    for g in day_games:
+        if not g.get("already_played") or not g.get("gamePk"):
+            continue
+        try:
+            box = fetch_boxscore_stats(g["gamePk"])
+        except Exception as e:
+            print(f"  actuals fetch failed for gamePk {g['gamePk']}: {e}")
+            continue
+        for p in g.get("props", []):
+            pid = p.get("player_id")
+            market = p["market"]
+            stats = box.get(pid) if pid is not None else None
+            if stats is None:
+                p["actual"] = None
+                continue
+
+            if market == "Anytime HR":
+                bat = stats.get("batting", {})
+                p["actual"] = None if (not bat or bat.get("atBats", 0) == 0) else int(bat.get("homeRuns", 0) > 0)
+                continue
+
+            section, field = COUNT_FIELD.get(market, (None, None))
+            if section is None:
+                continue
+            block = stats.get(section, {})
+            played_field = PLAYED_FIELD[market]
+            p["actual"] = None if (not block or block.get(played_field, 0) == 0) else block.get(field, 0)
+
+
 def current_team_scoring_rates(games_df):
     """Each team's latest known trailing runs-scored/runs-allowed (the same
     columns games.py already computes for the Elo rest/form features,
@@ -185,10 +232,33 @@ def current_team_scoring_rates(games_df):
     return long.groupby("team").tail(1).set_index("team")[["scored", "allowed"]]
 
 
+# Widely-cited approximate long-run park run-scoring tendencies (1.0 =
+# neutral) -- general baseball knowledge, not fitted from this project's own
+# data and not claiming single-season precision, same "plain, transparent,
+# not dressed up as validated" framing as the rest of this projection.
+# Real-time weather (temp/wind) was tested and deliberately left out: MLB's
+# own API only populates it once a game is in progress or right at first
+# pitch (confirmed directly -- every game still showed an empty weather
+# object while "Scheduled", including same-day), which is after this
+# pipeline's own generation time, so it would almost never actually have
+# real data to use.
+PARK_FACTORS = {
+    "COL": 1.15, "CIN": 1.08, "BOS": 1.06, "TEX": 1.04, "PHI": 1.04,
+    "NYY": 1.03, "BAL": 1.03, "ATH": 1.05, "CHC": 1.02, "MIL": 1.02, "AZ": 1.02,
+    "TOR": 1.01, "LAA": 1.01, "MIN": 1.00, "WSH": 1.00, "ATL": 1.00, "HOU": 1.00,
+    "NYM": 0.99, "LAD": 0.99, "STL": 0.98, "CWS": 0.98, "CLE": 0.97,
+    "DET": 0.97, "KC": 0.97, "PIT": 0.96, "TB": 0.96, "SEA": 0.94,
+    "MIA": 0.93, "SD": 0.92, "SF": 0.90,
+}
+
+
 def projected_total(rates, home_team, away_team):
     """Classic 'blend your own scoring rate with the opponent's allowed
     rate' projection -- average of (home's own scoring, what away allows)
-    for the home side and the mirror for away, summed for a game total."""
+    for the home side and the mirror for away, summed for a game total,
+    then scaled by the home park's run-scoring tendency (the game is
+    played entirely in the home team's park, so it applies to the whole
+    total, not just one side)."""
     if home_team not in rates.index or away_team not in rates.index:
         return None
     h, a = rates.loc[home_team], rates.loc[away_team]
@@ -196,7 +266,8 @@ def projected_total(rates, home_team, away_team):
         return None
     home_exp = (h["scored"] + a["allowed"]) / 2
     away_exp = (a["scored"] + h["allowed"]) / 2
-    return round(float(home_exp + away_exp), 1)
+    park_factor = PARK_FACTORS.get(home_team, 1.0)
+    return round(float((home_exp + away_exp) * park_factor), 1)
 
 
 def elo_predictions(games_df, slate):
@@ -879,10 +950,12 @@ def main(today=None):
         for g in day_games:
             del g["target_date"]
         finalized = d < today_iso
+        if finalized:
+            attach_prop_actuals(day_games)
         day_payload = build_day_payload(d, day_games, elo_params, pitcher_blend_used, finalized)
         if finalized:
             write_snapshot(d, day_payload)
-            print(f"  {d}: finalized and snapshotted ({len(day_games)} games, real final scores attached)")
+            print(f"  {d}: finalized and snapshotted ({len(day_games)} games, real final scores + prop actuals attached)")
         days_out[d] = day_payload
 
     _write_week_payload(dates, today_iso, days_out)

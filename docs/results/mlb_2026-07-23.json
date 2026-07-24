@@ -66,7 +66,8 @@
               "line": 2.5,
               "over_prob": 0.043
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -92,7 +93,8 @@
               "line": 3.0,
               "over_prob": 0.214
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -104,7 +106,8 @@
           "projected": 0.5,
           "model_over_prob": 0.195,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -116,7 +119,8 @@
           "projected": 0.6,
           "model_over_prob": 0.295,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -125,7 +129,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.145,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -147,7 +152,8 @@
               "line": 2.0,
               "over_prob": 0.084
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -173,7 +179,8 @@
               "line": 2.5,
               "over_prob": 0.254
             }
-          ]
+          ],
+          "actual": 5
         },
         {
           "section": "Batting",
@@ -185,7 +192,8 @@
           "projected": 0.3,
           "model_over_prob": 0.378,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -197,7 +205,8 @@
           "projected": 0.4,
           "model_over_prob": 0.459,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -206,7 +215,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.093,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -228,7 +238,8 @@
               "line": 2.0,
               "over_prob": 0.094
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -254,7 +265,8 @@
               "line": 3.0,
               "over_prob": 0.201
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -266,7 +278,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -278,7 +291,8 @@
           "projected": 0.4,
           "model_over_prob": 0.459,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -287,7 +301,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.145,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -309,7 +324,8 @@
               "line": 2.0,
               "over_prob": 0.094
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -335,7 +351,8 @@
               "line": 2.5,
               "over_prob": 0.268
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -347,7 +364,8 @@
           "projected": 0.2,
           "model_over_prob": 0.67,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -359,7 +377,8 @@
           "projected": 0.5,
           "model_over_prob": 0.482,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -368,7 +387,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -390,7 +410,8 @@
               "line": 2.0,
               "over_prob": 0.094
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -416,7 +437,8 @@
               "line": 3.0,
               "over_prob": 0.193
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -428,7 +450,8 @@
           "projected": 0.3,
           "model_over_prob": 0.36,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -440,7 +463,8 @@
           "projected": 0.5,
           "model_over_prob": 0.489,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -449,7 +473,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.145,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -471,7 +496,8 @@
               "line": 1.5,
               "over_prob": 0.163
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -493,7 +519,8 @@
               "line": 1.5,
               "over_prob": 0.388
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -505,7 +532,8 @@
           "projected": 0.4,
           "model_over_prob": 0.398,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -517,7 +545,8 @@
           "projected": 0.4,
           "model_over_prob": 0.444,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -526,7 +555,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -548,7 +578,8 @@
               "line": 1.5,
               "over_prob": 0.179
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -570,7 +601,8 @@
               "line": 2.0,
               "over_prob": 0.328
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -582,7 +614,8 @@
           "projected": 0.4,
           "model_over_prob": 0.417,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -594,7 +627,8 @@
           "projected": 0.5,
           "model_over_prob": 0.482,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -603,7 +637,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -625,7 +660,8 @@
               "line": 2.0,
               "over_prob": 0.099
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -651,7 +687,8 @@
               "line": 2.5,
               "over_prob": 0.272
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -663,7 +700,8 @@
           "projected": 0.2,
           "model_over_prob": 0.672,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -675,7 +713,8 @@
           "projected": 0.4,
           "model_over_prob": 0.47,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -684,7 +723,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.094,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -710,7 +750,8 @@
               "line": 2.5,
               "over_prob": 0.043
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -736,7 +777,8 @@
               "line": 3.5,
               "over_prob": 0.149
             }
-          ]
+          ],
+          "actual": 5
         },
         {
           "section": "Batting",
@@ -748,7 +790,8 @@
           "projected": 0.2,
           "model_over_prob": 0.633,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -760,7 +803,8 @@
           "projected": 0.5,
           "model_over_prob": 0.288,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -769,7 +813,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.125,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -795,7 +840,8 @@
               "line": 2.5,
               "over_prob": 0.043
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -821,7 +867,8 @@
               "line": 3.0,
               "over_prob": 0.214
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -833,7 +880,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -845,7 +893,8 @@
           "projected": 0.5,
           "model_over_prob": 0.482,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -854,7 +903,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -876,7 +926,8 @@
               "line": 1.5,
               "over_prob": 0.148
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -898,7 +949,8 @@
               "line": 2.0,
               "over_prob": 0.307
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -910,7 +962,8 @@
           "projected": 0.3,
           "model_over_prob": 0.688,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -922,7 +975,8 @@
           "projected": 0.4,
           "model_over_prob": 0.466,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -931,7 +985,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -953,7 +1008,8 @@
               "line": 1.5,
               "over_prob": 0.163
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -975,7 +1031,8 @@
               "line": 2.0,
               "over_prob": 0.313
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -987,7 +1044,8 @@
           "projected": 0.3,
           "model_over_prob": 0.688,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -999,7 +1057,8 @@
           "projected": 0.4,
           "model_over_prob": 0.459,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1008,7 +1067,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1030,7 +1090,8 @@
               "line": 1.5,
               "over_prob": 0.141
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1052,7 +1113,8 @@
               "line": 1.5,
               "over_prob": 0.371
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1064,7 +1126,8 @@
           "projected": 0.2,
           "model_over_prob": 0.67,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1076,7 +1139,8 @@
           "projected": 0.3,
           "model_over_prob": 0.652,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1085,7 +1149,8 @@
           "team": "ATL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1111,7 +1176,8 @@
               "line": 2.5,
               "over_prob": 0.044
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1137,7 +1203,8 @@
               "line": 3.0,
               "over_prob": 0.207
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1149,7 +1216,8 @@
           "projected": 0.4,
           "model_over_prob": 0.403,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1161,7 +1229,8 @@
           "projected": 0.5,
           "model_over_prob": 0.491,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1170,7 +1239,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.132,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1192,7 +1262,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1218,7 +1289,8 @@
               "line": 3.0,
               "over_prob": 0.203
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1230,7 +1302,8 @@
           "projected": 0.5,
           "model_over_prob": 0.481,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1242,7 +1315,8 @@
           "projected": 0.5,
           "model_over_prob": 0.506,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1251,7 +1325,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.176,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1273,7 +1348,8 @@
               "line": 2.0,
               "over_prob": 0.113
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1299,7 +1375,8 @@
               "line": 3.5,
               "over_prob": 0.16
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -1311,7 +1388,8 @@
           "projected": 0.3,
           "model_over_prob": 0.675,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1323,7 +1401,8 @@
           "projected": 0.5,
           "model_over_prob": 0.283,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -1332,7 +1411,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.176,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1354,7 +1434,8 @@
               "line": 1.5,
               "over_prob": 0.183
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1376,7 +1457,8 @@
               "line": 2.0,
               "over_prob": 0.325
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1388,7 +1470,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1400,7 +1483,8 @@
           "projected": 0.4,
           "model_over_prob": 0.468,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1409,7 +1493,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1431,7 +1516,8 @@
               "line": 1.5,
               "over_prob": 0.151
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1453,7 +1539,8 @@
               "line": 1.5,
               "over_prob": 0.379
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1465,7 +1552,8 @@
           "projected": 0.5,
           "model_over_prob": 0.481,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1477,7 +1565,8 @@
           "projected": 0.4,
           "model_over_prob": 0.674,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1486,7 +1575,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1508,7 +1598,8 @@
               "line": 1.5,
               "over_prob": 0.183
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1534,7 +1625,8 @@
               "line": 2.5,
               "over_prob": 0.246
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1546,7 +1638,8 @@
           "projected": 0.3,
           "model_over_prob": 0.384,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1558,7 +1651,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1567,7 +1661,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.114,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1589,7 +1684,8 @@
               "line": 1.5,
               "over_prob": 0.144
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1611,7 +1707,8 @@
               "line": 1.5,
               "over_prob": 0.385
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1623,7 +1720,8 @@
           "projected": 0.2,
           "model_over_prob": 0.657,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1635,7 +1733,8 @@
           "projected": 0.4,
           "model_over_prob": 0.681,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1644,7 +1743,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1666,7 +1766,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1692,7 +1793,8 @@
               "line": 2.5,
               "over_prob": 0.255
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1704,7 +1806,8 @@
           "projected": 0.3,
           "model_over_prob": 0.692,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1716,7 +1819,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1725,7 +1829,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1751,7 +1856,8 @@
               "line": 2.5,
               "over_prob": 0.041
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1777,7 +1883,8 @@
               "line": 3.5,
               "over_prob": 0.15
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1789,7 +1896,8 @@
           "projected": 0.4,
           "model_over_prob": 0.422,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1801,7 +1909,8 @@
           "projected": 0.5,
           "model_over_prob": 0.29,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -1810,7 +1919,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.132,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1832,7 +1942,8 @@
               "line": 2.0,
               "over_prob": 0.107
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1858,7 +1969,8 @@
               "line": 3.0,
               "over_prob": 0.203
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1870,7 +1982,8 @@
           "projected": 0.3,
           "model_over_prob": 0.365,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1882,7 +1995,8 @@
           "projected": 0.5,
           "model_over_prob": 0.506,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1891,7 +2005,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.152,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -1913,7 +2028,8 @@
               "line": 1.5,
               "over_prob": 0.159
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1935,7 +2051,8 @@
               "line": 1.5,
               "over_prob": 0.396
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1947,7 +2064,8 @@
           "projected": 0.2,
           "model_over_prob": 0.638,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1959,7 +2077,8 @@
           "projected": 0.4,
           "model_over_prob": 0.674,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1968,7 +2087,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -1990,7 +2110,8 @@
               "line": 1.5,
               "over_prob": 0.183
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2012,7 +2133,8 @@
               "line": 2.0,
               "over_prob": 0.32
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2024,7 +2146,8 @@
           "projected": 0.4,
           "model_over_prob": 0.403,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2036,7 +2159,8 @@
           "projected": 0.5,
           "model_over_prob": 0.476,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2045,7 +2169,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2067,7 +2192,8 @@
               "line": 1.5,
               "over_prob": 0.184
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2089,7 +2215,8 @@
               "line": 2.0,
               "over_prob": 0.313
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2101,7 +2228,8 @@
           "projected": 0.5,
           "model_over_prob": 0.489,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2113,7 +2241,8 @@
           "projected": 0.4,
           "model_over_prob": 0.458,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2122,7 +2251,8 @@
           "team": "SD",
           "market": "Anytime HR",
           "model_prob": 0.1,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -2133,7 +2263,8 @@
           "line": 7.0,
           "projected": 6.7,
           "model_over_prob": 0.423,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 11
         },
         {
           "section": "Pitching",
@@ -2144,7 +2275,8 @@
           "line": 5.0,
           "projected": 4.9,
           "model_over_prob": 0.479,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 5
         },
         {
           "section": "Pitching",
@@ -2155,7 +2287,8 @@
           "line": 1.5,
           "projected": 1.3,
           "model_over_prob": 0.403,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 1
         },
         {
           "section": "Pitching",
@@ -2166,7 +2299,8 @@
           "line": 1.5,
           "projected": 1.4,
           "model_over_prob": 0.476,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -2177,7 +2311,8 @@
           "line": 17.5,
           "projected": 17.2,
           "model_over_prob": 0.457,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 18
         },
         {
           "section": "Pitching",
@@ -2188,7 +2323,8 @@
           "line": 1.5,
           "projected": 1.6,
           "model_over_prob": 0.515,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 1
         },
         {
           "section": "Pitching",
@@ -2199,7 +2335,8 @@
           "line": 1.0,
           "projected": 1.3,
           "model_over_prob": 0.579,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -2210,7 +2347,8 @@
           "line": 0.5,
           "projected": 0.5,
           "model_over_prob": 0.511,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -2221,7 +2359,8 @@
           "line": 1.0,
           "projected": 1.2,
           "model_over_prob": 0.573,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -2232,7 +2371,8 @@
           "line": 4.0,
           "projected": 4.1,
           "model_over_prob": 0.511,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 3
         }
       ],
       "already_played": true,
@@ -2293,7 +2433,8 @@
               "line": 2.5,
               "over_prob": 0.039
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -2319,7 +2460,8 @@
               "line": 2.5,
               "over_prob": 0.271
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -2331,7 +2473,8 @@
           "projected": 0.4,
           "model_over_prob": 0.438,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2343,7 +2486,8 @@
           "projected": 0.4,
           "model_over_prob": 0.457,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2352,7 +2496,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.083,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2378,7 +2523,8 @@
               "line": 2.5,
               "over_prob": 0.045
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2404,7 +2550,8 @@
               "line": 3.5,
               "over_prob": 0.158
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2416,7 +2563,8 @@
           "projected": 0.3,
           "model_over_prob": 0.38,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2428,7 +2576,8 @@
           "projected": 0.5,
           "model_over_prob": 0.503,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2437,7 +2586,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.15,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2459,7 +2609,8 @@
               "line": 2.0,
               "over_prob": 0.114
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2485,7 +2636,8 @@
               "line": 3.0,
               "over_prob": 0.204
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2497,7 +2649,8 @@
           "projected": 0.2,
           "model_over_prob": 0.653,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2509,7 +2662,8 @@
           "projected": 0.5,
           "model_over_prob": 0.503,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2518,7 +2672,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.13,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2540,7 +2695,8 @@
               "line": 2.0,
               "over_prob": 0.086
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2566,7 +2722,8 @@
               "line": 2.5,
               "over_prob": 0.266
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2578,7 +2735,8 @@
           "projected": 0.4,
           "model_over_prob": 0.438,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2590,7 +2748,8 @@
           "projected": 0.4,
           "model_over_prob": 0.472,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2599,7 +2758,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2621,7 +2781,8 @@
               "line": 1.5,
               "over_prob": 0.176
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2647,7 +2808,8 @@
               "line": 2.5,
               "over_prob": 0.257
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2659,7 +2821,8 @@
           "projected": 0.3,
           "model_over_prob": 0.38,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2671,7 +2834,8 @@
           "projected": 0.4,
           "model_over_prob": 0.472,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2680,7 +2844,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.15,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2702,7 +2867,8 @@
               "line": 1.5,
               "over_prob": 0.168
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2724,7 +2890,8 @@
               "line": 2.0,
               "over_prob": 0.311
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2736,7 +2903,8 @@
           "projected": 0.3,
           "model_over_prob": 0.689,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2748,7 +2916,8 @@
           "projected": 0.4,
           "model_over_prob": 0.678,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2757,7 +2926,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.096,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2779,7 +2949,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2805,7 +2976,8 @@
               "line": 2.5,
               "over_prob": 0.252
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -2817,7 +2989,8 @@
           "projected": 0.2,
           "model_over_prob": 0.671,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2829,7 +3002,8 @@
           "projected": 0.4,
           "model_over_prob": 0.465,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2838,7 +3012,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -2860,7 +3035,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2886,7 +3062,8 @@
               "line": 2.5,
               "over_prob": 0.262
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2898,7 +3075,8 @@
           "projected": 0.2,
           "model_over_prob": 0.653,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2910,7 +3088,8 @@
           "projected": 0.4,
           "model_over_prob": 0.449,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2919,7 +3098,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -2941,7 +3121,8 @@
               "line": 2.0,
               "over_prob": 0.086
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2967,7 +3148,8 @@
               "line": 2.5,
               "over_prob": 0.252
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2979,7 +3161,8 @@
           "projected": 0.2,
           "model_over_prob": 0.671,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -2991,7 +3174,8 @@
           "projected": 0.4,
           "model_over_prob": 0.465,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3000,7 +3184,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3022,7 +3207,8 @@
               "line": 1.5,
               "over_prob": 0.184
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3044,7 +3230,8 @@
               "line": 1.5,
               "over_prob": 0.415
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3056,7 +3243,8 @@
           "projected": 0.3,
           "model_over_prob": 0.689,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3068,7 +3256,8 @@
           "projected": 0.4,
           "model_over_prob": 0.671,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3077,7 +3266,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.083,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3099,7 +3289,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3121,7 +3312,8 @@
               "line": 2.0,
               "over_prob": 0.343
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3133,7 +3325,8 @@
           "projected": 0.3,
           "model_over_prob": 0.689,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3145,7 +3338,8 @@
           "projected": 0.4,
           "model_over_prob": 0.449,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3154,7 +3348,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3172,7 +3367,8 @@
               "line": 1.0,
               "over_prob": 0.308
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3194,7 +3390,8 @@
               "line": 1.5,
               "over_prob": 0.403
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3206,7 +3403,8 @@
           "projected": 0.3,
           "model_over_prob": 0.689,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3218,7 +3416,8 @@
           "projected": 0.4,
           "model_over_prob": 0.449,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3227,7 +3426,8 @@
           "team": "CLE",
           "market": "Anytime HR",
           "model_prob": 0.112,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -3249,7 +3449,8 @@
               "line": 2.0,
               "over_prob": 0.102
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3275,7 +3476,8 @@
               "line": 2.5,
               "over_prob": 0.268
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3287,7 +3489,8 @@
           "projected": 0.4,
           "model_over_prob": 0.401,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3299,7 +3502,8 @@
           "projected": 0.5,
           "model_over_prob": 0.484,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3308,7 +3512,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.093,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3330,7 +3535,8 @@
               "line": 2.0,
               "over_prob": 0.102
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3356,7 +3562,8 @@
               "line": 2.5,
               "over_prob": 0.273
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3368,7 +3575,8 @@
           "projected": 0.3,
           "model_over_prob": 0.691,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3380,7 +3588,8 @@
           "projected": 0.5,
           "model_over_prob": 0.484,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3389,7 +3598,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3411,7 +3621,8 @@
               "line": 2.0,
               "over_prob": 0.084
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3437,7 +3648,8 @@
               "line": 3.0,
               "over_prob": 0.216
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3449,7 +3661,8 @@
           "projected": 0.4,
           "model_over_prob": 0.431,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3461,7 +3674,8 @@
           "projected": 0.6,
           "model_over_prob": 0.297,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3470,7 +3684,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.167,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3492,7 +3707,8 @@
               "line": 2.0,
               "over_prob": 0.108
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3518,7 +3734,8 @@
               "line": 3.0,
               "over_prob": 0.201
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3530,7 +3747,8 @@
           "projected": 0.3,
           "model_over_prob": 0.382,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3542,7 +3760,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3551,7 +3770,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3573,7 +3793,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3599,7 +3820,8 @@
               "line": 3.0,
               "over_prob": 0.209
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3611,7 +3833,8 @@
           "projected": 0.3,
           "model_over_prob": 0.691,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3623,7 +3846,8 @@
           "projected": 0.5,
           "model_over_prob": 0.491,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3632,7 +3856,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.145,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3654,7 +3879,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3680,7 +3906,8 @@
               "line": 2.5,
               "over_prob": 0.258
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3692,7 +3919,8 @@
           "projected": 0.4,
           "model_over_prob": 0.421,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -3704,7 +3932,8 @@
           "projected": 0.5,
           "model_over_prob": 0.476,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3713,7 +3942,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3735,7 +3965,8 @@
               "line": 1.5,
               "over_prob": 0.176
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3757,7 +3988,8 @@
               "line": 1.5,
               "over_prob": 0.399
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3769,7 +4001,8 @@
           "projected": 0.4,
           "model_over_prob": 0.421,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3781,7 +4014,8 @@
           "projected": 0.4,
           "model_over_prob": 0.675,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3790,7 +4024,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3812,7 +4047,8 @@
               "line": 2.0,
               "over_prob": 0.102
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3838,7 +4074,8 @@
               "line": 2.5,
               "over_prob": 0.268
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3850,7 +4087,8 @@
           "projected": 0.4,
           "model_over_prob": 0.401,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3862,7 +4100,8 @@
           "projected": 0.4,
           "model_over_prob": 0.446,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3871,7 +4110,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.108,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3893,7 +4133,8 @@
               "line": 1.5,
               "over_prob": 0.16
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3915,7 +4156,8 @@
               "line": 1.5,
               "over_prob": 0.388
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3927,7 +4169,8 @@
           "projected": 0.3,
           "model_over_prob": 0.673,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3939,7 +4182,8 @@
           "projected": 0.3,
           "model_over_prob": 0.661,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3948,7 +4192,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -3970,7 +4215,8 @@
               "line": 2.0,
               "over_prob": 0.102
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -3996,7 +4242,8 @@
               "line": 3.0,
               "over_prob": 0.201
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4008,7 +4255,8 @@
           "projected": 0.4,
           "model_over_prob": 0.421,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4020,7 +4268,8 @@
           "projected": 0.5,
           "model_over_prob": 0.491,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4029,7 +4278,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.125,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4051,7 +4301,8 @@
               "line": 1.5,
               "over_prob": 0.201
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4073,7 +4324,8 @@
               "line": 2.0,
               "over_prob": 0.334
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4085,7 +4337,8 @@
           "projected": 0.3,
           "model_over_prob": 0.363,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4097,7 +4350,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4106,7 +4360,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.093,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4128,7 +4383,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4154,7 +4410,8 @@
               "line": 2.5,
               "over_prob": 0.249
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4166,7 +4423,8 @@
           "projected": 0.2,
           "model_over_prob": 0.655,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4178,7 +4436,8 @@
           "projected": 0.4,
           "model_over_prob": 0.453,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4187,7 +4446,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.093,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -4209,7 +4469,8 @@
               "line": 1.5,
               "over_prob": 0.172
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4231,7 +4492,8 @@
               "line": 1.5,
               "over_prob": 0.391
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4243,7 +4505,8 @@
           "projected": 0.4,
           "model_over_prob": 0.401,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4255,7 +4518,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4264,7 +4528,8 @@
           "team": "MIN",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -4275,7 +4540,8 @@
           "line": 7.0,
           "projected": 6.7,
           "model_over_prob": 0.406,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 11
         },
         {
           "section": "Pitching",
@@ -4286,7 +4552,8 @@
           "line": 6.0,
           "projected": 5.5,
           "model_over_prob": 0.382,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -4297,7 +4564,8 @@
           "line": 1.5,
           "projected": 1.2,
           "model_over_prob": 0.382,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -4308,7 +4576,8 @@
           "line": 3.0,
           "projected": 2.8,
           "model_over_prob": 0.431,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -4319,7 +4588,8 @@
           "line": 17.5,
           "projected": 17.2,
           "model_over_prob": 0.456,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 21
         },
         {
           "section": "Pitching",
@@ -4330,7 +4600,8 @@
           "line": 6.5,
           "projected": 6.2,
           "model_over_prob": 0.411,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 5
         },
         {
           "section": "Pitching",
@@ -4341,7 +4612,8 @@
           "line": 5.0,
           "projected": 4.7,
           "model_over_prob": 0.42,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -4352,7 +4624,8 @@
           "line": 2.5,
           "projected": 2.1,
           "model_over_prob": 0.319,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -4363,7 +4636,8 @@
           "line": 2.5,
           "projected": 2.4,
           "model_over_prob": 0.467,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 1
         },
         {
           "section": "Pitching",
@@ -4374,7 +4648,8 @@
           "line": 17.0,
           "projected": 16.7,
           "model_over_prob": 0.455,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 21
         }
       ],
       "already_played": true,
@@ -4431,7 +4706,8 @@
               "line": 1.5,
               "over_prob": 0.165
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4453,7 +4729,8 @@
               "line": 2.0,
               "over_prob": 0.309
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -4465,7 +4742,8 @@
           "projected": 0.3,
           "model_over_prob": 0.34,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4477,7 +4755,8 @@
           "projected": 0.4,
           "model_over_prob": 0.675,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4486,7 +4765,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4508,7 +4788,8 @@
               "line": 2.0,
               "over_prob": 0.106
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4534,7 +4815,8 @@
               "line": 2.5,
               "over_prob": 0.255
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4546,7 +4828,8 @@
           "projected": 0.2,
           "model_over_prob": 0.65,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4558,7 +4841,8 @@
           "projected": 0.4,
           "model_over_prob": 0.682,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4567,7 +4851,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4589,7 +4874,8 @@
               "line": 2.0,
               "over_prob": 0.085
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -4615,7 +4901,8 @@
               "line": 2.5,
               "over_prob": 0.26
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -4627,7 +4914,8 @@
           "projected": 0.3,
           "model_over_prob": 0.34,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4639,7 +4927,8 @@
           "projected": 0.4,
           "model_over_prob": 0.469,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4648,7 +4937,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.114,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4670,7 +4960,8 @@
               "line": 1.5,
               "over_prob": 0.198
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4692,7 +4983,8 @@
               "line": 2.0,
               "over_prob": 0.33
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4704,7 +4996,8 @@
           "projected": 0.4,
           "model_over_prob": 0.415,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4716,7 +5009,8 @@
           "projected": 0.4,
           "model_over_prob": 0.454,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4725,7 +5019,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4747,7 +5042,8 @@
               "line": 1.5,
               "over_prob": 0.173
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4769,7 +5065,8 @@
               "line": 2.0,
               "over_prob": 0.341
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4781,7 +5078,8 @@
           "projected": 0.3,
           "model_over_prob": 0.358,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4793,7 +5091,8 @@
           "projected": 0.5,
           "model_over_prob": 0.492,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4802,7 +5101,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.132,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4824,7 +5124,8 @@
               "line": 1.5,
               "over_prob": 0.183
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4846,7 +5147,8 @@
               "line": 2.0,
               "over_prob": 0.338
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4858,7 +5160,8 @@
           "projected": 0.3,
           "model_over_prob": 0.677,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4870,7 +5173,8 @@
           "projected": 0.4,
           "model_over_prob": 0.685,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4879,7 +5183,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.119,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4901,7 +5206,8 @@
               "line": 1.5,
               "over_prob": 0.143
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4923,7 +5229,8 @@
               "line": 1.5,
               "over_prob": 0.39
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4935,7 +5242,8 @@
           "projected": 0.2,
           "model_over_prob": 0.612,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -4947,7 +5255,8 @@
           "projected": 0.4,
           "model_over_prob": 0.461,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4956,7 +5265,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -4978,7 +5288,8 @@
               "line": 1.5,
               "over_prob": 0.198
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -5004,7 +5315,8 @@
               "line": 2.5,
               "over_prob": 0.251
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -5016,7 +5328,8 @@
           "projected": 0.4,
           "model_over_prob": 0.396,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5028,7 +5341,8 @@
           "projected": 0.5,
           "model_over_prob": 0.484,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5037,7 +5351,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.114,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5059,7 +5374,8 @@
               "line": 2.0,
               "over_prob": 0.09
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5081,7 +5397,8 @@
               "line": 2.0,
               "over_prob": 0.336
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5093,7 +5410,8 @@
           "projected": 0.3,
           "model_over_prob": 0.34,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5105,7 +5423,8 @@
           "projected": 0.4,
           "model_over_prob": 0.668,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5114,7 +5433,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5136,7 +5456,8 @@
               "line": 1.5,
               "over_prob": 0.181
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5158,7 +5479,8 @@
               "line": 2.0,
               "over_prob": 0.314
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5170,7 +5492,8 @@
           "projected": 0.3,
           "model_over_prob": 0.358,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5182,7 +5505,8 @@
           "projected": 0.4,
           "model_over_prob": 0.454,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5191,7 +5515,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5213,7 +5538,8 @@
               "line": 1.5,
               "over_prob": 0.165
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5235,7 +5561,8 @@
               "line": 1.5,
               "over_prob": 0.396
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5247,7 +5574,8 @@
           "projected": 0.2,
           "model_over_prob": 0.65,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5259,7 +5587,8 @@
           "projected": 0.4,
           "model_over_prob": 0.675,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5268,7 +5597,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5290,7 +5620,8 @@
               "line": 1.5,
               "over_prob": 0.157
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5312,7 +5643,8 @@
               "line": 1.5,
               "over_prob": 0.396
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5324,7 +5656,8 @@
           "projected": 0.2,
           "model_over_prob": 0.668,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5336,7 +5669,8 @@
           "projected": 0.4,
           "model_over_prob": 0.454,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5345,7 +5679,8 @@
           "team": "TOR",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -5367,7 +5702,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5393,7 +5729,8 @@
               "line": 2.5,
               "over_prob": 0.257
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5405,7 +5742,8 @@
           "projected": 0.2,
           "model_over_prob": 0.667,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5417,7 +5755,8 @@
           "projected": 0.5,
           "model_over_prob": 0.479,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5426,7 +5765,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.106,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5448,7 +5788,8 @@
               "line": 2.0,
               "over_prob": 0.101
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5474,7 +5815,8 @@
               "line": 2.5,
               "over_prob": 0.257
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5486,7 +5828,8 @@
           "projected": 0.3,
           "model_over_prob": 0.357,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5498,7 +5841,8 @@
           "projected": 0.5,
           "model_over_prob": 0.479,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5507,7 +5851,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.091,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5529,7 +5874,8 @@
               "line": 2.0,
               "over_prob": 0.101
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5555,7 +5901,8 @@
               "line": 3.0,
               "over_prob": 0.196
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5567,7 +5914,8 @@
           "projected": 0.4,
           "model_over_prob": 0.453,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5579,7 +5927,8 @@
           "projected": 0.5,
           "model_over_prob": 0.479,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5588,7 +5937,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.124,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5610,7 +5960,8 @@
               "line": 2.0,
               "over_prob": 0.085
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5636,7 +5987,8 @@
               "line": 2.5,
               "over_prob": 0.248
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -5648,7 +6000,8 @@
           "projected": 0.3,
           "model_over_prob": 0.357,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5660,7 +6013,8 @@
           "projected": 0.5,
           "model_over_prob": 0.494,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5669,7 +6023,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.106,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5695,7 +6050,8 @@
               "line": 2.5,
               "over_prob": 0.047
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5721,7 +6077,8 @@
               "line": 3.0,
               "over_prob": 0.192
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5733,7 +6090,8 @@
           "projected": 0.2,
           "model_over_prob": 0.667,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5745,7 +6103,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5754,7 +6113,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.078,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5776,7 +6136,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5802,7 +6163,8 @@
               "line": 2.5,
               "over_prob": 0.239
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5814,7 +6176,8 @@
           "projected": 0.3,
           "model_over_prob": 0.357,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5826,7 +6189,8 @@
           "projected": 0.4,
           "model_over_prob": 0.463,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5835,7 +6199,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.091,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5857,7 +6222,8 @@
               "line": 1.5,
               "over_prob": 0.191
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5879,7 +6245,8 @@
               "line": 2.0,
               "over_prob": 0.333
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5891,7 +6258,8 @@
           "projected": 0.3,
           "model_over_prob": 0.376,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5903,7 +6271,8 @@
           "projected": 0.4,
           "model_over_prob": 0.471,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5912,7 +6281,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.106,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5934,7 +6304,8 @@
               "line": 1.5,
               "over_prob": 0.174
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -5956,7 +6327,8 @@
               "line": 2.0,
               "over_prob": 0.317
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -5968,7 +6340,8 @@
           "projected": 0.3,
           "model_over_prob": 0.357,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5980,7 +6353,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -5989,7 +6363,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.091,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6011,7 +6386,8 @@
               "line": 1.5,
               "over_prob": 0.174
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6033,7 +6409,8 @@
               "line": 2.0,
               "over_prob": 0.333
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6045,7 +6422,8 @@
           "projected": 0.4,
           "model_over_prob": 0.395,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6057,7 +6435,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6066,7 +6445,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.124,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6088,7 +6468,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6114,7 +6495,8 @@
               "line": 3.0,
               "over_prob": 0.209
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6126,7 +6508,8 @@
           "projected": 0.3,
           "model_over_prob": 0.376,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6138,7 +6521,8 @@
           "projected": 0.5,
           "model_over_prob": 0.494,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6147,7 +6531,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.165,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6169,7 +6554,8 @@
               "line": 1.5,
               "over_prob": 0.191
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6191,7 +6577,8 @@
               "line": 2.0,
               "over_prob": 0.311
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6203,7 +6590,8 @@
           "projected": 0.3,
           "model_over_prob": 0.357,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6215,7 +6603,8 @@
           "projected": 0.4,
           "model_over_prob": 0.677,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6224,7 +6613,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.078,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6246,7 +6636,8 @@
               "line": 1.5,
               "over_prob": 0.174
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6272,7 +6663,8 @@
               "line": 2.5,
               "over_prob": 0.253
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6284,7 +6676,8 @@
           "projected": 0.3,
           "model_over_prob": 0.685,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6296,7 +6689,8 @@
           "projected": 0.5,
           "model_over_prob": 0.494,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6305,7 +6699,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.143,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6327,7 +6722,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6353,7 +6749,8 @@
               "line": 2.5,
               "over_prob": 0.267
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6365,7 +6762,8 @@
           "projected": 0.2,
           "model_over_prob": 0.649,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6377,7 +6775,8 @@
           "projected": 0.5,
           "model_over_prob": 0.509,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -6386,7 +6785,8 @@
           "team": "TB",
           "market": "Anytime HR",
           "model_prob": 0.124,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -6397,7 +6797,8 @@
           "line": 4.0,
           "projected": 3.6,
           "model_over_prob": 0.397,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -6408,7 +6809,8 @@
           "line": 6.0,
           "projected": 5.6,
           "model_over_prob": 0.387,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -6419,7 +6821,8 @@
           "line": 2.5,
           "projected": 2.1,
           "model_over_prob": 0.331,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 0
         },
         {
           "section": "Pitching",
@@ -6430,7 +6833,8 @@
           "line": 3.0,
           "projected": 2.5,
           "model_over_prob": 0.354,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 1
         },
         {
           "section": "Pitching",
@@ -6441,7 +6845,8 @@
           "line": 14.0,
           "projected": 13.9,
           "model_over_prob": 0.488,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 21
         },
         {
           "section": "Pitching",
@@ -6452,7 +6857,8 @@
           "line": 1.0,
           "projected": 0.7,
           "model_over_prob": 0.413,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -6463,7 +6869,8 @@
           "line": 1.0,
           "projected": 0.9,
           "model_over_prob": 0.476,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -6474,7 +6881,8 @@
           "line": 0.5,
           "projected": 0.3,
           "model_over_prob": 0.429,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -6485,7 +6893,8 @@
           "line": 0.5,
           "projected": 0.5,
           "model_over_prob": 0.514,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 1
         },
         {
           "section": "Pitching",
@@ -6496,7 +6905,8 @@
           "line": 3.5,
           "projected": 3.4,
           "model_over_prob": 0.488,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 6
         }
       ],
       "already_played": true,
@@ -6553,7 +6963,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -6579,7 +6990,8 @@
               "line": 2.5,
               "over_prob": 0.269
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -6591,7 +7003,8 @@
           "projected": 0.3,
           "model_over_prob": 0.361,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6603,7 +7016,8 @@
           "projected": 0.4,
           "model_over_prob": 0.448,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6612,7 +7026,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.124,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6634,7 +7049,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -6660,7 +7076,8 @@
               "line": 3.0,
               "over_prob": 0.189
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -6672,7 +7089,8 @@
           "projected": 0.4,
           "model_over_prob": 0.398,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6684,7 +7102,8 @@
           "projected": 0.5,
           "model_over_prob": 0.279,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -6693,7 +7112,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.124,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6715,7 +7135,8 @@
               "line": 2.0,
               "over_prob": 0.096
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -6741,7 +7162,8 @@
               "line": 2.5,
               "over_prob": 0.249
             }
-          ]
+          ],
+          "actual": 5
         },
         {
           "section": "Batting",
@@ -6753,7 +7175,8 @@
           "projected": 0.3,
           "model_over_prob": 0.342,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6765,7 +7188,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6774,7 +7198,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.092,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6796,7 +7221,8 @@
               "line": 1.5,
               "over_prob": 0.175
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -6818,7 +7244,8 @@
               "line": 2.0,
               "over_prob": 0.308
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -6830,7 +7257,8 @@
           "projected": 0.4,
           "model_over_prob": 0.418,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6842,7 +7270,8 @@
           "projected": 0.4,
           "model_over_prob": 0.448,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -6851,7 +7280,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.092,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6873,7 +7303,8 @@
               "line": 1.5,
               "over_prob": 0.175
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6895,7 +7326,8 @@
               "line": 1.5,
               "over_prob": 0.395
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6907,7 +7339,8 @@
           "projected": 0.3,
           "model_over_prob": 0.379,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -6919,7 +7352,8 @@
           "projected": 0.4,
           "model_over_prob": 0.448,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6928,7 +7362,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -6950,7 +7385,8 @@
               "line": 1.5,
               "over_prob": 0.2
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -6972,7 +7408,8 @@
               "line": 2.0,
               "over_prob": 0.329
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -6984,7 +7421,8 @@
           "projected": 0.3,
           "model_over_prob": 0.361,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -6996,7 +7434,8 @@
           "projected": 0.4,
           "model_over_prob": 0.448,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7005,7 +7444,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.092,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7027,7 +7467,8 @@
               "line": 1.5,
               "over_prob": 0.144
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7049,7 +7490,8 @@
               "line": 1.5,
               "over_prob": 0.366
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7061,7 +7503,8 @@
           "projected": 0.2,
           "model_over_prob": 0.652,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7073,7 +7516,8 @@
           "projected": 0.3,
           "model_over_prob": 0.656,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7082,7 +7526,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7104,7 +7549,8 @@
               "line": 1.5,
               "over_prob": 0.2
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7126,7 +7572,8 @@
               "line": 2.0,
               "over_prob": 0.313
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7138,7 +7585,8 @@
           "projected": 0.2,
           "model_over_prob": 0.634,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7150,7 +7598,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7159,7 +7608,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7181,7 +7631,8 @@
               "line": 1.5,
               "over_prob": 0.152
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7203,7 +7654,8 @@
               "line": 1.5,
               "over_prob": 0.406
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7215,7 +7667,8 @@
           "projected": 0.2,
           "model_over_prob": 0.652,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7227,7 +7680,8 @@
           "projected": 0.4,
           "model_over_prob": 0.67,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7236,7 +7690,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.107,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7258,7 +7713,8 @@
               "line": 1.5,
               "over_prob": 0.183
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -7280,7 +7736,8 @@
               "line": 2.0,
               "over_prob": 0.303
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -7292,7 +7749,8 @@
           "projected": 0.2,
           "model_over_prob": 0.652,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -7304,7 +7762,8 @@
           "projected": 0.3,
           "model_over_prob": 0.663,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -7313,7 +7772,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.092,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -7335,7 +7795,8 @@
               "line": 1.5,
               "over_prob": 0.144
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7357,7 +7818,8 @@
               "line": 1.5,
               "over_prob": 0.406
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7369,7 +7831,8 @@
           "projected": 0.3,
           "model_over_prob": 0.361,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7381,7 +7844,8 @@
           "projected": 0.4,
           "model_over_prob": 0.456,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7390,7 +7854,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.107,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7412,7 +7877,8 @@
               "line": 1.5,
               "over_prob": 0.159
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7434,7 +7900,8 @@
               "line": 1.5,
               "over_prob": 0.389
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7446,7 +7913,8 @@
           "projected": 0.2,
           "model_over_prob": 0.634,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7458,7 +7926,8 @@
           "projected": 0.3,
           "model_over_prob": 0.663,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7467,7 +7936,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.079,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7489,7 +7959,8 @@
               "line": 1.5,
               "over_prob": 0.144
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7511,7 +7982,8 @@
               "line": 2.0,
               "over_prob": 0.303
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7523,7 +7995,8 @@
           "projected": 0.2,
           "model_over_prob": 0.634,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7535,7 +8008,8 @@
           "projected": 0.4,
           "model_over_prob": 0.67,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -7544,7 +8018,8 @@
           "team": "STL",
           "market": "Anytime HR",
           "model_prob": 0.107,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7566,7 +8041,8 @@
               "line": 1.5,
               "over_prob": 0.18
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7592,7 +8068,8 @@
               "line": 2.5,
               "over_prob": 0.242
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -7604,7 +8081,8 @@
           "projected": 0.4,
           "model_over_prob": 0.459,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7616,7 +8094,8 @@
           "projected": 0.4,
           "model_over_prob": 0.444,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7625,7 +8104,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.103,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7647,7 +8127,8 @@
               "line": 2.0,
               "over_prob": 0.08
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7673,7 +8154,8 @@
               "line": 2.5,
               "over_prob": 0.242
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7685,7 +8167,8 @@
           "projected": 0.4,
           "model_over_prob": 0.439,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -7697,7 +8180,8 @@
           "projected": 0.4,
           "model_over_prob": 0.451,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7706,7 +8190,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.103,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7732,7 +8217,8 @@
               "line": 2.5,
               "over_prob": 0.041
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -7758,7 +8244,8 @@
               "line": 2.5,
               "over_prob": 0.271
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -7770,7 +8257,8 @@
           "projected": 0.5,
           "model_over_prob": 0.479,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7782,7 +8270,8 @@
           "projected": 0.4,
           "model_over_prob": 0.466,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -7791,7 +8280,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.088,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7813,7 +8303,8 @@
               "line": 2.0,
               "over_prob": 0.08
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7839,7 +8330,8 @@
               "line": 2.5,
               "over_prob": 0.246
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7851,7 +8343,8 @@
           "projected": 0.3,
           "model_over_prob": 0.362,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7863,7 +8356,8 @@
           "projected": 0.5,
           "model_over_prob": 0.275,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7872,7 +8366,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.103,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7894,7 +8389,8 @@
               "line": 1.5,
               "over_prob": 0.172
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -7916,7 +8412,8 @@
               "line": 2.0,
               "over_prob": 0.3
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -7928,7 +8425,8 @@
           "projected": 0.3,
           "model_over_prob": 0.362,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7940,7 +8438,8 @@
           "projected": 0.4,
           "model_over_prob": 0.673,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7949,7 +8448,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.088,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -7971,7 +8471,8 @@
               "line": 2.0,
               "over_prob": 0.084
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -7997,7 +8498,8 @@
               "line": 3.0,
               "over_prob": 0.187
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8009,7 +8511,8 @@
           "projected": 0.2,
           "model_over_prob": 0.672,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8021,7 +8524,8 @@
           "projected": 0.5,
           "model_over_prob": 0.489,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8030,7 +8534,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.12,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8052,7 +8557,8 @@
               "line": 2.0,
               "over_prob": 0.089
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -8078,7 +8584,8 @@
               "line": 2.5,
               "over_prob": 0.237
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -8090,7 +8597,8 @@
           "projected": 0.3,
           "model_over_prob": 0.362,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8102,7 +8610,8 @@
           "projected": 0.4,
           "model_over_prob": 0.451,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8111,7 +8620,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.076,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8133,7 +8643,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8159,7 +8670,8 @@
               "line": 2.5,
               "over_prob": 0.254
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8171,7 +8683,8 @@
           "projected": 0.3,
           "model_over_prob": 0.681,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8183,7 +8696,8 @@
           "projected": 0.5,
           "model_over_prob": 0.489,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8192,7 +8706,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.111,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8214,7 +8729,8 @@
               "line": 2.0,
               "over_prob": 0.08
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8240,7 +8756,8 @@
               "line": 2.5,
               "over_prob": 0.237
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8252,7 +8769,8 @@
           "projected": 0.3,
           "model_over_prob": 0.381,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8264,7 +8782,8 @@
           "projected": 0.4,
           "model_over_prob": 0.451,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8273,7 +8792,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.088,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8295,7 +8815,8 @@
               "line": 2.0,
               "over_prob": 0.089
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -8321,7 +8842,8 @@
               "line": 3.0,
               "over_prob": 0.212
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -8333,7 +8855,8 @@
           "projected": 0.4,
           "model_over_prob": 0.439,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8345,7 +8868,8 @@
           "projected": 0.5,
           "model_over_prob": 0.275,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -8354,7 +8878,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.16,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8376,7 +8901,8 @@
               "line": 1.5,
               "over_prob": 0.164
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8398,7 +8924,8 @@
               "line": 2.0,
               "over_prob": 0.3
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8410,7 +8937,8 @@
           "projected": 0.3,
           "model_over_prob": 0.381,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8422,7 +8950,8 @@
           "projected": 0.4,
           "model_over_prob": 0.673,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -8431,7 +8960,8 @@
           "team": "AZ",
           "market": "Anytime HR",
           "model_prob": 0.088,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -8442,7 +8972,8 @@
           "line": 4.0,
           "projected": 3.7,
           "model_over_prob": 0.431,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -8453,7 +8984,8 @@
           "line": 5.5,
           "projected": 5.1,
           "model_over_prob": 0.398,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 7
         },
         {
           "section": "Pitching",
@@ -8464,7 +8996,8 @@
           "line": 1.5,
           "projected": 1.3,
           "model_over_prob": 0.426,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 3
         },
         {
           "section": "Pitching",
@@ -8475,7 +9008,8 @@
           "line": 1.5,
           "projected": 1.6,
           "model_over_prob": 0.541,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 4
         },
         {
           "section": "Pitching",
@@ -8486,7 +9020,8 @@
           "line": 17.0,
           "projected": 16.6,
           "model_over_prob": 0.434,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 19
         }
       ],
       "already_played": true,
@@ -8543,7 +9078,8 @@
               "line": 2.0,
               "over_prob": 0.103
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8569,7 +9105,8 @@
               "line": 2.5,
               "over_prob": 0.274
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8581,7 +9118,8 @@
           "projected": 0.4,
           "model_over_prob": 0.46,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8593,7 +9131,8 @@
           "projected": 0.4,
           "model_over_prob": 0.46,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8602,7 +9141,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.114,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8624,7 +9164,8 @@
               "line": 1.5,
               "over_prob": 0.193
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8650,7 +9191,8 @@
               "line": 2.5,
               "over_prob": 0.254
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8662,7 +9204,8 @@
           "projected": 0.3,
           "model_over_prob": 0.691,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8674,7 +9217,8 @@
           "projected": 0.4,
           "model_over_prob": 0.475,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8683,7 +9227,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.133,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8705,7 +9250,8 @@
               "line": 2.0,
               "over_prob": 0.097
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8731,7 +9277,8 @@
               "line": 3.0,
               "over_prob": 0.223
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8743,7 +9290,8 @@
           "projected": 0.4,
           "model_over_prob": 0.44,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8755,7 +9303,8 @@
           "projected": 0.5,
           "model_over_prob": 0.289,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8764,7 +9313,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.153,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8786,7 +9336,8 @@
               "line": 2.0,
               "over_prob": 0.114
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -8812,7 +9363,8 @@
               "line": 3.0,
               "over_prob": 0.219
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -8824,7 +9376,8 @@
           "projected": 0.2,
           "model_over_prob": 0.655,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8836,7 +9389,8 @@
           "projected": 0.4,
           "model_over_prob": 0.475,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8845,7 +9399,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.133,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8867,7 +9422,8 @@
               "line": 1.5,
               "over_prob": 0.146
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8889,7 +9445,8 @@
               "line": 1.5,
               "over_prob": 0.378
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -8901,7 +9458,8 @@
           "projected": 0.3,
           "model_over_prob": 0.673,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8913,7 +9471,8 @@
           "projected": 0.4,
           "model_over_prob": 0.667,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8922,7 +9481,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8944,7 +9504,8 @@
               "line": 1.5,
               "over_prob": 0.193
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8970,7 +9531,8 @@
               "line": 2.5,
               "over_prob": 0.279
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8982,7 +9544,8 @@
           "projected": 0.3,
           "model_over_prob": 0.363,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -8994,7 +9557,8 @@
           "projected": 0.6,
           "model_over_prob": 0.296,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9003,7 +9567,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.177,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9025,7 +9590,8 @@
               "line": 1.5,
               "over_prob": 0.185
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9047,7 +9613,8 @@
               "line": 2.0,
               "over_prob": 0.33
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9059,7 +9626,8 @@
           "projected": 0.3,
           "model_over_prob": 0.363,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9071,7 +9639,8 @@
           "projected": 0.4,
           "model_over_prob": 0.46,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9080,7 +9649,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9102,7 +9672,8 @@
               "line": 1.5,
               "over_prob": 0.168
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9124,7 +9695,8 @@
               "line": 2.0,
               "over_prob": 0.314
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -9136,7 +9708,8 @@
           "projected": 0.2,
           "model_over_prob": 0.655,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9148,7 +9721,8 @@
           "projected": 0.4,
           "model_over_prob": 0.468,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -9157,7 +9731,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.098,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9179,7 +9754,8 @@
               "line": 2.0,
               "over_prob": 0.082
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9205,7 +9781,8 @@
               "line": 2.5,
               "over_prob": 0.254
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9217,7 +9794,8 @@
           "projected": 0.3,
           "model_over_prob": 0.673,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9229,7 +9807,8 @@
           "projected": 0.5,
           "model_over_prob": 0.498,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9238,7 +9817,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.114,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9260,7 +9840,8 @@
               "line": 1.5,
               "over_prob": 0.176
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9282,7 +9863,8 @@
               "line": 2.0,
               "over_prob": 0.34
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9294,7 +9876,8 @@
           "projected": 0.4,
           "model_over_prob": 0.44,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9306,7 +9889,8 @@
           "projected": 0.4,
           "model_over_prob": 0.468,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9315,7 +9899,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.133,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9337,7 +9922,8 @@
               "line": 1.5,
               "over_prob": 0.193
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9359,7 +9945,8 @@
               "line": 2.0,
               "over_prob": 0.319
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9371,7 +9958,8 @@
           "projected": 0.3,
           "model_over_prob": 0.673,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9383,7 +9971,8 @@
           "projected": 0.4,
           "model_over_prob": 0.681,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9392,7 +9981,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9414,7 +10004,8 @@
               "line": 1.5,
               "over_prob": 0.193
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9436,7 +10027,8 @@
               "line": 2.0,
               "over_prob": 0.316
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9448,7 +10040,8 @@
           "projected": 0.3,
           "model_over_prob": 0.382,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9460,7 +10053,8 @@
           "projected": 0.4,
           "model_over_prob": 0.468,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9469,7 +10063,8 @@
           "team": "DET",
           "market": "Anytime HR",
           "model_prob": 0.084,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -9491,7 +10086,8 @@
               "line": 2.0,
               "over_prob": 0.077
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9517,7 +10113,8 @@
               "line": 2.5,
               "over_prob": 0.251
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9529,7 +10126,8 @@
           "projected": 0.4,
           "model_over_prob": 0.412,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9541,7 +10139,8 @@
           "projected": 0.4,
           "model_over_prob": 0.45,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9550,7 +10149,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.104,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9576,7 +10176,8 @@
               "line": 2.5,
               "over_prob": 0.036
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9602,7 +10203,8 @@
               "line": 3.5,
               "over_prob": 0.15
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9614,7 +10216,8 @@
           "projected": 0.3,
           "model_over_prob": 0.392,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9626,7 +10229,8 @@
           "projected": 0.5,
           "model_over_prob": 0.274,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9635,7 +10239,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.14,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9657,7 +10262,8 @@
               "line": 2.0,
               "over_prob": 0.081
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9679,7 +10285,8 @@
               "line": 2.0,
               "over_prob": 0.31
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9691,7 +10298,8 @@
           "projected": 0.4,
           "model_over_prob": 0.442,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9703,7 +10311,8 @@
           "projected": 0.3,
           "model_over_prob": 0.659,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9712,7 +10321,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.077,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9734,7 +10344,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9760,7 +10371,8 @@
               "line": 3.0,
               "over_prob": 0.199
             }
-          ]
+          ],
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9772,7 +10384,8 @@
           "projected": 0.3,
           "model_over_prob": 0.683,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9784,7 +10397,8 @@
           "projected": 0.5,
           "model_over_prob": 0.281,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9793,7 +10407,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.14,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9815,7 +10430,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9841,7 +10457,8 @@
               "line": 2.5,
               "over_prob": 0.233
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9853,7 +10470,8 @@
           "projected": 0.3,
           "model_over_prob": 0.373,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9865,7 +10483,8 @@
           "projected": 0.4,
           "model_over_prob": 0.45,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9874,7 +10493,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.077,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -9896,7 +10516,8 @@
               "line": 2.0,
               "over_prob": 0.086
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9922,7 +10543,8 @@
               "line": 2.5,
               "over_prob": 0.246
             }
-          ]
+          ],
+          "actual": 4
         },
         {
           "section": "Batting",
@@ -9934,7 +10556,8 @@
           "projected": 0.3,
           "model_over_prob": 0.373,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9946,7 +10569,8 @@
           "projected": 0.4,
           "model_over_prob": 0.458,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9955,7 +10579,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.09,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -9977,7 +10602,8 @@
               "line": 1.5,
               "over_prob": 0.167
             }
-          ]
+          ],
+          "actual": 2
         },
         {
           "section": "Batting",
@@ -9999,7 +10625,8 @@
               "line": 1.5,
               "over_prob": 0.385
             }
-          ]
+          ],
+          "actual": 3
         },
         {
           "section": "Batting",
@@ -10011,7 +10638,8 @@
           "projected": 0.2,
           "model_over_prob": 0.647,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -10023,7 +10651,8 @@
           "projected": 0.3,
           "model_over_prob": 0.651,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -10032,7 +10661,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.077,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -10054,7 +10684,8 @@
               "line": 2.0,
               "over_prob": 0.091
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -10080,7 +10711,8 @@
               "line": 2.5,
               "over_prob": 0.242
             }
-          ]
+          ],
+          "actual": 1
         },
         {
           "section": "Batting",
@@ -10092,7 +10724,8 @@
           "projected": 0.3,
           "model_over_prob": 0.683,
           "model_std": 0.556,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -10104,7 +10737,8 @@
           "projected": 0.4,
           "model_over_prob": 0.465,
           "model_std": 0.822,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -10113,7 +10747,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.09,
-          "confirmed_starter": true
+          "confirmed_starter": true,
+          "actual": 0
         },
         {
           "section": "Batting",
@@ -10135,7 +10770,8 @@
               "line": 2.0,
               "over_prob": 0.086
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10161,7 +10797,8 @@
               "line": 2.5,
               "over_prob": 0.261
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10173,7 +10810,8 @@
           "projected": 0.2,
           "model_over_prob": 0.628,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10185,7 +10823,8 @@
           "projected": 0.4,
           "model_over_prob": 0.465,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10194,7 +10833,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.104,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10216,7 +10856,8 @@
               "line": 2.0,
               "over_prob": 0.086
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10238,7 +10879,8 @@
               "line": 2.0,
               "over_prob": 0.31
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10250,7 +10892,8 @@
           "projected": 0.3,
           "model_over_prob": 0.683,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10262,7 +10905,8 @@
           "projected": 0.4,
           "model_over_prob": 0.435,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10271,7 +10915,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.077,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10293,7 +10938,8 @@
               "line": 2.0,
               "over_prob": 0.097
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10319,7 +10965,8 @@
               "line": 2.5,
               "over_prob": 0.251
             }
-          ]
+          ],
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10331,7 +10978,8 @@
           "projected": 0.2,
           "model_over_prob": 0.665,
           "model_std": 0.556,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10343,7 +10991,8 @@
           "projected": 0.4,
           "model_over_prob": 0.45,
           "model_std": 0.822,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Batting",
@@ -10352,7 +11001,8 @@
           "team": "KC",
           "market": "Anytime HR",
           "model_prob": 0.104,
-          "confirmed_starter": false
+          "confirmed_starter": false,
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -10363,7 +11013,8 @@
           "line": 5.5,
           "projected": 5.3,
           "model_over_prob": 0.447,
-          "model_std": 1.455
+          "model_std": 1.455,
+          "actual": 5
         },
         {
           "section": "Pitching",
@@ -10374,7 +11025,8 @@
           "line": 3.5,
           "projected": 3.6,
           "model_over_prob": 0.52,
-          "model_std": 1.529
+          "model_std": 1.529,
+          "actual": 5
         },
         {
           "section": "Pitching",
@@ -10385,7 +11037,8 @@
           "line": 1.5,
           "projected": 1.5,
           "model_over_prob": 0.493,
-          "model_std": 0.871
+          "model_std": 0.871,
+          "actual": 4
         },
         {
           "section": "Pitching",
@@ -10396,7 +11049,8 @@
           "line": 1.5,
           "projected": 1.3,
           "model_over_prob": 0.442,
-          "model_std": 1.347
+          "model_std": 1.347,
+          "actual": 2
         },
         {
           "section": "Pitching",
@@ -10407,7 +11061,8 @@
           "line": 18.0,
           "projected": 17.7,
           "model_over_prob": 0.456,
-          "model_std": 2.604
+          "model_std": 2.604,
+          "actual": 15
         }
       ],
       "already_played": true,

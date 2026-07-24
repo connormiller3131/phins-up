@@ -166,6 +166,20 @@
   .parlay-hr .parlay-leg-edge{color:var(--amber);}
   .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
   .parlay-sgp .parlay-title{color:var(--blue);}
+  .track-record-day{margin-bottom:14px;}
+  .track-record-day:last-of-type{margin-bottom:0;}
+  .track-record-day-head{
+    font-family:var(--disp);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--text);
+    text-transform:uppercase;
+    margin-bottom:4px;
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+  }
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -1507,8 +1521,8 @@ function bestPropInMarket(props, marketName, used){
     const chosen = isHr ? {line: null, prob: modelP} : pickLine(p);
     const sub = isHr ? p.team : `${p.team} · ${chosen.line}+`;
     const leg = p.dk_implied_prob != null
-      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id}
-      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id};
+      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, line: chosen.line}
+      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, line: chosen.line};
     if(leg.edge != null && leg.edge <= 0) return; // a real price with no edge isn't a pick
     if(!best) { best = leg; return; }
     const bestIsReal = best.edge != null, legIsReal = leg.edge != null;
@@ -1632,6 +1646,78 @@ function collectHrSpecialLegs(games, excludeIds){
   return real.concat(modelOnly).slice(0, 3);
 }
 
+// Grades one reconstructed parlay leg against real results already frozen
+// in the day's snapshot ('actual' on each prop, real scores on each game) --
+// returns 'hit'/'miss', or null when the player didn't actually appear (not
+// a fair test of the pick, same "did not play" exclusion grade_props.py
+// already applies server-side).
+function gradeMlbLeg(games, leg){
+  if(leg.market === 'Moneyline'){
+    const team = leg.label.replace(' ML', '');
+    const g = games.find(gm => (gm.homeAbbr === team && leg.sub === `vs ${gm.awayAbbr}`) || (gm.awayAbbr === team && leg.sub === `@ ${gm.homeAbbr}`));
+    if(!g || !g.already_played || g.home_score == null || g.away_score == null) return null;
+    const won = team === g.homeAbbr ? g.home_score > g.away_score : g.away_score > g.home_score;
+    return won ? 'hit' : 'miss';
+  }
+  const prop = games.flatMap(g => g.props || []).find(p => p.player_id === leg.player_id && p.market === leg.market);
+  if(!prop || prop.actual == null) return null;
+  if(leg.market === 'Anytime HR') return prop.actual > 0 ? 'hit' : 'miss';
+  return prop.actual > leg.line ? 'hit' : 'miss';
+}
+
+function mlbTrackRecordLegRow(l){
+  const resultHtml = l.result == null
+    ? `<span class="p-exp">did not play</span>`
+    : (l.result === 'hit' ? `<span class="hit">&check; Hit</span>` : `<span class="miss">&cross; Miss</span>`);
+  return `
+    <div class="parlay-leg">
+      <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
+      <span class="parlay-leg-market">${l.market}</span>
+      <span class="parlay-leg-prob">${resultHtml}</span>
+    </div>
+  `;
+}
+
+// Reconstructs, for every finalized day in the currently-loaded week, what
+// the Suggested Parlay and HR Special would have picked pregame (same
+// functions the live cards use, run against the frozen snapshot's props --
+// which now carry a real `actual` value once a day is finalized), then
+// grades each leg against reality. Scoped to this week's finalized days
+// only, since that's all this page's data ever holds (older weeks' snapshot
+// files exist on disk but were never embedded in the page payload) --
+// labeled as such rather than implied to be a full season record.
+function mlbTrackRecordHtml(){
+  const days = MLB_WEEK_DAYS.map(d => MLB_DATA.days[d]).filter(d => d && d.finalized && d.games && d.games.length);
+  if(!days.length){
+    return `<div class="placeholder parlay-empty">No finalized MLB days yet this week to show a track record for.</div>`;
+  }
+  let totalHit = 0, totalMiss = 0;
+  const dayBlocks = days.map(day => {
+    const prevDay = MLB_DATA.days[mlbPrevDateStr(day.date)];
+    const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
+    const legs = collectMlbParlayLegs(day.games).concat(collectHrSpecialLegs(day.games, prevHrIds));
+    const graded = legs.map(l => ({...l, result: gradeMlbLeg(day.games, l)}));
+    const hit = graded.filter(l => l.result === 'hit').length;
+    const miss = graded.filter(l => l.result === 'miss').length;
+    const na = graded.length - hit - miss;
+    totalHit += hit; totalMiss += miss;
+    return `
+      <div class="track-record-day">
+        <div class="track-record-day-head">${day.weekday}, ${fmtShortDate(day.date)} <span class="p-exp">${hit}-${miss}${na ? ` (${na} n/a)` : ''}</span></div>
+        ${graded.map(mlbTrackRecordLegRow).join('')}
+      </div>
+    `;
+  }).join('');
+  const total = totalHit + totalMiss;
+  return `
+    <details class="props-toggle" id="mlb-track-record">
+      <summary>Track Record <span class="props-sample-tag">(${totalHit}-${totalMiss}${total ? ` &middot; ${((totalHit/total)*100).toFixed(0)}%` : ''} this week, reconstructed pregame picks graded against real results)</span></summary>
+      ${dayBlocks}
+      <div class="p-exp" style="margin-top:6px;">Not betting advice -- each day's picks are the exact Suggested Parlay / HR Special legs the frozen pregame snapshot would have shown, never revised after the fact. "n/a" means the player didn't actually appear in the game.</div>
+    </details>
+  `;
+}
+
 function mlbPrevDateStr(dateStr){
   const d = new Date(dateStr + 'T00:00:00');
   d.setDate(d.getDate() - 1);
@@ -1750,7 +1836,8 @@ function renderMLBGames(selectedDate){
           ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
           : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
         emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
-      });
+      })
+    + mlbTrackRecordHtml();
 
   dayData.games.forEach((g, idx) => {
     const card = document.createElement("div");
@@ -1761,7 +1848,9 @@ function renderMLBGames(selectedDate){
 
     const finalScoreBadge = g.already_played
       ? `FINAL<span class="pct">${g.awayAbbr} ${g.away_score} – ${g.homeAbbr} ${g.home_score}</span>`
-      : (isToday ? '' : '<span style="color:var(--text-dim)">Scheduled</span>');
+      : (isToday ? '' : (selectedDate < MLB_DATA.today
+          ? '<span style="color:var(--text-dim)">Postponed / no result</span>'
+          : '<span style="color:var(--text-dim)">Scheduled</span>'));
 
     card.innerHTML = `
       <div class="game-top">

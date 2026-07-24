@@ -166,20 +166,20 @@
   .parlay-hr .parlay-leg-edge{color:var(--amber);}
   .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
   .parlay-sgp .parlay-title{color:var(--blue);}
-  .track-record-day{margin-bottom:14px;}
-  .track-record-day:last-of-type{margin-bottom:0;}
-  .track-record-day-head{
-    font-family:var(--disp);
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.03em;
-    color:var(--text);
-    text-transform:uppercase;
-    margin-bottom:4px;
+  .track-record-row{
     display:flex;
+    align-items:center;
+    flex-wrap:wrap;
     gap:8px;
-    align-items:baseline;
+    font-family:var(--mono);
+    font-size:12px;
+    padding:7px 0;
+    border-bottom:1px solid var(--line);
   }
+  .track-record-row:last-of-type{border-bottom:none;}
+  .track-record-market{font-weight:600;color:var(--text);min-width:150px;}
+  .track-record-n{color:var(--text-dim);min-width:50px;}
+  .track-record-acc{color:var(--green);font-weight:600;margin-left:auto;}
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -1521,8 +1521,8 @@ function bestPropInMarket(props, marketName, used){
     const chosen = isHr ? {line: null, prob: modelP} : pickLine(p);
     const sub = isHr ? p.team : `${p.team} · ${chosen.line}+`;
     const leg = p.dk_implied_prob != null
-      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, line: chosen.line}
-      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, line: chosen.line};
+      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id}
+      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id};
     if(leg.edge != null && leg.edge <= 0) return; // a real price with no edge isn't a pick
     if(!best) { best = leg; return; }
     const bestIsReal = best.edge != null, legIsReal = leg.edge != null;
@@ -1646,74 +1646,64 @@ function collectHrSpecialLegs(games, excludeIds){
   return real.concat(modelOnly).slice(0, 3);
 }
 
-// Grades one reconstructed parlay leg against real results already frozen
-// in the day's snapshot ('actual' on each prop, real scores on each game) --
-// returns 'hit'/'miss', or null when the player didn't actually appear (not
-// a fair test of the pick, same "did not play" exclusion grade_props.py
-// already applies server-side).
-function gradeMlbLeg(games, leg){
-  if(leg.market === 'Moneyline'){
-    const team = leg.label.replace(' ML', '');
-    const g = games.find(gm => (gm.homeAbbr === team && leg.sub === `vs ${gm.awayAbbr}`) || (gm.awayAbbr === team && leg.sub === `@ ${gm.homeAbbr}`));
-    if(!g || !g.already_played || g.home_score == null || g.away_score == null) return null;
-    const won = team === g.homeAbbr ? g.home_score > g.away_score : g.away_score > g.home_score;
-    return won ? 'hit' : 'miss';
-  }
-  const prop = games.flatMap(g => g.props || []).find(p => p.player_id === leg.player_id && p.market === leg.market);
-  if(!prop || prop.actual == null) return null;
-  if(leg.market === 'Anytime HR') return prop.actual > 0 ? 'hit' : 'miss';
-  return prop.actual > leg.line ? 'hit' : 'miss';
-}
-
-function mlbTrackRecordLegRow(l){
-  const resultHtml = l.result == null
-    ? `<span class="p-exp">did not play</span>`
-    : (l.result === 'hit' ? `<span class="hit">&check; Hit</span>` : `<span class="miss">&cross; Miss</span>`);
-  return `
-    <div class="parlay-leg">
-      <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
-      <span class="parlay-leg-market">${l.market}</span>
-      <span class="parlay-leg-prob">${resultHtml}</span>
-    </div>
-  `;
-}
-
-// Reconstructs, for every finalized day in the currently-loaded week, what
-// the Suggested Parlay and HR Special would have picked pregame (same
-// functions the live cards use, run against the frozen snapshot's props --
-// which now carry a real `actual` value once a day is finalized), then
-// grades each leg against reality. Scoped to this week's finalized days
-// only, since that's all this page's data ever holds (older weeks' snapshot
-// files exist on disk but were never embedded in the page payload) --
-// labeled as such rather than implied to be a full season record.
+// Same shape as grade_props.py's own console report (the per-market
+// Brier/accuracy table already run standalone against every finalized
+// snapshot) -- this is that same grading logic, client-side, against every
+// player prop with a real actual attached (not just the day's picked
+// parlay legs, which is a much smaller and cherry-picked sample). A count
+// prop is "correct" when the side the model favored (over/under its line)
+// matches which side the real stat actually landed on; Anytime HR is
+// correct when the model's >=50% yes/no call matched whether the player
+// actually homered. Scoped to this week's finalized days, since that's all
+// this page's data ever holds (older weeks' snapshot files exist on disk
+// but were never embedded in the page payload).
 function mlbTrackRecordHtml(){
   const days = MLB_WEEK_DAYS.map(d => MLB_DATA.days[d]).filter(d => d && d.finalized && d.games && d.games.length);
   if(!days.length){
     return `<div class="placeholder parlay-empty">No finalized MLB days yet this week to show a track record for.</div>`;
   }
-  let totalHit = 0, totalMiss = 0;
-  const dayBlocks = days.map(day => {
-    const prevDay = MLB_DATA.days[mlbPrevDateStr(day.date)];
-    const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
-    const legs = collectMlbParlayLegs(day.games).concat(collectHrSpecialLegs(day.games, prevHrIds));
-    const graded = legs.map(l => ({...l, result: gradeMlbLeg(day.games, l)}));
-    const hit = graded.filter(l => l.result === 'hit').length;
-    const miss = graded.filter(l => l.result === 'miss').length;
-    const na = graded.length - hit - miss;
-    totalHit += hit; totalMiss += miss;
+  const byMarket = {};
+  days.forEach(day => {
+    day.games.forEach(g => {
+      (g.props || []).forEach(p => {
+        if(p.actual == null) return;
+        const isHr = p.market === 'Anytime HR';
+        const modelProb = isHr ? p.model_prob : p.model_over_prob;
+        if(modelProb == null || (!isHr && (p.line == null || p.line <= 0))) return;
+        const actualOver = (isHr ? p.actual > 0 : p.actual > p.line) ? 1 : 0;
+        const predictedOver = modelProb >= 0.5 ? 1 : 0;
+        const b = byMarket[p.market] || (byMarket[p.market] = {n: 0, correct: 0, actualOverSum: 0, modelProbSum: 0});
+        b.n++;
+        b.correct += (actualOver === predictedOver) ? 1 : 0;
+        b.actualOverSum += actualOver;
+        b.modelProbSum += modelProb;
+      });
+    });
+  });
+  const markets = Object.keys(byMarket).sort();
+  if(!markets.length){
+    return `<div class="placeholder parlay-empty">No graded props yet this week.</div>`;
+  }
+  let totalN = 0, totalCorrect = 0;
+  const rows = markets.map(mk => {
+    const b = byMarket[mk];
+    totalN += b.n; totalCorrect += b.correct;
+    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n, avgProb = b.modelProbSum / b.n;
     return `
-      <div class="track-record-day">
-        <div class="track-record-day-head">${day.weekday}, ${fmtShortDate(day.date)} <span class="p-exp">${hit}-${miss}${na ? ` (${na} n/a)` : ''}</span></div>
-        ${graded.map(mlbTrackRecordLegRow).join('')}
+      <div class="track-record-row">
+        <span class="track-record-market">${mk}</span>
+        <span class="track-record-n">n=${b.n}</span>
+        <span class="track-record-acc">${(acc*100).toFixed(0)}% accuracy</span>
+        <span class="p-exp">actual-over ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
       </div>
     `;
   }).join('');
-  const total = totalHit + totalMiss;
+  const overallAcc = totalCorrect / totalN;
   return `
     <details class="props-toggle" id="mlb-track-record">
-      <summary>Track Record <span class="props-sample-tag">(${totalHit}-${totalMiss}${total ? ` &middot; ${((totalHit/total)*100).toFixed(0)}%` : ''} this week, reconstructed pregame picks graded against real results)</span></summary>
-      ${dayBlocks}
-      <div class="p-exp" style="margin-top:6px;">Not betting advice -- each day's picks are the exact Suggested Parlay / HR Special legs the frozen pregame snapshot would have shown, never revised after the fact. "n/a" means the player didn't actually appear in the game.</div>
+      <summary>Track Record <span class="props-sample-tag">(${totalN} props graded this week &middot; ${(overallAcc*100).toFixed(0)}% accuracy overall)</span></summary>
+      <div class="track-record-table">${rows}</div>
+      <div class="p-exp" style="margin-top:6px;">Every player prop with a real result this week, not just the day's picked parlay legs -- "accuracy" is whether the side the model favored (over/under the line, or yes/no for Anytime HR) matched reality; "actual-over" is how often the real stat actually beat the line; "avg model" is the model's average confidence on the side it favored. A market sitting near 50% accuracy is closer to a coin flip than a real edge -- shown honestly either way, small-sample this early in the week.</div>
     </details>
   `;
 }

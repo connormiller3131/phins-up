@@ -1728,13 +1728,16 @@ function mlbTrackRecordTableHtml(byMarket, dates){
     // baseline -- a market where the model's own accuracy barely beats this
     // has little real skill above just knowing the base rate.
     const baseline = Math.max(actualRate, 1 - actualRate);
+    const deltaPts = Math.round((acc - baseline) * 100);
+    const deltaLabel = deltaPts > 0 ? `+${deltaPts}pts vs. guessing` : (deltaPts < 0 ? `${deltaPts}pts vs. guessing` : `even with guessing`);
+    const deltaClass = deltaPts > 2 ? 'hit' : (deltaPts < -2 ? 'miss' : '');
     const actualLabel = mk === 'Moneyline' ? 'actual home win' : 'actual-over';
     return `
       <div class="track-record-row">
         <span class="track-record-market">${mk}</span>
         <span class="track-record-n">n=${b.n}</span>
-        <span class="track-record-acc">${(acc*100).toFixed(0)}% accuracy</span>
-        <span class="p-exp">(baseline ${(baseline*100).toFixed(0)}%) &middot; Brier ${brier.toFixed(3)} &middot; ${actualLabel} ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
+        <span class="track-record-acc">${(acc*100).toFixed(0)}% accuracy <span class="${deltaClass}" style="font-weight:600;">(${deltaLabel})</span></span>
+        <span class="p-exp">baseline ${(baseline*100).toFixed(0)}% &middot; Brier ${brier.toFixed(3)} &middot; ${actualLabel} ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
       </div>
     `;
   }).join('');
@@ -1744,7 +1747,7 @@ function mlbTrackRecordTableHtml(byMarket, dates){
     <details class="props-toggle" id="mlb-track-record">
       <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy &middot; Brier ${overallBrier.toFixed(3)})</span></summary>
       <div class="track-record-table">${rows}</div>
-      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs -- Moneyline uses the model's own home-win probability graded against real final scores, same table as the props. "Accuracy" is whether the side the model favored (home/away, over/under the line, or yes/no for Anytime HR) matched reality; "baseline" is the accuracy you'd get by always guessing whichever side actually happens more often for that market, with zero model skill -- a market whose accuracy sits close to baseline (like Anytime HR, where "always guess no" alone scores ~89-90% given how rare a home run actually is) isn't showing real edge, no matter how high the raw percentage looks. Brier score (lower is better, 0=perfect, 0.25=coin flip on a 50/50 line) is the more honest single number since it doesn't have that blind spot.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs -- Moneyline uses the model's own home-win probability graded against real final scores, same table as the props. "Accuracy" is whether the side the model favored (home/away, over/under the line, or yes/no for Anytime HR) matched reality; "baseline" is the accuracy you'd get by always guessing whichever side actually happens more often for that market, with zero model skill. The green/red "pts vs. guessing" number is accuracy minus that baseline -- the real tell of skill, since raw accuracy alone can look great on a lopsided market for free (Anytime HR sits at ~89% accuracy, but so does just always guessing "no," since a real home run only happens ~11% of the time -- that market currently shows +0 to +1pts, i.e. no real edge above knowing the base rate). Brier score (lower is better, 0=perfect, 0.25=coin flip on a 50/50 line) is the more rigorous single number behind the same idea.</div>
     </details>
   `;
 }

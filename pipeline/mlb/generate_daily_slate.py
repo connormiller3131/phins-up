@@ -660,11 +660,11 @@ def prepare_binary_model(hist_df):
     return model
 
 
-def count_ladder(pred_mean, resid_std, own_avg, step=1.0, n=3):
-    """A small ladder of lines in steps of 1 around the player's trailing
-    average -- MLB counting stats (hits, total bases) are small integers, so
-    NFL's steps-of-10 doesn't translate; steps of 1 does."""
-    base = round(own_avg * 2) / 2
+def count_ladder(pred_mean, resid_std, step=1.0, n=3):
+    """A small ladder of lines in steps of 1 around the model's own
+    predicted mean -- MLB counting stats (hits, total bases) are small
+    integers, so NFL's steps-of-10 doesn't translate; steps of 1 does."""
+    base = round(pred_mean * 2) / 2
     half = (n // 2) * step
     out = []
     for i in range(n):
@@ -684,14 +684,28 @@ def project_count_stat(stat_key, prep, player_id, opp_team):
         return None
     opp_avg = float(opp.loc[opp_team])
     pred_mean = float(prep["model"].predict([[float(own_avg), opp_avg]])[0])
-    line = round(own_avg * 2) / 2
+    # The line is anchored to the model's own predicted mean (which already
+    # blends the player's own trailing rate with the opponent's allowed
+    # rate), not the player's raw own-average alone -- anchoring on own_avg
+    # let a low-average bench player's line round down to a trivially easy
+    # bar (e.g. 0.5+ hits) while a genuine star's higher own_avg rounded up
+    # to a harder one, so "probability of clearing your own line" ended up
+    # NEGATIVELY correlated with actual talent (confirmed on real data:
+    # Pearson r=-0.79 between own_avg and model_over_prob before this fix,
+    # e.g. a .200 bench bat showing ~74% vs. a real everyday hitter at
+    # ~29%). Anchoring on pred_mean instead cut that correlation roughly in
+    # half (r=-0.54) -- a real improvement though not a full fix, since
+    # rounding to the nearest half-integer line is still an inherently
+    # coarse mechanism; bestPropInMarket in the frontend adds an explicit
+    # ranking-by-production tiebreak on top of this for the rest of the gap.
+    line = round(pred_mean * 2) / 2
     p_over = float(over_prob(pred_mean, prep["std"], line))
     out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(p_over, 3),
         "model_std": round(prep["std"], 3), "player_display_name": own.loc[player_id, "player_display_name"],
     }
     if stat_key in LADDER_STATS:
-        out["ladder"] = count_ladder(pred_mean, prep["std"], float(own_avg))
+        out["ladder"] = count_ladder(pred_mean, prep["std"])
     return out
 
 

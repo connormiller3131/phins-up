@@ -1536,7 +1536,8 @@ function pickLine(p){
 }
 
 // The single best candidate in one market across a pool of props (real-edge
-// candidates always outrank model-only; ties broken by edge/prob), skipping
+// candidates always outrank model-only; ties broken by edge, or by real
+// projected production for model-only picks -- see note below), skipping
 // anyone already used elsewhere in this parlay and the same degenerate-0+
 // line exclusion used everywhere else. Returns null if nothing qualifies.
 function bestPropInMarket(props, marketName, used){
@@ -1555,13 +1556,28 @@ function bestPropInMarket(props, marketName, used){
     const chosen = isHr ? {line: null, prob: modelP} : pickLine(p);
     const sub = isHr ? p.team : `${p.team} · ${chosen.line}+`;
     const leg = p.dk_implied_prob != null
-      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id}
-      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id};
+      ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected}
+      : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected};
     if(leg.edge != null && leg.edge <= 0) return; // a real price with no edge isn't a pick
+    // Without a real price to grade an edge against, a count-stat line is
+    // set from the model's own predicted mean rounded to the nearest half
+    // -- so probability of "clearing your own calibrated line" hovers near
+    // 50% for everyone by design and isn't a real quality signal (a bench
+    // player with a low, easy line and a star with a tougher one can both
+    // land near the same probability). Ranking model-only count-stat picks
+    // by real projected production instead -- gated on the pick still
+    // being a genuine >50% call -- surfaces actual good players instead of
+    // whoever happened to land closest to their own rounding threshold.
+    // Anytime HR is unaffected: its probability isn't line-anchored this
+    // way, so it's already a fair, continuous measure of quality on its own.
+    if(leg.edge == null && !isHr && leg.prob < 0.5) return;
     if(!best) { best = leg; return; }
     const bestIsReal = best.edge != null, legIsReal = leg.edge != null;
     if(legIsReal !== bestIsReal){ if(legIsReal) best = leg; return; }
-    const legRank = legIsReal ? leg.edge : leg.prob, bestRank = bestIsReal ? best.edge : best.prob;
+    let legRank, bestRank;
+    if(legIsReal){ legRank = leg.edge; bestRank = best.edge; }
+    else if(!isHr){ legRank = leg.projected; bestRank = best.projected; }
+    else { legRank = leg.prob; bestRank = best.prob; }
     if(legRank > bestRank) best = leg;
   });
   return best;

@@ -497,6 +497,17 @@
     padding-bottom:4px;
     margin-bottom:8px;
   }
+  .prop-subgroup-title{
+    font-family:var(--mono);
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-top:10px;
+    margin-bottom:2px;
+  }
+  .prop-subgroup-title:first-of-type{margin-top:0;}
   .prop-player{
     padding:8px 0;
     border-bottom:1px solid var(--line);
@@ -1208,7 +1219,7 @@ function mlbPropsBySection(props){
       if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, pid:p.player_id, confirmed:p.confirmed_starter, rows:[]});
       byPlayer.get(key).rows.push(p);
     });
-    const playerBlocks = Array.from(byPlayer.values()).map(pl => {
+    const renderPlayer = pl => {
       const pregameFlag = (sec === "Batting" && anyConfirmed)
         ? (pl.confirmed
             ? '<span class="hit">&#10003; Confirmed starter</span>'
@@ -1220,8 +1231,22 @@ function mlbPropsBySection(props){
         ${pl.rows.map(mlbPropStatRow).join("")}
       </details>
     `;
-    }).join("");
-    return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${playerBlocks}</div>`;
+    };
+    const allPlayers = Array.from(byPlayer.values());
+    // Once a real lineup is posted, group the 9 confirmed starters above
+    // everyone else instead of leaving them interleaved -- the underlying
+    // order was already starters-first from the backend, but there was no
+    // visual break, so it just looked like one long undifferentiated list.
+    let body;
+    if(sec === "Batting" && anyConfirmed){
+      const starters = allPlayers.filter(pl => pl.confirmed);
+      const bench = allPlayers.filter(pl => !pl.confirmed);
+      body = `<div class="prop-subgroup-title">Starting lineup</div>${starters.map(renderPlayer).join("")}`
+        + (bench.length ? `<div class="prop-subgroup-title">Bench / not in today's lineup</div>${bench.map(renderPlayer).join("")}` : "");
+    } else {
+      body = allPlayers.map(renderPlayer).join("");
+    }
+    return `<div class="prop-section"><div class="prop-section-title">${sec}</div>${body}</div>`;
   }).join("");
 }
 
@@ -1517,6 +1542,11 @@ function bestPropInMarket(props, marketName, used){
   let best = null;
   props.forEach(p => {
     if(p.market !== marketName || used.has(p.player_id)) return;
+    // __lineup_known is set per-game by the caller (true only when THAT
+    // game's real lineup is actually posted) -- skip a bench player only
+    // once we actually know who's starting, not just because someone
+    // somewhere else in the pool happens to have a posted lineup.
+    if(p.__lineup_known && p.confirmed_starter === false) return;
     const modelP = isHr ? p.model_prob : p.model_over_prob;
     if(modelP == null) return;
     if(!isHr && (p.line == null || p.line <= 0)) return;
@@ -1582,7 +1612,15 @@ function buildRealisticParlay(games, opts){
   // covers home runs on its own, so forcing one into this parlay too was
   // redundant. It can still show up below via the filler pool if it's
   // genuinely the best remaining pick, just not reserved.
-  const allProps = games.flatMap(g => g.props || []);
+  // Annotate each game's Batting props with whether THAT game's real lineup
+  // is actually posted (per-game, not pool-wide -- a cross-game parlay can
+  // mix a game with a posted lineup and one without, and the "no lineup
+  // yet" games' props all read confirmed_starter:false by default, which
+  // must not be mistaken for "confirmed not starting").
+  const allProps = games.flatMap(g => {
+    const lineupKnown = (g.props || []).some(p => p.section === 'Batting' && p.confirmed_starter === true);
+    return (g.props || []).map(p => p.section === 'Batting' ? {...p, __lineup_known: lineupKnown} : p);
+  });
   const tb = bestPropInMarket(allProps, "Total Bases", used);
   if(tb){ legs.push(tb); used.add(tb.player_id); }
 
@@ -1631,8 +1669,13 @@ function collectHrSpecialLegs(games, excludeIds){
   const real = [], modelOnly = [];
   const seenIds = new Set(); // a doubleheader can list the same player twice across games -- keep one
   games.forEach(g => {
+    // Same per-game (not pool-wide) lineup-known check as buildRealisticParlay
+    // -- only skip a bench player once this specific game's real lineup is
+    // actually posted, never because some other game happens to have one.
+    const lineupKnown = (g.props||[]).some(p => p.section === 'Batting' && p.confirmed_starter === true);
     (g.props||[]).forEach(p => {
       if(p.market !== "Anytime HR" || excludeIds.has(p.player_id) || seenIds.has(p.player_id)) return;
+      if(lineupKnown && p.confirmed_starter === false) return;
       seenIds.add(p.player_id);
       const sub = `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`;
       if(p.dk_implied_prob != null){
@@ -1834,6 +1877,28 @@ function fmtShortDate(iso){
   return new Date(y, m-1, d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
 }
 
+// Shared by the initial render and by updateMLBLiveStats -- pulled out so a
+// real lineup posting mid-afternoon (well before first pitch, confirmed
+// against MLB's own boxscore API) can trigger a live re-pick of the day's
+// Suggested Parlay / HR Special using the same exact logic, not a
+// reimplementation of it.
+function mlbParlayCardsHtml(dayData, selectedDate){
+  const prevDay = MLB_DATA.days[mlbPrevDateStr(selectedDate)];
+  const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
+  const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
+  const hrRealCount = hrLegs.filter(l => l.edge != null).length;
+  return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
+      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"
+    })
+    + parlayCardHtml(hrLegs, 'MLB', {
+        title: 'HR SPECIAL', accentClass: 'parlay-hr',
+        note: hrRealCount
+          ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
+          : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
+        emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
+      });
+}
+
 function renderMLBGames(selectedDate){
   selectedDate = selectedDate || MLB_DATA.today;
   populateMlbDaySelect(selectedDate);
@@ -1865,20 +1930,7 @@ function renderMLBGames(selectedDate){
     return;
   }
 
-  const prevDay = MLB_DATA.days[mlbPrevDateStr(selectedDate)];
-  const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
-  const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
-  const hrRealCount = hrLegs.filter(l => l.edge != null).length;
-  root.innerHTML = parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
-      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"
-    })
-    + parlayCardHtml(hrLegs, 'MLB', {
-        title: 'HR SPECIAL', accentClass: 'parlay-hr',
-        note: hrRealCount
-          ? `top Anytime HR picks -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
-          : `model's highest Anytime HR probabilities -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
-        emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
-      });
+  root.innerHTML = `<div id="mlb-parlay-cards">${mlbParlayCardsHtml(dayData, selectedDate)}</div>`;
 
   dayData.games.forEach((g, idx) => {
     const card = document.createElement("div");
@@ -2154,6 +2206,15 @@ async function updateMLBLiveStats(){
   // id only exists in the DOM when today is the day currently rendered.
   const today = MLB_DATA.today;
   const todayGames = (today && MLB_DATA.days[today] && MLB_DATA.days[today].games) || [];
+  // Set whenever a real posted lineup changes a prop's confirmed_starter
+  // value below -- MLB's own boxscore API carries the real battingOrder as
+  // soon as the lineup is official, confirmed directly against a live
+  // Pre-Game boxscore ~50 minutes before first pitch, not just once the
+  // game starts. When that happens mid-poll, the day's parlay cards and
+  // that game's Same Game Parlay get regenerated from the now-accurate
+  // data below, instead of staying stuck on the pregame top-9-by-PA guess
+  // for the rest of the day.
+  let anyLineupChanged = false;
   for(let idx=0; idx<todayGames.length; idx++){
     const g = todayGames[idx];
     const nowEl = document.getElementById(`mlb-nowline-${today}-${idx}`);
@@ -2220,6 +2281,18 @@ async function updateMLBLiveStats(){
         const flagEl = propRow.querySelector('.lineup-flag');
         if(flagEl) flagEl.innerHTML = (lineupPosted && !starters.has(pid))
           ? '<span class="miss">&#9888; NOT in today\'s lineup</span>' : '';
+        // Feed the real posted lineup back into the actual prop data (not
+        // just the DOM badge) so the parlay-builder functions -- which read
+        // confirmed_starter straight off g.props -- pick up the truth too.
+        if(lineupPosted){
+          const isStarter = starters.has(pid);
+          (g.props||[]).forEach(p => {
+            if(p.player_id === pid && p.section === 'Batting' && p.confirmed_starter !== isStarter){
+              p.confirmed_starter = isStarter;
+              anyLineupChanged = true;
+            }
+          });
+        }
       }
     }
 
@@ -2245,6 +2318,15 @@ async function updateMLBLiveStats(){
         if(flagEl) flagEl.innerHTML = '<span class="hit">&#10003; Confirmed starter</span>';
       }
     }
+  }
+
+  if(anyLineupChanged){
+    const parlayWrap = document.getElementById('mlb-parlay-cards');
+    if(parlayWrap) parlayWrap.innerHTML = mlbParlayCardsHtml(MLB_DATA.days[today], today);
+    todayGames.forEach((g, idx) => {
+      const sgpEl = document.getElementById(`mlb-sgp-${today}-${idx}`);
+      if(sgpEl) sgpEl.outerHTML = mlbSameGameParlaySection(today, g, idx);
+    });
   }
 }
 updateMLBLiveStats();

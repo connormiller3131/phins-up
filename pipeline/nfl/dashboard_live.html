@@ -179,7 +179,9 @@
   .track-record-row:last-of-type{border-bottom:none;}
   .track-record-market{font-weight:600;color:var(--text);min-width:150px;}
   .track-record-n{color:var(--text-dim);min-width:50px;}
-  .track-record-acc{color:var(--green);font-weight:600;margin-left:auto;}
+  .track-record-acc{color:var(--text);font-weight:600;margin-left:auto;}
+  .track-record-acc.hit{color:var(--green);}
+  .track-record-acc.miss{color:var(--red);}
   .game-top{
     display:flex;
     justify-content:space-between;
@@ -1762,35 +1764,33 @@ function mlbTrackRecordTableHtml(byMarket, dates){
   if(!markets.length){
     return `<div class="placeholder parlay-empty">No graded MLB props yet -- check back once a day has finished.</div>`;
   }
-  let totalN = 0, totalCorrect = 0, totalBrier = 0;
+  let totalN = 0, totalCorrect = 0;
   const rows = markets.map(mk => {
     const b = byMarket[mk];
-    totalN += b.n; totalCorrect += b.correct; totalBrier += b.brierSum;
-    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n, avgProb = b.modelProbSum / b.n, brier = b.brierSum / b.n;
+    totalN += b.n; totalCorrect += b.correct;
+    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n;
     // The naive "always guess whichever side actually happened more often"
-    // baseline -- a market where the model's own accuracy barely beats this
-    // has little real skill above just knowing the base rate.
+    // baseline -- a market where accuracy barely beats this has little real
+    // skill above just knowing the base rate (this is what made Anytime
+    // HR's raw 89% accuracy misleading -- baseline there is also ~89%).
     const baseline = Math.max(actualRate, 1 - actualRate);
-    const deltaPts = Math.round((acc - baseline) * 100);
-    const deltaLabel = deltaPts > 0 ? `+${deltaPts}pts vs. guessing` : (deltaPts < 0 ? `${deltaPts}pts vs. guessing` : `even with guessing`);
-    const deltaClass = deltaPts > 2 ? 'hit' : (deltaPts < -2 ? 'miss' : '');
-    const actualLabel = mk === 'Moneyline' ? 'actual home win' : 'actual-over';
+    const deltaClass = (acc - baseline) > 0.02 ? 'hit' : ((acc - baseline) < -0.02 ? 'miss' : '');
     return `
       <div class="track-record-row">
         <span class="track-record-market">${mk}</span>
         <span class="track-record-n">n=${b.n}</span>
-        <span class="track-record-acc">${(acc*100).toFixed(0)}% accuracy <span class="${deltaClass}" style="font-weight:600;">(${deltaLabel})</span></span>
-        <span class="p-exp">baseline ${(baseline*100).toFixed(0)}% &middot; Brier ${brier.toFixed(3)} &middot; ${actualLabel} ${(actualRate*100).toFixed(0)}% &middot; avg model ${(avgProb*100).toFixed(0)}%</span>
+        <span class="track-record-acc ${deltaClass}">${(acc*100).toFixed(0)}% accuracy</span>
+        <span class="p-exp">baseline ${(baseline*100).toFixed(0)}%</span>
       </div>
     `;
   }).join('');
-  const overallAcc = totalCorrect / totalN, overallBrier = totalBrier / totalN;
+  const overallAcc = totalCorrect / totalN;
   const range = dates.length ? `${fmtShortDate(dates[0])}–${fmtShortDate(dates[dates.length-1])}` : '';
   return `
     <details class="props-toggle" id="mlb-track-record">
-      <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy &middot; Brier ${overallBrier.toFixed(3)})</span></summary>
+      <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
-      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs -- Moneyline uses the model's own home-win probability graded against real final scores, same table as the props. "Accuracy" is whether the side the model favored (home/away, over/under the line, or yes/no for Anytime HR) matched reality; "baseline" is the accuracy you'd get by always guessing whichever side actually happens more often for that market, with zero model skill. The green/red "pts vs. guessing" number is accuracy minus that baseline -- the real tell of skill, since raw accuracy alone can look great on a lopsided market for free (Anytime HR sits at ~89% accuracy, but so does just always guessing "no," since a real home run only happens ~11% of the time -- that market currently shows +0 to +1pts, i.e. no real edge above knowing the base rate). Brier score (lower is better, 0=perfect, 0.25=coin flip on a 50/50 line) is the more rigorous single number behind the same idea.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- a market whose accuracy sits close to its baseline (colored red) isn't showing real edge no matter how high the number looks; clearly ahead of baseline (green) is the real tell.</div>
     </details>
   `;
 }

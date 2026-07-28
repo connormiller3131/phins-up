@@ -204,10 +204,10 @@ def get_starters(target_season):
 YARDAGE_LADDER_OFFSETS = (-20, -10, 0, 10, 20)
 
 
-def yardage_ladder(pred_mean, resid_std, own_avg):
-    """Lines in steps of 10 around the player's current trailing average,
-    e.g. 190/200/210/220/230 for a receiver averaging ~207 yds/game."""
-    base = max(round(own_avg / 10) * 10, 10)
+def yardage_ladder(pred_mean, resid_std):
+    """Lines in steps of 10 around the model's own predicted mean, e.g.
+    190/200/210/220/230 for a game the model projects at ~207 yds."""
+    base = max(round(pred_mean / 10) * 10, 10)
     ladder = []
     for off in YARDAGE_LADDER_OFFSETS:
         line = base + off
@@ -243,7 +243,16 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
         return None  # fewer than MIN_GAMES of trailing history (rookie/deep backup) -- no basis to project
     feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]]
     pred_mean = float(prep["model"].predict(feat_row)[0])
-    line = round(own_avg * 2) / 2
+    # Anchored on the model's own predicted mean (which already blends own
+    # average, opponent, weather, rest, and implied team total), not the
+    # player's raw own-average alone -- same fix as MLB's project_count_stat.
+    # Anchoring on own_avg let a below-average player's line round down to
+    # an easy bar relative to what the model actually expected (e.g. a
+    # plus matchup or a dome game the raw average doesn't capture), while a
+    # real workhorse's higher own_avg rounded up to a harder one -- same
+    # "probability of clearing your own line ends up negatively correlated
+    # with real production" issue confirmed on MLB's real data.
+    line = round(pred_mean * 2) / 2
     over_prob = float(yardage_over_prob(pred_mean, prep["resid_std"], line))
     out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(over_prob, 3),
@@ -251,7 +260,7 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
         "games_played": int(own.loc[player_id, "games_played"]),
     }
     if with_ladder:
-        out["ladder"] = yardage_ladder(pred_mean, prep["resid_std"], own_avg)
+        out["ladder"] = yardage_ladder(pred_mean, prep["resid_std"])
     return out
 
 

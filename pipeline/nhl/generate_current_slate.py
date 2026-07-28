@@ -25,6 +25,7 @@ sys.path.insert(0, str(ROOT))
 from pipeline.nhl.games import load_games
 from pipeline.nhl.elo_model import run_elo
 from pipeline.nhl.team_map import normalize_team
+from pipeline.nhl.goalie_ratings import team_recent_save_pct
 
 DATA_DIR = ROOT / "data" / "nhl"
 SCHEDULE_URL = "https://api-web.nhle.com/v1/schedule"
@@ -113,20 +114,24 @@ def projected_total(rates, home_team, away_team):
 
 
 def team_stats_for_dropdown(rates, team):
-    """Team Stats dropdown data for NHL -- goals for/against is genuinely
-    all the real per-team data this pipeline has (api-web.nhle.com's
-    schedule endpoint used here doesn't return shots/power-play/penalty-
-    minute detail; that would need a different per-game boxscore endpoint,
-    a real new data pull, not something to fake from what's already here).
+    """Team Stats dropdown data for NHL. goals for/against comes from the
+    schedule endpoint's trailing rates; goalie_save_pct comes from the
+    separate real boxscore pull (pull_goalie_games.py) -- shown as plain
+    real recent form, not a model input (backtest_goals_model.py found no
+    predictive signal there, so projected_score doesn't use it).
     Returns None if the team has no trailing scoring history yet."""
     if team not in rates.index:
         return None
     r = rates.loc[team]
     if pd.isna(r["scored"]) or pd.isna(r["allowed"]):
         return None
+    defense = {"goals_allowed_per_game": round(float(r["allowed"]), 2)}
+    save_pct = team_recent_save_pct(team)
+    if save_pct is not None:
+        defense["goalie_save_pct"] = round(save_pct, 3)
     return {
         "offense": {"goals_per_game": round(float(r["scored"]), 2)},
-        "defense": {"goals_allowed_per_game": round(float(r["allowed"]), 2)},
+        "defense": defense,
     }
 
 

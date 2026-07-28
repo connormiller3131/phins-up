@@ -97,6 +97,13 @@ jobs:
       - name: Pull latest NHL game results
         run: python pipeline/nhl/pull_games.py
 
+      # data/nhl/goalie_game_logs.parquet is git-committed (a narrow
+      # .gitignore exception -- see the comment there), so this checkout
+      # already has the full historical backfill; this only needs to pull
+      # whatever games have completed since the last run, which is fast.
+      - name: Pull latest NHL goalie boxscores
+        run: python pipeline/nhl/pull_goalie_games.py
+
       - name: Fit/backtest NHL win-probability model
         run: python pipeline/nhl/backtest_win_prob.py
 
@@ -119,7 +126,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for i in 1 2 3 4 5; do
-            git add docs/index.html docs/404.html docs/results/
+            git add docs/index.html docs/404.html docs/results/ data/nhl/goalie_game_logs.parquet
             if git diff --quiet --cached; then
               echo "Nothing to commit."
               break

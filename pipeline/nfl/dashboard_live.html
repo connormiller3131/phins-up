@@ -1001,7 +1001,10 @@ function nhlTeamStatsRows(stats, mode){
   }
   const d = stats.defense;
   if(!d) return '<div class="p-exp">No trailing data yet.</div>';
-  return `<div class="team-stats-row"><span class="team-stats-cat">Goals Allowed</span><span class="team-stats-item">Goals Allowed/G <b>${d.goals_allowed_per_game}</b></span></div>`;
+  const saveRow = d.goalie_save_pct != null
+    ? `<span class="team-stats-item">Goalie Save% (L10) <b>${pctFrac(d.goalie_save_pct)}</b></span>`
+    : '';
+  return `<div class="team-stats-row"><span class="team-stats-cat">Goals Allowed</span><span class="team-stats-item">Goals Allowed/G <b>${d.goals_allowed_per_game}</b></span>${saveRow}</div>`;
 }
 
 const TEAM_STATS_ROWS_FN = {nfl: nflTeamStatsRows, mlb: mlbTeamStatsRows, nhl: nhlTeamStatsRows};

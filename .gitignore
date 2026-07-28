@@ -2,7 +2,18 @@
 .claude/
 __pycache__/
 *.pyc
-data/
+data/*
+# Real per-game NHL goalie boxscore data -- committed as a one-time seed
+# (unlike every other pipeline's pulled data) because rebuilding it from
+# scratch means ~9,800 individual rate-limited API calls (~25hrs observed),
+# which can't run inside a single CI job. refresh.yml pulls only the small
+# incremental delta (newly completed games) each run and commits it back
+# here, same as docs/index.html. A git-ignored directory hides its
+# contents from negation patterns, so this has to explicitly re-include
+# each path segment down to the one real file.
+!data/nhl
+data/nhl/*
+!data/nhl/goalie_game_logs.parquet
 notebooks_out/
 pipeline/nfl/*_filled.html
 pipeline/nfl/*_artifact*.html

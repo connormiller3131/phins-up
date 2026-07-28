@@ -765,6 +765,14 @@ const NHL_WEEK_DAYS = Object.keys(NHL_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+// Shared by MLB/NFL/NHL: the same trailing-average-based projection that
+// already feeds the projected TOTAL, just split back out by team instead of
+// summed -- home_exp/away_exp were always computed separately internally,
+// this just surfaces both instead of only their sum.
+function projectedScoreLine(awayAbbr, homeAbbr, awayVal, homeVal){
+  if(awayVal == null || homeVal == null) return '';
+  return `<div class="stat-line" style="margin-top:4px;justify-content:flex-start;gap:6px;"><span>Projected score</span><b>${awayAbbr} ${awayVal} &ndash; ${homeAbbr} ${homeVal}</b></div>`;
+}
 function fmtSpread(s, isHome){
   if(s===null || s===undefined) return "—";
   const v = isHome ? s : -s;
@@ -1059,6 +1067,7 @@ function renderGames(week){
         </div>
       </div>
       <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b>${g.model_total_points != null ? `<span class="p-exp">Projected: ${g.model_total_points}</span>` : ''}</div>
+      ${projectedScoreLine(g.awayAbbr, g.homeAbbr, g.model_away_points, g.model_home_points)}
       ${propsTable(g.props)}
       ${nflSameGameParlaySection(g, idx)}
     `;
@@ -2037,6 +2046,7 @@ function renderMLBGames(selectedDate){
         </div>
       </div>
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b>${g.model_total_runs != null ? `<span class="p-exp">Projected: ${g.model_total_runs}</span>` : ''}</div>` : (g.model_total_runs != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Projected run total</span><b>${g.model_total_runs}</b></div>` : "")}
+      ${projectedScoreLine(g.awayAbbr, g.homeAbbr, g.model_away_runs, g.model_home_runs)}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
       ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
       ${mlbSameGameParlaySection(selectedDate, g, idx)}
@@ -2144,6 +2154,7 @@ function renderNHLGames(selectedDate){
         </div>
       </div>
       ${g.model_total_goals != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Projected goal total</span><b>${g.model_total_goals}</b></div>` : ''}
+      ${projectedScoreLine(g.awayAbbr, g.homeAbbr, g.model_away_goals, g.model_home_goals)}
       <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
     `;
     root.appendChild(card);

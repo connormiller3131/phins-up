@@ -270,22 +270,30 @@ PARK_FACTORS = {
 }
 
 
-def projected_total(rates, home_team, away_team):
+def projected_score(rates, home_team, away_team):
     """Classic 'blend your own scoring rate with the opponent's allowed
     rate' projection -- average of (home's own scoring, what away allows)
-    for the home side and the mirror for away, summed for a game total,
-    then scaled by the home park's run-scoring tendency (the game is
-    played entirely in the home team's park, so it applies to the whole
-    total, not just one side)."""
+    for the home side and the mirror for away, each scaled by the home
+    park's run-scoring tendency (the game is played entirely in the home
+    team's park, so it applies to both sides, not just the total). Returns
+    (home_exp, away_exp), or (None, None) if either team has no trailing
+    scoring history yet."""
     if home_team not in rates.index or away_team not in rates.index:
-        return None
+        return None, None
     h, a = rates.loc[home_team], rates.loc[away_team]
     if pd.isna(h["scored"]) or pd.isna(h["allowed"]) or pd.isna(a["scored"]) or pd.isna(a["allowed"]):
-        return None
-    home_exp = (h["scored"] + a["allowed"]) / 2
-    away_exp = (a["scored"] + h["allowed"]) / 2
+        return None, None
     park_factor = PARK_FACTORS.get(home_team, 1.0)
-    return round(float((home_exp + away_exp) * park_factor), 1)
+    home_exp = (h["scored"] + a["allowed"]) / 2 * park_factor
+    away_exp = (a["scored"] + h["allowed"]) / 2 * park_factor
+    return round(float(home_exp), 1), round(float(away_exp), 1)
+
+
+def projected_total(rates, home_team, away_team):
+    home_exp, away_exp = projected_score(rates, home_team, away_team)
+    if home_exp is None:
+        return None
+    return round(home_exp + away_exp, 1)
 
 
 def elo_predictions(games_df, slate):
@@ -942,6 +950,9 @@ def main(today=None):
             good_value_home = elo_home > market["home_fair_prob"]
             good_value_away = (1 - elo_home) > (1 - market["home_fair_prob"])
 
+        model_home_runs, model_away_runs = projected_score(scoring_rates, g["home_team"], g["away_team"])
+        model_total_runs = round(model_home_runs + model_away_runs, 1) if model_home_runs is not None else None
+
         games_out.append({
             "target_date": g["target_date"],
             "awayAbbr": g["away_team"], "homeAbbr": g["home_team"],
@@ -954,7 +965,9 @@ def main(today=None):
             "homeProbablePitcherId": g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
             "elo_home_prob": round(elo_home, 4),
             "team_elo_home_prob": round(float(team_elo_preds[i]), 4),
-            "model_total_runs": projected_total(scoring_rates, g["home_team"], g["away_team"]),
+            "model_total_runs": model_total_runs,
+            "model_home_runs": model_home_runs,
+            "model_away_runs": model_away_runs,
             "market": market,
             "good_value_home": good_value_home,
             "good_value_away": good_value_away,

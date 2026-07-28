@@ -116,15 +116,24 @@ def current_team_scoring_rates(games_df):
     return latest.set_index("team")[["trailing_scored", "trailing_allowed"]]
 
 
-def projected_total(rates, home_team, away_team):
+def projected_score(rates, home_team, away_team):
+    """Returns (home_exp, away_exp), or (None, None) if either team has no
+    trailing scoring history yet."""
     if home_team not in rates.index or away_team not in rates.index:
-        return None
+        return None, None
     h, a = rates.loc[home_team], rates.loc[away_team]
     if pd.isna(h["trailing_scored"]) or pd.isna(h["trailing_allowed"]) or pd.isna(a["trailing_scored"]) or pd.isna(a["trailing_allowed"]):
-        return None
+        return None, None
     home_exp = (h["trailing_scored"] + a["trailing_allowed"]) / 2
     away_exp = (a["trailing_scored"] + h["trailing_allowed"]) / 2
-    return round(float(home_exp + away_exp), 1)
+    return round(float(home_exp), 1), round(float(away_exp), 1)
+
+
+def projected_total(rates, home_team, away_team):
+    home_exp, away_exp = projected_score(rates, home_team, away_team)
+    if home_exp is None:
+        return None
+    return round(home_exp + away_exp, 1)
 
 
 def elo_predictions_for_season(games_df, season_sched):
@@ -481,6 +490,9 @@ def main():
                 good_value_home = elo_home_prob > market_home_prob
                 good_value_away = (1 - elo_home_prob) > (1 - market_home_prob)
 
+            model_home_points, model_away_points = projected_score(scoring_rates, home, away)
+            model_total_points = round(model_home_points + model_away_points, 1) if model_home_points is not None else None
+
             games_out.append({
                 "awayAbbr": away, "homeAbbr": home,
                 "awayName": names.get(away, away), "homeName": names.get(home, home),
@@ -490,7 +502,9 @@ def main():
                 "location": row.location if pd.notna(row.location) else None,
                 "spread_line": row.spread_line if pd.notna(row.spread_line) else None,
                 "total_line": row.total_line if pd.notna(row.total_line) else None,
-                "model_total_points": projected_total(scoring_rates, home, away),
+                "model_total_points": model_total_points,
+                "model_home_points": model_home_points,
+                "model_away_points": model_away_points,
                 "mlAway": int(row.away_moneyline) if pd.notna(row.away_moneyline) else None,
                 "mlHome": int(row.home_moneyline) if pd.notna(row.home_moneyline) else None,
                 "market_home_prob": market_home_prob,

@@ -92,15 +92,24 @@ def current_team_scoring_rates(games_df):
     return long.groupby("team").tail(1).set_index("team")[["scored", "allowed"]]
 
 
-def projected_total(rates, home_team, away_team):
+def projected_score(rates, home_team, away_team):
+    """Returns (home_exp, away_exp), or (None, None) if either team has no
+    trailing scoring history yet."""
     if home_team not in rates.index or away_team not in rates.index:
-        return None
+        return None, None
     h, a = rates.loc[home_team], rates.loc[away_team]
     if pd.isna(h["scored"]) or pd.isna(h["allowed"]) or pd.isna(a["scored"]) or pd.isna(a["allowed"]):
-        return None
+        return None, None
     home_exp = (h["scored"] + a["allowed"]) / 2
     away_exp = (a["scored"] + h["allowed"]) / 2
-    return round(float(home_exp + away_exp), 1)
+    return round(float(home_exp), 1), round(float(away_exp), 1)
+
+
+def projected_total(rates, home_team, away_team):
+    home_exp, away_exp = projected_score(rates, home_team, away_team)
+    if home_exp is None:
+        return None
+    return round(home_exp + away_exp, 1)
 
 
 def elo_predictions(games_df, slate):
@@ -172,6 +181,8 @@ def main(today=None):
         # Renamed to match the MLB/NFL template's existing field naming
         # convention (awayAbbr/homeAbbr/awayName/homeName/gameDatetime) --
         # the frontend is shared across all three sports' tabs.
+        model_home_goals, model_away_goals = projected_score(scoring_rates, g["home_team"], g["away_team"])
+        model_total_goals = round(model_home_goals + model_away_goals, 1) if model_home_goals is not None else None
         out_game = {
             "awayAbbr": g["away_team"], "homeAbbr": g["home_team"],
             "awayName": g["away_name"], "homeName": g["home_name"],
@@ -179,7 +190,9 @@ def main(today=None):
             "already_played": g["already_played"],
             "away_score": g["away_score"], "home_score": g["home_score"],
             "elo_home_prob": round(float(elo_preds[i]), 4),
-            "model_total_goals": projected_total(scoring_rates, g["home_team"], g["away_team"]),
+            "model_total_goals": model_total_goals,
+            "model_home_goals": model_home_goals,
+            "model_away_goals": model_away_goals,
         }
         by_date.setdefault(g["target_date"], []).append(out_game)
 

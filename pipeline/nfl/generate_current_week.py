@@ -30,6 +30,7 @@ from pipeline.nfl.props.prop_data import build_prop_table
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
 from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
+from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from scipy.stats import norm
 
@@ -435,6 +436,7 @@ def main():
     names = team_names()
     games_df = load_games()
     scoring_rates = current_team_scoring_rates(games_df)
+    team_stats_table = build_team_stats_table()
     season_sched = get_season_schedule(target_season)
     all_weeks = sorted(season_sched["week"].unique().tolist())
     print(f"Season {target_season}: generating weeks {all_weeks[0]}-{all_weeks[-1]}, current={current_week}")
@@ -514,6 +516,8 @@ def main():
                 "roof": row.roof if pd.notna(row.roof) else None,
                 "away_rest": int(row.away_rest) if pd.notna(row.away_rest) else None,
                 "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,
+                "awayTeamStats": current_team_stats(team_stats_table, away),
+                "homeTeamStats": current_team_stats(team_stats_table, home),
                 "already_played": bool(already_played),
                 "props": props,
             })

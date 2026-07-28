@@ -112,6 +112,24 @@ def projected_total(rates, home_team, away_team):
     return round(home_exp + away_exp, 1)
 
 
+def team_stats_for_dropdown(rates, team):
+    """Team Stats dropdown data for NHL -- goals for/against is genuinely
+    all the real per-team data this pipeline has (api-web.nhle.com's
+    schedule endpoint used here doesn't return shots/power-play/penalty-
+    minute detail; that would need a different per-game boxscore endpoint,
+    a real new data pull, not something to fake from what's already here).
+    Returns None if the team has no trailing scoring history yet."""
+    if team not in rates.index:
+        return None
+    r = rates.loc[team]
+    if pd.isna(r["scored"]) or pd.isna(r["allowed"]):
+        return None
+    return {
+        "offense": {"goals_per_game": round(float(r["scored"]), 2)},
+        "defense": {"goals_allowed_per_game": round(float(r["allowed"]), 2)},
+    }
+
+
 def elo_predictions(games_df, slate):
     with open(ROOT / "notebooks_out" / "nhl_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
@@ -193,6 +211,8 @@ def main(today=None):
             "model_total_goals": model_total_goals,
             "model_home_goals": model_home_goals,
             "model_away_goals": model_away_goals,
+            "awayTeamStats": team_stats_for_dropdown(scoring_rates, g["away_team"]),
+            "homeTeamStats": team_stats_for_dropdown(scoring_rates, g["home_team"]),
         }
         by_date.setdefault(g["target_date"], []).append(out_game)
 

@@ -393,6 +393,20 @@
   .stat-line b{color:var(--text);font-weight:600;}
   .stat-line.model b{color:var(--blue);}
 
+  .team-stats-controls{display:flex;gap:8px;margin:6px 0 10px;}
+  .team-stats-controls select{
+    font-family:var(--mono);font-size:12px;background:var(--panel);
+    color:var(--text);border:1px solid var(--line);border-radius:6px;padding:4px 6px;
+  }
+  .team-stats-row{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+    font-family:var(--mono);font-size:12px;color:var(--text-dim);
+    padding:6px 0;border-bottom:1px solid var(--line);
+  }
+  .team-stats-row:last-of-type{border-bottom:none;}
+  .team-stats-cat{font-weight:700;color:var(--text);min-width:90px;text-transform:uppercase;font-size:10.5px;letter-spacing:.03em;}
+  .team-stats-item b{color:var(--text);font-weight:600;}
+
   .prob-bar-wrap{margin:10px 0 6px;}
   .prob-bar{
     display:flex;height:20px;border-radius:5px;overflow:hidden;
@@ -773,6 +787,110 @@ function projectedScoreLine(awayAbbr, homeAbbr, awayVal, homeVal){
   if(awayVal == null || homeVal == null) return '';
   return `<div class="stat-line" style="margin-top:4px;justify-content:flex-start;gap:6px;"><span>Projected score</span><b>${awayAbbr} ${awayVal} &ndash; ${homeAbbr} ${homeVal}</b></div>`;
 }
+
+// ---- Team Stats dropdown: shared across all 3 sports (each team's own
+// trailing offense/defense splits -- real per-game data, not model-fed
+// features). Same "team" + "offense/defense" selects for every sport;
+// which categories show up under each depends on what real data actually
+// exists for that sport (see each sport's *TeamStatsRows below).
+function pctFrac(x){ return x == null ? '—' : (x*100).toFixed(1)+'%'; }
+
+function nflTeamStatsRows(stats, mode){
+  const s = stats[mode];
+  if(!s) return '<div class="p-exp">No trailing data yet.</div>';
+  const categories = mode === 'offense' ? ['passing','rushing','receiving'] : ['passing','rushing'];
+  const labels = {passing:'Passing', rushing:'Rushing', receiving:'Receiving'};
+  const rows = categories.map(cat => {
+    const c = s[cat];
+    if(!c) return '';
+    const items = [
+      `Yds/G <b>${c.yds_per_game ?? '—'}</b>`, `Yds/Att <b>${c.yds_per_att ?? '—'}</b>`,
+      `TD/G <b>${c.td_per_game ?? '—'}</b>`, `TD/Att <b>${pctFrac(c.td_per_att)}</b>`,
+    ];
+    if('int_per_game' in c) items.push(`INT/G <b>${c.int_per_game}</b>`);
+    if('fum_per_game' in c) items.push(`Fum/G <b>${c.fum_per_game}</b>`);
+    return `<div class="team-stats-row"><span class="team-stats-cat">${labels[cat]}</span>${items.map(i => `<span class="team-stats-item">${i}</span>`).join('')}</div>`;
+  }).join('');
+  const ptsLabel = mode === 'offense' ? 'Points For/G' : 'Points Allowed/G';
+  return rows + `<div class="team-stats-row"><span class="team-stats-cat">Scoring</span><span class="team-stats-item">${ptsLabel} <b>${s.points_per_game ?? '—'}</b></span></div>`;
+}
+
+function mlbTeamStatsRows(stats, mode){
+  if(mode === 'offense'){
+    const b = stats.offense && stats.offense.batting;
+    if(!b) return '<div class="p-exp">No trailing data yet.</div>';
+    return `<div class="team-stats-row"><span class="team-stats-cat">Batting</span>
+      <span class="team-stats-item">H/G <b>${b.hits_per_game}</b></span>
+      <span class="team-stats-item">TB/G <b>${b.total_bases_per_game}</b></span>
+      <span class="team-stats-item">HR/G <b>${b.hr_per_game}</b></span>
+      <span class="team-stats-item">BB/G <b>${b.bb_per_game}</b></span>
+      <span class="team-stats-item">K/G <b>${b.k_per_game}</b></span>
+      <span class="team-stats-item">RBI/G <b>${b.rbi_per_game}</b></span>
+    </div>`;
+  }
+  const p = stats.defense && stats.defense.pitching;
+  if(!p) return '<div class="p-exp">No trailing data yet.</div>';
+  return `<div class="team-stats-row"><span class="team-stats-cat">Pitching</span>
+    <span class="team-stats-item">ERA* <b>${p.era ?? '—'}</b></span>
+    <span class="team-stats-item">K/G <b>${p.k_per_game}</b></span>
+    <span class="team-stats-item">H Allowed/G <b>${p.hits_allowed_per_game}</b></span>
+    <span class="team-stats-item">BB Allowed/G <b>${p.bb_allowed_per_game}</b></span>
+    <span class="team-stats-item">Runs Allowed/G <b>${p.runs_allowed_per_game}</b></span>
+  </div>
+  <div class="p-exp" style="margin-top:4px;">*Total-runs-allowed based, not true ERA -- Statcast's pitch-level feed can't separate earned from unearned runs (that needs an official scorer's judgment call).</div>`;
+}
+
+function nhlTeamStatsRows(stats, mode){
+  if(mode === 'offense'){
+    const o = stats.offense;
+    if(!o) return '<div class="p-exp">No trailing data yet.</div>';
+    return `<div class="team-stats-row"><span class="team-stats-cat">Scoring</span><span class="team-stats-item">Goals/G <b>${o.goals_per_game}</b></span></div>`;
+  }
+  const d = stats.defense;
+  if(!d) return '<div class="p-exp">No trailing data yet.</div>';
+  return `<div class="team-stats-row"><span class="team-stats-cat">Goals Allowed</span><span class="team-stats-item">Goals Allowed/G <b>${d.goals_allowed_per_game}</b></span></div>`;
+}
+
+const TEAM_STATS_ROWS_FN = {nfl: nflTeamStatsRows, mlb: mlbTeamStatsRows, nhl: nhlTeamStatsRows};
+
+function teamStatsSection(sport, containerId, idx, date, awayAbbr, homeAbbr){
+  return `
+    <details class="props-toggle" id="${containerId}" data-idx="${idx}"${date ? ` data-date="${date}"` : ''}>
+      <summary>Team Stats</summary>
+      <div class="team-stats-controls">
+        <select id="${containerId}-team" onchange="updateTeamStatsView('${sport}','${containerId}')">
+          <option value="away">${awayAbbr}</option>
+          <option value="home">${homeAbbr}</option>
+        </select>
+        <select id="${containerId}-mode" onchange="updateTeamStatsView('${sport}','${containerId}')">
+          <option value="offense">Offense</option>
+          <option value="defense">Defense</option>
+        </select>
+      </div>
+      <div id="${containerId}-content" class="team-stats-content"></div>
+    </details>
+  `;
+}
+
+// Looks up the game straight from each sport's already-loaded page data
+// (no need to duplicate stats into DOM attributes) -- containerId encodes
+// enough (sport-specific idx, and date for MLB/NHL) via the data-* attrs
+// set when the section was created.
+function updateTeamStatsView(sport, containerId){
+  const root = document.getElementById(containerId);
+  const idx = parseInt(root.dataset.idx, 10);
+  let g;
+  if(sport === 'nfl') g = CURRENT_NFL_WEEK_DATA.games[idx];
+  else if(sport === 'mlb') g = MLB_DATA.days[root.dataset.date].games[idx];
+  else g = NHL_DATA.days[root.dataset.date].games[idx];
+
+  const isAway = document.getElementById(containerId+'-team').value === 'away';
+  const mode = document.getElementById(containerId+'-mode').value;
+  const stats = isAway ? g.awayTeamStats : g.homeTeamStats;
+  const contentEl = document.getElementById(containerId+'-content');
+  if(!stats){ contentEl.innerHTML = '<div class="p-exp">No trailing stats yet for this team.</div>'; return; }
+  contentEl.innerHTML = TEAM_STATS_ROWS_FN[sport](stats, mode);
+}
 function fmtSpread(s, isHome){
   if(s===null || s===undefined) return "—";
   const v = isHome ? s : -s;
@@ -1030,6 +1148,7 @@ function renderGames(week){
       ${!hasOdds ? '<div class="no-odds-note">No market line posted yet for this game -- showing model projection only.</div>' : ''}
       <div class="result-box" id="result-box-${idx}"></div>
       ${nflBoxScoreSection(g, idx)}
+      ${teamStatsSection('nfl', `nfl-team-stats-${idx}`, idx, null, g.awayAbbr, g.homeAbbr)}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -1074,6 +1193,7 @@ function renderGames(week){
     root.appendChild(card);
     if(g.already_played) loadGameResult(DATA.season, selectedWeek, g, idx);
     if(g.gameday) loadNflBoxScore(idx);
+    updateTeamStatsView('nfl', `nfl-team-stats-${idx}`);
 
     ["away","home"].forEach(side=>{
       const input = card.querySelector(`input[data-side="${side}"]`);
@@ -2021,6 +2141,7 @@ function renderMLBGames(selectedDate){
       </div>
 
       ${boxScoreSection(selectedDate, g, idx)}
+      ${teamStatsSection('mlb', `mlb-team-stats-${selectedDate}-${idx}`, idx, selectedDate, g.awayAbbr, g.homeAbbr)}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -2058,6 +2179,7 @@ function renderMLBGames(selectedDate){
     // attribute's `ontoggle` firing on initial parse, which isn't reliable
     // across browsers.
     if(g.gamePk) loadBoxScore(selectedDate, idx);
+    updateTeamStatsView('mlb', `mlb-team-stats-${selectedDate}-${idx}`);
   });
 
   document.getElementById("mlb-foot").innerHTML =
@@ -2135,6 +2257,7 @@ function renderNHLGames(selectedDate){
         <div class="hold-badge">${finalScoreBadge}</div>
       </div>
       ${nhlBoxScoreSection(selectedDate, g, idx)}
+      ${teamStatsSection('nhl', `nhl-team-stats-${selectedDate}-${idx}`, idx, selectedDate, g.awayAbbr, g.homeAbbr)}
 
       <div class="prob-bar-wrap">
         <div class="prob-bar">
@@ -2159,6 +2282,7 @@ function renderNHLGames(selectedDate){
     `;
     root.appendChild(card);
     loadNhlBoxScore(selectedDate, idx);
+    updateTeamStatsView('nhl', `nhl-team-stats-${selectedDate}-${idx}`);
   });
 
   document.getElementById("nhl-foot").innerHTML =

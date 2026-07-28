@@ -53,6 +53,7 @@ from pipeline.mlb.props.current_state import (
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
 from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
 from pipeline.mlb.team_offense import current_team_woba
+from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
 from pipeline.common.espn_odds import (
     get_scoreboard_events as get_espn_scoreboard_events,
@@ -879,6 +880,7 @@ def main(today=None):
     attach_market_odds(combined_slate)
     attach_espn_fallback_odds(combined_slate)
     scoring_rates = current_team_scoring_rates(games_df)
+    team_stats_table = build_team_stats_table()
 
     print("Fitting batter prop models on full historical data...")
     batter_models = {}
@@ -976,6 +978,8 @@ def main(today=None):
             "already_played": g["already_played"],
             "away_score": g["away_score"],
             "home_score": g["home_score"],
+            "awayTeamStats": current_team_stats(team_stats_table, g["away_team"]),
+            "homeTeamStats": current_team_stats(team_stats_table, g["home_team"]),
         })
         print(f"  {g['target_date']} {g['away_team']} @ {g['home_team']}: model_home={elo_preds[i]:.3f} "
               f"(team-only elo={team_elo_preds[i]:.3f}) market={'yes' if g['market'] else 'no'} props={len(props)}")

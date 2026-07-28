@@ -594,6 +594,61 @@
     white-space:nowrap;
   }
   .count-chip b{color:var(--blue);font-weight:600;}
+  .parlay-add-btn{
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 8px;
+    font-size:10.5px;
+    font-family:var(--mono);
+    font-weight:700;
+    color:var(--text-dim);
+    cursor:pointer;
+  }
+  .parlay-add-btn:hover{border-color:var(--blue);color:var(--blue);}
+  .parlay-add-btn.added{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .builder-panel{
+    background:var(--panel);
+    border:1px solid var(--blue);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:18px;
+  }
+  .builder-title{
+    font-family:var(--disp);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:var(--blue);
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .builder-leg{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    padding:6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .builder-leg:last-of-type{border-bottom:none;}
+  .builder-leg-remove{
+    margin-left:auto;
+    cursor:pointer;
+    color:var(--red);
+    font-weight:700;
+    padding:0 4px;
+  }
+  .builder-summary{
+    font-family:var(--mono);
+    font-size:12px;
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px dashed var(--line);
+  }
+  .builder-summary b{color:var(--blue);}
   .td-chip{
     border-radius:5px;
     padding:2px 8px;
@@ -698,6 +753,8 @@
     <span><i class="sw" style="background:var(--red)"></i>Edge against you &ge; 3%</span>
   </div>
 
+  <div id="parlay-builder-nfl"></div>
+
   <div id="games"></div>
 
   <footer id="foot"></footer>
@@ -725,6 +782,8 @@
   </div>
 
   <div id="mlb-track-record-wrap"></div>
+
+  <div id="parlay-builder-mlb"></div>
 
   <div id="mlb-games"></div>
 
@@ -779,6 +838,100 @@ const NHL_WEEK_DAYS = Object.keys(NHL_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+
+// ---- Build-your-own parlay: pick any prop shown on the page (per sport),
+// see the model's combined probability, and -- only when every picked leg
+// actually has a real DraftKings price -- the real combined odds/implied
+// probability too. Never fabricates a combined market price out of a mix
+// of real and model-only legs (same honesty rule used everywhere else on
+// this site: a MODEL EST. leg has no real price to combine with anything).
+const PARLAY_BUILDER = {mlb: [], nfl: []};
+
+function escAttr(s){
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
+function americanToDecimal(odds){
+  return odds > 0 ? 1 + odds / 100 : 1 + 100 / Math.abs(odds);
+}
+function decimalToAmerican(dec){
+  const net = dec - 1;
+  return net >= 1 ? Math.round(net * 100) : Math.round(-100 / net);
+}
+
+// A button embedded directly in a prop row -- reads its own data back off
+// data-* attributes on click rather than threading a JS object through an
+// inline onclick string, since player names can contain quotes/apostrophes
+// that would otherwise break the generated HTML.
+function parlayAddBtn(sport, key, label, sub, market, prob, dkOdds, dkImplied){
+  if(prob == null) return '';
+  return `<button type="button" class="parlay-add-btn" data-sport="${sport}" data-key="${escAttr(key)}" data-label="${escAttr(label)}" data-sub="${escAttr(sub)}" data-market="${escAttr(market)}" data-prob="${prob}" data-dk-odds="${dkOdds ?? ''}" data-dk-implied="${dkImplied ?? ''}" onclick="handleParlayAddClick(this)">+ parlay</button>`;
+}
+
+function handleParlayAddClick(btn){
+  const d = btn.dataset;
+  const sport = d.sport;
+  const legs = PARLAY_BUILDER[sport];
+  const idx = legs.findIndex(l => l.key === d.key);
+  if(idx >= 0){
+    legs.splice(idx, 1);
+    btn.classList.remove('added');
+  } else {
+    legs.push({
+      key: d.key, label: d.label, sub: d.sub, market: d.market,
+      prob: parseFloat(d.prob),
+      dkOdds: d.dkOdds ? parseFloat(d.dkOdds) : null,
+      dkImplied: d.dkImplied ? parseFloat(d.dkImplied) : null,
+    });
+    btn.classList.add('added');
+  }
+  renderParlayBuilderPanel(sport);
+}
+
+function removeParlayLeg(sport, key){
+  PARLAY_BUILDER[sport] = PARLAY_BUILDER[sport].filter(l => l.key !== key);
+  document.querySelectorAll(`.parlay-add-btn[data-sport="${sport}"][data-key="${CSS.escape(key)}"]`)
+    .forEach(btn => btn.classList.remove('added'));
+  renderParlayBuilderPanel(sport);
+}
+
+function renderParlayBuilderPanel(sport){
+  const root = document.getElementById(`parlay-builder-${sport}`);
+  if(!root) return;
+  const legs = PARLAY_BUILDER[sport];
+  if(!legs.length){
+    root.innerHTML = `<div class="placeholder">Tap "+ parlay" on any prop below to build your own combination -- you'll see the model's combined probability here, plus the real combined odds whenever every leg you've picked has a real DraftKings price.</div>`;
+    return;
+  }
+  const rows = legs.map(l => `
+    <div class="builder-leg">
+      <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
+      <span class="parlay-leg-market">${l.market}</span>
+      <span class="parlay-leg-prob">${l.dkOdds != null ? `<b>${fmtOdds(l.dkOdds)}</b> ` : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this pick">MODEL EST.</span> `}${pct(l.prob)}</span>
+      <span class="builder-leg-remove" onclick="removeParlayLeg('${sport}','${l.key.replace(/'/g,"\\'")}')" title="Remove">&times;</span>
+    </div>
+  `).join('');
+  const combinedProb = legs.reduce((p, l) => p * l.prob, 1);
+  const allReal = legs.every(l => l.dkOdds != null);
+  let marketLine;
+  if(allReal){
+    const combinedDecimal = legs.reduce((p, l) => p * americanToDecimal(l.dkOdds), 1);
+    const combinedAmerican = decimalToAmerican(combinedDecimal);
+    const impliedProb = 1 / combinedDecimal;
+    marketLine = `Real combined odds: <b>${fmtOdds(combinedAmerican)}</b> (market implies ${pct(impliedProb)}) vs. model's <b>${pct(combinedProb)}</b>`;
+  } else {
+    const realCount = legs.filter(l => l.dkOdds != null).length;
+    marketLine = `Model combined probability: <b>${pct(combinedProb)}</b> -- ${realCount ? `${realCount} of ${legs.length} legs have a real DK price, but a combined market price needs all of them to` : `no real DK price posted for any of these legs yet`}`;
+  }
+  root.innerHTML = `
+    <div class="builder-panel">
+      <div class="builder-title">Your parlay (${legs.length} leg${legs.length===1?'':'s'})</div>
+      ${rows}
+      <div class="builder-summary">${marketLine}</div>
+      <div class="p-exp" style="margin-top:4px;">Not betting advice -- assumes independence between legs, which overstates the real combined probability in practice.</div>
+    </div>
+  `;
+}
 // Shared by MLB/NFL/NHL: the same trailing-average-based projection that
 // already feeds the projected TOTAL, just split back out by team instead of
 // summed -- home_exp/away_exp were always computed separately internally,
@@ -933,6 +1086,7 @@ function propStatRow(p){
       <span class="prop-stat-label">Anytime TD</span>
       <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
       ${dk}
+      ${parlayAddBtn('nfl', `${p.player_id}-AnytimeTD`, p.player, p.team, 'Anytime TD', p.model_prob, p.dk_odds, p.dk_implied_prob)}
     </div>`;
   }
   if(p.ladder && p.ladder.length){
@@ -942,6 +1096,7 @@ function propStatRow(p){
       ${sourceBadge(p)}
       <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
+      ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -949,6 +1104,7 @@ function propStatRow(p){
     ${sourceBadge(p)}
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
+    ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -1272,6 +1428,7 @@ async function loadGameResult(season, week, g, idx){
 }
 
 renderGames();
+renderParlayBuilderPanel('nfl');
 
 // ============ MLB ============
 function hrAdvice(p){
@@ -1295,6 +1452,7 @@ function mlbPropStatRow(p){
       <span class="prop-stat-label">Anytime HR</span>
       <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
       ${dkNote}
+      ${parlayAddBtn('mlb', `${p.player_id}-AnytimeHR`, p.player, p.team, 'Anytime HR', p.model_prob, p.dk_over, p.dk_implied_prob)}
     </div>`;
   }
   if(p.ladder && p.ladder.length){
@@ -1305,6 +1463,7 @@ function mlbPropStatRow(p){
       <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
       ${dkNote}
+      ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -1313,6 +1472,7 @@ function mlbPropStatRow(p){
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
     ${dkNote}
+    ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -2197,6 +2357,7 @@ function noVigProb(mlHome, mlAway){
 
 renderMLBGames();
 renderMlbTrackRecord();
+renderParlayBuilderPanel('mlb');
 
 function populateNhlDaySelect(selected){
   const sel = document.getElementById('nhl-day-select');

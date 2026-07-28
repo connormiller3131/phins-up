@@ -31,6 +31,7 @@ from pipeline.nfl.props.current_state import player_current_trailing, defense_cu
 from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
+from pipeline.nfl.team_offense_defense import build_offense_defense_ratings, current_offense_defense_rating
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from scipy.stats import norm
 
@@ -97,6 +98,24 @@ def primetime_label(weekday, gametime):
 SCORING_WINDOW, SCORING_MIN_GAMES = 8, 3
 
 
+def _scoring_trailing_long(games_df):
+    """One row per (team, game): real points scored/allowed plus the
+    walk-forward trailing average of each, for every game a team's played
+    -- the full history, unlike current_team_scoring_rates below which only
+    keeps the latest row per team. Shared so build_points_model can fit on
+    the same real trailing figures the live projection uses."""
+    home = games_df[["season", "week", "game_id", "game_date", "home_team", "home_score", "away_score"]].rename(
+        columns={"home_team": "team", "home_score": "scored", "away_score": "allowed"})
+    away = games_df[["season", "week", "game_id", "game_date", "away_team", "away_score", "home_score"]].rename(
+        columns={"away_team": "team", "away_score": "scored", "home_score": "allowed"})
+    long = pd.concat([home, away], ignore_index=True).sort_values(["team", "game_date"])
+    long["trailing_scored"] = long.groupby("team")["scored"].transform(
+        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
+    long["trailing_allowed"] = long.groupby("team")["allowed"].transform(
+        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
+    return long
+
+
 def current_team_scoring_rates(games_df):
     """Each team's current trailing points-scored/points-allowed (last 8
     games, min 3) -- a plain trailing-average-based projected total, same
@@ -104,20 +123,51 @@ def current_team_scoring_rates(games_df):
     win-probability model and not separately backtested. games_df only
     contains played games, so this naturally carries forward from last
     season during the off-season, same as the deployed Elo ratings do."""
-    home = games_df[["game_date", "home_team", "home_score", "away_score"]].rename(
-        columns={"home_team": "team", "home_score": "scored", "away_score": "allowed"})
-    away = games_df[["game_date", "away_team", "away_score", "home_score"]].rename(
-        columns={"away_team": "team", "away_score": "scored", "home_score": "allowed"})
-    long = pd.concat([home, away], ignore_index=True).sort_values(["team", "game_date"])
-    long["trailing_scored"] = long.groupby("team")["scored"].transform(
-        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
-    long["trailing_allowed"] = long.groupby("team")["allowed"].transform(
-        lambda s: s.shift(1).rolling(SCORING_WINDOW, min_periods=SCORING_MIN_GAMES).mean())
+    long = _scoring_trailing_long(games_df)
     latest = long.sort_values("game_date").groupby("team").tail(1)
     return latest.set_index("team")[["trailing_scored", "trailing_allowed"]]
 
 
-def projected_score(rates, home_team, away_team):
+def build_points_model():
+    """Does real recent offense/defense efficiency (pass yards/attempt,
+    rush yards/carry -- the same signal team_offense_defense.py already
+    computed for Elo blend research, never actually wired into the
+    deployed win-probability model) predict a team's real points scored
+    better than the deployed simple average of (own trailing points
+    scored, opponent trailing points allowed)? Tested on real held-out 2025
+    data in backtest_points_model.py first: yes -- MAE 7.97 -> 7.57, about
+    5% better. Trained here on every real season on file for production,
+    unlike the backtest's split, which held out 2025 specifically to prove
+    the signal generalizes before this was written."""
+    games_df = load_games()
+    scoring = _scoring_trailing_long(games_df)
+
+    ratings = build_offense_defense_ratings()
+    opp = ratings[["game_id", "team", "pass_ypa_def_trail", "rush_ypc_def_trail"]].rename(
+        columns={"team": "_other_team", "pass_ypa_def_trail": "opp_pass_ypa_def", "rush_ypc_def_trail": "opp_rush_ypc_def"})
+    merged = ratings.merge(opp, on="game_id")
+    merged = merged[merged["team"] != merged["_other_team"]].drop(columns=["_other_team"])
+
+    df = scoring.merge(
+        merged[["team", "season", "week", "game_id", "pass_ypa_off_trail", "rush_ypc_off_trail", "opp_pass_ypa_def", "opp_rush_ypc_def"]],
+        on=["team", "season", "week", "game_id"], how="left",
+    )
+    df = df.rename(columns={"pass_ypa_off_trail": "own_pass_ypa_off", "rush_ypc_off_trail": "own_rush_ypc_off"})
+    df = df.dropna(subset=["scored", "trailing_scored", "trailing_allowed"])
+
+    fills = {}
+    for col in ["own_pass_ypa_off", "own_rush_ypc_off", "opp_pass_ypa_def", "opp_rush_ypc_def"]:
+        fill = df[col].mean()
+        fills[col] = 0.0 if pd.isna(fill) else float(fill)
+        df[col] = df[col].fillna(fills[col])
+
+    features = ["trailing_scored", "trailing_allowed", "own_pass_ypa_off", "own_rush_ypc_off", "opp_pass_ypa_def", "opp_rush_ypc_def"]
+    model = RidgeCV(alphas=np.logspace(-2, 3, 25))
+    model.fit(df[features].values, df["scored"].values)
+    return model, fills
+
+
+def projected_score(points_model, points_fills, rates, home_team, away_team):
     """Returns (home_exp, away_exp), or (None, None) if either team has no
     trailing scoring history yet."""
     if home_team not in rates.index or away_team not in rates.index:
@@ -125,16 +175,24 @@ def projected_score(rates, home_team, away_team):
     h, a = rates.loc[home_team], rates.loc[away_team]
     if pd.isna(h["trailing_scored"]) or pd.isna(h["trailing_allowed"]) or pd.isna(a["trailing_scored"]) or pd.isna(a["trailing_allowed"]):
         return None, None
-    home_exp = (h["trailing_scored"] + a["trailing_allowed"]) / 2
-    away_exp = (a["trailing_scored"] + h["trailing_allowed"]) / 2
-    return round(float(home_exp), 1), round(float(away_exp), 1)
+
+    model, fills = points_model, points_fills
+    home_off = current_offense_defense_rating(home_team)
+    away_off = current_offense_defense_rating(away_team)
+    home_pass_off = home_off["pass_ypa_off"] if home_off["pass_ypa_off"] is not None else fills["own_pass_ypa_off"]
+    home_rush_off = home_off["rush_ypc_off"] if home_off["rush_ypc_off"] is not None else fills["own_rush_ypc_off"]
+    away_pass_off = away_off["pass_ypa_off"] if away_off["pass_ypa_off"] is not None else fills["own_pass_ypa_off"]
+    away_rush_off = away_off["rush_ypc_off"] if away_off["rush_ypc_off"] is not None else fills["own_rush_ypc_off"]
+    home_pass_def = home_off["pass_ypa_def"] if home_off["pass_ypa_def"] is not None else fills["opp_pass_ypa_def"]
+    home_rush_def = home_off["rush_ypc_def"] if home_off["rush_ypc_def"] is not None else fills["opp_rush_ypc_def"]
+    away_pass_def = away_off["pass_ypa_def"] if away_off["pass_ypa_def"] is not None else fills["opp_pass_ypa_def"]
+    away_rush_def = away_off["rush_ypc_def"] if away_off["rush_ypc_def"] is not None else fills["opp_rush_ypc_def"]
+
+    home_pred = model.predict([[h["trailing_scored"], h["trailing_allowed"], home_pass_off, home_rush_off, away_pass_def, away_rush_def]])[0]
+    away_pred = model.predict([[a["trailing_scored"], a["trailing_allowed"], away_pass_off, away_rush_off, home_pass_def, home_rush_def]])[0]
+    return round(float(home_pred), 1), round(float(away_pred), 1)
 
 
-def projected_total(rates, home_team, away_team):
-    home_exp, away_exp = projected_score(rates, home_team, away_team)
-    if home_exp is None:
-        return None
-    return round(home_exp + away_exp, 1)
 
 
 def elo_predictions_for_season(games_df, season_sched):
@@ -437,6 +495,7 @@ def main():
     games_df = load_games()
     scoring_rates = current_team_scoring_rates(games_df)
     team_stats_table = build_team_stats_table()
+    points_model, points_fills = build_points_model()
     season_sched = get_season_schedule(target_season)
     all_weeks = sorted(season_sched["week"].unique().tolist())
     print(f"Season {target_season}: generating weeks {all_weeks[0]}-{all_weeks[-1]}, current={current_week}")
@@ -492,7 +551,7 @@ def main():
                 good_value_home = elo_home_prob > market_home_prob
                 good_value_away = (1 - elo_home_prob) > (1 - market_home_prob)
 
-            model_home_points, model_away_points = projected_score(scoring_rates, home, away)
+            model_home_points, model_away_points = projected_score(points_model, points_fills, scoring_rates, home, away)
             model_total_points = round(model_home_points + model_away_points, 1) if model_home_points is not None else None
 
             games_out.append({

@@ -102,7 +102,34 @@ def get_slate_schedule_for_date(target_date):
     return dates[0]["games"] if dates else []
 
 
-def parse_slate(raw_games, target_date):
+def _live_feed_result(game_pk):
+    """Fallback check for a game the schedule endpoint still calls
+    unresolved on a date that's already passed. Confirmed directly on a
+    real case (CLE @ CIN, 2026-07-27, gamePk 824490): the schedule endpoint
+    still reported detailedState "Postponed" with null scores a full day
+    after the game actually finished, while this per-game live-feed
+    endpoint already had detailedState "Final" with the real 6-5 score --
+    the schedule endpoint just doesn't reliably catch up once a
+    postponed/suspended game resumes and completes under the same gamePk.
+    Returns (away_score, home_score) if the live feed confirms Final,
+    else None (including on any request failure -- staying "unresolved"
+    is the safe default, not guessing)."""
+    try:
+        resp = requests.get(f"https://statsapi.mlb.com/api/v1.1/game/{game_pk}/feed/live", timeout=15)
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception:
+        return None
+    if data.get("gameData", {}).get("status", {}).get("detailedState") != "Final":
+        return None
+    teams = data.get("liveData", {}).get("linescore", {}).get("teams", {})
+    away_runs, home_runs = teams.get("away", {}).get("runs"), teams.get("home", {}).get("runs")
+    if away_runs is None or home_runs is None:
+        return None
+    return int(away_runs), int(home_runs)
+
+
+def parse_slate(raw_games, target_date, is_past=False):
     out = []
     for g in raw_games:
         away, home = g["teams"]["away"], g["teams"]["home"]
@@ -130,6 +157,23 @@ def parse_slate(raw_games, target_date):
         # null scores), which was wrongly showing those as played 0-0.
         # detailedState is "Final" only for a genuinely completed game.
         is_final = g.get("status", {}).get("detailedState") == "Final"
+        away_score = away.get("score") if is_final else None
+        home_score = home.get("score") if is_final else None
+
+        # A rained-out/suspended game can still show unresolved here even
+        # once it's genuinely over (see _live_feed_result) -- only worth
+        # the extra request for a date that's already passed, where the
+        # schedule endpoint saying "not Final" is itself suspicious rather
+        # than just "hasn't happened yet."
+        if is_past and not is_final and g.get("gamePk"):
+            live = _live_feed_result(g["gamePk"])
+            if live is not None:
+                away_score, home_score = live
+                is_final = True
+                print(f"  {away_abbr} @ {home_abbr}: schedule endpoint says "
+                      f"{g.get('status', {}).get('detailedState')!r}, live feed confirms Final "
+                      f"{away_score}-{home_score} -- using the live feed result")
+
         out.append({
             "target_date": target_date,
             "away_name": away["team"]["name"], "home_name": home["team"]["name"],
@@ -139,10 +183,67 @@ def parse_slate(raw_games, target_date):
             "game_datetime": g.get("gameDate"),
             "game_pk": g.get("gamePk"),
             "already_played": is_final,
-            "away_score": away.get("score") if is_final else None,
-            "home_score": home.get("score") if is_final else None,
+            "away_score": away_score,
+            "home_score": home_score,
         })
     return out
+
+
+# A rained-out/suspended game can resume and finish hours later, or even
+# the next day (MLB requires a suspended game be completed before the
+# same two teams' next game, which can slip to the next calendar day) --
+# and confirmed directly, the live schedule feed's detailedState doesn't
+# always flip from "Postponed"/"Suspended" to "Final" the instant that
+# happens. Freezing a day's snapshot the moment it turns "past" baked that
+# in-flux state in forever (a real completed game stuck showing "Postponed
+# / no result"). Waiting this many days before permanently finalizing
+# gives the feed time to catch up; a date within the window is instead
+# treated like "today" -- fully regenerated live every run -- until it
+# ages out and gets frozen for good.
+FINALIZE_GRACE_DAYS = 3
+
+
+def eligible_to_finalize(target_date, today_iso):
+    d = datetime.date.fromisoformat(target_date)
+    today = datetime.date.fromisoformat(today_iso)
+    return (today - d).days >= FINALIZE_GRACE_DAYS
+
+
+def repair_stale_finalized_snapshots():
+    """The grace period above is a real, tested guess at how long the
+    schedule endpoint might stay stale, not a guarantee -- confirmed
+    directly, a real postponed-then-resumed PIT@NYY game from 2026-07-21
+    was STILL showing "Postponed" there a full week later, well past the
+    window. A "finalized" snapshot is supposed to be permanent, but any
+    game still stuck as already_played=False in one gets a cheap live-feed
+    recheck on every run regardless of age -- this only ever looks at
+    however many games are still actually stuck (which shrinks over time
+    as real ones resolve), not every finalized game ever written."""
+    fixed = []
+    for path in sorted(RESULTS_DIR.glob("mlb_*.json")):
+        if path.name == "mlb_index.json":
+            continue
+        with open(path, encoding="utf-8") as f:
+            snap = json.load(f)
+        if not snap.get("finalized"):
+            continue
+        changed = False
+        for g in snap.get("games", []):
+            if g.get("already_played") or not g.get("gamePk"):
+                continue
+            live = _live_feed_result(g["gamePk"])
+            if live is None:
+                continue
+            g["away_score"], g["home_score"] = live
+            g["already_played"] = True
+            changed = True
+            fixed.append((snap["date"], g["awayAbbr"], g["homeAbbr"]))
+        if changed:
+            attach_prop_actuals(snap["games"])
+            write_snapshot(snap["date"], snap)
+    if fixed:
+        print(f"Repaired {len(fixed)} previously-stuck postponed game(s) via live-feed recheck: {fixed}")
+    return fixed
 
 
 def week_dates(today=None):
@@ -894,6 +995,8 @@ def main(today=None):
     dates = week_dates(today)
     print(f"Week: {dates[0]} to {dates[-1]} (today={today_iso})")
 
+    repair_stale_finalized_snapshots()
+
     games_df = load_games()
     pitcher_model_path = ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json"
     pitcher_blend_used = pitcher_model_path.exists()
@@ -901,14 +1004,14 @@ def main(today=None):
     days_out = {}
     combined_slate = []
     for d in dates:
-        if d < today_iso:
+        if d < today_iso and eligible_to_finalize(d, today_iso):
             snap = load_finalized_snapshot(d)
             if snap is not None:
                 days_out[d] = snap
                 print(f"  {d}: reused finalized snapshot ({len(snap['games'])} games) -- day is over, never regenerated")
                 continue
         raw_games = get_slate_schedule_for_date(d)
-        combined_slate.extend(parse_slate(raw_games, d))
+        combined_slate.extend(parse_slate(raw_games, d, is_past=(d < today_iso)))
         print(f"  {d}: {len(raw_games)} games scheduled" + (" (needs finalizing -- past day with no snapshot yet)" if d < today_iso else ""))
 
     if not combined_slate:
@@ -1048,7 +1151,7 @@ def main(today=None):
     for d, day_games in sorted(by_date.items()):
         for g in day_games:
             del g["target_date"]
-        finalized = d < today_iso
+        finalized = d < today_iso and eligible_to_finalize(d, today_iso)
         if finalized:
             attach_prop_actuals(day_games)
         day_payload = build_day_payload(d, day_games, elo_params, pitcher_blend_used, finalized)

@@ -30542,9 +30542,9 @@
           "actual": 19
         }
       ],
-      "already_played": false,
-      "away_score": null,
-      "home_score": null
+      "already_played": true,
+      "away_score": 0,
+      "home_score": 2
     },
     {
       "awayAbbr": "BAL",
@@ -32805,9 +32805,9 @@
           "actual": null
         }
       ],
-      "already_played": false,
-      "away_score": null,
-      "home_score": null
+      "already_played": true,
+      "away_score": 3,
+      "home_score": 6
     }
   ]
 }

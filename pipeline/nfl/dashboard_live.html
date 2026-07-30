@@ -575,6 +575,7 @@
   }
   .prop-stat-label{color:var(--text-dim);min-width:96px;}
   .ladder{display:flex;flex-wrap:wrap;gap:5px;}
+  .ladder-row{display:flex;align-items:center;gap:3px;}
   .ladder-chip{
     background:var(--panel-alt);
     border:1px solid var(--line);
@@ -607,6 +608,7 @@
   }
   .parlay-add-btn:hover{border-color:var(--blue);color:var(--blue);}
   .parlay-add-btn.added{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .parlay-add-btn.compact{padding:1px 6px;font-size:9px;}
   .builder-panel{
     background:var(--panel);
     border:1px solid var(--blue);
@@ -863,9 +865,10 @@ function decimalToAmerican(dec){
 // data-* attributes on click rather than threading a JS object through an
 // inline onclick string, since player names can contain quotes/apostrophes
 // that would otherwise break the generated HTML.
-function parlayAddBtn(sport, key, label, sub, market, prob, dkOdds, dkImplied){
+function parlayAddBtn(sport, key, label, sub, market, prob, dkOdds, dkImplied, extraClass){
   if(prob == null) return '';
-  return `<button type="button" class="parlay-add-btn" data-sport="${sport}" data-key="${escAttr(key)}" data-label="${escAttr(label)}" data-sub="${escAttr(sub)}" data-market="${escAttr(market)}" data-prob="${prob}" data-dk-odds="${dkOdds ?? ''}" data-dk-implied="${dkImplied ?? ''}" onclick="handleParlayAddClick(this)">+ parlay</button>`;
+  const cls = extraClass ? ` ${extraClass}` : '';
+  return `<button type="button" class="parlay-add-btn${cls}" data-sport="${sport}" data-key="${escAttr(key)}" data-label="${escAttr(label)}" data-sub="${escAttr(sub)}" data-market="${escAttr(market)}" data-prob="${prob}" data-dk-odds="${dkOdds ?? ''}" data-dk-implied="${dkImplied ?? ''}" onclick="handleParlayAddClick(this)">+ parlay</button>`;
 }
 
 function handleParlayAddClick(btn){
@@ -1093,13 +1096,21 @@ function propStatRow(p){
     </div>`;
   }
   if(p.ladder && p.ladder.length){
-    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
+    // A separate "+ parlay" per rung (not just the featured line) -- a real
+    // DK price only exists for the featured p.line, so every other rung
+    // adds as a model-only leg (the parlay builder already shows that
+    // honestly via the MODEL EST. badge).
+    const rungs = p.ladder.map(l => {
+      const isFeatured = l.line === p.line;
+      const btn = parlayAddBtn('nfl', `${p.player_id}-${p.market}-${l.line}`, p.player, `${p.team} · ${l.line}+`,
+        p.market, l.over_prob, isFeatured ? p.dk_odds : null, isFeatured ? p.dk_implied_prob : null, 'compact');
+      return `<span class="ladder-row"><span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>${btn}</span>`;
+    }).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
       ${sourceBadge(p)}
-      <span class="ladder">${chips}</span>
+      <span class="ladder">${rungs}</span>
       <span class="p-exp">proj ${p.projected}</span>
-      ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -1459,14 +1470,22 @@ function mlbPropStatRow(p){
     </div>`;
   }
   if(p.ladder && p.ladder.length){
-    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
+    // A separate "+ parlay" per rung (not just the featured line) -- a real
+    // DK price only exists for the featured p.line, so every other rung
+    // adds as a model-only leg (the parlay builder already shows that
+    // honestly via the MODEL EST. badge).
+    const rungs = p.ladder.map(l => {
+      const isFeatured = l.line === p.line;
+      const btn = parlayAddBtn('mlb', `${p.player_id}-${p.market}-${l.line}`, p.player, `${p.team} · ${l.line}+`,
+        p.market, l.over_prob, isFeatured ? p.dk_over : null, isFeatured ? p.dk_implied_prob : null, 'compact');
+      return `<span class="ladder-row"><span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>${btn}</span>`;
+    }).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
       ${sourceBadge(p)}
-      <span class="ladder">${chips}</span>
+      <span class="ladder">${rungs}</span>
       <span class="p-exp">proj ${p.projected}</span>
       ${dkNote}
-      ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -1568,22 +1587,32 @@ function boxScoreSection(date, g, idx){
 }
 
 const boxScoreLoaded = new Set();
-async function loadBoxScore(date, idx){
+async function loadBoxScore(date, idx, attempt=0){
   const key = `${date}_${idx}`;
   if(boxScoreLoaded.has(key)) return;
-  boxScoreLoaded.add(key);
   const g = MLB_DATA.days[date] && MLB_DATA.days[date].games[idx];
   const body = document.getElementById(`mlb-box-body-${date}-${idx}`);
   if(!g || !body) return;
 
+  // Every game's box score fires this fetch at once on page load (a day can
+  // have 15+ games) -- a single one getting rate-limited or hitting a
+  // network blip shouldn't just show "unavailable" forever, so this retries
+  // a couple times with backoff before actually giving up.
   let line;
   try{
     const r = await fetch(`https://statsapi.mlb.com/api/v1/game/${g.gamePk}/linescore`);
+    if(!r.ok) throw new Error(`bad status ${r.status}`);
     line = await r.json();
   }catch(e){
+    if(attempt < 2){
+      setTimeout(() => loadBoxScore(date, idx, attempt + 1), 1000 * (attempt + 1));
+      return;
+    }
+    boxScoreLoaded.add(key);
     body.innerHTML = '<span class="p-exp">Box score unavailable right now.</span>';
     return;
   }
+  boxScoreLoaded.add(key);
 
   const innings = line.innings || [];
   if(!innings.length){
@@ -2052,22 +2081,37 @@ function collectNflTdSpecialLegs(games, excludeIds){
 // instead of hiding behind a big-looking percentage.
 let MLB_TRACK_RECORD_CACHE = null;
 
+// A single failed fetch of a static, same-origin JSON file (a real
+// transient blip, or a request that raced a mid-deploy moment) shouldn't
+// permanently show "No graded MLB props yet" for the rest of the page
+// session -- retries a couple times with a short backoff before giving up.
+async function fetchJsonWithRetry(url, retries=2, delayMs=600){
+  for(let attempt=0; attempt<=retries; attempt++){
+    try{
+      const r = await fetch(url);
+      if(r.ok) return await r.json();
+    }catch(e){ /* fall through to retry */ }
+    if(attempt < retries) await new Promise(res => setTimeout(res, delayMs));
+  }
+  return null;
+}
+
 async function loadMlbTrackRecord(){
   if(MLB_TRACK_RECORD_CACHE) return MLB_TRACK_RECORD_CACHE;
-  let dates = [];
-  try{
-    const r = await fetch('results/mlb_index.json');
-    if(r.ok) dates = (await r.json()).dates || [];
-  }catch(e){ /* no manifest yet -- treat as no history */ }
+  const manifest = await fetchJsonWithRetry('results/mlb_index.json');
+  if(manifest === null){
+    // The manifest itself never loaded -- don't cache this as final (that
+    // would lock in the empty placeholder until the user reloads the page);
+    // just return an empty result for this render and let the next call
+    // (e.g. switching tabs back to MLB) try again fresh.
+    return {byMarket: {}, dates: []};
+  }
+  const dates = manifest.dates || [];
 
   const byMarket = {};
   for(const d of dates){
-    let day;
-    try{
-      const r = await fetch(`results/mlb_${d}.json`);
-      if(!r.ok) continue;
-      day = await r.json();
-    }catch(e){ continue; }
+    const day = await fetchJsonWithRetry(`results/mlb_${d}.json`);
+    if(!day) continue;
     (day.games || []).forEach(g => {
       // Moneyline: same 0/1-event framing as a prop's over/under, just with
       // "home team wins" as the event and the model's own elo_home_prob as

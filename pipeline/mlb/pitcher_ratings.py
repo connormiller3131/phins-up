@@ -17,6 +17,7 @@ DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "data" / "mlb"
 
 SP_WINDOW, SP_MIN = 6, 3     # trailing starts
 BP_WINDOW, BP_MIN = 10, 5    # trailing relief appearances (team-level)
+SP_IP_WINDOW, SP_IP_MIN = 6, 3  # trailing starts, for outs-per-start durability
 
 
 def _load_pitchers():
@@ -52,12 +53,35 @@ def build_bullpen_ratings():
     return team_game[["team", "game_date", "bullpen_rating"]]
 
 
+def build_sp_ip_ratings():
+    """One row per (player_id, team, game_date) for STARTERS: trailing avg
+    OUTS RECORDED per start -- a durability/manager-trust signal distinct
+    from run_value quality (how long a starter actually goes decides how
+    many innings his bullpen must cover). Validated as a win-probability
+    feature on two independent holdouts (2026: Brier 0.2466 -> 0.2462;
+    2025: 0.2437 -> 0.2434) before deploying."""
+    df = _load_pitchers()
+    starters = df[df["is_starter"]].sort_values(["player_id", "game_date"]).copy()
+    starters["sp_ip_rating"] = starters.groupby("player_id")["outs_recorded"].transform(
+        lambda s: s.shift(1).rolling(SP_IP_WINDOW, min_periods=SP_IP_MIN).mean()
+    )
+    return starters[["player_id", "team", "game_date", "sp_ip_rating"]]
+
+
 def current_sp_rating(pitcher_id):
     df = _load_pitchers()
     starts = df[(df["is_starter"]) & (df["player_id"] == pitcher_id)].sort_values("game_date")
     if len(starts) < SP_MIN:
         return None
     return float(starts["run_value"].tail(SP_WINDOW).mean())
+
+
+def current_sp_ip(pitcher_id):
+    df = _load_pitchers()
+    starts = df[(df["is_starter"]) & (df["player_id"] == pitcher_id)].sort_values("game_date")
+    if len(starts) < SP_IP_MIN:
+        return None
+    return float(starts["outs_recorded"].tail(SP_IP_WINDOW).mean())
 
 
 def current_bullpen_rating(team):

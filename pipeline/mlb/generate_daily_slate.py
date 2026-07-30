@@ -51,7 +51,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
-from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
+from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, current_sp_ip
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
@@ -371,6 +371,12 @@ def _feature_value(name, elo_pred, g, fills):
         home_sp = current_sp_rating(home_pid) if home_pid else None
         away_sp = current_sp_rating(away_pid) if away_pid else None
         return (home_sp - away_sp) if (home_sp is not None and away_sp is not None) else fills.get("sp_diff", 0.0)
+    if name == "sp_ip_diff":
+        home_pid = g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None
+        away_pid = g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None
+        home_ip = current_sp_ip(home_pid) if home_pid else None
+        away_ip = current_sp_ip(away_pid) if away_pid else None
+        return (home_ip - away_ip) if (home_ip is not None and away_ip is not None) else fills.get("sp_ip_diff", 0.0)
     if name == "bp_diff":
         home_bp = current_bullpen_rating(g["home_team"])
         away_bp = current_bullpen_rating(g["away_team"])
@@ -397,11 +403,16 @@ def blend_with_pitcher_strength(elo_preds, slate):
     with open(path) as f:
         b = json.load(f)
     coef, intercept, features_used, fills = b["coef"], b["intercept"], b["features_used"], b.get("fills", {})
+    # The fit standardizes features (they span wildly different scales);
+    # inference must apply the identical transform. Older artifacts without
+    # scaler params fall back to identity, matching how they were fit.
+    scaler_mean = b.get("scaler_mean") or [0.0] * len(features_used)
+    scaler_std = b.get("scaler_std") or [1.0] * len(features_used)
 
     out = []
     for i, g in enumerate(slate):
         feats = [_feature_value(name, elo_preds[i], g, fills) for name in features_used]
-        z = sum(c * v for c, v in zip(coef, feats)) + intercept
+        z = sum(c * (v - m) / s for c, v, m, s in zip(coef, feats, scaler_mean, scaler_std)) + intercept
         out.append(1.0 / (1.0 + np.exp(-z)))
     return out
 

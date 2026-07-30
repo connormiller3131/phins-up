@@ -51,7 +51,7 @@ from pipeline.mlb.props.current_state import (
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
 from pipeline.mlb.props.prop_models import FEATURES, over_prob
-from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, build_sp_ratings, build_bullpen_ratings
+from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_api import get_game_odds, get_event_player_props
@@ -333,113 +333,6 @@ def attach_prop_actuals(day_games):
             played_field = PLAYED_FIELD[market]
             p["actual"] = None if (not block or block.get(played_field, 0) == 0) else block.get(field, 0)
 
-
-def current_team_scoring_rates(games_df):
-    """Each team's latest known trailing runs-scored/runs-allowed (the same
-    columns games.py already computes for the Elo rest/form features,
-    home_trailing_runs_scored etc.) -- just the most recent row per team,
-    read back out as a simple team -> (scored, allowed) lookup for a
-    transparent, trailing-average-based projected total. Not a competing
-    win-probability model and not separately backtested -- same honesty
-    framing as any other plain trailing-average stat already shown
-    elsewhere (e.g. a prop's own trailing-average line), not dressed up as
-    validated the way the deployed Elo blend is."""
-    home = games_df[["game_date", "home_team", "home_trailing_runs_scored", "home_trailing_runs_allowed"]].rename(
-        columns={"home_team": "team", "home_trailing_runs_scored": "scored", "home_trailing_runs_allowed": "allowed"})
-    away = games_df[["game_date", "away_team", "away_trailing_runs_scored", "away_trailing_runs_allowed"]].rename(
-        columns={"away_team": "team", "away_trailing_runs_scored": "scored", "away_trailing_runs_allowed": "allowed"})
-    long = pd.concat([home, away], ignore_index=True).sort_values("game_date")
-    return long.groupby("team").tail(1).set_index("team")[["scored", "allowed"]]
-
-
-# Widely-cited approximate long-run park run-scoring tendencies (1.0 =
-# neutral) -- general baseball knowledge, not fitted from this project's own
-# data and not claiming single-season precision, same "plain, transparent,
-# not dressed up as validated" framing as the rest of this projection.
-# Real-time weather (temp/wind) was tested and deliberately left out: MLB's
-# own API only populates it once a game is in progress or right at first
-# pitch (confirmed directly -- every game still showed an empty weather
-# object while "Scheduled", including same-day), which is after this
-# pipeline's own generation time, so it would almost never actually have
-# real data to use.
-PARK_FACTORS = {
-    "COL": 1.15, "CIN": 1.08, "BOS": 1.06, "TEX": 1.04, "PHI": 1.04,
-    "NYY": 1.03, "BAL": 1.03, "ATH": 1.05, "CHC": 1.02, "MIL": 1.02, "AZ": 1.02,
-    "TOR": 1.01, "LAA": 1.01, "MIN": 1.00, "WSH": 1.00, "ATL": 1.00, "HOU": 1.00,
-    "NYM": 0.99, "LAD": 0.99, "STL": 0.98, "CWS": 0.98, "CLE": 0.97,
-    "DET": 0.97, "KC": 0.97, "PIT": 0.96, "TB": 0.96, "SEA": 0.94,
-    "MIA": 0.93, "SD": 0.92, "SF": 0.90,
-}
-
-
-def build_runs_model():
-    """Does today's actual opposing starting-pitcher/bullpen quality
-    (Statcast run-value based, the same signal already validated for the
-    win-probability blend) predict a team's real runs scored better than
-    the deployed simple average of (own trailing scored, opponent trailing
-    allowed)? Tested on real held-out 2026 data in backtest_runs_model.py
-    first: yes, modestly -- MAE 2.607 -> 2.549, the same order of
-    improvement the SP/bullpen blend already gave the win-probability
-    model. Trained here on every season with real Statcast run-value
-    coverage (2024 onward, including the current season to date) for
-    production, unlike the backtest's split, which held out 2026
-    specifically to prove the signal generalizes before this was written."""
-    games = load_games()
-    games = games[games["season"] >= 2024]
-    sp = build_sp_ratings().drop_duplicates(["team", "game_date"], keep="first")[["team", "game_date", "sp_rating"]]
-    bp = build_bullpen_ratings()
-    games = games.merge(sp.rename(columns={"team": "home_team", "sp_rating": "home_sp"}), on=["home_team", "game_date"], how="left")
-    games = games.merge(sp.rename(columns={"team": "away_team", "sp_rating": "away_sp"}), on=["away_team", "game_date"], how="left")
-    games = games.merge(bp.rename(columns={"team": "home_team", "bullpen_rating": "home_bp"}), on=["home_team", "game_date"], how="left")
-    games = games.merge(bp.rename(columns={"team": "away_team", "bullpen_rating": "away_bp"}), on=["away_team", "game_date"], how="left")
-
-    home_rows = games[["home_score", "home_trailing_runs_scored", "away_trailing_runs_allowed", "away_sp", "away_bp"]].rename(
-        columns={"home_score": "runs", "home_trailing_runs_scored": "own_scored",
-                 "away_trailing_runs_allowed": "opp_allowed", "away_sp": "opp_sp", "away_bp": "opp_bp"})
-    away_rows = games[["away_score", "away_trailing_runs_scored", "home_trailing_runs_allowed", "home_sp", "home_bp"]].rename(
-        columns={"away_score": "runs", "away_trailing_runs_scored": "own_scored",
-                 "home_trailing_runs_allowed": "opp_allowed", "home_sp": "opp_sp", "home_bp": "opp_bp"})
-    long = pd.concat([home_rows, away_rows], ignore_index=True).dropna(subset=["runs", "own_scored", "opp_allowed"])
-
-    fills = {}
-    for col in ["opp_sp", "opp_bp"]:
-        fill = long[col].mean()
-        fills[col] = 0.0 if pd.isna(fill) else float(fill)
-        long[col] = long[col].fillna(fills[col])
-
-    features = ["own_scored", "opp_allowed", "opp_sp", "opp_bp"]
-    model = RidgeCV(alphas=np.logspace(-2, 3, 25))
-    model.fit(long[features].values, long["runs"].values)
-    return model, fills
-
-
-def projected_score(runs_model, runs_fills, rates, home_team, away_team, home_pitcher_id, away_pitcher_id):
-    """Blend-your-own-scoring-rate projection, now including today's actual
-    probable starting pitcher/bullpen quality on the opposing side (see
-    build_runs_model for why), scaled by the home park's run-scoring
-    tendency (the game is played entirely in the home team's park, so it
-    applies to both sides, not just the total). Returns (home_exp,
-    away_exp), or (None, None) if either team has no trailing scoring
-    history yet."""
-    if home_team not in rates.index or away_team not in rates.index:
-        return None, None
-    h, a = rates.loc[home_team], rates.loc[away_team]
-    if pd.isna(h["scored"]) or pd.isna(h["allowed"]) or pd.isna(a["scored"]) or pd.isna(a["allowed"]):
-        return None, None
-
-    home_sp = current_sp_rating(home_pitcher_id) if home_pitcher_id else None
-    away_sp = current_sp_rating(away_pitcher_id) if away_pitcher_id else None
-    home_bp = current_bullpen_rating(home_team)
-    away_bp = current_bullpen_rating(away_team)
-    home_sp = home_sp if home_sp is not None else runs_fills["opp_sp"]
-    away_sp = away_sp if away_sp is not None else runs_fills["opp_sp"]
-    home_bp = home_bp if home_bp is not None else runs_fills["opp_bp"]
-    away_bp = away_bp if away_bp is not None else runs_fills["opp_bp"]
-
-    park_factor = PARK_FACTORS.get(home_team, 1.0)
-    home_pred = runs_model.predict([[h["scored"], a["allowed"], away_sp, away_bp]])[0]
-    away_pred = runs_model.predict([[a["scored"], h["allowed"], home_sp, home_bp]])[0]
-    return round(float(home_pred * park_factor), 1), round(float(away_pred * park_factor), 1)
 
 
 def elo_predictions(games_df, slate):
@@ -1026,9 +919,7 @@ def main(today=None):
     elo_preds = blend_with_pitcher_strength(team_elo_preds, combined_slate)
     attach_market_odds(combined_slate)
     attach_espn_fallback_odds(combined_slate)
-    scoring_rates = current_team_scoring_rates(games_df)
     team_stats_table = build_team_stats_table()
-    runs_model, runs_fills = build_runs_model()
 
     print("Fitting batter prop models on full historical data...")
     batter_models = {}
@@ -1100,13 +991,6 @@ def main(today=None):
             good_value_home = elo_home > market["home_fair_prob"]
             good_value_away = (1 - elo_home) > (1 - market["home_fair_prob"])
 
-        model_home_runs, model_away_runs = projected_score(
-            runs_model, runs_fills, scoring_rates, g["home_team"], g["away_team"],
-            g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
-            g["away_probable_pitcher"]["id"] if g["away_probable_pitcher"] else None,
-        )
-        model_total_runs = round(model_home_runs + model_away_runs, 1) if model_home_runs is not None else None
-
         games_out.append({
             "target_date": g["target_date"],
             "awayAbbr": g["away_team"], "homeAbbr": g["home_team"],
@@ -1119,9 +1003,6 @@ def main(today=None):
             "homeProbablePitcherId": g["home_probable_pitcher"]["id"] if g["home_probable_pitcher"] else None,
             "elo_home_prob": round(elo_home, 4),
             "team_elo_home_prob": round(float(team_elo_preds[i]), 4),
-            "model_total_runs": model_total_runs,
-            "model_home_runs": model_home_runs,
-            "model_away_runs": model_away_runs,
             "market": market,
             "good_value_home": good_value_home,
             "good_value_away": good_value_away,

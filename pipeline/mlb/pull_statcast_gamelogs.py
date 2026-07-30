@@ -71,7 +71,13 @@ OUT_EVENTS = {
 
 TODAY = datetime.date.today()
 SEASON_MONTHS = []
-for year in (2024, 2025, 2026):
+# 2021-2023 added after confirming (against a real 2021 pull) that
+# delta_pitcher_run_exp and estimated_woba_using_speedangle both exist that
+# far back -- backtest_pitcher_model.py's blend had been training on 2024-25
+# only, and its own docstring flagged the missing history as a known gap.
+# Not extended further: 2020 is a 60-game season under anomalous conditions,
+# and 2019 predates delta_run_exp coverage.
+for year in (2021, 2022, 2023, 2024, 2025, 2026):
     for month in range(2, 12):  # Feb through Nov (spring training through World Series)
         start = datetime.date(year, month, 1)
         if start > TODAY:

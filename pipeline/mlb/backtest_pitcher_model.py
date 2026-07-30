@@ -42,11 +42,19 @@ from pipeline.mlb.team_map import DIVISIONS
 from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
 
 # The base Elo (elo_pred, used as one input feature below) was fit on the
-# full 2019-2025 team-schedule history. But pitcher-level Statcast data only
-# covers 2024-2026 -- the SP/bullpen/offense blend's own training window is
-# necessarily narrower than Elo's. Extending pitcher Statcast back to
-# 2019-2023 is a real future improvement (another ~25-35min pull) but not
-# done here.
+# full 2019-2025 team-schedule history. Pitcher-level Statcast now covers
+# 2021-2026 (backfilled after this blend originally shipped on 2024-2026
+# data alone), but the blend's TRAINING window deliberately stays 2024-2025:
+# extending it backward was tested on held-out 2026 and got monotonically
+# WORSE (Brier 0.2466 -> 0.2471 with 2023 added -> 0.2472 with 2021-2022),
+# with woba_diff's coefficient collapsing from 1.22 to 0.14 -- the 2023 rule
+# changes (pitch clock, shift ban) shifted the run environment enough that
+# pre-2023 relationships dilute the current-regime signal. The backfilled
+# history still earns its keep as FEATURE input: early-2024 games now get
+# real trailing SP/bullpen/offense ratings computed from late-2023 games
+# instead of mean-fills at the season boundary, which is where the same-
+# window improvement (0.2469 -> 0.2466) came from. Prop models were checked
+# separately and are insensitive to the extra training rows either way.
 TRAIN_SEASONS = [2024, 2025]
 TEST_SEASONS = [2026]
 

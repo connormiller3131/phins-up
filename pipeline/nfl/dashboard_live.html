@@ -2289,9 +2289,16 @@ let MLB_TRACK_RECORD_CACHE = null;
 // permanently show "No graded MLB props yet" for the rest of the page
 // session -- retries a couple times with a short backoff before giving up.
 async function fetchJsonWithRetry(url, retries=2, delayMs=600){
+  // cache: 'no-store' stops the BROWSER's own HTTP cache from serving a
+  // stale local copy across reloads within the same session. Note: tested
+  // directly and a cache-busting query param does NOT bypass Cloudflare's
+  // own edge/asset cache for this platform (identical content came back
+  // with and without one) -- so this only helps with client-side caching,
+  // not a genuine CDN-level staleness issue if one exists.
+  const bustUrl = url + (url.includes('?') ? '&' : '?') + '_=' + Date.now();
   for(let attempt=0; attempt<=retries; attempt++){
     try{
-      const r = await fetch(url);
+      const r = await fetch(bustUrl, {cache: 'no-store'});
       if(r.ok) return await r.json();
     }catch(e){ /* fall through to retry */ }
     if(attempt < retries) await new Promise(res => setTimeout(res, delayMs));

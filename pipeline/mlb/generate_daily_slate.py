@@ -16,8 +16,9 @@ NFL tab offers a week picker:
               Outs Recorded
   fit ONCE per stat on the full historical dataset and reused across every
   game (the target date is genuinely in the future, so there's no leakage
-  to guard against the way there is in a backtest). Hits and Total Bases
-  additionally show a small ladder of lines around the trailing average.
+  to guard against the way there is in a backtest). Hits, Total Bases, and
+  Pitcher Strikeouts additionally show a small ladder of lines around the
+  trailing average.
 - Real DraftKings player-prop odds for a handful of games each refresh
   (per-event pulls cost credits per market, so not the whole slate) --
   Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price,
@@ -67,7 +68,7 @@ RESULTS_DIR = ROOT / "docs" / "results"
 BATTER_COUNT_STATS = {
     "hits": "Hits", "total_bases": "Total Bases", "walks": "Walks", "rbi": "RBI",
 }
-LADDER_STATS = {"hits", "total_bases"}
+LADDER_STATS = {"hits", "total_bases", "strikeouts"}
 PITCHER_COUNT_STATS = {
     "strikeouts": "Pitcher Strikeouts", "hits_allowed": "Pitcher Hits Allowed",
     "walks_allowed": "Pitcher Walks Allowed", "runs_allowed": "Pitcher Runs Allowed",
@@ -876,7 +877,8 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
         if r:
             entries.append({"section": "Pitching", "player": r["player_display_name"], "player_id": int(pitcher_id),
                              "team": team, "market": market_label, "line": r["line"], "projected": r["projected"],
-                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"]})
+                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
+                             **({"ladder": r["ladder"]} if "ladder" in r else {})})
     return entries
 
 

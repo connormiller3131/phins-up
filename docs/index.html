@@ -939,6 +939,7 @@ const NHL_WEEK_DAYS = Object.keys(NHL_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+function mlImpliedProb(o){ return o===null||o===undefined ? null : (o<0 ? (-o)/(-o+100) : 100/(o+100)); }
 
 // ---- Build-your-own parlay: pick any prop shown on the page (per sport),
 // see the model's combined probability, and -- only when every picked leg
@@ -979,6 +980,20 @@ function handleParlayAddClick(btn){
     legs.splice(idx, 1);
     btn.classList.remove('added');
   } else {
+    // A game's away/home moneyline are mutually exclusive outcomes of the
+    // same event -- can't both win, so adding one has to drop the other if
+    // it's already in the builder (same reasoning selectLadderRung already
+    // applies to a player's ladder rungs: only one pick per real outcome).
+    const mlMatch = /^(ml-.+-)(away|home)$/.exec(d.key);
+    if(mlMatch){
+      const oppositeKey = mlMatch[1] + (mlMatch[2] === 'away' ? 'home' : 'away');
+      const oppIdx = legs.findIndex(l => l.key === oppositeKey);
+      if(oppIdx >= 0){
+        legs.splice(oppIdx, 1);
+        document.querySelectorAll(`.parlay-add-btn[data-sport="${sport}"][data-key="${CSS.escape(oppositeKey)}"]`)
+          .forEach(b => b.classList.remove('added'));
+      }
+    }
     legs.push({
       key: d.key, label: d.label, sub: d.sub, market: d.market,
       prob: parseFloat(d.prob),
@@ -1523,7 +1538,7 @@ function renderGames(week){
         <div class="side">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
-          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlAway)}</b>${parlayAddBtn('nfl', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, g.mlAway, mlImpliedProb(g.mlAway))}</span></div>
           <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b>${g.good_value_away ? valueTag : ''}</div>
           <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(1-pHomeCurrent) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
@@ -1536,7 +1551,7 @@ function renderGames(week){
         <div class="side">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
-          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlHome)}</b>${parlayAddBtn('nfl', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, g.mlHome, mlImpliedProb(g.mlHome))}</span></div>
           <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b>${g.good_value_home ? valueTag : ''}</div>
           <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(pHomeCurrent) : "—"}</b></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
@@ -2592,14 +2607,14 @@ function renderMLBGames(selectedDate){
         <div class="side">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.awayProbablePitcher || "—"}</b></div>
-          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlAway : null)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(m ? m.mlAway : null)}</b>${parlayAddBtn('mlb', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, m ? m.mlAway : null, m ? mlImpliedProb(m.mlAway) : null)}</span></div>
           <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(1-fairHome) : "—"}</b>${g.good_value_away ? `<span class="value-tag" title="Model win % beats the market fair %">GOOD VALUE</span>` : ''}</div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
         </div>
         <div class="side">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.homeProbablePitcher || "—"}</b></div>
-          <div class="stat-line"><span>Moneyline</span><b>${fmtOdds(m ? m.mlHome : null)}</b></div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(m ? m.mlHome : null)}</b>${parlayAddBtn('mlb', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, m ? m.mlHome : null, m ? mlImpliedProb(m.mlHome) : null)}</span></div>
           <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(fairHome) : "—"}</b>${g.good_value_home ? `<span class="value-tag" title="Model win % beats the market fair %">GOOD VALUE</span>` : ''}</div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>

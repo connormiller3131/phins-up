@@ -508,6 +508,24 @@
   .props-table .p-exp{color:var(--text-dim);font-size:10px;}
   .lineup-flag{margin-left:6px;font-family:var(--mono);font-size:9.5px;font-weight:600;}
 
+  .props-team-tabs{display:flex;gap:6px;margin-bottom:4px;}
+  .props-team-tab{
+    flex:1;
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-family:var(--disp);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--text-dim);
+    cursor:pointer;
+  }
+  .props-team-tab.active{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+  .props-team-panel{display:none;}
+  .props-team-panel.active{display:block;}
+
   .prop-section{margin-top:14px;}
   .prop-section:first-child{margin-top:2px;}
   .prop-section-title{
@@ -583,7 +601,6 @@
   }
   .prop-stat-label{color:var(--text-dim);min-width:96px;}
   .ladder{display:flex;flex-wrap:wrap;gap:5px;}
-  .ladder-row{display:flex;align-items:center;gap:3px;}
   .ladder-chip{
     background:var(--panel-alt);
     border:1px solid var(--line);
@@ -616,7 +633,71 @@
   }
   .parlay-add-btn:hover{border-color:var(--blue);color:var(--blue);}
   .parlay-add-btn.added{background:var(--blue);border-color:var(--blue);color:#fff;}
-  .parlay-add-btn.compact{padding:1px 6px;font-size:9px;}
+  .ladder-picker-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .ladder-picker-panel{
+    background:var(--panel);
+    border:1px solid var(--blue);
+    border-radius:12px;
+    padding:14px 16px;
+    max-width:360px;
+    width:100%;
+    max-height:80vh;
+    overflow-y:auto;
+  }
+  .ladder-picker-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .ladder-picker-title{
+    font-family:var(--disp);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--blue);
+  }
+  .ladder-picker-close{
+    background:none;
+    border:none;
+    color:var(--text-dim);
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    padding:0 4px;
+  }
+  .ladder-picker-close:hover{color:var(--text);}
+  .ladder-picker-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    margin-bottom:6px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text);
+    cursor:pointer;
+    text-align:left;
+  }
+  .ladder-picker-row:hover{border-color:var(--blue);}
+  .ladder-picker-row.selected{background:var(--green-dim);border-color:var(--green);}
+  .ladder-picker-line{font-weight:700;min-width:40px;}
+  .ladder-picker-prob{color:var(--text-dim);}
+  .ladder-picker-odds{margin-left:auto;}
+  .ladder-picker-check{color:var(--green);font-weight:700;}
   .builder-panel{
     background:var(--panel);
     border:1px solid var(--blue);
@@ -827,6 +908,16 @@
 
 </div>
 
+<div class="ladder-picker-backdrop" id="ladder-picker-modal" onclick="if(event.target===this) closeLadderPicker()">
+  <div class="ladder-picker-panel">
+    <div class="ladder-picker-header">
+      <span class="ladder-picker-title" id="ladder-picker-title"></span>
+      <button type="button" class="ladder-picker-close" onclick="closeLadderPicker()" title="Close">&times;</button>
+    </div>
+    <div id="ladder-picker-body"></div>
+  </div>
+</div>
+
 <script>
 function showTab(name){
   ['nfl','mlb','nhl'].forEach(t=>{
@@ -903,7 +994,93 @@ function removeParlayLeg(sport, key){
   PARLAY_BUILDER[sport] = PARLAY_BUILDER[sport].filter(l => l.key !== key);
   document.querySelectorAll(`.parlay-add-btn[data-sport="${sport}"][data-key="${CSS.escape(key)}"]`)
     .forEach(btn => btn.classList.remove('added'));
+  // Ladder triggers don't carry the rung-specific key directly (one button
+  // represents the whole market, not a single line) -- match by
+  // reconstructing the same playerId-market prefix instead.
+  document.querySelectorAll(`.ladder-trigger[data-sport="${sport}"]`).forEach(btn => {
+    const prefix = `${btn.dataset.playerId}-${btn.dataset.market}-`;
+    if(key.startsWith(prefix)){
+      btn.textContent = '+ parlay';
+      btn.classList.remove('added');
+    }
+  });
   renderParlayBuilderPanel(sport);
+}
+
+// A single "+ parlay" trigger per ladder market (Hits/Total Bases in MLB,
+// yardage props in NFL) instead of one button per rung -- picking a
+// specific line happens in a popup, not a wall of inline buttons. Only the
+// featured line (p.line) has a real DK price; every other rung is a
+// model-only leg in the picker, same honesty rule as everywhere else.
+function ladderTriggerBtn(sport, p, featuredDkOdds, featuredDkImplied){
+  if(!p.ladder || !p.ladder.length) return '';
+  const rungs = p.ladder.map(l => ({
+    line: l.line, prob: l.over_prob,
+    dkOdds: (l.line === p.line) ? featuredDkOdds : null,
+    dkImplied: (l.line === p.line) ? featuredDkImplied : null,
+  }));
+  return `<button type="button" class="parlay-add-btn ladder-trigger" data-sport="${sport}" data-player-id="${p.player_id}" data-market="${escAttr(p.market)}" data-label="${escAttr(p.player)}" data-team="${escAttr(p.team)}" data-rungs="${escAttr(JSON.stringify(rungs))}" onclick="openLadderPicker(this)">+ parlay</button>`;
+}
+
+let LADDER_PICKER_TRIGGER = null;
+
+function openLadderPicker(btn){
+  LADDER_PICKER_TRIGGER = btn;
+  const d = btn.dataset;
+  const rungs = JSON.parse(d.rungs);
+  const prefix = `${d.playerId}-${d.market}-`;
+  const existing = PARLAY_BUILDER[d.sport].find(l => l.key.startsWith(prefix));
+
+  const rows = rungs.map(r => {
+    const rungKey = `${prefix}${r.line}`;
+    const isSel = existing && existing.key === rungKey;
+    const oddsHtml = r.dkOdds != null
+      ? `<b>${fmtOdds(r.dkOdds)}</b>`
+      : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this pick">MODEL EST.</span>`;
+    return `<button type="button" class="ladder-picker-row${isSel ? ' selected' : ''}" data-sport="${d.sport}" data-key="${escAttr(rungKey)}" data-prefix="${escAttr(prefix)}" data-label="${escAttr(d.label)}" data-team="${escAttr(d.team)}" data-market="${escAttr(d.market)}" data-line="${r.line}" data-prob="${r.prob}" data-dk-odds="${r.dkOdds ?? ''}" data-dk-implied="${r.dkImplied ?? ''}" onclick="selectLadderRung(this)">
+      <span class="ladder-picker-line">${r.line}+</span>
+      <span class="ladder-picker-prob">${pct(r.prob)}</span>
+      <span class="ladder-picker-odds">${oddsHtml}</span>
+      ${isSel ? '<span class="ladder-picker-check">&#10003;</span>' : ''}
+    </button>`;
+  }).join('');
+
+  document.getElementById('ladder-picker-title').textContent = `${d.label} · ${d.market}`;
+  document.getElementById('ladder-picker-body').innerHTML = rows;
+  document.getElementById('ladder-picker-modal').style.display = 'flex';
+}
+
+function selectLadderRung(optBtn){
+  const d = optBtn.dataset;
+  const wasSelected = optBtn.classList.contains('selected');
+  PARLAY_BUILDER[d.sport] = PARLAY_BUILDER[d.sport].filter(l => !l.key.startsWith(d.prefix));
+  if(!wasSelected){
+    PARLAY_BUILDER[d.sport].push({
+      key: d.key, label: d.label, sub: `${d.team} · ${d.line}+`, market: d.market,
+      prob: parseFloat(d.prob),
+      dkOdds: d.dkOdds ? parseFloat(d.dkOdds) : null,
+      dkImplied: d.dkImplied ? parseFloat(d.dkImplied) : null,
+    });
+  }
+  updateLadderTriggerLabel(wasSelected ? null : d.line);
+  closeLadderPicker();
+  renderParlayBuilderPanel(d.sport);
+}
+
+function updateLadderTriggerLabel(selectedLine){
+  if(!LADDER_PICKER_TRIGGER) return;
+  if(selectedLine != null){
+    LADDER_PICKER_TRIGGER.textContent = `✓ ${selectedLine}+`;
+    LADDER_PICKER_TRIGGER.classList.add('added');
+  } else {
+    LADDER_PICKER_TRIGGER.textContent = '+ parlay';
+    LADDER_PICKER_TRIGGER.classList.remove('added');
+  }
+}
+
+function closeLadderPicker(){
+  document.getElementById('ladder-picker-modal').style.display = 'none';
+  LADDER_PICKER_TRIGGER = null;
 }
 
 function renderParlayBuilderPanel(sport){
@@ -942,14 +1119,6 @@ function renderParlayBuilderPanel(sport){
       <div class="p-exp" style="margin-top:4px;">Not betting advice -- assumes independence between legs, which overstates the real combined probability in practice.</div>
     </div>
   `;
-}
-// Shared by MLB/NFL/NHL: the same trailing-average-based projection that
-// already feeds the projected TOTAL, just split back out by team instead of
-// summed -- home_exp/away_exp were always computed separately internally,
-// this just surfaces both instead of only their sum.
-function projectedScoreLine(awayAbbr, homeAbbr, awayVal, homeVal){
-  if(awayVal == null || homeVal == null) return '';
-  return `<div class="stat-line" style="margin-top:4px;justify-content:flex-start;gap:6px;"><span>Projected score</span><b>${awayAbbr} ${awayVal} &ndash; ${homeAbbr} ${homeVal}</b></div>`;
 }
 
 // ---- Team Stats dropdown: shared across all 3 sports (each team's own
@@ -1104,21 +1273,13 @@ function propStatRow(p){
     </div>`;
   }
   if(p.ladder && p.ladder.length){
-    // A separate "+ parlay" per rung (not just the featured line) -- a real
-    // DK price only exists for the featured p.line, so every other rung
-    // adds as a model-only leg (the parlay builder already shows that
-    // honestly via the MODEL EST. badge).
-    const rungs = p.ladder.map(l => {
-      const isFeatured = l.line === p.line;
-      const btn = parlayAddBtn('nfl', `${p.player_id}-${p.market}-${l.line}`, p.player, `${p.team} · ${l.line}+`,
-        p.market, l.over_prob, isFeatured ? p.dk_odds : null, isFeatured ? p.dk_implied_prob : null, 'compact');
-      return `<span class="ladder-row"><span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>${btn}</span>`;
-    }).join("");
+    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
       ${sourceBadge(p)}
-      <span class="ladder">${rungs}</span>
+      <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
+      ${ladderTriggerBtn('nfl', p, p.dk_odds, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -1128,6 +1289,24 @@ function propStatRow(p){
     <span class="p-exp">proj ${p.projected}</span>
     ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
   </div>`;
+}
+
+// Shared by NFL/MLB player props: one tab per team so the list isn't both
+// teams' full rosters interleaved -- switching tabs just toggles which
+// pre-rendered panel is visible, no re-render needed.
+function propsTeamTabs(containerId, awayAbbr, homeAbbr){
+  return `<div class="props-team-tabs">
+    <button type="button" class="props-team-tab active" data-team="${escAttr(awayAbbr)}" onclick="switchPropsTeam('${containerId}', this)">${awayAbbr}</button>
+    <button type="button" class="props-team-tab" data-team="${escAttr(homeAbbr)}" onclick="switchPropsTeam('${containerId}', this)">${homeAbbr}</button>
+  </div>`;
+}
+
+function switchPropsTeam(containerId, btn){
+  const root = document.getElementById(containerId);
+  if(!root) return;
+  const team = btn.dataset.team;
+  root.querySelectorAll('.props-team-tab').forEach(b => b.classList.toggle('active', b === btn));
+  root.querySelectorAll('.props-team-panel').forEach(p => p.classList.toggle('active', p.dataset.team === team));
 }
 
 function propsBySection(props){
@@ -1151,12 +1330,17 @@ function propsBySection(props){
   }).join("");
 }
 
-function propsTable(props){
+function propsTable(g, containerId){
+  const props = g.props;
   if(!props || !props.length) return "";
   return `
     <details class="props-toggle">
       <summary>Player Props <span class="props-sample-tag">(full starting offense, current depth chart — line = trailing average, see footer)</span></summary>
-      ${propsBySection(props)}
+      <div id="${containerId}">
+        ${propsTeamTabs(containerId, g.awayAbbr, g.homeAbbr)}
+        <div class="props-team-panel active" data-team="${escAttr(g.awayAbbr)}">${propsBySection(props.filter(p => p.team === g.awayAbbr))}</div>
+        <div class="props-team-panel" data-team="${escAttr(g.homeAbbr)}">${propsBySection(props.filter(p => p.team === g.homeAbbr))}</div>
+      </div>
     </details>
   `;
 }
@@ -1363,9 +1547,8 @@ function renderGames(week){
           </div>
         </div>
       </div>
-      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b>${g.model_total_points != null ? `<span class="p-exp">Projected: ${g.model_total_points}</span>` : ''}</div>
-      ${projectedScoreLine(g.awayAbbr, g.homeAbbr, g.model_away_points, g.model_home_points)}
-      ${propsTable(g.props)}
+      <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b></div>
+      ${propsTable(g, `props-panel-nfl-${idx}`)}
       ${nflSameGameParlaySection(g, idx)}
     `;
     root.appendChild(card);
@@ -1373,20 +1556,35 @@ function renderGames(week){
     if(g.gameday) loadNflBoxScore(idx);
     updateTeamStatsView('nfl', `nfl-team-stats-${idx}`);
 
+    const yourPctInputs = {};
     ["away","home"].forEach(side=>{
-      const input = card.querySelector(`input[data-side="${side}"]`);
-      const tag = card.querySelector(`[data-tag="${idx}-${side}"]`);
-      const fairP = hasOdds ? (side==="home" ? pHomeRaw : 1-pHomeRaw) : null;
-      function update(){
-        const yourP = parseFloat(input.value)/100;
-        const edge = (isNaN(yourP) || fairP===null) ? null : (yourP - fairP);
-        const c = edgeColor(edge);
-        tag.style.background = c.bg;
-        tag.style.color = c.fg;
-        tag.textContent = edge===null ? "—" : (edge>=0?"+":"") + (edge*100).toFixed(1) + "% edge vs. market";
-      }
-      input.addEventListener("input", update);
-      update();
+      yourPctInputs[side] = {
+        input: card.querySelector(`input[data-side="${side}"]`),
+        tag: card.querySelector(`[data-tag="${idx}-${side}"]`),
+        fairP: hasOdds ? (side==="home" ? pHomeRaw : 1-pHomeRaw) : null,
+      };
+    });
+    function updateEdgeTag(side){
+      const {input, tag, fairP} = yourPctInputs[side];
+      const yourP = parseFloat(input.value)/100;
+      const edge = (isNaN(yourP) || fairP===null) ? null : (yourP - fairP);
+      const c = edgeColor(edge);
+      tag.style.background = c.bg;
+      tag.style.color = c.fg;
+      tag.textContent = edge===null ? "—" : (edge>=0?"+":"") + (edge*100).toFixed(1) + "% edge vs. market";
+    }
+    // A two-outcome game's win probabilities have to sum to 100 -- editing
+    // one side now keeps the other in sync instead of letting them silently
+    // drift into a state that doesn't correspond to any real probability.
+    ["away","home"].forEach(side=>{
+      const other = side === "away" ? "home" : "away";
+      yourPctInputs[side].input.addEventListener("input", () => {
+        const val = parseFloat(yourPctInputs[side].input.value);
+        if(!isNaN(val)) yourPctInputs[other].input.value = (100 - val).toFixed(1);
+        updateEdgeTag(side);
+        updateEdgeTag(other);
+      });
+      updateEdgeTag(side);
     });
   });
 
@@ -1478,22 +1676,14 @@ function mlbPropStatRow(p){
     </div>`;
   }
   if(p.ladder && p.ladder.length){
-    // A separate "+ parlay" per rung (not just the featured line) -- a real
-    // DK price only exists for the featured p.line, so every other rung
-    // adds as a model-only leg (the parlay builder already shows that
-    // honestly via the MODEL EST. badge).
-    const rungs = p.ladder.map(l => {
-      const isFeatured = l.line === p.line;
-      const btn = parlayAddBtn('mlb', `${p.player_id}-${p.market}-${l.line}`, p.player, `${p.team} · ${l.line}+`,
-        p.market, l.over_prob, isFeatured ? p.dk_over : null, isFeatured ? p.dk_implied_prob : null, 'compact');
-      return `<span class="ladder-row"><span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>${btn}</span>`;
-    }).join("");
+    const chips = p.ladder.map(l => `<span class="ladder-chip">${l.line}+ <b>${pct(l.over_prob)}</b></span>`).join("");
     return `<div class="prop-stat-row">
       <span class="prop-stat-label">${p.market}</span>
       ${sourceBadge(p)}
-      <span class="ladder">${rungs}</span>
+      <span class="ladder">${chips}</span>
       <span class="p-exp">proj ${p.projected}</span>
       ${dkNote}
+      ${ladderTriggerBtn('mlb', p, p.dk_over, p.dk_implied_prob)}
     </div>`;
   }
   return `<div class="prop-stat-row">
@@ -1558,7 +1748,8 @@ function mlbPropsBySection(props){
   }).join("");
 }
 
-function mlbPropsTable(props, combo, featured){
+function mlbPropsTable(g, containerId){
+  const props = g.props, combo = g.hr_combo, featured = g.featured_props;
   const hasDK = !!featured;
   const comboHtml = combo ? `
     <div class="h2h-note" style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;">
@@ -1572,7 +1763,11 @@ function mlbPropsTable(props, combo, featured){
   return `
     <details class="props-toggle" ${hasDK ? 'open' : ''}>
       <summary>Player Props ${hasDK ? '<span style="color:var(--green)">★</span>' : ''} <span class="props-sample-tag">${tag}</span></summary>
-      ${mlbPropsBySection(props)}
+      <div id="${containerId}">
+        ${propsTeamTabs(containerId, g.awayAbbr, g.homeAbbr)}
+        <div class="props-team-panel active" data-team="${escAttr(g.awayAbbr)}">${mlbPropsBySection(props.filter(p => p.team === g.awayAbbr))}</div>
+        <div class="props-team-panel" data-team="${escAttr(g.homeAbbr)}">${mlbPropsBySection(props.filter(p => p.team === g.homeAbbr))}</div>
+      </div>
       ${comboHtml}
     </details>
   `;
@@ -2383,7 +2578,7 @@ function renderMLBGames(selectedDate){
       </div>
       ${m && m.total_line ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Run total</span><b>${m.total_line}</b></div>` : ""}
       ${!m ? `<div class="h2h-note">No DraftKings line posted yet for this game.</div>` : ""}
-      ${mlbPropsTable(g.props, g.hr_combo, g.featured_props)}
+      ${mlbPropsTable(g, `props-panel-mlb-${selectedDate}-${idx}`)}
       ${mlbSameGameParlaySection(selectedDate, g, idx)}
       ${bvpSection(selectedDate, g, idx)}
     `;
@@ -2491,8 +2686,6 @@ function renderNHLGames(selectedDate){
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
-      ${g.model_total_goals != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Projected goal total</span><b>${g.model_total_goals}</b></div>` : ''}
-      ${projectedScoreLine(g.awayAbbr, g.homeAbbr, g.model_away_goals, g.model_home_goals)}
       <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
     `;
     root.appendChild(card);

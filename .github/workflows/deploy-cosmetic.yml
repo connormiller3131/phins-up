@@ -1,0 +1,75 @@
+name: Deploy cosmetic/UI-only changes
+
+# For pure frontend changes (colors, fonts, layout, copy in
+# dashboard_live.html) that don't need fresh data -- rebuilds and deploys
+# using whatever data the last full refresh (refresh.yml) produced, instead
+# of re-running the whole ~30-40min pull-and-refit pipeline. No external
+# API calls (Odds API, MLB/NFL/NHL live feeds) happen here at all.
+#
+# Manual only: this is meant to be triggered right after pushing a cosmetic
+# commit, not on a schedule. If refresh.yml has never run in this repo (no
+# cache saved yet), this job fails clearly at the restore step rather than
+# silently deploying with missing data.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore most recent dashboard data
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/nfl/dashboard_current_week.json
+            data/mlb/dashboard_current_slate.json
+            data/nhl/dashboard_current_slate.json
+          key: dashboard-data-cache-none
+          restore-keys: |
+            dashboard-data-cache-
+          fail-on-cache-miss: true
+
+      - name: Build static site
+        run: python pipeline/nfl/build_static_site.py
+
+      # Same non-fast-forward retry pattern as refresh.yml's commit step --
+      # only docs/index.html and docs/404.html change here, never
+      # docs/results/ (this workflow never regenerates results).
+      - name: Commit and push updated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4 5; do
+            git add docs/index.html docs/404.html
+            if git diff --quiet --cached; then
+              echo "Nothing to commit."
+              break
+            fi
+            git commit -m "Deploy cosmetic/UI-only changes"
+            git fetch origin main
+            if git push origin main; then
+              break
+            fi
+            echo "Push rejected (remote moved), retrying on top of the latest main..."
+            git reset --soft origin/main
+            sleep 5
+          done
+
+      - name: Deploy to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy

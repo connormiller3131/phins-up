@@ -110,6 +110,21 @@ jobs:
       - name: Generate current-slate NHL projections
         run: python pipeline/nhl/generate_current_slate.py
 
+      # Lets deploy-cosmetic.yml (UI/CSS-only changes) rebuild and redeploy
+      # the site in seconds without re-running this whole pipeline -- it
+      # restores this same cache instead of re-pulling anything. Save-only
+      # (this job never needs to restore it, since it always generates
+      # fresh data), same ever-growing-cache key pattern as the historical
+      # pull caches above.
+      - name: Save current dashboard data for cosmetic-only deploys
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/nfl/dashboard_current_week.json
+            data/mlb/dashboard_current_slate.json
+            data/nhl/dashboard_current_slate.json
+          key: dashboard-data-cache-${{ github.run_id }}
+
       - name: Build static site
         run: python pipeline/nfl/build_static_site.py
 

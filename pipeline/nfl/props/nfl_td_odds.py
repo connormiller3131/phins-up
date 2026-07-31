@@ -15,7 +15,9 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 
-from pipeline.common.odds_api import get_game_odds, get_event_player_props
+from pipeline.common.odds_api import cached_game_odds, cached_event_player_props
+
+DATA_DIR = ROOT / "data" / "nfl"
 
 SPORT_KEY = "americanfootball_nfl"
 
@@ -29,7 +31,7 @@ def fetch_current_week_odds_map(names):
     current h2h game lines. Returns {(away_full_name, home_full_name):
     {"event_id":..., "mlAway":..., "mlHome":...}}, empty dict on any failure."""
     try:
-        events = get_game_odds(SPORT_KEY, markets="h2h")
+        events = cached_game_odds(DATA_DIR / "odds_cache.json", SPORT_KEY, markets="h2h")
     except Exception as e:
         print(f"[nfl_td_odds] bulk odds call failed, skipping current-line + TD odds: {e}")
         return {}
@@ -47,7 +49,10 @@ def fetch_current_week_odds_map(names):
                         ml_away = int(outcome["price"])
                     elif outcome["name"] == ev["home_team"]:
                         ml_home = int(outcome["price"])
-        out[(ev["away_team"], ev["home_team"])] = {"event_id": ev["id"], "mlAway": ml_away, "mlHome": ml_home}
+        out[(ev["away_team"], ev["home_team"])] = {
+            "event_id": ev["id"], "mlAway": ml_away, "mlHome": ml_home,
+            "commence_time": ev.get("commence_time"),
+        }
     return out
 
 
@@ -80,7 +85,9 @@ def attach_td_odds(games_out, names, odds_map):
             continue
 
         try:
-            event_odds = get_event_player_props(SPORT_KEY, match["event_id"], markets="player_anytime_td")
+            event_odds = cached_event_player_props(
+                DATA_DIR / "odds_cache.json", SPORT_KEY, match["event_id"], markets="player_anytime_td",
+                commence_time=match.get("commence_time"))
         except Exception as e:
             print(f"[nfl_td_odds] event odds call failed for {g['awayAbbr']}@{g['homeAbbr']}: {e}")
             continue

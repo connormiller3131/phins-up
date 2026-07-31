@@ -42,6 +42,19 @@ jobs:
       - name: Fit/backtest NFL win-probability model
         run: python pipeline/nfl/backtest_win_prob.py
 
+      # Odds calls are cached (pipeline/common/odds_api.py) so a game's real
+      # DraftKings props/lines get fetched once and reused instead of every
+      # run (twice daily) re-pulling the same not-yet-played game for
+      # however many days it sits in "upcoming" -- this cache has to survive
+      # between runs the same way the historical-pull caches above do.
+      - name: Restore NFL odds cache
+        uses: actions/cache@v4
+        with:
+          path: data/nfl/odds_cache.json
+          key: nfl-odds-cache-${{ github.run_id }}
+          restore-keys: |
+            nfl-odds-cache-
+
       - name: Generate current-week NFL projections
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
@@ -77,6 +90,15 @@ jobs:
 
       - name: Fit/backtest MLB starting-pitcher + bullpen blend
         run: python pipeline/mlb/backtest_pitcher_model.py
+
+      # Same odds-caching rationale as NFL's restore step above.
+      - name: Restore MLB odds cache
+        uses: actions/cache@v4
+        with:
+          path: data/mlb/odds_cache.json
+          key: mlb-odds-cache-${{ github.run_id }}
+          restore-keys: |
+            mlb-odds-cache-
 
       - name: Generate current-slate MLB projections
         env:

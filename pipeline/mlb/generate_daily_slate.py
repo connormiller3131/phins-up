@@ -54,7 +54,7 @@ from pipeline.mlb.props.prop_models import FEATURES, over_prob
 from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, current_sp_ip
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
-from pipeline.common.odds_api import get_game_odds, get_event_player_props
+from pipeline.common.odds_api import cached_game_odds, cached_event_player_props
 from pipeline.common.espn_odds import (
     get_scoreboard_events as get_espn_scoreboard_events,
     get_event_odds as get_espn_event_odds,
@@ -452,7 +452,7 @@ def _build_market_dict(odds_game):
 
 def attach_market_odds(slate):
     try:
-        odds_data = get_game_odds("baseball_mlb")
+        odds_data = cached_game_odds(DATA_DIR / "odds_cache.json", "baseball_mlb")
     except Exception as e:
         print(f"  odds API unavailable: {e}")
         for g in slate:
@@ -657,9 +657,10 @@ def attach_featured_prop_odds(games_out, limit=2):
 
     for g in candidates[:limit]:
         try:
-            data = get_event_player_props(
-                "baseball_mlb", g["market"]["event_id"],
-                markets=",".join(sorted(set(PROP_MARKET_KEYS.values()))))
+            data = cached_event_player_props(
+                DATA_DIR / "odds_cache.json", "baseball_mlb", g["market"]["event_id"],
+                markets=",".join(sorted(set(PROP_MARKET_KEYS.values()))),
+                commence_time=g["market"]["commence_time"])
         except Exception as e:
             print(f"  featured props fetch failed for {g['awayAbbr']} @ {g['homeAbbr']}: {e}")
             continue

@@ -1362,14 +1362,15 @@ function fmtKickoffLine(g){
 }
 
 // 5 legs: up to 2 real-edge moneylines, then one best pick per prop market
-// (Anytime TD, Rushing/Passing/Receiving Yds) via bestPropInMarket -- one
-// pick per market, not a flat pool sorted by raw probability, because TD
-// probabilities (roughly 20-70%) and yardage probabilities (now correctly
-// hovering near 50% for everyone post-fix, see project_count in
-// generate_current_week.py) aren't on comparable scales; sorting them
-// together would let TD candidates crowd out yardage picks every time.
-// Falls back to extra moneylines if a short slate can't fill all 4 prop
-// markets, same "reach the target leg count wherever real data exists"
+// (Rushing/Passing/Receiving Yds) via bestPropInMarket -- one pick per
+// market, not a flat pool sorted by raw probability, so one yardage stat
+// can't crowd out the others every time. Anytime TD deliberately isn't one
+// of these markets: it already gets its own dedicated TD SPECIAL card
+// (collectNflTdSpecialLegs) right below this one, so reserving a guaranteed
+// TD slot here too was redundant -- a mediocre TD candidate would get
+// "locked in" just to fill the market quota even when a better yardage pick
+// existed. Falls back to extra moneylines if a short slate can't fill all 3
+// prop markets, same "reach the target leg count wherever real data exists"
 // approach used everywhere else on this site.
 function collectNflParlayLegs(games){
   const legs = [];
@@ -1387,7 +1388,7 @@ function collectNflParlayLegs(games){
 
   const allProps = games.filter(g => !g.already_played).flatMap(g => g.props || []);
   const propPicks = [];
-  for(const mk of ["Anytime TD", "Rushing Yds", "Passing Yds", "Receiving Yds"]){
+  for(const mk of ["Rushing Yds", "Passing Yds", "Receiving Yds"]){
     const pick = bestPropInMarket(allProps, mk, used);
     if(pick){ propPicks.push(pick); used.add(pick.player_id); }
   }
@@ -1449,14 +1450,14 @@ function parlayCardHtml(legs, sport, opts){
 let CURRENT_NFL_WEEK_DATA = null; // set below, read by loadNflBoxScore -- avoids threading week number through the inline ontoggle string
 
 // Mirrors MLB's mlbParlayCardsHtml: Suggested Parlay (5 legs -- up to 2
-// moneylines plus one best pick each from Anytime TD/Rushing/Passing/
-// Receiving Yds) and a TD Special (3 Anytime TD legs, different teams).
+// moneylines plus one best pick each from Rushing/Passing/Receiving Yds)
+// and a TD Special (3 Anytime TD legs, different teams).
 function nflParlayCardsHtml(weekData){
   const legs = collectNflParlayLegs(weekData.games);
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(legs, 'NFL', {
-      note: "shaped like a realistic parlay -- up to 2 moneylines, plus the best available pick from Anytime TD, Rushing Yds, Passing Yds, and Receiving Yds -- real edge preferred over model estimate wherever DraftKings has posted a price"
+      note: "shaped like a realistic parlay -- up to 2 moneylines, plus the best available pick from Rushing Yds, Passing Yds, and Receiving Yds -- real edge preferred over model estimate wherever DraftKings has posted a price"
     })
     + parlayCardHtml(tdLegs, 'NFL', {
         title: 'TD SPECIAL', accentClass: 'parlay-special',

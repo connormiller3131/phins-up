@@ -2479,15 +2479,36 @@ function fmtShortDate(iso){
   return new Date(y, m-1, d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
 }
 
+// Reconstructs what HR Special WOULD actually show on `date`, by first
+// reconstructing the actual (exclusion-aware) picks for up to 3 prior days
+// and excluding those, recursively. This has to be recursive rather than
+// calling collectHrSpecialLegs(day.games) raw on each prior day: a raw call
+// ignores THAT day's own exclusions, so it can disagree with what was really
+// shown on that day whenever exclusion changed the outcome -- which let a
+// player who WAS actually shown 3 days running slip through a first attempt
+// at this fix that only unioned raw prior-day picks. MLB_DATA.days only ever
+// has ~7 entries and dates strictly decrease each recursive step, so this
+// always terminates quickly.
+function mlbHrSpecialPicksForDate(date){
+  const dayData = MLB_DATA.days[date];
+  if(!dayData) return [];
+  const excludeIds = new Set();
+  let cursor = date;
+  for(let i = 0; i < 3; i++){
+    cursor = mlbPrevDateStr(cursor);
+    if(!MLB_DATA.days[cursor]) break;
+    mlbHrSpecialPicksForDate(cursor).forEach(l => { if(l.player_id != null) excludeIds.add(l.player_id); });
+  }
+  return collectHrSpecialLegs(dayData.games, excludeIds);
+}
+
 // Shared by the initial render and by updateMLBLiveStats -- pulled out so a
 // real lineup posting mid-afternoon (well before first pitch, confirmed
 // against MLB's own boxscore API) can trigger a live re-pick of the day's
 // Suggested Parlay / HR Special using the same exact logic, not a
 // reimplementation of it.
 function mlbParlayCardsHtml(dayData, selectedDate){
-  const prevDay = MLB_DATA.days[mlbPrevDateStr(selectedDate)];
-  const prevHrIds = prevDay ? new Set(collectHrSpecialLegs(prevDay.games).map(l => l.player_id).filter(id => id != null)) : new Set();
-  const hrLegs = collectHrSpecialLegs(dayData.games, prevHrIds);
+  const hrLegs = mlbHrSpecialPicksForDate(selectedDate);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
       note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"

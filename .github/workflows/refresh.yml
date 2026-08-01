@@ -158,25 +158,40 @@ jobs:
       # patched), so there's no real content to reconcile on a collision:
       # retry by re-basing the commit onto whatever is newest and pushing
       # again, rather than just failing.
+      #
+      # IMPORTANT: the retry must be a real `git rebase`, not `git reset
+      # --soft origin/main`. A soft reset moves HEAD but leaves the index/
+      # working tree exactly as they were -- for every file this job's
+      # commit DIDN'T touch, that's still whatever was in this job's
+      # (possibly stale, pre-race) checkout, not origin/main's real content.
+      # Re-adding only docs/*/data paths and recommitting then bakes that
+      # staleness in as a real commit with a misleadingly current parent --
+      # this silently reverted a real source change once already (a shipped
+      # frontend feature quietly disappeared for several commits until
+      # caught by chance). `git rebase -X ours` replays this commit's actual
+      # diff on top of the new tip instead: files we didn't touch correctly
+      # take origin/main's latest content, and our regenerated docs/*/data
+      # files win on any conflict (there's nothing to reconcile there since
+      # they're full regenerations, not patches).
       - name: Commit and push updated site
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          for i in 1 2 3 4 5; do
-            git add docs/index.html docs/404.html docs/results/ data/nhl/goalie_game_logs.parquet
-            if git diff --quiet --cached; then
-              echo "Nothing to commit."
-              break
-            fi
+          git add docs/index.html docs/404.html docs/results/ data/nhl/goalie_game_logs.parquet
+          if git diff --quiet --cached; then
+            echo "Nothing to commit."
+          else
             git commit -m "Auto-refresh NFL + MLB projections"
-            git fetch origin main
-            if git push origin main; then
-              break
-            fi
-            echo "Push rejected (remote moved), retrying on top of the latest main..."
-            git reset --soft origin/main
-            sleep 5
-          done
+            for i in 1 2 3 4 5; do
+              git fetch origin main
+              if git push origin main; then
+                break
+              fi
+              echo "Push rejected (remote moved), rebasing onto the latest main..."
+              git rebase -X ours origin/main
+              sleep 5
+            done
+          fi
 
       # Cloudflare becomes the real hosting -- faster/more reliable CDN than
       # GitHub Pages, and we hit a real GitHub Pages deploy 503 once already.

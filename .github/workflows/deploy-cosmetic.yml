@@ -47,26 +47,36 @@ jobs:
 
       # Same non-fast-forward retry pattern as refresh.yml's commit step --
       # only docs/index.html and docs/404.html change here, never
-      # docs/results/ (this workflow never regenerates results).
+      # docs/results/ (this workflow never regenerates results). Uses a real
+      # `git rebase -X ours`, not `git reset --soft origin/main` -- a soft
+      # reset leaves the index/working tree exactly as they were, so any
+      # file this job didn't touch keeps whatever was in this job's
+      # (possibly stale, pre-race) checkout instead of origin/main's real
+      # content once re-committed. That silently reverted a real shipped
+      # frontend feature once already. Rebasing replays this commit's actual
+      # diff onto the new tip instead: untouched files correctly pick up
+      # origin/main's latest content, and our regenerated docs/* win on any
+      # conflict (nothing to reconcile there -- full regeneration, not a
+      # patch).
       - name: Commit and push updated site
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          for i in 1 2 3 4 5; do
-            git add docs/index.html docs/404.html
-            if git diff --quiet --cached; then
-              echo "Nothing to commit."
-              break
-            fi
+          git add docs/index.html docs/404.html
+          if git diff --quiet --cached; then
+            echo "Nothing to commit."
+          else
             git commit -m "Deploy cosmetic/UI-only changes"
-            git fetch origin main
-            if git push origin main; then
-              break
-            fi
-            echo "Push rejected (remote moved), retrying on top of the latest main..."
-            git reset --soft origin/main
-            sleep 5
-          done
+            for i in 1 2 3 4 5; do
+              git fetch origin main
+              if git push origin main; then
+                break
+              fi
+              echo "Push rejected (remote moved), rebasing onto the latest main..."
+              git rebase -X ours origin/main
+              sleep 5
+            done
+          fi
 
       - name: Deploy to Cloudflare
         env:

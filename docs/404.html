@@ -803,6 +803,27 @@
   }
   .placeholder b{color:var(--text);}
 
+  /* Loading skeleton for box scores / Batter vs Pitcher History -- these
+     all fetch a real external API (MLB Stats API, ESPN) on expand, which
+     can take a beat, especially with 15+ games all firing at once on page
+     load. A plain "Loading..." text sat there doing nothing; this at least
+     hints at the eventual table shape so it reads as "working," not stuck. */
+  .skeleton{display:flex;flex-direction:column;gap:6px;padding:2px 0;}
+  .skeleton-row{
+    height:13px;
+    border-radius:4px;
+    background:linear-gradient(90deg, var(--panel-alt) 25%, var(--line) 50%, var(--panel-alt) 75%);
+    background-size:200% 100%;
+    animation:skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes skeleton-shimmer{
+    0%{background-position:200% 0;}
+    100%{background-position:-200% 0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .skeleton-row{animation:none;background:var(--panel-alt);}
+  }
+
   @media (max-width:560px){
     h1{font-size:38px;}
     .rowgrid{grid-template-columns:1fr;}
@@ -997,6 +1018,51 @@ const NHL_WEEK_DAYS = Object.keys(NHL_DATA.days || {}).sort();
 
 function pct(x){ return x===null||x===undefined ? "—" : (x*100).toFixed(1)+"%"; }
 function fmtOdds(o){ return o===null||o===undefined ? "—" : (o>0?"+":"")+o; }
+// Widths just vary enough to not look like one solid rectangle -- meant to
+// hint at "a couple of rows are coming," not to precisely preview content.
+function skeletonHtml(){
+  return `<div class="skeleton"><div class="skeleton-row" style="width:70%"></div><div class="skeleton-row" style="width:45%"></div></div>`;
+}
+
+// Real primary franchise brand colors, one accent hex per team -- purely a
+// visual accent (a border-left stripe on each side of a game card), not a
+// data claim, so close-enough brand accuracy is fine here. Keyed by this
+// project's own abbreviation convention per sport (confirmed against
+// pipeline/nfl's nflverse codes, pipeline/mlb/team_map.py's Statcast
+// abbreviations, and pipeline/nhl/team_map.py's post-Utah-move codes --
+// NOT assumed to match some other generic "standard" abbreviation set).
+const TEAM_COLORS = {
+  nfl: {
+    ARI:"#97233F", ATL:"#A71930", BAL:"#241773", BUF:"#00338D", CAR:"#0085CA",
+    CHI:"#0B162A", CIN:"#FB4F14", CLE:"#311D00", DAL:"#003594", DEN:"#002244",
+    DET:"#0076B6", GB:"#203731", HOU:"#03202F", IND:"#002C5F", JAX:"#006778",
+    KC:"#E31837", LA:"#003594", LAC:"#0080C6", LV:"#A5ACAF", MIA:"#008E97",
+    MIN:"#4F2683", NE:"#002244", NO:"#D3BC8D", NYG:"#0B2265", NYJ:"#125740",
+    PHI:"#004C54", PIT:"#FFB612", SEA:"#69BE28", SF:"#AA0000", TB:"#D50A0A",
+    TEN:"#4B92DB", WAS:"#5A1414",
+  },
+  mlb: {
+    AZ:"#A71930", ATL:"#CE1141", BAL:"#DF4601", BOS:"#BD3039", CHC:"#0E3386",
+    CWS:"#27251F", CIN:"#C6011F", CLE:"#00385D", COL:"#333366", DET:"#0C2340",
+    HOU:"#EB6E1F", KC:"#004687", LAA:"#BA0021", LAD:"#005A9C", MIA:"#00A3E0",
+    MIL:"#0A2351", MIN:"#002B5C", NYM:"#002D72", NYY:"#003087", ATH:"#003831",
+    PHI:"#E81828", PIT:"#FDB827", SD:"#2F241D", SF:"#FD5A1E", SEA:"#005C5C",
+    STL:"#C41E3A", TB:"#092C5C", TEX:"#003278", TOR:"#134A8E", WSH:"#AB0003",
+  },
+  nhl: {
+    ANA:"#F47A38", BOS:"#FFB81C", BUF:"#002654", CGY:"#C8102E", CAR:"#CC0000",
+    CHI:"#CF0A2C", COL:"#6F263D", CBJ:"#041E42", DAL:"#006847", DET:"#CE1126",
+    EDM:"#FF4C00", FLA:"#C8102E", LAK:"#A2AAAD", MIN:"#154734", MTL:"#AF1E2D",
+    NSH:"#FFB81C", NJD:"#CE1126", NYI:"#00539B", NYR:"#0038A8", OTT:"#C52032",
+    PHI:"#F74902", PIT:"#FCB514", SJS:"#006D75", SEA:"#99D9D9", STL:"#003087",
+    TBL:"#002868", TOR:"#00205B", UTA:"#71AFE5", VAN:"#00205B", VGK:"#B4975A",
+    WSH:"#C8102E", WPG:"#041E42",
+  },
+};
+
+function teamAccent(sport, abbr){
+  return (TEAM_COLORS[sport] && TEAM_COLORS[sport][abbr]) || '';
+}
 function mlImpliedProb(o){ return o===null||o===undefined ? null : (o<0 ? (-o)/(-o+100) : 100/(o+100)); }
 
 // ---- Build-your-own parlay: pick any prop shown on the page (per sport),
@@ -1594,7 +1660,7 @@ function renderGames(week){
       </div>
 
       <div class="rowgrid">
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('nfl', g.awayAbbr)}">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
           <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlAway)}</b>${parlayAddBtn('nfl', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, g.mlAway, mlImpliedProb(g.mlAway))}</span></div>
@@ -1607,7 +1673,7 @@ function renderGames(week){
             <span class="edge-tag" data-tag="${idx}-away">—</span>
           </div>
         </div>
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('nfl', g.homeAbbr)}">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
           <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlHome)}</b>${parlayAddBtn('nfl', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, g.mlHome, mlImpliedProb(g.mlHome))}</span></div>
@@ -1858,7 +1924,7 @@ function boxScoreSection(date, g, idx){
   return `
     <details class="props-toggle" open id="mlb-box-${date}-${idx}" ontoggle="if(this.open) loadBoxScore('${date}', ${idx})">
       <summary>Box Score <span class="props-sample-tag">(innings, runs, hits, errors -- fetched live from MLB)</span></summary>
-      <div id="mlb-box-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
+      <div id="mlb-box-body-${date}-${idx}">${skeletonHtml()}</div>
     </details>
   `;
 }
@@ -1988,7 +2054,7 @@ function nflBoxScoreSection(g, idx){
   return `
     <details class="props-toggle" open id="nfl-box-${idx}" ontoggle="if(this.open) loadNflBoxScore(${idx})">
       <summary>Box Score <span class="props-sample-tag">(quarter-by-quarter score -- fetched live from ESPN)</span></summary>
-      <div id="nfl-box-body-${idx}"><span class="p-exp">Loading…</span></div>
+      <div id="nfl-box-body-${idx}">${skeletonHtml()}</div>
     </details>
   `;
 }
@@ -2016,7 +2082,7 @@ function nhlBoxScoreSection(date, g, idx){
   return `
     <details class="props-toggle" open id="nhl-box-${date}-${idx}" ontoggle="if(this.open) loadNhlBoxScore('${date}', ${idx})">
       <summary>Box Score <span class="props-sample-tag">(period-by-period score -- fetched live from ESPN)</span></summary>
-      <div id="nhl-box-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
+      <div id="nhl-box-body-${date}-${idx}">${skeletonHtml()}</div>
     </details>
   `;
 }
@@ -2048,7 +2114,7 @@ function bvpSection(date, g, idx){
   return `
     <details class="props-toggle" id="mlb-bvp-${date}-${idx}" ontoggle="if(this.open) loadBvP('${date}', ${idx})">
       <summary>Batter vs Pitcher History <span class="props-sample-tag">(real career stats vs. today's probable starter, fetched live from MLB on expand)</span></summary>
-      <div id="mlb-bvp-body-${date}-${idx}"><span class="p-exp">Loading…</span></div>
+      <div id="mlb-bvp-body-${date}-${idx}">${skeletonHtml()}</div>
     </details>
   `;
 }
@@ -2665,14 +2731,14 @@ function renderMLBGames(selectedDate){
       </div>
 
       <div class="rowgrid">
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('mlb', g.awayAbbr)}">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.awayProbablePitcher || "—"}</b></div>
           <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(m ? m.mlAway : null)}</b>${parlayAddBtn('mlb', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, m ? m.mlAway : null, m ? mlImpliedProb(m.mlAway) : null)}</span></div>
           <div class="stat-line"><span>Fair win %</span><b>${fairHome!==null ? pct(1-fairHome) : "—"}</b>${g.good_value_away ? `<span class="value-tag" title="Model win % beats the market fair %">GOOD VALUE</span>` : ''}</div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
         </div>
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('mlb', g.homeAbbr)}">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Probable P</span><b>${g.homeProbablePitcher || "—"}</b></div>
           <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(m ? m.mlHome : null)}</b>${parlayAddBtn('mlb', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, m ? m.mlHome : null, m ? mlImpliedProb(m.mlHome) : null)}</span></div>
@@ -2781,11 +2847,11 @@ function renderNHLGames(selectedDate){
       </div>
 
       <div class="rowgrid">
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('nhl', g.awayAbbr)}">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
         </div>
-        <div class="side">
+        <div class="side" style="--team-accent:${teamAccent('nhl', g.homeAbbr)}">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>

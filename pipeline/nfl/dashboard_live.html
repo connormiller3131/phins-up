@@ -1571,11 +1571,11 @@ function parlayCardHtml(legs, sport, opts){
   `).join("");
   const anyReal = legs.some(l => l.edge != null);
   const anyModelOnly = legs.some(l => l.edge == null);
-  const rankingNote = anyReal && anyModelOnly
+  const rankingNote = opts.rankingNote || (anyReal && anyModelOnly
     ? "ranked by real edge where DraftKings has posted a price, model probability where it hasn't -- either can be wrong"
     : anyReal
       ? "ranked by the model's own edge estimate, which can be wrong"
-      : "ranked by the model's own probability estimate, not graded against a real price -- can be wrong";
+      : "ranked by the model's own probability estimate, not graded against a real price -- can be wrong");
   return `
     <div class="parlay-card ${accentClass}">
       <div class="parlay-title">${title} <span class="props-sample-tag">(${note})</span></div>
@@ -1595,6 +1595,7 @@ function nflParlayCardsHtml(weekData){
   const legs = collectNflParlayLegs(weekData.games);
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
+  const flinFlonLegs = collectFlinFlonLegs(weekData.games);
   return parlayCardHtml(legs, 'NFL', {
       note: "shaped like a realistic parlay -- up to 2 moneylines, plus the best available pick from Rushing Yds, Passing Yds, and Receiving Yds -- real edge preferred over model estimate wherever DraftKings has posted a price"
     })
@@ -1604,6 +1605,12 @@ function nflParlayCardsHtml(weekData){
           ? `top Anytime TD picks from 3 different teams -- ${tdRealCount} vs. a real DK price, ${tdLegs.length - tdRealCount} model-only where DK hasn't posted one`
           : `model's highest Anytime TD probabilities from 3 different teams -- DraftKings hasn't posted Anytime TD prices for this week's featured game(s) yet, so these aren't graded against a real edge`,
         emptyText: 'No Anytime TD projections available yet for this week. Check back once the model has run.',
+      })
+    + parlayCardHtml(flinFlonLegs, 'NFL', {
+        title: 'FLIN FLON SPECIAL',
+        note: "3 completely random props, picked with zero model logic -- not ranked, not curated, no edge involved. Reload the page for a new 3. Just for fun.",
+        rankingNote: "picked completely at random -- not ranked by edge, probability, or anything else",
+        emptyText: 'No props available to draw from yet this week.',
       });
 }
 
@@ -2186,6 +2193,49 @@ function pickLine(p){
   return best ? {line: best.line, prob: best.over_prob} : {line: p.line, prob: p.model_over_prob};
 }
 
+// FLIN FLON SPECIAL: 3 completely random props, on purpose -- no edge
+// ranking, no reliability gate, none of the curation every other card on
+// this page applies. Just a fun lucky-dip alongside the real analysis, and
+// deliberately labeled as exactly that wherever it's shown (same "never
+// dress up what a number actually is" rule as everywhere else on this
+// site). Refreshing the page draws a new 3 each time -- this isn't a
+// stable daily pick the way HR/TD Special are.
+function collectFlinFlonLegs(games){
+  const pool = [];
+  games.forEach(g => {
+    if(g.already_played) return;
+    (g.props||[]).forEach(p => {
+      const isBinary = p.market === "Anytime HR" || p.market === "Anytime TD";
+      const modelP = isBinary ? p.model_prob : p.model_over_prob;
+      if(modelP == null) return;
+      if(!isBinary && (p.line == null || p.line <= 0)) return;
+      const chosen = isBinary ? {line: null, prob: modelP} : pickLine(p);
+      const oppSuffix = p.opp ? ` vs ${p.opp}` : '';
+      const sub = isBinary ? (p.opp ? `vs ${p.opp}` : p.team) : `${chosen.line}+ ${p.market.toLowerCase()}${oppSuffix}`;
+      const leg = p.dk_implied_prob != null
+        ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected}
+        : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected};
+      pool.push(leg);
+    });
+  });
+  for(let i = pool.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  // Same player, two different stat lines, is a real possible draw here --
+  // still "random," but reads like a mistake more than a fun 3-leg parlay,
+  // so skip a repeat player rather than let two legs land on one person.
+  const picked = [];
+  const seenPlayers = new Set();
+  for(const leg of pool){
+    if(picked.length >= 3) break;
+    if(seenPlayers.has(leg.player_id)) continue;
+    seenPlayers.add(leg.player_id);
+    picked.push(leg);
+  }
+  return picked;
+}
+
 // A real DK price already has a book's own skepticism baked in, so a hot-
 // but-tiny sample can't out-rank a real edge on its own -- but a MODEL-ONLY
 // pick has nothing else keeping a trailing rate built from a handful of
@@ -2680,6 +2730,7 @@ function mlbHrSpecialPicksForDate(date){
 function mlbParlayCardsHtml(dayData, selectedDate){
   const hrLegs = mlbHrSpecialPicksForDate(selectedDate);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
+  const flinFlonLegs = collectFlinFlonLegs(dayData.games);
   return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
       note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"
     })
@@ -2689,6 +2740,12 @@ function mlbParlayCardsHtml(dayData, selectedDate){
           ? `top Anytime HR picks from 3 different teams -- ${hrRealCount} vs. a real DK price, ${hrLegs.length - hrRealCount} model-only where DK hasn't posted one`
           : `model's highest Anytime HR probabilities from 3 different teams -- DraftKings hasn't posted Anytime HR prices for today's featured game(s) yet, so these aren't graded against a real edge`,
         emptyText: 'No Anytime HR projections available yet for this slate. Check back once the model has run.',
+      })
+    + parlayCardHtml(flinFlonLegs, 'MLB', {
+        title: 'FLIN FLON SPECIAL',
+        note: "3 completely random props, picked with zero model logic -- not ranked, not curated, no edge involved. Reload the page for a new 3. Just for fun.",
+        rankingNote: "picked completely at random -- not ranked by edge, probability, or anything else",
+        emptyText: 'No props available to draw from yet for this slate.',
       });
 }
 

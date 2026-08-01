@@ -1100,7 +1100,7 @@ function selectLadderRung(optBtn){
   PARLAY_BUILDER[d.sport] = PARLAY_BUILDER[d.sport].filter(l => !l.key.startsWith(d.prefix));
   if(!wasSelected){
     PARLAY_BUILDER[d.sport].push({
-      key: d.key, label: d.label, sub: `${d.line}+ ${d.market.toLowerCase()}${d.opp ? ' vs '+d.opp : ''}`, market: d.market,
+      key: d.key, label: d.label, sub: `${d.line}+${d.opp ? ' vs '+d.opp : ''}`, market: d.market,
       prob: parseFloat(d.prob),
       dkOdds: d.dkOdds ? parseFloat(d.dkOdds) : null,
       dkImplied: d.dkImplied ? parseFloat(d.dkImplied) : null,
@@ -1127,15 +1127,6 @@ function closeLadderPicker(){
   LADDER_PICKER_TRIGGER = null;
 }
 
-// Count-stat leg subs already spell out the market inline (e.g. "2+ total
-// bases vs ATL"), so the separate market chip would just repeat it right
-// next door -- skip the chip whenever sub already mentions it. Moneyline/
-// Anytime HR/TD subs never include the market name, so they keep the chip.
-function marketChip(l){
-  if(l.sub && l.sub.toLowerCase().includes(l.market.toLowerCase())) return '';
-  return `<span class="parlay-leg-market">${l.market}</span>`;
-}
-
 function renderParlayBuilderPanel(sport){
   const root = document.getElementById(`parlay-builder-${sport}`);
   if(!root) return;
@@ -1147,7 +1138,7 @@ function renderParlayBuilderPanel(sport){
   const rows = legs.map(l => `
     <div class="builder-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
-      ${marketChip(l)}
+      <span class="parlay-leg-market">${l.market}</span>
       <span class="parlay-leg-prob">${l.dkOdds != null ? `<b>${fmtOdds(l.dkOdds)}</b> ` : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this pick">MODEL EST.</span> `}${pct(l.prob)}</span>
       <span class="builder-leg-remove" onclick="removeParlayLeg('${sport}','${l.key.replace(/'/g,"\\'")}')" title="Remove">&times;</span>
     </div>
@@ -1340,7 +1331,7 @@ function propStatRow(p){
     ${sourceBadge(p)}
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
-    ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.line}+ ${p.market.toLowerCase()}${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
+    ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.line}+${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -1476,7 +1467,7 @@ function parlayCardHtml(legs, sport, opts){
   const rows = legs.map(l => `
     <div class="parlay-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
-      ${marketChip(l)}
+      <span class="parlay-leg-market">${l.market}</span>
       <span class="parlay-leg-edge">${l.edge != null ? `+${(l.edge*100).toFixed(1)}% edge` : ''}</span>
       <span class="parlay-leg-prob">${l.edge == null
         ? `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this player to grade an edge against">MODEL EST.</span> `
@@ -1746,7 +1737,7 @@ function mlbPropStatRow(p){
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
     ${dkNote}
-    ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.line}+ ${p.market.toLowerCase()}${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
+    ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.line}+${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -2126,7 +2117,7 @@ function bestPropInMarket(props, marketName, used){
     if(!isBinary && (p.line == null || p.line <= 0)) return;
     const chosen = isBinary ? {line: null, prob: modelP} : pickLine(p);
     const oppSuffix = p.opp ? ` vs ${p.opp}` : '';
-    const sub = isBinary ? (p.opp ? `vs ${p.opp}` : p.team) : `${chosen.line}+ ${p.market.toLowerCase()}${oppSuffix}`;
+    const sub = isBinary ? (p.opp ? `vs ${p.opp}` : p.team) : `${chosen.line}+${oppSuffix}`;
     const leg = p.dk_implied_prob != null
       ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected}
       : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected};

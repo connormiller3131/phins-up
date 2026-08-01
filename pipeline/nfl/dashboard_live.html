@@ -806,6 +806,22 @@
     padding-top:16px;
   }
   footer b{color:var(--text);}
+  .site-legal-footer{
+    margin-top:30px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    line-height:1.6;
+  }
+  .legal-sections{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+  .legal-sections summary{cursor:pointer;color:var(--text);font-weight:700;}
+  .legal-sections summary:hover{color:var(--blue);}
+  .legal-sections p{margin:8px 0 4px;max-width:640px;}
+  .legal-footer-bottom{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;}
+  .legal-footer-bottom a{color:var(--text-dim);text-decoration:underline;}
+  .legal-footer-bottom a:hover{color:var(--blue);}
 </style>
 </head>
 <body>
@@ -905,6 +921,34 @@
 
   <footer id="nhl-foot"></footer>
   </div>
+
+  <footer class="site-legal-footer">
+    <div class="legal-sections">
+      <details>
+        <summary>Disclaimer</summary>
+        <p>Phins Up provides statistical projections and model-based analysis for informational and entertainment purposes only. Nothing on this site is professional betting advice, and no projection, probability, or "edge" estimate is a guarantee of any outcome. Sports outcomes are inherently uncertain, and a model's past accuracy does not guarantee its future accuracy. You are solely responsible for any decisions you make using information from this site.</p>
+      </details>
+      <details>
+        <summary>Responsible Gambling</summary>
+        <p>Phins Up does not accept wagers, process bets, or facilitate gambling of any kind — it's an analytics site only. If you or someone you know has a gambling problem, help is available: call 1-800-GAMBLER (1-800-426-2537) or visit <a href="https://www.ncpgambling.org" target="_blank" rel="noopener">ncpgambling.org</a>. You must be of legal gambling age in your jurisdiction to act on any information from this site.</p>
+      </details>
+      <details>
+        <summary>Privacy Policy</summary>
+        <p>Phins Up doesn't collect personal information beyond what's needed to operate the site. If you create an account, your email and basic account details are handled by Clerk, our authentication provider — see Clerk's own privacy policy for how they handle that data. We don't sell your data or use it for advertising. Standard web server logs (IP address, browser type) may be collected by our hosting provider, Cloudflare, for security and performance purposes.</p>
+      </details>
+      <details>
+        <summary>Terms of Use</summary>
+        <p>By using Phins Up, you agree to use the site for personal, informational purposes only. All model projections, odds, and statistics are provided "as is" without warranty of accuracy or completeness. Phins Up is not liable for any losses, financial or otherwise, resulting from decisions made using information from this site. All trademarks, team names, and league names are the property of their respective owners; Phins Up is not affiliated with, endorsed by, or sponsored by the NFL, MLB, NHL, DraftKings, or any team or league referenced on this site.</p>
+      </details>
+    </div>
+    <div class="legal-footer-bottom">
+      <span>&copy; 2026 Connor Miller</span>
+      <span>·</span>
+      <a href="mailto:connor.miller3131@gmail.com">connor.miller3131@gmail.com</a>
+      <span>·</span>
+      <span>Not affiliated with the NFL, MLB, NHL, or DraftKings</span>
+    </div>
+  </footer>
 
 </div>
 

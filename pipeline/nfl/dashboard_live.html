@@ -1063,7 +1063,7 @@ function ladderTriggerBtn(sport, p, featuredDkOdds, featuredDkImplied){
     dkOdds: (l.line === p.line) ? featuredDkOdds : null,
     dkImplied: (l.line === p.line) ? featuredDkImplied : null,
   }));
-  return `<button type="button" class="parlay-add-btn ladder-trigger" data-sport="${sport}" data-player-id="${p.player_id}" data-market="${escAttr(p.market)}" data-label="${escAttr(p.player)}" data-team="${escAttr(p.team)}" data-rungs="${escAttr(JSON.stringify(rungs))}" onclick="openLadderPicker(this)">+ parlay</button>`;
+  return `<button type="button" class="parlay-add-btn ladder-trigger" data-sport="${sport}" data-player-id="${p.player_id}" data-market="${escAttr(p.market)}" data-label="${escAttr(p.player)}" data-team="${escAttr(p.team)}" data-opp="${escAttr(p.opp || '')}" data-rungs="${escAttr(JSON.stringify(rungs))}" onclick="openLadderPicker(this)">+ parlay</button>`;
 }
 
 let LADDER_PICKER_TRIGGER = null;
@@ -1081,7 +1081,7 @@ function openLadderPicker(btn){
     const oddsHtml = r.dkOdds != null
       ? `<b>${fmtOdds(r.dkOdds)}</b>`
       : `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this pick">MODEL EST.</span>`;
-    return `<button type="button" class="ladder-picker-row${isSel ? ' selected' : ''}" data-sport="${d.sport}" data-key="${escAttr(rungKey)}" data-prefix="${escAttr(prefix)}" data-label="${escAttr(d.label)}" data-team="${escAttr(d.team)}" data-market="${escAttr(d.market)}" data-line="${r.line}" data-prob="${r.prob}" data-dk-odds="${r.dkOdds ?? ''}" data-dk-implied="${r.dkImplied ?? ''}" onclick="selectLadderRung(this)">
+    return `<button type="button" class="ladder-picker-row${isSel ? ' selected' : ''}" data-sport="${d.sport}" data-key="${escAttr(rungKey)}" data-prefix="${escAttr(prefix)}" data-label="${escAttr(d.label)}" data-team="${escAttr(d.team)}" data-opp="${escAttr(d.opp || '')}" data-market="${escAttr(d.market)}" data-line="${r.line}" data-prob="${r.prob}" data-dk-odds="${r.dkOdds ?? ''}" data-dk-implied="${r.dkImplied ?? ''}" onclick="selectLadderRung(this)">
       <span class="ladder-picker-line">${r.line}+</span>
       <span class="ladder-picker-prob">${pct(r.prob)}</span>
       <span class="ladder-picker-odds">${oddsHtml}</span>
@@ -1100,7 +1100,7 @@ function selectLadderRung(optBtn){
   PARLAY_BUILDER[d.sport] = PARLAY_BUILDER[d.sport].filter(l => !l.key.startsWith(d.prefix));
   if(!wasSelected){
     PARLAY_BUILDER[d.sport].push({
-      key: d.key, label: d.label, sub: `${d.team} · ${d.line}+`, market: d.market,
+      key: d.key, label: d.label, sub: `${d.line}+${d.opp ? ' vs '+d.opp : ''}`, market: d.market,
       prob: parseFloat(d.prob),
       dkOdds: d.dkOdds ? parseFloat(d.dkOdds) : null,
       dkImplied: d.dkImplied ? parseFloat(d.dkImplied) : null,
@@ -1313,7 +1313,7 @@ function propStatRow(p){
       <span class="prop-stat-label">Anytime TD</span>
       <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
       ${dk}
-      ${parlayAddBtn('nfl', `${p.player_id}-AnytimeTD`, p.player, p.team, 'Anytime TD', p.model_prob, p.dk_odds, p.dk_implied_prob)}
+      ${parlayAddBtn('nfl', `${p.player_id}-AnytimeTD`, p.player, p.opp ? `vs ${p.opp}` : p.team, 'Anytime TD', p.model_prob, p.dk_odds, p.dk_implied_prob)}
     </div>`;
   }
   if(p.ladder && p.ladder.length){
@@ -1331,7 +1331,7 @@ function propStatRow(p){
     ${sourceBadge(p)}
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
-    ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
+    ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.line}+${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -1717,7 +1717,7 @@ function mlbPropStatRow(p){
       <span class="prop-stat-label">Anytime HR</span>
       <span class="td-chip td-${advice.cls}" title="${advice.note}">${advice.label} · ${pct(p.model_prob)}</span>
       ${dkNote}
-      ${parlayAddBtn('mlb', `${p.player_id}-AnytimeHR`, p.player, p.team, 'Anytime HR', p.model_prob, p.dk_over, p.dk_implied_prob)}
+      ${parlayAddBtn('mlb', `${p.player_id}-AnytimeHR`, p.player, p.opp ? `vs ${p.opp}` : p.team, 'Anytime HR', p.model_prob, p.dk_over, p.dk_implied_prob)}
     </div>`;
   }
   if(p.ladder && p.ladder.length){
@@ -1737,7 +1737,7 @@ function mlbPropStatRow(p){
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
     ${dkNote}
-    ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.team} · ${p.line}+`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
+    ${parlayAddBtn('mlb', `${p.player_id}-${p.market}`, p.player, `${p.line}+${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_over, p.dk_implied_prob)}
   </div>`;
 }
 
@@ -2116,7 +2116,8 @@ function bestPropInMarket(props, marketName, used){
     if(modelP == null) return;
     if(!isBinary && (p.line == null || p.line <= 0)) return;
     const chosen = isBinary ? {line: null, prob: modelP} : pickLine(p);
-    const sub = isBinary ? p.team : `${p.team} · ${chosen.line}+`;
+    const oppSuffix = p.opp ? ` vs ${p.opp}` : '';
+    const sub = isBinary ? (p.opp ? `vs ${p.opp}` : p.team) : `${chosen.line}+${oppSuffix}`;
     const leg = p.dk_implied_prob != null
       ? {edge: modelP - p.dk_implied_prob, prob: modelP, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected}
       : {edge: null, prob: chosen.prob, label: p.player, sub, market: p.market, player_id: p.player_id, projected: p.projected};
@@ -2258,7 +2259,7 @@ function collectHrSpecialLegs(games, excludeIds){
       if(p.market !== "Anytime HR" || excludeIds.has(p.player_id) || seenIds.has(p.player_id)) return;
       if(lineupKnown && p.confirmed_starter === false) return;
       seenIds.add(p.player_id);
-      const sub = `${p.team} vs ${g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr}`;
+      const sub = `vs ${p.opp || (g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr)}`;
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;
         if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id, team: p.team});
@@ -2295,11 +2296,12 @@ function collectNflTdSpecialLegs(games, excludeIds){
     (g.props||[]).forEach(p => {
       if(p.market !== "Anytime TD" || p.model_prob == null || excludeIds.has(p.player_id) || seenIds.has(p.player_id)) return;
       seenIds.add(p.player_id);
+      const sub = p.opp ? `vs ${p.opp}` : p.team;
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;
-        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD', player_id: p.player_id, team: p.team});
+        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime TD', player_id: p.player_id, team: p.team});
       } else {
-        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub: p.team, market: 'Anytime TD', player_id: p.player_id, team: p.team});
+        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime TD', player_id: p.player_id, team: p.team});
       }
     });
   });

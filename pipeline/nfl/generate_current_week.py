@@ -260,17 +260,18 @@ def project_td(prep, player_id, opp_team, env):
     return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
 
 
-def _prop_entry(section, market, team, player_id, r, ladder=False):
+def _prop_entry(section, market, team, opp_team, player_id, r, ladder=False):
     e = {"section": section, "player": r["player_display_name"], "player_id": player_id, "team": team,
-         "market": market, "line": r["line"], "projected": r["projected"], "model_over_prob": r["model_over_prob"]}
+         "opp": opp_team, "market": market, "line": r["line"], "projected": r["projected"],
+         "model_over_prob": r["model_over_prob"]}
     if ladder and r.get("ladder"):
         e["ladder"] = r["ladder"]
     return e
 
 
-def _td_entry(section, team, player_id, player_name, t):
+def _td_entry(section, team, opp_team, player_id, player_name, t):
     return {"section": section, "player": player_name, "player_id": player_id, "team": team,
-            "market": "Anytime TD", "model_prob": t["model_prob"]}
+            "opp": opp_team, "market": "Anytime TD", "model_prob": t["model_prob"]}
 
 
 def build_props_for_team(team, opp_team, starters, env, models):
@@ -280,45 +281,45 @@ def build_props_for_team(team, opp_team, starters, env, models):
     for qb_id in picks.get("QB", []):
         r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append(_prop_entry("Passing", "Passing Yds", team, qb_id, r, ladder=True))
+            entries.append(_prop_entry("Passing", "Passing Yds", team, opp_team, qb_id, r, ladder=True))
         rt = project_count(models["passing_tds"], qb_id, opp_team, env)
         if rt:
-            entries.append(_prop_entry("Passing", "Passing TDs", team, qb_id, rt))
+            entries.append(_prop_entry("Passing", "Passing TDs", team, opp_team, qb_id, rt))
         rc = project_count(models["completions"], qb_id, opp_team, env)
         if rc:
-            entries.append(_prop_entry("Passing", "Completions", team, qb_id, rc))
+            entries.append(_prop_entry("Passing", "Completions", team, opp_team, qb_id, rc))
         ra = project_count(models["attempts"], qb_id, opp_team, env)
         if ra:
-            entries.append(_prop_entry("Passing", "Pass Attempts", team, qb_id, ra))
+            entries.append(_prop_entry("Passing", "Pass Attempts", team, opp_team, qb_id, ra))
 
     for rb_id in picks.get("RB", []):
         r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
         if r:
-            entries.append(_prop_entry("Rushing", "Rushing Yds", team, rb_id, r, ladder=True))
+            entries.append(_prop_entry("Rushing", "Rushing Yds", team, opp_team, rb_id, r, ladder=True))
         rc = project_count(models["carries"], rb_id, opp_team, env)
         if rc:
-            entries.append(_prop_entry("Rushing", "Carries", team, rb_id, rc))
+            entries.append(_prop_entry("Rushing", "Carries", team, opp_team, rb_id, rc))
         t = project_td(models["td"], rb_id, opp_team, env)
         if t and r:
-            entries.append(_td_entry("Rushing", team, rb_id, r["player_display_name"], t))
+            entries.append(_td_entry("Rushing", team, opp_team, rb_id, r["player_display_name"], t))
         rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True)
         if rr:
-            entries.append(_prop_entry("Receiving", "Receiving Yds", team, rb_id, rr, ladder=True))
+            entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, rb_id, rr, ladder=True))
         rec = project_count(models["receptions"], rb_id, opp_team, env)
         if rec:
-            entries.append(_prop_entry("Receiving", "Receptions", team, rb_id, rec))
+            entries.append(_prop_entry("Receiving", "Receptions", team, opp_team, rb_id, rec))
 
     for wrte_pos in ("WR", "TE"):
         for pid in picks.get(wrte_pos, []):
             r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True)
             if r:
-                entries.append(_prop_entry("Receiving", "Receiving Yds", team, pid, r, ladder=True))
+                entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, pid, r, ladder=True))
             rec = project_count(models["receptions"], pid, opp_team, env)
             if rec:
-                entries.append(_prop_entry("Receiving", "Receptions", team, pid, rec))
+                entries.append(_prop_entry("Receiving", "Receptions", team, opp_team, pid, rec))
             t = project_td(models["td"], pid, opp_team, env)
             if t and r:
-                entries.append(_td_entry("Receiving", team, pid, r["player_display_name"], t))
+                entries.append(_td_entry("Receiving", team, opp_team, pid, r["player_display_name"], t))
 
     return entries
 

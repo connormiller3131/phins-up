@@ -851,7 +851,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
             if r:
                 name = r["player_display_name"]
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
-                                 "market": market_label, "line": r["line"], "projected": r["projected"],
+                                 "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
                                  "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
                                  "confirmed_starter": is_starter,
                                  **({"ladder": r["ladder"]} if "ladder" in r else {})})
@@ -862,7 +862,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 name = name or hr_own.loc[pid, "player_display_name"]
                 hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
-                                 "market": "Anytime HR", "model_prob": round(hr_prob, 3),
+                                 "opp": opp_team, "market": "Anytime HR", "model_prob": round(hr_prob, 3),
                                  "confirmed_starter": is_starter})
                 hr_candidates.append((name, hr_prob))
 
@@ -876,7 +876,7 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
         r = project_count_stat(stat_key, pitcher_models[stat_key], pitcher_id, opp_team)
         if r:
             entries.append({"section": "Pitching", "player": r["player_display_name"], "player_id": int(pitcher_id),
-                             "team": team, "market": market_label, "line": r["line"], "projected": r["projected"],
+                             "team": team, "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
                              "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
                              **({"ladder": r["ladder"]} if "ladder" in r else {})})
     return entries

@@ -763,6 +763,7 @@ def project_count_stat(stat_key, prep, player_id, opp_team):
     out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(p_over, 3),
         "model_std": round(prep["std"], 3), "player_display_name": own.loc[player_id, "player_display_name"],
+        "trailing_n": int(own.loc[player_id, "games_played"]),
     }
     if stat_key in LADDER_STATS:
         out["ladder"] = count_ladder(pred_mean, prep["std"])
@@ -853,7 +854,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
                                  "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
                                  "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
-                                 "confirmed_starter": is_starter,
+                                 "confirmed_starter": is_starter, "trailing_n": r["trailing_n"],
                                  **({"ladder": r["ladder"]} if "ladder" in r else {})})
 
         if pid in hr_own.index and opp_team in hr_opp.index:
@@ -863,7 +864,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
                                  "opp": opp_team, "market": "Anytime HR", "model_prob": round(hr_prob, 3),
-                                 "confirmed_starter": is_starter})
+                                 "confirmed_starter": is_starter, "trailing_n": int(hr_own.loc[pid, "games_played"])})
                 hr_candidates.append((name, hr_prob))
 
     best_hr = max(hr_candidates, key=lambda x: x[1]) if hr_candidates else None
@@ -877,7 +878,7 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
         if r:
             entries.append({"section": "Pitching", "player": r["player_display_name"], "player_id": int(pitcher_id),
                              "team": team, "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
-                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
+                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"], "trailing_n": r["trailing_n"],
                              **({"ladder": r["ladder"]} if "ladder" in r else {})})
     return entries
 

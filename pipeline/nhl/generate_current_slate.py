@@ -148,6 +148,78 @@ def build_day_payload(date, games):
     }
 
 
+def _nhl_name(entry):
+    return f"{entry['firstName']['default']} {entry['lastName']['default']}"
+
+
+def build_nhl_standings():
+    """Real, current NHL standings straight from the league's own standings
+    endpoint -- unlike NFL/MLB there's no win-loss aggregation to do
+    ourselves, the API already computes division/conference rank, points,
+    and record. Confirmed live: /now always reflects the most relevant
+    current standings (mid-season while games are being played, or the just-
+    finished season's final table once it's over), so no separate
+    off-season fallback is needed the way NFL's build needed one."""
+    resp = requests.get("https://api-web.nhle.com/v1/standings/now", timeout=15)
+    resp.raise_for_status()
+    data = resp.json()
+
+    by_division = {}
+    for t in data["standings"]:
+        streak = None
+        if t.get("streakCode") and t.get("streakCount"):
+            streak = f"{t['streakCode']}{t['streakCount']}"
+        row = {
+            "team": normalize_team(t["teamAbbrev"]["default"]),
+            "division": t["divisionName"], "conference": t["conferenceName"],
+            "rank": t["divisionSequence"],
+            "games_played": t["gamesPlayed"], "wins": t["wins"], "losses": t["losses"],
+            "ot_losses": t["otLosses"], "points": t["points"],
+            "point_pct": round(t["pointPctg"], 3), "streak": streak,
+        }
+        by_division.setdefault(row["division"], []).append(row)
+    for div_rows in by_division.values():
+        div_rows.sort(key=lambda r: r["rank"])
+
+    season_id = data["standings"][0]["seasonId"] if data["standings"] else None
+    return {"season": season_id, "as_of": data.get("standingsDateTimeUtc"), "standings": by_division}
+
+
+def build_nhl_stat_leaders(top_n=5):
+    """Real current-season stat leaders straight from the league's own
+    leaders endpoints -- no aggregation needed, and no separate data source
+    from what build_nhl_standings already hits (same api-web.nhle.com base)."""
+    skater_resp = requests.get("https://api-web.nhle.com/v1/skater-stats-leaders/current", timeout=15)
+    skater_resp.raise_for_status()
+    skaters = skater_resp.json()
+
+    goalie_resp = requests.get("https://api-web.nhle.com/v1/goalie-stats-leaders/current", timeout=15)
+    goalie_resp.raise_for_status()
+    goalies = goalie_resp.json()
+
+    def top_leaders(entries, label, value_round=None):
+        top = entries[:top_n]
+        return {"stat": label, "leaders": [
+            {
+                "player": _nhl_name(e), "team": normalize_team(e["teamAbbrev"]),
+                "value": round(e["value"], value_round) if value_round is not None else e["value"],
+            }
+            for e in top
+        ]}
+
+    return {
+        "skaters": [
+            top_leaders(skaters.get("points", []), "Points"),
+            top_leaders(skaters.get("goals", []), "Goals"),
+            top_leaders(skaters.get("assists", []), "Assists"),
+        ],
+        "goalies": [
+            top_leaders(goalies.get("wins", []), "Wins"),
+            top_leaders(goalies.get("savePctg", []), "Save %", value_round=3),
+        ],
+    }
+
+
 def main(today=None):
     today = today or datetime.date.today()
 
@@ -203,11 +275,13 @@ def main(today=None):
 
 
 def _write_payload(dates, today_iso, days_out, elo_params=None):
+    print("Building NHL standings + stat leaders...")
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
         "elo_params": elo_params,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,
+        "season_info": {"standings": build_nhl_standings(), "stat_leaders": build_nhl_stat_leaders()},
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     out_path = DATA_DIR / "dashboard_current_slate.json"

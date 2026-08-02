@@ -563,6 +563,92 @@
   .props-team-panel{display:none;}
   .props-team-panel.active{display:block;}
 
+  /* Same visual language as .props-team-tab(s)/.props-team-panel above, but
+     a distinct class name -- this toggles Games vs. Season at the whole
+     sport-panel level, while .props-team-tab is reused many times per page
+     (once per game card, for its own home/away props toggle); sharing the
+     class name would make a querySelectorAll scoped to the sport panel
+     incorrectly also match every nested per-game instance. */
+  .sport-subtab-tabs{display:flex;gap:6px;margin-bottom:14px;}
+  .sport-subtab-tab{
+    flex:1;
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-family:var(--disp);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--text-dim);
+    cursor:pointer;
+  }
+  .sport-subtab-tab.active{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+  .sport-subpanel{display:none;}
+  .sport-subpanel.active{display:block;}
+
+  .season-section{margin-bottom:22px;}
+  .season-section-title{
+    font-family:var(--disp);
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--text);
+  }
+  .division-block{margin-bottom:16px;}
+  .division-title{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--text-dim);
+    margin-bottom:4px;
+  }
+  .standings-table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:var(--mono);
+    font-size:12.5px;
+  }
+  .standings-table th, .standings-table td{
+    padding:5px 8px;
+    text-align:right;
+    border-bottom:1px solid var(--line);
+  }
+  .standings-table th:first-child, .standings-table td:first-child{
+    text-align:left;
+    border-left:3px solid var(--team-accent, transparent);
+  }
+  .standings-table th{color:var(--text-dim);font-weight:400;}
+  .leaders-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:12px;
+  }
+  .leader-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:10px 12px;
+  }
+  .leader-card-title{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--text-dim);
+    margin-bottom:6px;
+  }
+  .leader-row{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    font-size:13px;
+    padding:3px 0;
+  }
+  .leader-row .leader-name{color:var(--text);}
+  .leader-row .leader-value{color:var(--green);font-weight:600;font-family:var(--mono);white-space:nowrap;}
+
   .prop-section{margin-top:14px;}
   .prop-section:first-child{margin-top:2px;}
   .prop-section-title{
@@ -909,6 +995,12 @@
     </div>
   </header>
 
+  <div class="sport-subtab-tabs">
+    <button class="sport-subtab-tab active" onclick="switchSportSubTab('nfl', 'games', this)">Games</button>
+    <button class="sport-subtab-tab" id="nfl-season-tab-btn" onclick="switchSportSubTab('nfl', 'season', this)">Season</button>
+  </div>
+
+  <div class="sport-subpanel active" data-subtab="games">
   <div class="week-select-wrap">
     <label for="week-select">Week</label>
     <select id="week-select" onchange="renderGames(parseInt(this.value,10)); updateUrl('/nfl/week'+this.value)"></select>
@@ -931,6 +1023,9 @@
   <footer id="foot"></footer>
   </div>
 
+  <div class="sport-subpanel" data-subtab="season" id="nfl-season"></div>
+  </div>
+
   <div id="tab-mlb" class="tab-panel">
   <header>
     <p class="eyebrow" id="mlb-eyebrow"></p>
@@ -942,6 +1037,12 @@
     </div>
   </header>
 
+  <div class="sport-subtab-tabs">
+    <button class="sport-subtab-tab active" onclick="switchSportSubTab('mlb', 'games', this)">Games</button>
+    <button class="sport-subtab-tab" id="mlb-season-tab-btn" onclick="switchSportSubTab('mlb', 'season', this)">Season</button>
+  </div>
+
+  <div class="sport-subpanel active" data-subtab="games">
   <div class="week-select-wrap">
     <label for="mlb-day-select">Day</label>
     <select id="mlb-day-select" onchange="renderMLBGames(this.value); updateUrl('/mlb/'+this.value)"></select>
@@ -965,6 +1066,9 @@
   <footer id="mlb-foot"></footer>
   </div>
 
+  <div class="sport-subpanel" data-subtab="season" id="mlb-season"></div>
+  </div>
+
   <div id="tab-nhl" class="tab-panel">
   <header>
     <p class="eyebrow" id="nhl-eyebrow"></p>
@@ -976,6 +1080,12 @@
     </div>
   </header>
 
+  <div class="sport-subtab-tabs">
+    <button class="sport-subtab-tab active" onclick="switchSportSubTab('nhl', 'games', this)">Games</button>
+    <button class="sport-subtab-tab" id="nhl-season-tab-btn" onclick="switchSportSubTab('nhl', 'season', this)">Season</button>
+  </div>
+
+  <div class="sport-subpanel active" data-subtab="games">
   <div class="week-select-wrap">
     <label for="nhl-day-select">Day</label>
     <select id="nhl-day-select" onchange="renderNHLGames(this.value); updateUrl('/nhl/'+this.value)"></select>
@@ -992,6 +1102,9 @@
   <div id="nhl-games"></div>
 
   <footer id="nhl-foot"></footer>
+  </div>
+
+  <div class="sport-subpanel" data-subtab="season" id="nhl-season"></div>
   </div>
 
   <footer class="site-legal-footer">
@@ -1045,6 +1158,28 @@ function showTab(name){
   // like "/mlb/monday", the sport segment already matches, so leave the day
   // half of the path alone instead of clobbering it back to just "/mlb".
   if(routeParts().sport !== name) updateUrl('/' + name);
+}
+
+// Games vs. Season sub-tab inside one sport panel -- deliberately its own
+// class names (.sport-subtab-tab/.sport-subpanel), not a reuse of
+// .props-team-tab/.props-team-panel, even though the visual style is
+// identical: those classes already appear once per game card (the
+// per-game home/away props toggle), so a querySelectorAll scoped to the
+// whole sport panel would incorrectly also match every nested instance.
+function switchSportSubTab(sport, subtab, btn){
+  const root = document.getElementById('tab-' + sport);
+  root.querySelectorAll('.sport-subtab-tab').forEach(b => b.classList.toggle('active', b === btn));
+  root.querySelectorAll('.sport-subpanel').forEach(p => p.classList.toggle('active', p.dataset.subtab === subtab));
+  const renderSeason = {nfl: renderNflSeason, mlb: renderMlbSeason, nhl: renderNhlSeason}[sport];
+  if(subtab === 'season'){
+    renderSeason();
+    updateUrl('/' + sport + '/season');
+  } else if(routeParts().sub === 'season'){
+    // Leaving the season view without picking a specific week/day: fall
+    // back to the bare sport URL rather than leaving a stale "/season" in
+    // the address bar pointing at a view that's no longer showing.
+    updateUrl('/' + sport);
+  }
 }
 
 const DATA = __DATA_JSON__;
@@ -1778,6 +1913,58 @@ function renderGames(week){
 
   const searchBox = document.getElementById("nfl-search");
   if(searchBox && searchBox.value) applySearchFilter("games", searchBox.value);
+}
+
+// Shared by all 3 sports' Season sub-tab: standings grouped into division
+// blocks (row order already reflects rank, sorted by each backend), and a
+// grid of small stat-leader cards. titleFn lets NHL prefix its conference
+// onto the division heading; NFL/MLB just use the division name as-is.
+function divisionStandingsHtml(sport, byDivision, columns, titleFn){
+  titleFn = titleFn || ((divName) => divName);
+  return Object.entries(byDivision).map(([divName, rows]) => `
+    <div class="division-block">
+      <div class="division-title">${titleFn(divName, rows)}</div>
+      <div class="box-score-wrap"><table class="standings-table">
+        <thead><tr><th>Team</th>${columns.map(c => `<th>${c.label}</th>`).join('')}</tr></thead>
+        <tbody>${rows.map(r => `
+          <tr style="--team-accent:${teamAccent(sport, r.team)}">
+            <td>${r.team}</td>
+            ${columns.map(c => `<td>${r[c.key] ?? '—'}</td>`).join('')}
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>
+  `).join('');
+}
+
+function leadersGridHtml(groups){
+  return `<div class="leaders-grid">${groups.map(g => `
+    <div class="leader-card">
+      <div class="leader-card-title">${g.stat}</div>
+      ${g.leaders.length ? g.leaders.map(l => `
+        <div class="leader-row"><span class="leader-name">${l.player} <small style="color:var(--text-dim)">${l.team}</small></span><span class="leader-value">${l.value}</span></div>
+      `).join('') : '<div class="leader-row"><span class="leader-name" style="color:var(--text-dim)">No data yet</span></div>'}
+    </div>
+  `).join('')}</div>`;
+}
+
+function renderNflSeason(){
+  const root = document.getElementById('nfl-season');
+  const info = DATA.season_info;
+  if(!info){ root.innerHTML = '<div class="placeholder">Season info not available yet.</div>'; return; }
+  const st = info.standings;
+  root.innerHTML = `
+    <div class="season-section">
+      <div class="season-section-title">${st.season} ${st.is_final ? 'Final Standings' : 'Standings'}</div>
+      ${divisionStandingsHtml('nfl', st.standings, [
+        {key: 'wins', label: 'W'}, {key: 'losses', label: 'L'}, {key: 'ties', label: 'T'}, {key: 'win_pct', label: 'PCT'},
+      ])}
+    </div>
+    <div class="season-section">
+      <div class="season-section-title">${info.stat_leaders.season} Stat Leaders</div>
+      ${leadersGridHtml(info.stat_leaders.leaders)}
+    </div>
+  `;
 }
 
 function applySearchFilter(rootId, rawQuery){
@@ -2940,6 +3127,26 @@ function renderMLBGames(selectedDate){
   if(searchBox && searchBox.value) applySearchFilter("mlb-games", searchBox.value);
 }
 
+function renderMlbSeason(){
+  const root = document.getElementById('mlb-season');
+  const info = MLB_DATA.season_info;
+  if(!info){ root.innerHTML = '<div class="placeholder">Season info not available yet.</div>'; return; }
+  const st = info.standings;
+  root.innerHTML = `
+    <div class="season-section">
+      <div class="season-section-title">${st.season} Standings</div>
+      ${divisionStandingsHtml('mlb', st.standings, [
+        {key: 'wins', label: 'W'}, {key: 'losses', label: 'L'}, {key: 'win_pct', label: 'PCT'},
+        {key: 'games_back', label: 'GB'}, {key: 'streak', label: 'STRK'},
+      ])}
+    </div>
+    <div class="season-section">
+      <div class="season-section-title">Stat Leaders</div>
+      ${leadersGridHtml([...info.stat_leaders.batting, ...info.stat_leaders.pitching])}
+    </div>
+  `;
+}
+
 function noVigProb(mlHome, mlAway){
   const impliedProb = (o) => o < 0 ? (-o)/(-o+100) : 100/(o+100);
   const pH = impliedProb(mlHome), pA = impliedProb(mlAway);
@@ -3040,6 +3247,26 @@ function renderNHLGames(selectedDate){
 
   const searchBox = document.getElementById("nhl-search");
   if(searchBox && searchBox.value) applySearchFilter("nhl-games", searchBox.value);
+}
+
+function renderNhlSeason(){
+  const root = document.getElementById('nhl-season');
+  const info = NHL_DATA.season_info;
+  if(!info){ root.innerHTML = '<div class="placeholder">Season info not available yet.</div>'; return; }
+  const st = info.standings;
+  root.innerHTML = `
+    <div class="season-section">
+      <div class="season-section-title">Standings</div>
+      ${divisionStandingsHtml('nhl', st.standings, [
+        {key: 'games_played', label: 'GP'}, {key: 'wins', label: 'W'}, {key: 'losses', label: 'L'},
+        {key: 'ot_losses', label: 'OTL'}, {key: 'points', label: 'PTS'}, {key: 'streak', label: 'STRK'},
+      ], (divName, rows) => `${rows[0].conference} Conference — ${divName}`)}
+    </div>
+    <div class="season-section">
+      <div class="season-section-title">Stat Leaders</div>
+      ${leadersGridHtml([...info.stat_leaders.skaters, ...info.stat_leaders.goalies])}
+    </div>
+  `;
 }
 
 renderNHLGames();
@@ -3326,19 +3553,25 @@ function applyRouteFromLocation(){
   if(!sport) return;
   if(sport === 'nfl'){
     showTab('nfl');
-    if(sub){
+    if(sub === 'season'){
+      switchSportSubTab('nfl', 'season', document.getElementById('nfl-season-tab-btn'));
+    } else if(sub){
       const wk = parseWeekSegment(sub);
       if(wk != null && DATA.weeks[String(wk)]) renderGames(wk);
     }
   } else if(sport === 'mlb'){
     showTab('mlb');
-    if(sub){
+    if(sub === 'season'){
+      switchSportSubTab('mlb', 'season', document.getElementById('mlb-season-tab-btn'));
+    } else if(sub){
       const day = findDaySegment(MLB_DATA.days || {}, sub);
       if(day) renderMLBGames(day);
     }
   } else if(sport === 'nhl'){
     showTab('nhl');
-    if(sub){
+    if(sub === 'season'){
+      switchSportSubTab('nhl', 'season', document.getElementById('nhl-season-tab-btn'));
+    } else if(sub){
       const day = findDaySegment(NHL_DATA.days || {}, sub);
       if(day) renderNHLGames(day);
     }

@@ -24,6 +24,11 @@ def main():
     schedules = nfl.load_schedules(seasons=SEASONS)  # schedules includes future/in-progress seasons
     save(schedules, "schedules")
 
+    # Team conf/division for the standings/season view -- not tied to a
+    # season, just the current alignment, so no seasons param.
+    teams = nfl.load_teams()
+    save(teams, "teams")
+
     # Play-by-play, player/team stats, and rosters only exist for seasons with
     # played games -- nflreadpy rejects anything past its own "current season"
     # (which tracks completed data), so cap those pulls there.

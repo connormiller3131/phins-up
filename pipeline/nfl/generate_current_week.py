@@ -383,6 +383,96 @@ def rebuild_results_manifest():
     return len(files)
 
 
+def build_nfl_standings():
+    """Real NFL standings by division, regular-season games only. Falls back
+    to the most recent season with any completed games when the target
+    season hasn't started yet (confirmed real: as of this build, 2026 has
+    zero completed games in player_stats/schedules -- the whole NFL tab is a
+    genuine future-week projection, not a replay) -- labeled with the real
+    season year and whether it's a final record, never silently implied to
+    be the live current season when it isn't."""
+    games = load_games()  # completed games only
+    display_season = int(games["season"].max())
+    reg = games[(games["season"] == display_season) & (games["game_type"] == "REG")]
+
+    raw_sched = pl.read_parquet(DATA_DIR / "schedules.parquet").to_pandas()
+    total_reg_scheduled = len(raw_sched[(raw_sched["season"] == display_season) & (raw_sched["game_type"] == "REG")])
+    is_final = len(reg) >= total_reg_scheduled
+
+    teams = pl.read_parquet(DATA_DIR / "teams.parquet").to_pandas()
+    conf_div = teams.drop_duplicates("team_abbr").set_index("team_abbr")[["team_conf", "team_division"]]
+
+    records = {}
+    for _, r in reg.iterrows():
+        home, away = r["home_team"], r["away_team"]
+        records.setdefault(home, {"wins": 0, "losses": 0, "ties": 0})
+        records.setdefault(away, {"wins": 0, "losses": 0, "ties": 0})
+        if r["home_win"] == 1.0:
+            records[home]["wins"] += 1
+            records[away]["losses"] += 1
+        elif r["home_win"] == 0.0:
+            records[away]["wins"] += 1
+            records[home]["losses"] += 1
+        else:
+            records[home]["ties"] += 1
+            records[away]["ties"] += 1
+
+    rows = []
+    for team, rec in records.items():
+        if team not in conf_div.index:
+            continue
+        w, l, t = rec["wins"], rec["losses"], rec["ties"]
+        played = w + l + t
+        rows.append({
+            "team": team, "division": conf_div.loc[team, "team_division"],
+            "wins": w, "losses": l, "ties": t,
+            "win_pct": round((w + 0.5 * t) / played, 3) if played else 0.0,
+        })
+
+    by_division = {}
+    for r in rows:
+        by_division.setdefault(r["division"], []).append(r)
+    for div_rows in by_division.values():
+        div_rows.sort(key=lambda r: -r["win_pct"])
+        for i, r in enumerate(div_rows):
+            r["rank"] = i + 1
+
+    return {"season": display_season, "is_final": is_final, "standings": by_division}
+
+
+def build_nfl_stat_leaders(top_n=5):
+    """Real season-to-date leaders in the major counting stats, same season
+    (and same real-completed-games fallback) as build_nfl_standings, straight
+    sums from nflreadpy's own player_stats -- no separate data source."""
+    stats = pl.read_parquet(DATA_DIR / "player_stats.parquet").to_pandas()
+    stats = stats[stats["season_type"] == "REG"]
+    display_season = int(stats["season"].max())
+    season_stats = stats[stats["season"] == display_season]
+
+    agg = season_stats.groupby(["player_display_name", "team"], as_index=False)[
+        ["passing_yards", "passing_tds", "rushing_yards", "rushing_tds", "receiving_yards", "receiving_tds"]
+    ].sum()
+
+    def top_leaders(stat_col, label):
+        top = agg.sort_values(stat_col, ascending=False).head(top_n)
+        return {"stat": label, "leaders": [
+            {"player": r["player_display_name"], "team": r["team"], "value": int(r[stat_col])}
+            for _, r in top.iterrows() if r[stat_col] > 0
+        ]}
+
+    return {
+        "season": display_season,
+        "leaders": [
+            top_leaders("passing_yards", "Passing Yards"),
+            top_leaders("passing_tds", "Passing TDs"),
+            top_leaders("rushing_yards", "Rushing Yards"),
+            top_leaders("rushing_tds", "Rushing TDs"),
+            top_leaders("receiving_yards", "Receiving Yards"),
+            top_leaders("receiving_tds", "Receiving TDs"),
+        ],
+    }
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser()
@@ -503,12 +593,14 @@ def main():
     n_snapshots = rebuild_results_manifest()
     print(f"Results manifest: {n_snapshots} prediction snapshots on disk.", flush=True)
 
+    print("Building NFL standings + stat leaders...")
     payload = {
         "season": target_season, "current_week": current_week,
         "elo_params": elo_params,
         "depth_chart_as_of": str(depth_chart_dt),
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "weeks": weeks_out,
+        "season_info": {"standings": build_nfl_standings(), "stat_leaders": build_nfl_stat_leaders()},
     }
     out_path = DATA_DIR / "dashboard_current_week.json"
     with open(out_path, "w") as f:

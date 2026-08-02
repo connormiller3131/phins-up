@@ -45,7 +45,8 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.mlb.games import load_games
 from pipeline.mlb.elo_model import run_elo
-from pipeline.mlb.team_map import full_name_to_statcast, STATCAST_TO_MLB_TEAM_ID, same_division
+from pipeline.mlb.team_map import full_name_to_statcast, STATCAST_TO_MLB_TEAM_ID, same_division, br_to_statcast, DIVISIONS
+from pipeline.mlb.player_names import get_name_lookup
 from pipeline.mlb.props.prop_data import build_batter_prop_table, build_pitcher_prop_table
 from pipeline.mlb.props.current_state import (
     batter_current_trailing, batter_opponent_current_trailing,
@@ -934,6 +935,91 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
     return entries
 
 
+def build_mlb_standings():
+    """Real, current MLB standings by division -- from team_schedule_raw.parquet,
+    already pulled for the division_game model feature (pipeline/mlb/team_map.py).
+    No new data source: the latest real (non-null W-L) row per team this season,
+    grouped by the same DIVISIONS dict used there."""
+    df = pd.read_parquet(DATA_DIR / "team_schedule_raw.parquet")
+    cur_season = int(df["season"].max())
+    cur = df[(df["season"] == cur_season) & df["W-L"].notna()]
+    # team_schedule_raw.parquet's rows are already in chronological order per
+    # team (confirmed: index is monotonic within a team's games), so the last
+    # row per team is simply their most recent real result -- no need to sort
+    # by the "Date" column, which is a non-sortable string like "Sep 9".
+    latest = cur.groupby("team").tail(1)
+
+    rows = []
+    for _, r in latest.iterrows():
+        abbr = br_to_statcast(r["team"])
+        wins, losses = (int(x) for x in r["W-L"].split("-"))
+        rank = int(r["Rank"]) if pd.notna(r["Rank"]) else None
+        # GB is "up N" (their lead margin) for the division leader and a
+        # plain number (games behind the leader) for everyone else --
+        # Rank already tells us who's #1, so the leader just shows 0.
+        gb = 0.0 if rank == 1 else (float(r["GB"]) if pd.notna(r["GB"]) else None)
+        streak_n = r["Streak"]
+        streak = None
+        if pd.notna(streak_n):
+            streak = f"W{int(streak_n)}" if streak_n > 0 else f"L{int(-streak_n)}"
+        rows.append({
+            "team": abbr, "division": DIVISIONS.get(abbr), "wins": wins, "losses": losses,
+            "win_pct": round(wins / (wins + losses), 3) if (wins + losses) else 0.0,
+            "rank": rank, "games_back": gb, "streak": streak,
+        })
+
+    by_division = {}
+    for r in rows:
+        by_division.setdefault(r["division"], []).append(r)
+    for div_rows in by_division.values():
+        div_rows.sort(key=lambda r: r["rank"] if r["rank"] is not None else 99)
+    # Wrapped the same shape as NFL/NHL's build_*_standings (season + a
+    # "standings" key), not the bare division dict, so the frontend's
+    # divisionStandingsHtml/render*Season functions can treat all 3 sports
+    # identically instead of MLB being a special case.
+    return {"season": cur_season, "standings": by_division}
+
+
+def build_mlb_stat_leaders(top_n=5):
+    """Real season-to-date stat leaders -- straight sums from the same game
+    logs the prop models already train on, no separate data source. Limited
+    to counting stats that don't need at-bats/earned-run-official-scoring
+    (neither is in this data, see the Track Record footer's own note on
+    that), same honesty rule as everywhere else in this pipeline."""
+    names = get_name_lookup()
+
+    bdf = pd.read_parquet(DATA_DIR / "batter_game_logs.parquet")
+    cur_year = int(bdf["game_date"].dt.year.max())
+    bdf = bdf[bdf["game_date"].dt.year == cur_year]
+    bteam = bdf.sort_values("game_date").groupby("player_id")["team"].last()
+    bagg = bdf.groupby("player_id", as_index=False)[["home_runs", "rbi", "hits"]].sum()
+    bagg = bagg.merge(names, on="player_id", how="left").merge(bteam.rename("team"), on="player_id", how="left")
+    bagg = bagg.dropna(subset=["player_display_name"])
+
+    def top_leaders(df, stat_col, label):
+        top = df.sort_values(stat_col, ascending=False).head(top_n)
+        return {"stat": label, "leaders": [
+            {"player": r["player_display_name"], "team": r["team"], "value": int(r[stat_col])}
+            for _, r in top.iterrows()
+        ]}
+
+    pdf = pd.read_parquet(DATA_DIR / "pitcher_game_logs.parquet")
+    pdf = pdf[pdf["game_date"].dt.year == cur_year]
+    pteam = pdf.sort_values("game_date").groupby("player_id")["team"].last()
+    pagg = pdf.groupby("player_id", as_index=False)[["strikeouts"]].sum()
+    pagg = pagg.merge(names, on="player_id", how="left").merge(pteam.rename("team"), on="player_id", how="left")
+    pagg = pagg.dropna(subset=["player_display_name"])
+
+    return {
+        "batting": [
+            top_leaders(bagg, "home_runs", "Home Runs"),
+            top_leaders(bagg, "rbi", "RBI"),
+            top_leaders(bagg, "hits", "Hits"),
+        ],
+        "pitching": [top_leaders(pagg, "strikeouts", "Strikeouts")],
+    }
+
+
 def build_day_payload(date, games, elo_params, pitcher_blend_used, finalized):
     return {
         "date": date, "weekday": datetime.date.fromisoformat(date).strftime("%A"),
@@ -1112,10 +1198,14 @@ def main(today=None):
 
 
 def _write_week_payload(dates, today_iso, days_out):
+    print("Building MLB standings + stat leaders...")
+    season_section = {"standings": build_mlb_standings(), "stat_leaders": build_mlb_stat_leaders()}
+
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,
+        "season_info": season_section,
     }
     out_path = DATA_DIR / "dashboard_current_slate.json"
     with open(out_path, "w") as f:

@@ -3148,12 +3148,26 @@ function renderMLBGames(selectedDate){
   if(searchBox && searchBox.value) applySearchFilter("mlb-games", searchBox.value);
 }
 
+// Converts build_mlb_player_awards()'s {mvp: {AL: [...], NL: [...]}, cy_young:
+// {...}} shape into leadersGridHtml's {stat, leaders} groups -- "score" is a
+// predicted vote-share (0-1), shown via pct() the same way a real award's
+// vote share is normally reported, not a probability of winning.
+function awardLeaderGroups(awards){
+  if(!awards) return [];
+  const toGroups = (label, byLeague) => Object.entries(byLeague || {}).map(([league, leaders]) => ({
+    stat: `${league} ${label}`,
+    leaders: leaders.map(l => ({player: l.player, team: l.team, value: pct(l.score)})),
+  }));
+  return [...toGroups('MVP', awards.mvp), ...toGroups('Cy Young', awards.cy_young)];
+}
+
 function renderMlbSeason(){
   const root = document.getElementById('mlb-season');
   const info = MLB_DATA.season_info;
   if(!info){ root.innerHTML = '<div class="placeholder">Season info not available yet.</div>'; return; }
   const st = info.standings;
   attachTitleOdds(st.standings, info.title_odds);
+  const awardGroups = awardLeaderGroups(info.player_awards);
   root.innerHTML = `
     <div class="season-section">
       <div class="season-section-title">${st.season} Standings</div>
@@ -3167,6 +3181,12 @@ function renderMlbSeason(){
       <div class="season-section-title">Stat Leaders</div>
       ${leadersGridHtml([...info.stat_leaders.batting, ...info.stat_leaders.pitching])}
     </div>
+    ${awardGroups.length ? `
+    <div class="season-section">
+      <div class="season-section-title">Player Awards (Projected)</div>
+      <div class="no-odds-note" style="margin-bottom:10px;">Model-projected vote share from a stats-to-vote-share model trained on real BBWAA MVP/Cy Young voting history (1911-2016, via pybaseball's Lahman DB fork), applied to real current-season stats (min. 200 PA / 40 IP). Not a probability of winning -- just a relative strength-of-case signal.</div>
+      ${leadersGridHtml(awardGroups)}
+    </div>` : ''}
   `;
 }
 

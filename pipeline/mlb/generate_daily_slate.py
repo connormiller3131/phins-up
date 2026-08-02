@@ -1271,8 +1271,9 @@ def main(today=None):
 
 def _write_week_payload(dates, today_iso, days_out):
     print("Building MLB standings + stat leaders...")
+    from pipeline.mlb.awards_data import build_mlb_player_awards
     season_section = {"standings": build_mlb_standings(), "stat_leaders": build_mlb_stat_leaders(),
-                      "title_odds": build_mlb_title_odds()}
+                      "title_odds": build_mlb_title_odds(), "player_awards": build_mlb_player_awards()}
 
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,

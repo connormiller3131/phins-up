@@ -291,6 +291,30 @@
     border-radius:6px;
     padding:6px 10px;
   }
+  .game-search-wrap{
+    margin-bottom:14px;
+  }
+  .game-search-wrap input[type="search"]{
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:13px;
+    border-radius:6px;
+    padding:6px 10px;
+    width:100%;
+    max-width:320px;
+  }
+  .game-search-wrap input[type="search"]::placeholder{
+    color:var(--text-dim);
+  }
+  .search-hidden{display:none !important;}
+  .search-empty-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    padding:10px 0;
+  }
   .no-odds-note{
     font-family:var(--mono);
     font-size:11px;
@@ -890,6 +914,10 @@
     <select id="week-select" onchange="renderGames(parseInt(this.value,10)); updateUrl('/nfl/week'+this.value)"></select>
   </div>
 
+  <div class="game-search-wrap">
+    <input type="search" id="nfl-search" placeholder="Search team, player, or matchup..." oninput="applySearchFilter('games', this.value)">
+  </div>
+
   <div class="legend">
     <span><i class="sw" style="background:var(--green)"></i>Edge for you &ge; 3%</span>
     <span><i class="sw" style="background:var(--amber)"></i>Edge within &plusmn;3%</span>
@@ -917,6 +945,10 @@
   <div class="week-select-wrap">
     <label for="mlb-day-select">Day</label>
     <select id="mlb-day-select" onchange="renderMLBGames(this.value); updateUrl('/mlb/'+this.value)"></select>
+  </div>
+
+  <div class="game-search-wrap">
+    <input type="search" id="mlb-search" placeholder="Search team, player, or matchup..." oninput="applySearchFilter('mlb-games', this.value)">
   </div>
 
   <div class="legend">
@@ -947,6 +979,10 @@
   <div class="week-select-wrap">
     <label for="nhl-day-select">Day</label>
     <select id="nhl-day-select" onchange="renderNHLGames(this.value); updateUrl('/nhl/'+this.value)"></select>
+  </div>
+
+  <div class="game-search-wrap">
+    <input type="search" id="nhl-search" placeholder="Search team or matchup..." oninput="applySearchFilter('nhl-games', this.value)">
   </div>
 
   <div class="legend">
@@ -1739,6 +1775,51 @@ function renderGames(week){
   document.getElementById("foot").innerHTML =
     `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
     `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+
+  const searchBox = document.getElementById("nfl-search");
+  if(searchBox && searchBox.value) applySearchFilter("games", searchBox.value);
+}
+
+function applySearchFilter(rootId, rawQuery){
+  const root = document.getElementById(rootId);
+  if(!root) return;
+  const query = (rawQuery || "").trim().toLowerCase();
+
+  // Search means "show me everything that matches" -- clear any active
+  // Focus mode first so the two features aren't fighting over the same
+  // card's display state.
+  if(root.classList.contains("focus-mode")){
+    root.classList.remove("focus-mode");
+    root.querySelectorAll(".game.focused").forEach(c => c.classList.remove("focused"));
+    const back = document.getElementById(rootId + "-back-to-games");
+    if(back) back.remove();
+  }
+
+  // A plain textContent match covers team names/abbreviations, every
+  // player name in props, box scores, and team stats -- including ones
+  // currently inside a closed <details>, since textContent doesn't care
+  // about visibility -- without needing to enumerate every searchable
+  // field by hand.
+  let matches = 0;
+  root.querySelectorAll(".game").forEach(card => {
+    const hit = !query || card.textContent.toLowerCase().includes(query);
+    card.classList.toggle("search-hidden", !hit);
+    if(hit) matches++;
+  });
+
+  const emptyId = rootId + "-search-empty";
+  let empty = document.getElementById(emptyId);
+  if(query && matches === 0){
+    if(!empty){
+      empty = document.createElement("div");
+      empty.id = emptyId;
+      empty.className = "search-empty-note";
+      root.appendChild(empty);
+    }
+    empty.textContent = `No games, players, or teams matching "${rawQuery.trim()}" on this slate.`;
+  } else if(empty){
+    empty.remove();
+  }
 }
 
 function toggleGameFocus(rootId, idx){
@@ -2428,22 +2509,24 @@ function collectHrSpecialLegs(games, excludeIds){
       const sub = `vs ${p.opp || (g.awayAbbr===p.team ? g.homeAbbr : g.awayAbbr)}`;
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;
-        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id, team: p.team});
+        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id, team: p.team, trailing_n: p.trailing_n});
       } else {
         modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime HR', player_id: p.player_id, team: p.team, trailing_n: p.trailing_n});
       }
     });
   });
-  real.sort((a,b) => b.edge - a.edge);
-  // Reliability before raw probability -- same reasoning as bestPropInMarket:
-  // nothing else stops a "4 HR in 6 games" trailing rate from outranking a
-  // real established slugger here, since these are all model-only (no real
-  // DK price to check them against).
-  modelOnly.sort((a,b) => {
+  // Reliability before edge/raw probability in both buckets -- a real DK
+  // price doesn't fix an unreliable model_prob: a small-sample-inflated
+  // trailing rate feeding into "edge = model_prob - dk_implied_prob" can
+  // show a large edge that's really just our own noise, not a genuine
+  // market inefficiency, same reasoning as bestPropInMarket.
+  const reliabilitySort = (rankKey) => (a,b) => {
     const ar = isReliablePick(a), br = isReliablePick(b);
     if(ar !== br) return ar ? -1 : 1;
-    return b.prob - a.prob;
-  });
+    return b[rankKey] - a[rankKey];
+  };
+  real.sort(reliabilitySort('edge'));
+  modelOnly.sort(reliabilitySort('prob'));
   // Different teams only -- a "3 players to homer" special loses its point
   // if two legs are teammates, since one big offensive game for that lineup
   // could make both true (or both false) together instead of being 3
@@ -2852,6 +2935,9 @@ function renderMLBGames(selectedDate){
     `<b>Player props:</b> each team's probable starting pitcher (from MLB's own schedule feed) and every hitter on the real active 26-man roster. Injured or inactive players don't show up. Once a real lineup is posted, the 9 confirmed starters are grouped above the rest of the roster, in their real batting order, with a <span class="hit" style="font-family:var(--mono);font-size:9.5px;">&#10003; Confirmed starter</span> badge. Everyone else is grouped below as bench, sorted by recent playing time, badged <span class="miss" style="font-family:var(--mono);font-size:9.5px;">&#9888; Not in today's confirmed lineup</span>, so a platoon partner or reserve is still shown, just not presented as if they're starting. If no lineup is posted yet, nobody's grouped or badged rather than guessing. That badge updates live, straight from MLB's own real lineup, usually well before first pitch (see Live Batter/Pitcher Stats below). Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and the Runs/Hits/Walks Allowed pitching props are derived from Statcast's play-by-play data, checked against a real box score before shipping. Outs Recorded is just innings pitched, relabeled. Stolen bases and earned-run splits aren't included: Statcast's pitch-level feed doesn't reliably attribute steals to a specific player, and separating earned from unearned runs needs an official scorer's judgment call we can't get from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data, comparing a player's real production to the opponent's real allowed rate, the same approach as NFL. One thing we tried and didn't ship: matching batters to pitchers by real Statcast pitch-style similarity, not just which side they bat or throw from. It made total-bases and home-run projections measurably worse in testing, not better, likely too few at-bats per style group to trust. The Anytime HR "either/or" special multiplies each player's own model probability together, assuming independence, which slightly overstates the real combined chance. ` +
     `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices, for markets with a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs). Model % gets recomputed against DK's actual line where available, marked with a <b>DK LINE</b> badge; everything else carries a <b>MODEL EST.</b> badge and is our own trailing-average projection, never dressed up to look like a real market number. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, the same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds each refresh, since per-game prop-odds API calls cost credits per market on the free tier. Those odds are a snapshot from the last site refresh (about twice daily), not live: the odds API key can't be exposed on a public page the way the free scores feed can. ` +
     `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting or pitching, and each shown player's real in-game stat line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
+
+  const searchBox = document.getElementById("mlb-search");
+  if(searchBox && searchBox.value) applySearchFilter("mlb-games", searchBox.value);
 }
 
 function noVigProb(mlHome, mlAway){
@@ -2951,6 +3037,9 @@ function renderNHLGames(selectedDate){
 
   document.getElementById("nhl-foot").innerHTML =
     `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. No real DraftKings odds or player props are wired up yet for NHL -- that's a real, its own future phase of this pipeline, not left out to hide anything.`;
+
+  const searchBox = document.getElementById("nhl-search");
+  if(searchBox && searchBox.value) applySearchFilter("nhl-games", searchBox.value);
 }
 
 renderNHLGames();

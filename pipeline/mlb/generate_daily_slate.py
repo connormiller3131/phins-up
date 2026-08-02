@@ -86,6 +86,26 @@ PROP_MARKET_KEYS = {
     "Pitcher Walks Allowed": "pitcher_walks", "Pitcher Outs Recorded": "pitcher_outs",
 }
 
+# A real everyday hitter gets roughly this many plate appearances per game
+# they're logged in; used to convert Anytime HR's trailing_n from raw
+# games_played (how many games a player was in the box score for at all)
+# into a PA-volume-adjusted figure. Confirmed real and needed on 2026 data:
+# games_played alone let bench/pinch-hit players (e.g. a player with 34
+# games_played but only ~2.3 PA/game recently) clear the frontend's
+# RELIABLE_TRAILING_N gate on games dressed, not real at-bats, producing a
+# noisy small-sample HR rate that kept winning the HR Special slot.
+EVERYDAY_PA_PER_GAME = 3.8
+
+# Matches dashboard_live.html's RELIABLE_TRAILING_N -- kept in sync by hand
+# since the frontend has no access to this backend constant. Used below to
+# pick the per-game "Either X or Y to homer" combo (hr_combo) from among
+# reliable candidates first, the same way the frontend's HR Special card
+# already treats trailing_n -- this backend selection previously took the
+# single highest-probability candidate on the team with no reliability
+# check at all, so it kept surfacing small-sample bench players here even
+# after the frontend-side fix.
+RELIABLE_TRAILING_N = 8
+
 
 def get_slate_schedule_for_date(target_date):
     """Real games (if any) scheduled for one specific date -- unlike the old
@@ -839,7 +859,7 @@ def top_batters_for_team(pa_own, team, active_ids, confirmed_lineup=None):
     return confirmed_ids + rest, set(confirmed_ids)
 
 
-def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, hr_own, hr_opp, confirmed_ids=None):
+def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, hr_own, hr_opp, pa_own, confirmed_ids=None):
     confirmed_ids = confirmed_ids or set()
     entries = []
     hr_candidates = []
@@ -862,12 +882,24 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
             if pd.notna(own_hr):
                 name = name or hr_own.loc[pid, "player_display_name"]
                 hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
+                games_n = int(hr_own.loc[pid, "games_played"])
+                trailing_n = games_n
+                if pid in pa_own.index:
+                    recent_pa = pa_own.loc[pid, "current_sum"]
+                    if pd.notna(recent_pa):
+                        trailing_n = min(games_n, round(float(recent_pa) / EVERYDAY_PA_PER_GAME))
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
                                  "opp": opp_team, "market": "Anytime HR", "model_prob": round(hr_prob, 3),
-                                 "confirmed_starter": is_starter, "trailing_n": int(hr_own.loc[pid, "games_played"])})
-                hr_candidates.append((name, hr_prob))
+                                 "confirmed_starter": is_starter, "trailing_n": trailing_n})
+                hr_candidates.append((name, hr_prob, trailing_n))
 
-    best_hr = max(hr_candidates, key=lambda x: x[1]) if hr_candidates else None
+    # Prefer a reliable candidate (real recent PA volume, not just games on
+    # the roster) if the team has one; only fall back to the single highest
+    # raw probability -- which for a bench/pinch-hit player is often just
+    # small-sample noise -- when nobody on the team clears the bar at all.
+    reliable = [c for c in hr_candidates if c[2] >= RELIABLE_TRAILING_N]
+    pool = reliable if reliable else hr_candidates
+    best_hr = max(pool, key=lambda x: x[1]) if pool else None
     return entries, best_hr
 
 
@@ -980,9 +1012,9 @@ def main(today=None):
             pa_own, g["away_team"], active_rosters.get(g["away_team"]), game_lineups.get("away"))
 
         home_props, home_best_hr = batter_props_for_team(
-            g["home_team"], g["away_team"], home_batters, batter_models, hr_model, hr_own, hr_opp, home_confirmed)
+            g["home_team"], g["away_team"], home_batters, batter_models, hr_model, hr_own, hr_opp, pa_own, home_confirmed)
         away_props, away_best_hr = batter_props_for_team(
-            g["away_team"], g["home_team"], away_batters, batter_models, hr_model, hr_own, hr_opp, away_confirmed)
+            g["away_team"], g["home_team"], away_batters, batter_models, hr_model, hr_own, hr_opp, pa_own, away_confirmed)
 
         props = home_props + away_props
         combo = None

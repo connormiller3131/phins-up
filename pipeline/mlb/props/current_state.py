@@ -61,6 +61,14 @@ def _current_trailing(df, stat_col):
     df["current_avg"] = df.groupby("player_id")[stat_col].transform(
         lambda s: s.rolling(window=WINDOW, min_periods=MIN_GAMES).mean()
     )
+    # Rolling SUM over the same window as current_avg -- when stat_col is
+    # "pa_count" this is real recent plate-appearance volume, used elsewhere
+    # to discount games_played for bench/pinch-hit players who accumulate
+    # games without accumulating real at-bats (see batter_props_for_team's
+    # Anytime HR trailing_n).
+    df["current_sum"] = df.groupby("player_id")[stat_col].transform(
+        lambda s: s.rolling(window=WINDOW, min_periods=MIN_GAMES).sum()
+    )
     df["games_played"] = df.groupby("player_id").cumcount() + 1
     latest = df.sort_values("game_date").groupby("player_id").tail(1)
     # Belt-and-suspenders: also drop anyone whose current stint's last game
@@ -69,7 +77,7 @@ def _current_trailing(df, stat_col):
     # current, undeclared injury), where there's no newer stint to speak of.
     as_of = df["game_date"].max()
     latest = latest[(as_of - latest["game_date"]).dt.days <= STALE_DAYS]
-    return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "games_played"]]
+    return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "current_sum", "games_played"]]
 
 
 def _current_trailing_defense(df, stat_col):

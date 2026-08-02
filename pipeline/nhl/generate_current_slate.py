@@ -220,6 +220,121 @@ def build_nhl_stat_leaders(top_n=5):
     }
 
 
+def _nhl_remaining_games(today):
+    """Real, still-to-be-played regular-season games from today through the
+    end of the current season -- data/nhl/team_games.parquet only has
+    completed games (pulled from the same schedule endpoint but filtered to
+    finished game states), so future games need their own live pull here,
+    same _fetch_week/window-stepping pattern pull_games.py uses for
+    historical seasons, just walked forward instead of over a fixed
+    already-known range. Deliberately does NOT rely on pull_games.py's
+    SEASON_WINDOWS for an end date -- that list only gets a new entry added
+    by hand once a season's real dates are known, so it can genuinely lag
+    behind "today" (confirmed: it does right now). Steps forward up to 30
+    weeks (a real NHL regular season is ~26) and stops early once a whole
+    week comes back with zero real games -- the schedule endpoint returns an
+    empty week for real gaps between seasons, same signal
+    detect_target_date already relies on elsewhere in this file."""
+    d = pd.Timestamp(today)
+    games = []
+    seasons_seen = set()
+    seen_ids = set()
+    empty_weeks_seen = 0
+    for _ in range(30):
+        data = _fetch_week(d.strftime("%Y-%m-%d"))
+        week_had_games = False
+        for week in data.get("gameWeek", []):
+            for g in week.get("games", []):
+                if g.get("gameType") != 2:
+                    continue
+                week_had_games = True
+                # NHL's own season id, e.g. 20262027 -> this function's
+                # caller needs the start-year (2026) to match
+                # team_games.parquet's convention.
+                if g.get("season"):
+                    seasons_seen.add(int(str(g["season"])[:4]))
+                if g.get("gameState") in ("OFF", "FINAL") or g["id"] in seen_ids:
+                    continue
+                seen_ids.add(g["id"])
+                games.append({
+                    "home_team": normalize_team(g["homeTeam"]["abbrev"]),
+                    "away_team": normalize_team(g["awayTeam"]["abbrev"]),
+                })
+        empty_weeks_seen = 0 if week_had_games else empty_weeks_seen + 1
+        if empty_weeks_seen >= 2 and games:
+            break  # two straight empty weeks after real games means the season's over
+        d += pd.Timedelta(days=7)
+    season = max(seasons_seen) if seasons_seen else None
+    return pd.DataFrame(games), season
+
+
+def build_nhl_title_odds():
+    """Division title + playoff berth odds, from Monte Carlo simulating the
+    real remaining schedule from each team's current real Elo rating --
+    pipeline/common/season_sim.py, validated in
+    pipeline/nhl/backtest_season_sim.py against 5 real completed NHL seasons
+    (beats a naive win-rate-extrapolation baseline in 9/10 backtested
+    snapshots; pooled division-title Brier 0.0740 vs. a naive equal-
+    probability baseline's 0.1094). Division-title rates are shrunk toward
+    the field (shrinkage=0.85, NHL's own backtested value); playoff-berth
+    rates ship as the simulator's raw output (not separately calibration-
+    checked). Real NHL playoff format: top 3 in each of 2 divisions per
+    conference guaranteed (top_n_per_division=3), plus 2 more wildcards per
+    conference (berths_per_conference=8)."""
+    from pipeline.common.season_sim import simulate_remaining_wins, division_title_rates, playoff_berth_rates, shrink_toward_field
+
+    with open(ROOT / "notebooks_out" / "nhl_win_prob_backtest.json") as f:
+        elo_params = json.load(f)["elo_params"]
+
+    played = load_games()  # all real completed games, every season on record
+    _, ratings = run_elo(played, k=elo_params["k"], home_adv=elo_params["home_adv"],
+                          scale=elo_params["scale"], season_regression=elo_params["season_regression"],
+                          return_ratings=True)
+
+    today = datetime.date.today()
+    remaining, target_season = _nhl_remaining_games(today)
+    if target_season is None:
+        target_season = int(played["season"].max())  # fallback: no real upcoming games found at all
+
+    # current_wins has to come from the SAME season as `remaining` -- using
+    # played["season"].max() here would silently be last season's full,
+    # final win totals (real bug caught in testing: during the real
+    # off-season, played's max season is the one that just ended, while
+    # remaining is already next season's schedule; adding a finished
+    # season's ~50+ real wins on top of a few simulated new-season wins
+    # made the just-finished top teams show ~100% title odds for a season
+    # they haven't played a single real game of yet).
+    current_wins = {}
+    for _, r in played[played["season"] == target_season].iterrows():
+        current_wins.setdefault(r["home_team"], 0)
+        current_wins.setdefault(r["away_team"], 0)
+        if r["home_win"] == 1.0:
+            current_wins[r["home_team"]] += 1
+        else:
+            current_wins[r["away_team"]] += 1
+
+    resp = requests.get("https://api-web.nhle.com/v1/standings/now", timeout=15)
+    resp.raise_for_status()
+    standings_data = resp.json()
+    team_divisions = {normalize_team(t["teamAbbrev"]["default"]): t["divisionName"] for t in standings_data["standings"]}
+    team_conferences = {normalize_team(t["teamAbbrev"]["default"]): t["conferenceName"] for t in standings_data["standings"]}
+    ratings = {t: r for t, r in ratings.items() if t in team_divisions}
+
+    teams, sim_wins = simulate_remaining_wins(remaining, ratings, elo_params["home_adv"], elo_params["scale"], n_sims=5000)
+    base_wins = np.array([current_wins.get(t, 0) for t in teams])
+    final_wins = base_wins[None, :] + sim_wins
+
+    div_rates = division_title_rates(teams, final_wins, team_divisions)
+    for team_rates in div_rates.values():
+        for t in team_rates:
+            team_rates[t] = round(shrink_toward_field(team_rates[t], 8, 0.85), 4)
+
+    playoff_rates = playoff_berth_rates(teams, final_wins, team_conferences, berths_per_conference=8,
+                                        division_winners_guaranteed=team_divisions, top_n_per_division=3)
+
+    return {"division_title_pct": div_rates, "playoff_pct": playoff_rates}
+
+
 def main(today=None):
     today = today or datetime.date.today()
 
@@ -281,7 +396,8 @@ def _write_payload(dates, today_iso, days_out, elo_params=None):
         "elo_params": elo_params,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,
-        "season_info": {"standings": build_nhl_standings(), "stat_leaders": build_nhl_stat_leaders()},
+        "season_info": {"standings": build_nhl_standings(), "stat_leaders": build_nhl_stat_leaders(),
+                        "title_odds": build_nhl_title_odds()},
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     out_path = DATA_DIR / "dashboard_current_slate.json"

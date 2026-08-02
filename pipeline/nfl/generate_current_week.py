@@ -473,6 +473,90 @@ def build_nfl_stat_leaders(top_n=5):
     }
 
 
+def _nfl_reg_games(max_season=None):
+    """One row per real REG game (played and unplayed), every season on
+    record (or through max_season if given) -- schedules.parquet already
+    carries the full season's real schedule, games not yet played included,
+    just never used for anything before now."""
+    raw = pl.read_parquet(DATA_DIR / "schedules.parquet")
+    reg = raw.filter(pl.col("game_type") == "REG")
+    if max_season is not None:
+        reg = reg.filter(pl.col("season") <= max_season)
+    df = reg.select(["season", "week", "home_team", "away_team", "home_score", "away_score"]).to_pandas()
+    df["margin"] = df["home_score"] - df["away_score"]
+    df["home_win"] = (df["margin"] > 0).astype(float)
+    return df.sort_values(["season", "week"]).reset_index(drop=True)
+
+
+def build_nfl_title_odds():
+    """Division title + playoff berth odds, from Monte Carlo simulating the
+    real remaining regular-season schedule from each team's current real Elo
+    rating -- pipeline/common/season_sim.py, validated in
+    pipeline/nfl/backtest_season_sim.py against 6 real completed NFL seasons
+    (beats a naive win-rate-extrapolation baseline in 12/12 backtested
+    snapshots; pooled division-title Brier 0.1063 vs. a naive equal-
+    probability baseline's 0.1875). Division-title rates are shrunk toward
+    the field (shrinkage=0.90, NFL's own backtested value); playoff-berth
+    rates ship as the simulator's raw output (not separately calibration-
+    checked). Targets the real current season from schedules.parquet
+    (whether it's started yet or not) rather than build_nfl_standings'
+    most-recent-completed fallback -- unlike standings, there's a genuine
+    remaining schedule to simulate even at 0 games played."""
+    from pipeline.nfl.elo_model import run_elo as _nfl_run_elo
+    from pipeline.common.season_sim import simulate_remaining_wins, division_title_rates, playoff_berth_rates, shrink_toward_field
+
+    with open(ROOT / "notebooks_out" / "nfl_win_prob_backtest.json") as f:
+        elo_params = json.load(f)["elo_params"]
+
+    all_games = _nfl_reg_games()
+    target_season = int(all_games["season"].max())
+    played = all_games[all_games["home_score"].notna()].reset_index(drop=True)
+    remaining = all_games[(all_games["season"] == target_season) & all_games["home_score"].isna()][["home_team", "away_team"]]
+
+    _, ratings = _nfl_run_elo(played, k=elo_params["k"], home_adv=elo_params["home_adv"],
+                              scale=elo_params["scale"], rest_adv=elo_params.get("rest_adv", 0.0),
+                              season_regression=elo_params["season_regression"], return_ratings=True)
+
+    current_wins = {}
+    for _, r in played[played["season"] == target_season].iterrows():
+        current_wins.setdefault(r["home_team"], 0)
+        current_wins.setdefault(r["away_team"], 0)
+        if r["home_win"] == 1.0:
+            current_wins[r["home_team"]] += 1
+        else:
+            current_wins[r["away_team"]] += 1
+
+    teams_df = pl.read_parquet(DATA_DIR / "teams.parquet").to_pandas().drop_duplicates("team_abbr")
+    conf_div = teams_df.set_index("team_abbr")[["team_conf", "team_division"]]
+
+    # ratings (run across all real history back to 2019) still carries a
+    # stale entry for any relocated/renamed franchise code (e.g. OAK before
+    # its LV rename) that never gets touched again after the move -- and
+    # teams.parquet keeps historical duplicate rows for the same reason
+    # (LA/LAR, LAC/SD, LV/OAK). A target season's own real schedule can only
+    # ever reference currently-active codes, so it's the one reliable source
+    # for "which 32 teams actually exist right now" to filter both against.
+    season_teams = set(all_games[all_games["season"] == target_season]["home_team"]) | \
+                   set(all_games[all_games["season"] == target_season]["away_team"])
+    ratings = {t: r for t, r in ratings.items() if t in season_teams}
+
+    teams, sim_wins = simulate_remaining_wins(remaining, ratings, elo_params["home_adv"], elo_params["scale"], n_sims=5000)
+    base_wins = np.array([current_wins.get(t, 0) for t in teams])
+    final_wins = base_wins[None, :] + sim_wins
+
+    team_divisions = {t: conf_div.loc[t, "team_division"] for t in teams if t in conf_div.index}
+    div_rates = division_title_rates(teams, final_wins, team_divisions)
+    for team_rates in div_rates.values():
+        for t in team_rates:
+            team_rates[t] = round(shrink_toward_field(team_rates[t], 4, 0.90), 4)
+
+    conferences = {t: conf_div.loc[t, "team_conf"] for t in teams if t in conf_div.index}
+    playoff_rates = playoff_berth_rates(teams, final_wins, conferences, berths_per_conference=7,
+                                        division_winners_guaranteed=team_divisions, top_n_per_division=1)
+
+    return {"division_title_pct": div_rates, "playoff_pct": playoff_rates}
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser()
@@ -600,7 +684,8 @@ def main():
         "depth_chart_as_of": str(depth_chart_dt),
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "weeks": weeks_out,
-        "season_info": {"standings": build_nfl_standings(), "stat_leaders": build_nfl_stat_leaders()},
+        "season_info": {"standings": build_nfl_standings(), "stat_leaders": build_nfl_stat_leaders(),
+                        "title_odds": build_nfl_title_odds()},
     }
     out_path = DATA_DIR / "dashboard_current_week.json"
     with open(out_path, "w") as f:

@@ -980,6 +980,78 @@ def build_mlb_standings():
     return {"season": cur_season, "standings": by_division}
 
 
+def _mlb_remaining_games():
+    """Real, still-to-be-played games this season -- team_schedule_raw.parquet
+    already carries the full season schedule (pb.schedule_and_record includes
+    future games, confirmed real: unplayed rows show real scheduled opponents
+    with null W-L/scores), just never used for anything before now."""
+    df = pd.read_parquet(DATA_DIR / "team_schedule_raw.parquet")
+    cur_season = int(df["season"].max())
+    cur = df[(df["season"] == cur_season) & df["W-L"].isna()]
+    home = cur[cur["Home_Away"] != "@"]
+    return pd.DataFrame({
+        "home_team": home["team"].map(br_to_statcast),
+        "away_team": home["Opp"].map(br_to_statcast),
+    })
+
+
+def build_mlb_title_odds():
+    """Division title + playoff berth odds, from Monte Carlo simulating the
+    real remaining schedule from each team's current real Elo rating --
+    pipeline/common/season_sim.py, validated in
+    pipeline/mlb/backtest_season_sim.py against 5 real completed MLB seasons
+    (beats a naive win-rate-extrapolation baseline in 10/10 backtested
+    snapshots; pooled division-title Brier 0.112 vs. a naive equal-
+    probability baseline's 0.160). Division-title rates are shrunk toward
+    the field (shrinkage=0.80, MLB's own backtested value -- a raw
+    fixed-rating simulation measurably overstates confidence in its own
+    high-end picks, see shrink_toward_field's docstring) -- playoff-berth
+    rates are shipped as the simulator's raw output, since that specific
+    derived quantity hasn't been separately calibration-checked."""
+    from pipeline.mlb.elo_model import run_elo as _mlb_run_elo
+    from pipeline.common.season_sim import simulate_remaining_wins, division_title_rates, playoff_berth_rates, shrink_toward_field
+
+    with open(ROOT / "notebooks_out" / "mlb_win_prob_backtest.json") as f:
+        elo_params = json.load(f)["elo_params"]
+
+    # Run Elo across the FULL multi-season history, not just this season --
+    # same reasoning as elo_predictions() above: ratings need to carry
+    # forward through season_regression at each boundary, not re-initialize
+    # every team to a blank 1500 at the start of the season being simulated.
+    games = load_games()
+    cur_season = int(games["season"].max())
+    _, ratings = _mlb_run_elo(games, k=elo_params["k"], home_adv=elo_params["home_adv"],
+                              scale=elo_params["scale"], season_regression=elo_params.get("season_regression", 0.65),
+                              return_ratings=True)
+
+    season_games = games[games["season"] == cur_season].reset_index(drop=True)
+    current_wins = {}
+    for _, r in season_games.iterrows():
+        current_wins.setdefault(r["home_team"], 0)
+        current_wins.setdefault(r["away_team"], 0)
+        if r["home_win"] == 1.0:
+            current_wins[r["home_team"]] += 1
+        else:
+            current_wins[r["away_team"]] += 1
+
+    remaining = _mlb_remaining_games()
+    teams, sim_wins = simulate_remaining_wins(remaining, ratings, elo_params["home_adv"], elo_params["scale"], n_sims=5000)
+    base_wins = np.array([current_wins.get(t, 0) for t in teams])
+    final_wins = base_wins[None, :] + sim_wins
+
+    team_divisions = {t: DIVISIONS[t] for t in teams if t in DIVISIONS}
+    div_rates = division_title_rates(teams, final_wins, team_divisions)
+    for team_rates in div_rates.values():
+        for t in team_rates:
+            team_rates[t] = round(shrink_toward_field(team_rates[t], 5, 0.80), 4)
+
+    leagues = {t: d.split()[0] for t, d in team_divisions.items()}  # "AL West" -> "AL"
+    playoff_rates = playoff_berth_rates(teams, final_wins, leagues, berths_per_conference=6,
+                                        division_winners_guaranteed=team_divisions, top_n_per_division=1)
+
+    return {"division_title_pct": div_rates, "playoff_pct": playoff_rates}
+
+
 def build_mlb_stat_leaders(top_n=5):
     """Real season-to-date stat leaders -- straight sums from the same game
     logs the prop models already train on, no separate data source. Limited
@@ -1199,7 +1271,8 @@ def main(today=None):
 
 def _write_week_payload(dates, today_iso, days_out):
     print("Building MLB standings + stat leaders...")
-    season_section = {"standings": build_mlb_standings(), "stat_leaders": build_mlb_stat_leaders()}
+    season_section = {"standings": build_mlb_standings(), "stat_leaders": build_mlb_stat_leaders(),
+                      "title_odds": build_mlb_title_odds()}
 
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,

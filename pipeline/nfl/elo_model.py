@@ -8,9 +8,14 @@ INITIAL_RATING = 1500.0
 
 
 def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float,
-            rest_adv: float = 0.0, season_regression: float = 0.75):
+            rest_adv: float = 0.0, season_regression: float = 0.75, return_ratings: bool = False):
     """Sequentially simulate Elo through df (must be chronologically sorted).
-    Returns array of pre-game home win probabilities, aligned to df rows."""
+    Returns array of pre-game home win probabilities, aligned to df rows.
+    With return_ratings=True, also returns the final {team: rating} dict as
+    of the last row -- every other caller (the hyperparameter grid search,
+    every generate_current_*.py) leaves this off and is unaffected; only the
+    season simulator needs each team's actual current rating rather than
+    just pairwise predictions."""
     ratings = {}
     last_season = {}
     preds = np.zeros(len(df))
@@ -48,7 +53,7 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float,
         ratings[home] += delta
         ratings[away] -= delta
 
-    return preds
+    return (preds, ratings) if return_ratings else preds
 
 
 def fit_elo_hyperparams(train_df: pd.DataFrame):

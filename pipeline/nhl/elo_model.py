@@ -16,7 +16,11 @@ import pandas as pd
 INITIAL_RATING = 1500.0
 
 
-def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, season_regression: float = 0.65):
+def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, season_regression: float = 0.65,
+            return_ratings: bool = False):
+    """With return_ratings=True, also returns the final {team: rating} dict
+    as of the last row, for the season simulator -- every other caller
+    leaves this off and is unaffected."""
     ratings = {}
     last_season = {}
     preds = np.zeros(len(df))
@@ -45,7 +49,7 @@ def run_elo(df: pd.DataFrame, k: float, home_adv: float, scale: float, season_re
         ratings[home] += delta
         ratings[away] -= delta
 
-    return preds
+    return (preds, ratings) if return_ratings else preds
 
 
 def fit_elo_hyperparams(train_df: pd.DataFrame):

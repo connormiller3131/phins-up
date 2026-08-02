@@ -16,6 +16,16 @@ def _trailing(series_by_group, window, min_games):
     return series_by_group.shift(1).rolling(window=window, min_periods=min_games).mean()
 
 
+def _trailing_career(series_by_group, min_games):
+    """Same walk-forward-safe shift(1) as _trailing, but an expanding (not
+    capped-window) mean -- a player's full available history to date, not
+    just their last WINDOW games. For a short-career player this is
+    identical to (or barely diverges from) own_trailing_avg; for a veteran
+    it captures whether a recent hot/cold stretch is really a change in
+    form or just noise on top of a long, stable baseline rate."""
+    return series_by_group.shift(1).expanding(min_periods=min_games).mean()
+
+
 def _build(df, stat_col):
     names = get_name_lookup()
     df = df.merge(names, on="player_id", how="left")
@@ -23,6 +33,9 @@ def _build(df, stat_col):
 
     df["own_trailing_avg"] = df.groupby("player_id")[stat_col].transform(
         lambda s: _trailing(s, WINDOW, MIN_GAMES)
+    )
+    df["own_career_trailing_avg"] = df.groupby("player_id")[stat_col].transform(
+        lambda s: _trailing_career(s, MIN_GAMES)
     )
 
     allowed = (
@@ -45,10 +58,14 @@ def _build(df, stat_col):
 
     keep = [
         "player_id", "player_display_name", "team", "opponent_team", "game_date",
-        stat_col, "own_trailing_avg", "opp_allowed_trailing_avg",
+        stat_col, "own_trailing_avg", "own_career_trailing_avg", "opp_allowed_trailing_avg",
     ]
     out = df[keep].rename(columns={stat_col: "actual"})
-    out = out.dropna(subset=["own_trailing_avg", "opp_allowed_trailing_avg", "player_display_name"])
+    # own_career_trailing_avg uses the same min_games as own_trailing_avg, just
+    # over an expanding instead of capped window, so it's never NaN when
+    # own_trailing_avg isn't -- included here for safety, not because it
+    # actually drops any additional rows.
+    out = out.dropna(subset=["own_trailing_avg", "own_career_trailing_avg", "opp_allowed_trailing_avg", "player_display_name"])
     return out.reset_index(drop=True)
 
 

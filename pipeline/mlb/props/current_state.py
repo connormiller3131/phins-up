@@ -38,6 +38,18 @@ def _current_trailing(df, stat_col):
             df.loc[still_missing, "player_display_name"] = df.loc[still_missing, "player_id"].apply(lambda pid: f"Player {pid}")
     df = df.sort_values(["player_id", "game_date"])
 
+    # Career-long signal, computed on full history *before* the stint filter
+    # below -- matches prop_data.py's own_career_trailing_avg (also computed
+    # over full history, no stint awareness). Unlike current_avg (which
+    # should reset after a real gap, since "current form" genuinely does), a
+    # player's long-run power level doesn't reset just because they had a
+    # demotion or IL stint in between -- computing this after the stint
+    # filter would silently shrink it back down to almost nothing for
+    # exactly the players it's most useful for.
+    df["career_avg"] = df.groupby("player_id")[stat_col].transform(
+        lambda s: s.expanding(min_periods=MIN_GAMES).mean()
+    )
+
     # The rolling window below counts *games*, not days -- with no gap
     # awareness, a player's last WINDOW logged rows can silently span a
     # demotion or a return from a stint over a year earlier. Confirmed real
@@ -77,7 +89,7 @@ def _current_trailing(df, stat_col):
     # current, undeclared injury), where there's no newer stint to speak of.
     as_of = df["game_date"].max()
     latest = latest[(as_of - latest["game_date"]).dt.days <= STALE_DAYS]
-    return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "current_sum", "games_played"]]
+    return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "current_sum", "career_avg", "games_played"]]
 
 
 def _current_trailing_defense(df, stat_col):

@@ -106,6 +106,23 @@ EVERYDAY_PA_PER_GAME = 3.8
 # after the frontend-side fix.
 RELIABLE_TRAILING_N = 8
 
+# Anytime HR gets a 3rd feature the other prop models don't: a career-long
+# (expanding, not window-capped) trailing rate, alongside the usual 15-game
+# own_trailing_avg and opp_allowed_trailing_avg. Backtested and validated
+# (pipeline/mlb/props/backtest_career_hr_feature.py): Brier 0.09941 ->
+# 0.09838, bootstrap 95% CI on the difference entirely negative
+# ([-0.00133, -0.00075]), real improvement, not noise. Real, reported case
+# it fixes: with own_trailing_avg pinned at 0 (its floor), the 2-feature
+# model's intercept alone still predicted ~7.7% for a player with
+# essentially no power history at all (Chandler Simpson: 1 career HR) --
+# own_career_trailing_avg lets the model tell that apart from a real
+# slugger who's simply cold right now (confirmed: for held-out rows with a
+# near-zero recent AND near-zero career rate, mean prediction correctly
+# drops from 7.86% to 5.54%, close to their real 6.03% actual rate; for
+# rows with a near-zero recent rate but real career power, prediction
+# correctly stays up near 8%, matching their real ~8% actual rate).
+HR_FEATURES = ["own_trailing_avg", "own_career_trailing_avg", "opp_allowed_trailing_avg"]
+
 
 def get_slate_schedule_for_date(target_date):
     """Real games (if any) scheduled for one specific date -- unlike the old
@@ -734,9 +751,10 @@ def prepare_count_model(hist_df):
     return model, resid_std
 
 
-def prepare_binary_model(hist_df):
+def prepare_binary_model(hist_df, features=None):
+    features = features or FEATURES
     model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
-    model.fit(hist_df[FEATURES].values, hist_df["actual"].values)
+    model.fit(hist_df[features].values, hist_df["actual"].values)
     return model
 
 
@@ -881,7 +899,8 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
             own_hr = hr_own.loc[pid, "current_avg"]
             if pd.notna(own_hr):
                 name = name or hr_own.loc[pid, "player_display_name"]
-                hr_prob = float(hr_model.predict_proba([[float(own_hr), float(hr_opp.loc[opp_team])]])[:, 1][0])
+                own_hr_career = float(hr_own.loc[pid, "career_avg"])
+                hr_prob = float(hr_model.predict_proba([[float(own_hr), own_hr_career, float(hr_opp.loc[opp_team])]])[:, 1][0])
                 games_n = int(hr_own.loc[pid, "games_played"])
                 trailing_n = games_n
                 if pid in pa_own.index:
@@ -979,7 +998,7 @@ def main(today=None):
         }
     hr_df = build_batter_prop_table("home_runs")
     hr_df["actual"] = (hr_df["actual"] > 0).astype(float)
-    hr_model = prepare_binary_model(hr_df)
+    hr_model = prepare_binary_model(hr_df, features=HR_FEATURES)
     hr_own = batter_current_trailing("home_runs")
     hr_opp = batter_opponent_current_trailing("home_runs")
     pa_own = batter_current_trailing("pa_count")

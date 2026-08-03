@@ -9,6 +9,18 @@ on:
 permissions:
   contents: write
 
+# Only one refresh at a time. Without this, a scheduled run already in
+# flight keeps building from the commit it checked out at start, then
+# commits and deploys that stale build AFTER a newer push has landed --
+# silently reverting the live site to pre-push code. Confirmed real: a
+# frontend change was pushed, an in-flight run deployed over it, and a
+# third run was needed to get the intended state live. cancel-in-progress
+# drops the older run instead, since its output is stale by definition
+# (every step regenerates from scratch, so nothing is lost by restarting).
+concurrency:
+  group: refresh-projections
+  cancel-in-progress: true
+
 jobs:
   refresh:
     runs-on: ubuntu-latest

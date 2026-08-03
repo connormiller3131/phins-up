@@ -57,6 +57,7 @@ from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rati
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_api import cached_game_odds, cached_event_player_props
+from pipeline.common.odds_history import record_title_odds
 from pipeline.common.espn_odds import (
     get_scoreboard_events as get_espn_scoreboard_events,
     get_event_odds as get_espn_event_odds,
@@ -1271,9 +1272,19 @@ def main(today=None):
 
 def _write_week_payload(dates, today_iso, days_out):
     print("Building MLB standings + stat leaders...")
-    from pipeline.mlb.awards_data import build_mlb_player_awards
-    season_section = {"standings": build_mlb_standings(), "stat_leaders": build_mlb_stat_leaders(),
-                      "title_odds": build_mlb_title_odds(), "player_awards": build_mlb_player_awards()}
+    # pipeline/mlb/awards_data.py (projected MVP/Cy Young from real Lahman
+    # vote-share history) is deliberately NOT called here. It was wired in,
+    # then pulled back out: the Cy Young model has no innings/volume feature,
+    # so small-sample relievers outrank real workhorse starters, and the MVP
+    # side can't represent stolen bases, defense, or a two-way player at all
+    # from this project's current data. The module stays on disk, fully
+    # working and backtested, until those are fixed -- running it here just
+    # spent CI time on a leaderboard nothing displayed.
+    standings = build_mlb_standings()
+    title_odds = build_mlb_title_odds()
+    season_section = {"standings": standings, "stat_leaders": build_mlb_stat_leaders(),
+                      "title_odds": title_odds}
+    record_title_odds("mlb", title_odds, snapshot_date=today_iso, season=standings.get("season"))
 
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,

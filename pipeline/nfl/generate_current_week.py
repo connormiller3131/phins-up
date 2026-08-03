@@ -31,6 +31,7 @@ from pipeline.nfl.props.current_state import player_current_trailing, defense_cu
 from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
+from pipeline.common.odds_history import record_title_odds
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 
 DATA_DIR = ROOT / "data" / "nfl"
@@ -676,6 +677,8 @@ def main():
     print(f"Results manifest: {n_snapshots} prediction snapshots on disk.", flush=True)
 
     print("Building NFL standings + stat leaders...")
+    nfl_title_odds = build_nfl_title_odds()
+    record_title_odds("nfl", nfl_title_odds, season=target_season)
     payload = {
         "season": target_season, "current_week": current_week,
         "elo_params": elo_params,
@@ -683,7 +686,7 @@ def main():
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "weeks": weeks_out,
         "season_info": {"standings": build_nfl_standings(), "stat_leaders": build_nfl_stat_leaders(),
-                        "title_odds": build_nfl_title_odds()},
+                        "title_odds": nfl_title_odds},
     }
     out_path = DATA_DIR / "dashboard_current_week.json"
     with open(out_path, "w") as f:

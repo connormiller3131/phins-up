@@ -26,6 +26,7 @@ from pipeline.nhl.games import load_games
 from pipeline.nhl.elo_model import run_elo
 from pipeline.nhl.team_map import normalize_team
 from pipeline.nhl.goalie_ratings import team_recent_save_pct
+from pipeline.common.odds_history import record_title_odds
 
 DATA_DIR = ROOT / "data" / "nhl"
 SCHEDULE_URL = "https://api-web.nhle.com/v1/schedule"
@@ -391,13 +392,16 @@ def main(today=None):
 
 def _write_payload(dates, today_iso, days_out, elo_params=None):
     print("Building NHL standings + stat leaders...")
+    nhl_standings = build_nhl_standings()
+    nhl_title_odds = build_nhl_title_odds()
+    record_title_odds("nhl", nhl_title_odds, snapshot_date=today_iso, season=nhl_standings.get("season"))
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
         "elo_params": elo_params,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,
-        "season_info": {"standings": build_nhl_standings(), "stat_leaders": build_nhl_stat_leaders(),
-                        "title_odds": build_nhl_title_odds()},
+        "season_info": {"standings": nhl_standings, "stat_leaders": build_nhl_stat_leaders(),
+                        "title_odds": nhl_title_odds},
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     out_path = DATA_DIR / "dashboard_current_slate.json"

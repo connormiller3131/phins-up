@@ -52,7 +52,7 @@ from pipeline.mlb.props.current_state import (
     batter_current_trailing, batter_opponent_current_trailing,
     pitcher_current_trailing, pitcher_opponent_current_trailing,
 )
-from pipeline.mlb.props.prop_models import FEATURES, over_prob
+from pipeline.mlb.props.prop_models import FEATURES, count_over_prob, estimate_dispersion
 from pipeline.mlb.pitcher_ratings import current_sp_rating, current_bullpen_rating, current_sp_ip
 from pipeline.mlb.team_offense import current_team_woba
 from pipeline.mlb.team_stats_display import build_team_stats_table, current_team_stats
@@ -737,8 +737,8 @@ def attach_featured_prop_odds(games_out, limit=2):
             # Re-aim the model probability at DraftKings' actual line instead
             # of our trailing-average proxy (binary Anytime HR already IS
             # P(over 0.5), so only count props need recomputing).
-            if p["market"] != "Anytime HR" and dk.get("line") is not None and "model_std" in p:
-                p["model_over_prob"] = round(float(over_prob(p["projected"], p["model_std"], dk["line"])), 3)
+            if p["market"] != "Anytime HR" and dk.get("line") is not None and "model_dispersion" in p:
+                p["model_over_prob"] = round(float(count_over_prob(p["projected"], dk["line"], p["model_dispersion"])), 3)
                 p["line"] = dk["line"]
             matched += 1
 
@@ -747,10 +747,18 @@ def attach_featured_prop_odds(games_out, limit=2):
 
 
 def prepare_count_model(hist_df):
+    """Also returns the negative-binomial dispersion used to turn a
+    projection into an over/under probability (see count_over_prob). The
+    residual std is still returned and still published as model_std, since
+    it's a genuine measure of how much the projection scatters, but it no
+    longer drives the probability itself."""
     model = RidgeCV(alphas=np.logspace(-1, 3, 25))
     model.fit(hist_df[FEATURES].values, hist_df["actual"].values)
-    resid_std = max(float(np.std(hist_df["actual"].values - model.predict(hist_df[FEATURES].values))), 1e-6)
-    return model, resid_std
+    fitted = model.predict(hist_df[FEATURES].values)
+    actual = hist_df["actual"].values
+    resid_std = max(float(np.std(actual - fitted)), 1e-6)
+    dispersion = estimate_dispersion(actual, fitted)
+    return model, resid_std, dispersion
 
 
 def prepare_binary_model(hist_df, features=None):
@@ -760,7 +768,7 @@ def prepare_binary_model(hist_df, features=None):
     return model
 
 
-def count_ladder(pred_mean, resid_std, step=1.0, n=3):
+def count_ladder(pred_mean, dispersion, step=1.0, n=3):
     """A small ladder of lines in steps of 1 around the model's own
     predicted mean -- MLB counting stats (hits, total bases) are small
     integers, so NFL's steps-of-10 doesn't translate; steps of 1 does."""
@@ -771,7 +779,7 @@ def count_ladder(pred_mean, resid_std, step=1.0, n=3):
         line = round(base - half + i * step, 1)
         if line <= 0:
             continue
-        out.append({"line": line, "over_prob": round(float(over_prob(pred_mean, resid_std, line)), 3)})
+        out.append({"line": line, "over_prob": round(float(count_over_prob(pred_mean, line, dispersion)), 3)})
     return out
 
 
@@ -799,14 +807,15 @@ def project_count_stat(stat_key, prep, player_id, opp_team):
     # coarse mechanism; bestPropInMarket in the frontend adds an explicit
     # ranking-by-production tiebreak on top of this for the rest of the gap.
     line = round(pred_mean * 2) / 2
-    p_over = float(over_prob(pred_mean, prep["std"], line))
+    p_over = float(count_over_prob(pred_mean, line, prep["dispersion"]))
     out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(p_over, 3),
-        "model_std": round(prep["std"], 3), "player_display_name": own.loc[player_id, "player_display_name"],
+        "model_std": round(prep["std"], 3), "model_dispersion": round(prep["dispersion"], 4),
+        "player_display_name": own.loc[player_id, "player_display_name"],
         "trailing_n": int(own.loc[player_id, "games_played"]),
     }
     if stat_key in LADDER_STATS:
-        out["ladder"] = count_ladder(pred_mean, prep["std"])
+        out["ladder"] = count_ladder(pred_mean, prep["dispersion"])
     return out
 
 
@@ -894,6 +903,7 @@ def batter_props_for_team(team, opp_team, player_ids, batter_models, hr_model, h
                 entries.append({"section": "Batting", "player": name, "player_id": int(pid), "team": team,
                                  "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
                                  "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
+                                 "model_dispersion": r["model_dispersion"],
                                  "confirmed_starter": is_starter, "trailing_n": r["trailing_n"],
                                  **({"ladder": r["ladder"]} if "ladder" in r else {})})
 
@@ -931,7 +941,8 @@ def pitcher_props_for_team(pitcher_id, team, opp_team, pitcher_models):
         if r:
             entries.append({"section": "Pitching", "player": r["player_display_name"], "player_id": int(pitcher_id),
                              "team": team, "opp": opp_team, "market": market_label, "line": r["line"], "projected": r["projected"],
-                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"], "trailing_n": r["trailing_n"],
+                             "model_over_prob": r["model_over_prob"], "model_std": r["model_std"],
+                             "model_dispersion": r["model_dispersion"], "trailing_n": r["trailing_n"],
                              **({"ladder": r["ladder"]} if "ladder" in r else {})})
     return entries
 
@@ -1093,11 +1104,22 @@ def build_mlb_stat_leaders(top_n=5):
     }
 
 
+# Which distribution turned a projected count into an over/under probability
+# for this snapshot. Finalized day snapshots are frozen and never
+# regenerated, so a day graded under an older, differently-calibrated model
+# keeps that model's numbers forever -- the frontend's calibration chart
+# reads this to avoid pooling superseded predictions with current ones and
+# reporting a calibration that belongs to neither. Bump this whenever the
+# over-probability calculation changes in a way that moves the numbers.
+PROP_PROB_MODEL = "negbin-v1"
+
+
 def build_day_payload(date, games, elo_params, pitcher_blend_used, finalized):
     return {
         "date": date, "weekday": datetime.date.fromisoformat(date).strftime("%A"),
         "finalized": finalized,
         "elo_params": elo_params, "pitcher_blend_used": pitcher_blend_used,
+        "prop_prob_model": PROP_PROB_MODEL,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "games": games,
     }
@@ -1150,9 +1172,9 @@ def main(today=None):
     batter_models = {}
     for stat_key in BATTER_COUNT_STATS:
         hist = build_batter_prop_table(stat_key)
-        model, std = prepare_count_model(hist)
+        model, std, dispersion = prepare_count_model(hist)
         batter_models[stat_key] = {
-            "model": model, "std": std,
+            "model": model, "std": std, "dispersion": dispersion,
             "own": batter_current_trailing(stat_key), "opp": batter_opponent_current_trailing(stat_key),
         }
     hr_df = build_batter_prop_table("home_runs")
@@ -1166,9 +1188,9 @@ def main(today=None):
     pitcher_models = {}
     for stat_key in PITCHER_COUNT_STATS:
         hist = build_pitcher_prop_table(stat_key)
-        model, std = prepare_count_model(hist)
+        model, std, dispersion = prepare_count_model(hist)
         pitcher_models[stat_key] = {
-            "model": model, "std": std,
+            "model": model, "std": std, "dispersion": dispersion,
             "own": pitcher_current_trailing(stat_key), "opp": pitcher_opponent_current_trailing(stat_key),
         }
 

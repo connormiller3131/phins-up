@@ -2808,6 +2808,11 @@ function collectNflTdSpecialLegs(games, excludeIds){
 // right next to the model's own makes the gap (or lack of one) obvious
 // instead of hiding behind a big-looking percentage.
 let MLB_TRACK_RECORD_CACHE = null;
+// Must match generate_daily_slate.py's PROP_PROB_MODEL. Kept in sync by hand,
+// same as RELIABLE_TRAILING_N -- the frontend has no access to backend
+// constants. A mismatch is safe in the sense that it hides the calibration
+// chart rather than showing wrong numbers.
+const CALIBRATION_PROP_MODEL = 'negbin-v1';
 
 // A single failed fetch of a static, same-origin JSON file (a real
 // transient blip, or a request that raced a mid-deploy moment) shouldn't
@@ -2839,7 +2844,7 @@ async function loadMlbTrackRecord(){
     // would lock in the empty placeholder until the user reloads the page);
     // just return an empty result for this render and let the next call
     // (e.g. switching tabs back to MLB) try again fresh.
-    return {byMarket: {}, dates: [], calBins: []};
+    return {byMarket: {}, dates: [], calBins: [], calDays: 0};
   }
   const dates = manifest.dates || [];
 
@@ -2848,7 +2853,16 @@ async function loadMlbTrackRecord(){
   // accuracy table below is built from -- no extra fetches, and no risk of
   // the chart and the table disagreeing about what counts as graded.
   const calBins = Array.from({length: 10}, (_, i) => ({lo: i/10, hi: (i+1)/10, n: 0, predSum: 0, actualSum: 0}));
+  let calDays = 0;
+  // Only bin days whose probabilities came from the CURRENT over/under model
+  // (generate_daily_slate.py's PROP_PROB_MODEL). Finalized snapshots are
+  // frozen forever, so days graded under the old symmetric-Normal version
+  // keep its numbers -- pooling them here would report a calibration that
+  // describes neither the old model nor the one actually on the page. Days
+  // predating the stamp simply have no field and are skipped.
+  let calibrationEligible = false;
   const addCalibration = (prob, outcome) => {
+    if(!calibrationEligible) return;
     const idx = Math.min(9, Math.max(0, Math.floor(prob * 10)));
     const b = calBins[idx];
     b.n++; b.predSum += prob; b.actualSum += outcome;
@@ -2856,6 +2870,8 @@ async function loadMlbTrackRecord(){
   for(const d of dates){
     const day = await fetchJsonWithRetry(`results/mlb_${d}.json`);
     if(!day) continue;
+    calibrationEligible = day.prop_prob_model === CALIBRATION_PROP_MODEL;
+    if(calibrationEligible) calDays++;
     (day.games || []).forEach(g => {
       // Moneyline: same 0/1-event framing as a prop's over/under, just with
       // "home team wins" as the event and the model's own elo_home_prob as
@@ -2891,7 +2907,7 @@ async function loadMlbTrackRecord(){
       });
     });
   }
-  MLB_TRACK_RECORD_CACHE = {byMarket, dates, calBins};
+  MLB_TRACK_RECORD_CACHE = {byMarket, dates, calBins, calDays};
   return MLB_TRACK_RECORD_CACHE;
 }
 
@@ -2904,9 +2920,10 @@ async function loadMlbTrackRecord(){
 // predictions doesn't visually argue as loudly as one resting on three
 // thousand. Hand-rolled SVG rather than a charting library: the whole site
 // ships as a single self-contained HTML file with no bundler or CDN.
-function calibrationChartSvg(calBins){
+function calibrationChartSvg(calBins, calDays){
   const bins = (calBins || []).filter(b => b.n > 0);
   if(bins.length < 2) return '';
+  const totalN = bins.reduce((s, b) => s + b.n, 0);
 
   const W = 320, H = 320, PAD_L = 44, PAD_B = 36, PAD_T = 12, PAD_R = 12;
   const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
@@ -2941,12 +2958,12 @@ function calibrationChartSvg(calBins){
         <text x="${(PAD_L + plotW/2).toFixed(1)}" y="${H - 4}" fill="var(--text-dim)" font-size="9.5" font-family="var(--mono)" text-anchor="middle">MODEL SAID</text>
         <text x="11" y="${(PAD_T + plotH/2).toFixed(1)}" fill="var(--text-dim)" font-size="9.5" font-family="var(--mono)" text-anchor="middle" transform="rotate(-90 11 ${(PAD_T + plotH/2).toFixed(1)})">ACTUALLY HAPPENED</text>
       </svg>
-      <div class="p-exp calibration-note">Each dot is one 10-point band of predicted probability, plotted against how often those things really happened; dot size scales with how many predictions sit behind it. The dashed line is perfect calibration. Above it means the model was too cautious in that range, below it means too confident. Hover a dot for its exact numbers.</div>
+      <div class="p-exp calibration-note"><b>Reliability check.</b> Each dot is one 10-point band of predicted probability, plotted against how often those things really happened; dot size scales with how many predictions sit behind it. The dashed line is perfect calibration. Above it means the model was too cautious in that range, below it means too confident. Hover a dot for its exact numbers. Covers ${totalN.toLocaleString()} graded prediction${totalN===1?'':'s'} across ${calDays} day${calDays===1?'':'s'} priced by the current over/under model. Days graded under an earlier model are excluded on purpose: their numbers came from different math, so pooling them would describe neither model.</div>
     </div>
   `;
 }
 
-function mlbTrackRecordTableHtml(byMarket, dates, calBins){
+function mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays){
   const markets = Object.keys(byMarket).sort();
   if(!markets.length){
     return `<div class="placeholder parlay-empty">No graded MLB props yet -- check back once a day has finished.</div>`;
@@ -2977,7 +2994,7 @@ function mlbTrackRecordTableHtml(byMarket, dates, calBins){
     <details class="props-toggle" id="mlb-track-record">
       <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
-      ${calibrationChartSvg(calBins)}
+      ${calibrationChartSvg(calBins, calDays)}
       <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- a market whose accuracy sits close to its baseline (colored red) isn't showing real edge no matter how high the number looks; clearly ahead of baseline (green) is the real tell.</div>
     </details>
   `;
@@ -2987,8 +3004,8 @@ async function renderMlbTrackRecord(){
   const wrap = document.getElementById('mlb-track-record-wrap');
   if(!wrap) return;
   wrap.innerHTML = `<div class="placeholder">Loading track record...</div>`;
-  const {byMarket, dates, calBins} = await loadMlbTrackRecord();
-  wrap.innerHTML = mlbTrackRecordTableHtml(byMarket, dates, calBins);
+  const {byMarket, dates, calBins, calDays} = await loadMlbTrackRecord();
+  wrap.innerHTML = mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays);
 }
 
 function mlbPrevDateStr(dateStr){

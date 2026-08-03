@@ -21,7 +21,6 @@ memoized so the many _current_trailing calls across one pipeline run don't
 refetch the same IDs repeatedly."""
 import warnings
 import requests
-import pandas as pd
 import pybaseball as pb
 
 warnings.filterwarnings("ignore")

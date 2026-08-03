@@ -32,7 +32,6 @@ from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from sklearn.linear_model import RidgeCV, LogisticRegressionCV
-from scipy.stats import norm
 
 DATA_DIR = ROOT / "data" / "nfl"
 RESULTS_DIR = ROOT / "docs" / "results"
@@ -326,7 +325,6 @@ def build_props_for_team(team, opp_team, starters, env, models):
 
 def env_fill_values(games_df):
     outdoor = games_df[games_df["roof"].isin(["outdoors", "open"])]
-    is_home = games_df["home_team"].notna()  # every row has a home team; just for the np.where below
     home_implied = games_df["total_line"] / 2 + games_df["spread_line"] / 2
     away_implied = games_df["total_line"] / 2 - games_df["spread_line"] / 2
     implied_fill = float(pd.concat([home_implied, away_implied]).median())

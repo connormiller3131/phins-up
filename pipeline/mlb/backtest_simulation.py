@@ -113,8 +113,6 @@ def main():
     y_test = test["home_win"].values
     mask = y_test != 0.5
 
-    with open(ROOT / "notebooks_out" / "mlb_win_prob_backtest.json") as f:
-        elo_params = json.load(f)["elo_params"]
     with open(ROOT / "notebooks_out" / "mlb_pitcher_model_backtest.json") as f:
         blend = json.load(f)
 
@@ -131,7 +129,7 @@ def main():
     }
     with open(ROOT / "notebooks_out" / "mlb_simulation_backtest.json", "w") as f:
         json.dump(out, f, indent=2)
-    print(f"\nSaved to notebooks_out/mlb_simulation_backtest.json")
+    print("\nSaved to notebooks_out/mlb_simulation_backtest.json")
 
 
 if __name__ == "__main__":

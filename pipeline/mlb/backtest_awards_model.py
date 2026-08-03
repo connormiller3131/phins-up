@@ -14,7 +14,6 @@ recover that same real result without having seen it.
 import sys
 import pathlib
 import numpy as np
-import pandas as pd
 from sklearn.linear_model import RidgeCV
 from scipy.stats import spearmanr
 

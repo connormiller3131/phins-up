@@ -38,7 +38,7 @@ sys.path.insert(0, str(ROOT))
 from pipeline.mlb.player_names import get_name_lookup
 from pipeline.mlb.props.prop_data import WINDOW, MIN_GAMES
 from pipeline.mlb.props.prop_models import over_prob
-from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
+from pipeline.common.metrics import brier_score, log_loss, accuracy
 
 DATA_DIR = ROOT / "data" / "mlb"
 TEST_START = pd.Timestamp("2025-08-01")

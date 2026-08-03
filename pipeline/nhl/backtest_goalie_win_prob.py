@@ -60,7 +60,7 @@ sys.path.insert(0, str(ROOT))
 from pipeline.nhl.games import load_games
 from pipeline.nhl.elo_model import run_elo
 from pipeline.nhl.goalie_ratings import build_team_goalie_ratings
-from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
+from pipeline.common.metrics import brier_score, log_loss, accuracy
 
 TRAIN_SEASONS = [2018, 2019, 2020, 2021, 2022, 2023]
 TEST_SEASONS = [2024]
@@ -123,7 +123,7 @@ def main():
     y_test = test["home_win"].values
     elo_only_pred = test["elo_pred"].values
 
-    print(f"\nelo_only (baseline)")
+    print("\nelo_only (baseline)")
     print(f"  Brier:    {brier_score(y_test, elo_only_pred):.4f}")
     print(f"  Log loss: {log_loss(y_test, elo_only_pred):.4f}")
     print(f"  Accuracy: {accuracy(y_test, elo_only_pred):.4f}")
@@ -138,7 +138,7 @@ def main():
 
     blend_result = {"brier": brier_score(y_test, blend_pred), "log_loss": log_loss(y_test, blend_pred),
                      "accuracy": accuracy(y_test, blend_pred)}
-    print(f"\nelo+goalie")
+    print("\nelo+goalie")
     print(f"  coef {dict(zip(cols, model.coef_[0]))}")
     print(f"  Brier:    {blend_result['brier']:.4f}")
     print(f"  Log loss: {blend_result['log_loss']:.4f}")

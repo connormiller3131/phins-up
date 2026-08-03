@@ -9,8 +9,6 @@ so the UI can show the model's calibration directly (predicted vs. actual).
 import sys
 import pathlib
 import json
-import numpy as np
-import pandas as pd
 import polars as pl
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]

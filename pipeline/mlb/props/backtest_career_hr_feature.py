@@ -85,12 +85,12 @@ def main():
     career_p = career_preds[valid]
 
     print(f"\nEvaluated on {valid.sum()} held-out rows.")
-    print(f"\nbaseline (own+opp):")
+    print("\nbaseline (own+opp):")
     print(f"  Brier:    {brier_score(y, base_p):.5f}")
     print(f"  Log loss: {log_loss(y, base_p):.5f}")
     print(f"  Accuracy: {accuracy(y, base_p):.5f}")
 
-    print(f"\n+career (own+career+opp):")
+    print("\n+career (own+career+opp):")
     print(f"  Brier:    {brier_score(y, career_p):.5f}")
     print(f"  Log loss: {log_loss(y, career_p):.5f}")
     print(f"  Accuracy: {accuracy(y, career_p):.5f}")

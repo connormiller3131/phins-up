@@ -5,7 +5,6 @@ scoring form (both walk-forward safe -- shift(1) before any rolling/diff,
 so a team's own current game never leaks into its own features)."""
 import pathlib
 import re
-import numpy as np
 import pandas as pd
 
 from pipeline.mlb.team_map import br_to_statcast

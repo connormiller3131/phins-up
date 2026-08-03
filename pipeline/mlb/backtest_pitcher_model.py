@@ -41,7 +41,7 @@ from pipeline.mlb.elo_model import run_elo
 from pipeline.mlb.pitcher_ratings import build_sp_ratings, build_bullpen_ratings, build_sp_ip_ratings
 from pipeline.mlb.team_offense import build_team_woba_ratings
 from pipeline.mlb.team_map import DIVISIONS
-from pipeline.common.metrics import brier_score, log_loss, calibration_curve, accuracy
+from pipeline.common.metrics import brier_score, log_loss, accuracy
 
 # The base Elo (elo_pred, used as one input feature below) was fit on the
 # full 2019-2025 team-schedule history. Pitcher-level Statcast now covers
@@ -162,7 +162,7 @@ def main():
         "elo+SP+bullpen+offense+division+IP (deployed)": DEPLOYED_FEATURES,
     }
 
-    print(f"\nelo_only (baseline)")
+    print("\nelo_only (baseline)")
     print(f"  Brier:    {brier_score(y_test, elo_only_pred):.4f}")
     print(f"  Log loss: {log_loss(y_test, elo_only_pred):.4f}")
     print(f"  Accuracy: {accuracy(y_test, elo_only_pred):.4f}")

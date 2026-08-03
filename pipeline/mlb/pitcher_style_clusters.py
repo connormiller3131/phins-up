@@ -6,7 +6,6 @@ against pitchers who throw like today's starter', independent of whether
 they've faced that specific pitcher before.
 """
 import pathlib
-import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler

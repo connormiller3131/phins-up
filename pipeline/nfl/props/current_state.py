@@ -3,7 +3,6 @@ un-shifted version of the same rolling window used in prop_data.py, evaluated
 at each player's/defense's most recent available game. Used to project a
 future week that hasn't been played yet, where the model has to reason from
 'their last N games' rather than a fixed backtest row."""
-import pandas as pd
 
 from pipeline.nfl.props.prop_data import _load_base, WINDOW, MIN_GAMES
 

@@ -9,7 +9,6 @@ they do in live use.
 import sys
 import pathlib
 import json
-import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))

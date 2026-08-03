@@ -84,7 +84,7 @@ def main():
 
     feat_cols = ["pass_off_diff", "rush_off_diff", "pass_def_diff", "rush_def_diff",
                  "pass_epa_off_diff", "rush_epa_off_diff", "pass_epa_def_diff", "rush_epa_def_diff", "int_margin_diff"]
-    print(f"  Train coverage: " + ", ".join(f"{c}={train[c].notna().mean():.1%}" for c in feat_cols))
+    print("  Train coverage: " + ", ".join(f"{c}={train[c].notna().mean():.1%}" for c in feat_cols))
 
     fills = {}
     for col in feat_cols:
@@ -114,7 +114,7 @@ def main():
         "elo+everything EPA": ["elo_logit", "pass_epa_off_diff", "rush_epa_off_diff", "pass_epa_def_diff", "rush_epa_def_diff", "int_margin_diff"],
     }
 
-    print(f"\nelo_only (baseline)")
+    print("\nelo_only (baseline)")
     print(f"  Brier:    {brier_score(y_test, elo_only_pred):.4f}")
     print(f"  Log loss: {log_loss(y_test, elo_only_pred):.4f}")
     print(f"  Accuracy: {accuracy(y_test, elo_only_pred):.4f}")

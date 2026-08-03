@@ -10,7 +10,6 @@ sample."""
 import sys
 import pathlib
 import numpy as np
-import pandas as pd
 import polars as pl
 import json
 
@@ -164,7 +163,6 @@ def main():
 
     print("\n  Shrinkage-factor sweep (toward the field's naive 1/4 baseline):")
     best = None
-    baseline = 1.0 / n_teams
     for lam in np.linspace(0, 1, 21):
         b = brier_score(all_outcomes, shrink_toward_field(all_probs, n_teams, lam))
         if best is None or b < best[0]:

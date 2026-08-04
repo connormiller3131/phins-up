@@ -34,7 +34,10 @@ sys.path.insert(0, str(ROOT))
 RESULTS_DIR = ROOT / "docs" / "results"
 RELIABLE_TRAILING_N = 8            # mirrors dashboard_live.html
 BINARY_MARKETS = {"Anytime HR", "Anytime TD"}
-FILLER_MARKETS = ["Anytime HR", "Hits", "RBI", "Walks"]
+# Mirrors dashboard_live.html's filler list, Walks deliberately excluded
+# (see the note there) -- the replay has to select exactly what the real
+# card selects or its record measures a parlay nobody was ever shown.
+FILLER_MARKETS = ["Anytime HR", "Hits", "RBI"]
 
 
 def implied_prob(odds):

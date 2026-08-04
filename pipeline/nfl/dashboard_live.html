@@ -600,6 +600,38 @@
   .sport-subpanel{display:none;}
   .sport-subpanel.active{display:block;}
 
+  /* Third tab level (sport -> Games/Season -> Games/Weekly Picks), so it
+     needs its own class prefix rather than reusing .sport-subtab-*: both of
+     the existing levels toggle by querySelectorAll on their own class, and
+     sharing one would make an outer switch stomp the inner panels. Styled a
+     step smaller and lighter than the level above so the nesting reads as
+     nesting rather than as two competing tab strips. */
+  .week-view-tabs{display:flex;gap:6px;margin:0 0 12px;}
+  .week-view-tab{
+    flex:1;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:5px 8px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    cursor:pointer;
+  }
+  .week-view-tab.active{background:var(--panel-alt);border-color:var(--green);color:var(--green);}
+  .week-view-panel{display:none;}
+  .week-view-panel.active{display:block;}
+  .picks-note{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+    font-style:italic;
+    margin-bottom:12px;
+  }
+
   .season-section{margin-bottom:22px;}
   .season-section-title{
     font-family:var(--disp);
@@ -1019,6 +1051,12 @@
     <select id="week-select" onchange="renderGames(parseInt(this.value,10)); updateUrl('/nfl/week'+this.value)"></select>
   </div>
 
+  <div class="week-view-tabs">
+    <button class="week-view-tab active" onclick="switchWeekView('games', this)">Games</button>
+    <button class="week-view-tab" onclick="switchWeekView('picks', this)">Weekly Picks</button>
+  </div>
+
+  <div class="week-view-panel active" data-weekview="games">
   <div class="game-search-wrap">
     <input type="search" id="nfl-search" placeholder="Search team, player, or matchup..." oninput="applySearchFilter('games', this.value)">
   </div>
@@ -1034,6 +1072,9 @@
   <div id="games"></div>
 
   <footer id="foot"></footer>
+  </div>
+
+  <div class="week-view-panel" data-weekview="picks" id="nfl-weekly-picks"></div>
   </div>
 
   <div class="sport-subpanel" data-subtab="season" id="nfl-season"></div>
@@ -1776,6 +1817,82 @@ let CURRENT_NFL_WEEK_DATA = null; // set below, read by loadNflBoxScore -- avoid
 // Mirrors MLB's mlbParlayCardsHtml: Suggested Parlay (5 legs -- up to 2
 // moneylines plus one best pick each from Rushing/Passing/Receiving Yds)
 // and a TD Special (3 Anytime TD legs, different teams).
+// Third tab level, nested inside the NFL Games sub-panel. Scoped to that
+// panel's own class names so switching here never touches the sport tabs
+// above it or the per-game prop toggles below it.
+function switchWeekView(view, btn){
+  const wrap = btn.closest('.sport-subpanel');
+  if(!wrap) return;
+  wrap.querySelectorAll('.week-view-tab').forEach(b => b.classList.toggle('active', b === btn));
+  wrap.querySelectorAll('.week-view-panel').forEach(p =>
+    p.classList.toggle('active', p.dataset.weekview === view));
+}
+
+// Which markets get a Weekly Picks card, and how each is ranked. Count/
+// yardage props rank on `projected` (the model's own expected production),
+// NOT on model_over_prob: that probability is anchored to a line derived
+// from the projection itself, so it hovers near 50% for everyone by design
+// and would rank a backup who barely clears his own easy line above a star
+// who has a hard one. Same reasoning already applied to model-only parlay
+// picks. Anytime TD is the exception and ranks on probability, because it
+// is a genuine binary with no line to clear.
+const NFL_PICK_MARKETS = [
+  {market: 'Passing Yds',   label: 'Passing Yards',   unit: 'yds'},
+  {market: 'Passing TDs',   label: 'Passing TDs',     unit: ''},
+  {market: 'Completions',   label: 'Completions',     unit: ''},
+  {market: 'Rushing Yds',   label: 'Rushing Yards',   unit: 'yds'},
+  {market: 'Carries',       label: 'Carries',         unit: ''},
+  {market: 'Receiving Yds', label: 'Receiving Yards', unit: 'yds'},
+  {market: 'Receptions',    label: 'Receptions',      unit: ''},
+  {market: 'Anytime TD',    label: 'Anytime TD',      unit: '', binary: true},
+];
+
+function nflWeeklyPicksGroups(weekData, topN){
+  topN = topN || 3;
+  const all = (weekData.games || []).flatMap(g => g.props || []);
+  return NFL_PICK_MARKETS.map(cfg => {
+    const rows = all.filter(p => {
+      if(p.market !== cfg.market) return false;
+      return cfg.binary ? p.model_prob != null : p.projected != null;
+    });
+    rows.sort((a, b) => cfg.binary ? b.model_prob - a.model_prob : b.projected - a.projected);
+    return {
+      stat: cfg.label,
+      leaders: rows.slice(0, topN).map(p => ({
+        player: p.player,
+        team: p.opp ? `${p.team} vs ${p.opp}` : p.team,
+        value: cfg.binary ? pct(p.model_prob)
+                          : `${p.projected}${cfg.unit ? ' ' + cfg.unit : ''}`,
+      })),
+    };
+  }).filter(grp => grp.leaders.length);
+}
+
+// Deliberately pinned to the CURRENT week and not to the week dropdown.
+// Every future week is projected off today's depth chart, so a Week 15 card
+// built in August would be a list of players who may not even be starters
+// by then -- presenting that as "picks" would dress up a stale roster as a
+// forecast. Browsing other weeks' games still works; the picks card just
+// stays on the week that's actually actionable.
+function renderNflWeeklyPicks(){
+  const root = document.getElementById('nfl-weekly-picks');
+  if(!root) return;
+  const week = DATA.current_week;
+  const weekData = DATA.weeks[String(week)];
+  const groups = weekData ? nflWeeklyPicksGroups(weekData) : [];
+  if(!groups.length){
+    root.innerHTML = `<div class="placeholder">No projections available for week ${week}.</div>`;
+    return;
+  }
+  root.innerHTML = `
+    <div class="season-section">
+      <div class="season-section-title">Week ${week} Projected Leaders <span class="props-sample-tag">(current week)</span></div>
+      <div class="picks-note">The model's highest projected producers for week ${week}, across every starter on every team's depth chart. This card always shows the current week, even while you browse another week's games -- later weeks are projected off today's depth chart, so they would list players who may not still be starting by then. Ranked by projected production, not by how likely each is to clear his own line: that line is set from the projection itself, so it sits near 50% for everyone and says nothing about who is actually good. Anytime TD is the exception and ranks by real probability, since it is a yes/no with no line to clear. These are projections, not market prices.</div>
+      ${leadersGridHtml(groups)}
+    </div>
+  `;
+}
+
 function nflParlayCardsHtml(weekData){
   const legs = collectNflParlayLegs(weekData.games);
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
@@ -2098,6 +2215,10 @@ async function loadGameResult(season, week, g, idx){
 }
 
 renderGames();
+// Rendered once, not per week-render: this card is pinned to the current
+// week by design (see renderNflWeeklyPicks), so changing the week dropdown
+// must not rebuild it.
+renderNflWeeklyPicks();
 renderParlayBuilderPanel('nfl');
 
 // ============ MLB ============
@@ -2675,7 +2796,17 @@ function buildRealisticParlay(games, opts){
   if(tb){ legs.push(tb); used.add(tb.player_id); }
 
   if(legs.length < 4){
-    const fillers = ["Anytime HR", "Hits", "RBI", "Walks"]
+    // Walks is deliberately NOT a parlay filler. This is a judgment call
+    // about what belongs on a suggested card, not a claim that the walks
+    // model is bad -- it is actually the best-calibrated batting prop we
+    // have (Brier 0.1847, lowest of the four), and the 0/2 record the
+    // replay tool found is two data points, which is no evidence at all.
+    // The real reason: a walk is the one batting outcome the hitter least
+    // controls (it is mostly the pitcher's decision), books do not reliably
+    // post the market, and it makes for a poor headline leg. Walks stays a
+    // fully supported prop in the props table and the build-your-own parlay
+    // -- this only stops it being auto-selected onto the suggested card.
+    const fillers = ["Anytime HR", "Hits", "RBI"]
       .map(mk => bestPropInMarket(allProps, mk, used))
       .filter(Boolean);
     fillers.sort((a,b) => {

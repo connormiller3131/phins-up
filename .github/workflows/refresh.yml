@@ -4,7 +4,22 @@ on:
   schedule:
     - cron: "0 6 * * *"    # 2am ET (EDT, UTC-4) -- GitHub cron is fixed UTC, so this reads as 1am once EST (winter, UTC-5) kicks in
     - cron: "0 15 * * *"   # 11am ET (EDT, UTC-4) -- reads as 10am once EST kicks in
-  workflow_dispatch: {}     # lets you trigger a run manually from the Actions tab
+  workflow_dispatch:        # lets you trigger a run manually from the Actions tab
+    inputs:
+      featured_props_limit:
+        description: >-
+          How many MLB games get real DraftKings player-prop odds this run.
+          COSTS REAL CREDITS: each game is one per-event call billed per
+          market returned, measured at 6-8 credits per game (9 markets are
+          requested; books do not post all of them for every game). The
+          default of 2 is what the twice-daily scheduled runs use and is
+          sized to fit the free tier over a month. Raising this is meant for
+          a deliberate one-off -- a full 15-game slate is roughly 105
+          credits, and at twice a day that would exhaust a 500-credit month
+          in under three days. Only same-day games can be priced at all,
+          since the bulk odds feed only returns today's slate.
+        required: false
+        default: "2"
 
 permissions:
   contents: write
@@ -115,6 +130,10 @@ jobs:
       - name: Generate current-slate MLB projections
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          # Scheduled runs have no inputs context, so they fall through to
+          # the same "2" the code already defaults to -- only a manual run
+          # that deliberately sets this spends extra credits.
+          FEATURED_PROPS_LIMIT: ${{ github.event.inputs.featured_props_limit || '2' }}
         run: python pipeline/mlb/generate_daily_slate.py
 
       # Same per-season caching convention as MLB's above -- completed NHL

@@ -28,7 +28,10 @@ from pipeline.nfl.games import load_games, moneyline_to_prob
 from pipeline.nfl.elo_model import run_elo
 from pipeline.nfl.props.prop_data import build_prop_table
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
-from pipeline.nfl.props.prop_models import FEATURES, yardage_over_prob
+from pipeline.nfl.props.prop_models import (
+    FEATURES, PROP_CONFIG, prop_features, prop_over_prob, yardage_over_prob,
+)
+from pipeline.common.count_dist import estimate_dispersion
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_history import record_title_odds
@@ -36,6 +39,15 @@ from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 
 DATA_DIR = ROOT / "data" / "nfl"
 RESULTS_DIR = ROOT / "docs" / "results"
+
+# Identifies the over/under machinery behind model_over_prob, stamped into
+# every frozen prediction snapshot. "mixed-v1" is the per-stat split
+# validated in pipeline/nfl/props/backtest_count_volume.py: negative
+# binomial for the small discrete counts, empirical residuals for the
+# right-skewed yardage props, Normal where it still wins. Bump this whenever
+# that machinery changes, so graded snapshots from different models are
+# never pooled into one accuracy or calibration number.
+PROP_PROB_MODEL = "mixed-v1"
 
 
 def detect_target_week():
@@ -175,30 +187,47 @@ def get_starters(target_season):
 YARDAGE_LADDER_OFFSETS = (-20, -10, 0, 10, 20)
 
 
-def yardage_ladder(pred_mean, resid_std):
+def yardage_ladder(prep, pred_mean):
     """Lines in steps of 10 around the model's own predicted mean, e.g.
-    190/200/210/220/230 for a game the model projects at ~207 yds."""
+    190/200/210/220/230 for a game the model projects at ~207 yds. Priced
+    with the same distribution as the main line (prop_over_prob), so a
+    ladder rung and the headline number can never disagree about shape."""
     base = max(round(pred_mean / 10) * 10, 10)
     ladder = []
     for off in YARDAGE_LADDER_OFFSETS:
         line = base + off
         if line <= 0:
             continue
-        ladder.append({"line": float(line), "over_prob": round(float(yardage_over_prob(pred_mean, resid_std, line)), 3)})
+        ladder.append({"line": float(line), "over_prob": round(prop_over_prob(prep, pred_mean, line), 3)})
     return ladder
 
 
 def prepare_count_model(stat_col, positions):
     """Fit a RidgeCV model ONCE on full history for any continuous/count stat
     (yards, completions, attempts, carries, receptions...). Doesn't depend on
-    the target week, so every game/week across the whole season reuses it."""
-    hist = build_prop_table(stat_col, positions)
+    the target week, so every game/week across the whole season reuses it.
+
+    Also carries whatever this stat's backtested over/under distribution
+    needs (see prop_models.PROP_CONFIG): a pooled residual std for Normal
+    stats, a negative-binomial dispersion for the small discrete counts, or
+    the full sorted residual vector for the empirical yardage props."""
+    cfg = PROP_CONFIG[stat_col]
+    features = prop_features(stat_col)
+    hist = build_prop_table(stat_col, positions, volume_col=cfg["volume"])
     model = RidgeCV(alphas=np.logspace(-1, 3, 25))
-    model.fit(hist[FEATURES].values, hist["actual"].values)
-    resid_std = max(float(np.std(hist["actual"].values - model.predict(hist[FEATURES].values))), 1e-6)
+    X, y = hist[features].values, hist["actual"].values
+    model.fit(X, y)
+    fitted = model.predict(X)
+    resid = y - fitted
     return {
-        "model": model, "resid_std": resid_std,
-        "own": player_current_trailing(stat_col, positions),
+        "model": model,
+        "features": features,
+        "dist": cfg["dist"],
+        "volume": cfg["volume"],
+        "resid_std": max(float(np.std(resid)), 1e-6),
+        "dispersion": float(estimate_dispersion(y, fitted)),
+        "resid_sorted": np.sort(resid),
+        "own": player_current_trailing(stat_col, positions, volume_col=cfg["volume"]),
         "defense": defense_current_trailing(stat_col, positions),
     }
 
@@ -212,8 +241,13 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
     opp_avg = float(defense.loc[opp_team])
     if pd.isna(own_avg) or pd.isna(opp_avg):
         return None  # fewer than MIN_GAMES of trailing history (rookie/deep backup) -- no basis to project
-    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]]
-    pred_mean = float(prep["model"].predict(feat_row)[0])
+    row = [own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]
+    if prep.get("volume"):
+        own_vol = float(own.loc[player_id, "current_volume"])
+        if pd.isna(own_vol):
+            return None  # same reason as above, for the opportunity feature
+        row.append(own_vol)
+    pred_mean = float(prep["model"].predict([row])[0])
     # Anchored on the model's own predicted mean (which already blends own
     # average, opponent, weather, rest, and implied team total), not the
     # player's raw own-average alone -- same fix as MLB's project_count_stat.
@@ -224,14 +258,14 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
     # "probability of clearing your own line ends up negatively correlated
     # with real production" issue confirmed on MLB's real data.
     line = round(pred_mean * 2) / 2
-    over_prob = float(yardage_over_prob(pred_mean, prep["resid_std"], line))
+    over_prob = prop_over_prob(prep, pred_mean, line)
     out = {
         "line": line, "projected": round(pred_mean, 1), "model_over_prob": round(over_prob, 3),
         "player_display_name": own.loc[player_id, "player_display_name"],
         "games_played": int(own.loc[player_id, "games_played"]),
     }
     if with_ladder:
-        out["ladder"] = yardage_ladder(pred_mean, prep["resid_std"])
+        out["ladder"] = yardage_ladder(prep, pred_mean)
     return out
 
 
@@ -364,6 +398,12 @@ def write_prediction_snapshot(season, week, game):
         "awayName": game["awayName"], "homeName": game["homeName"],
         "gameday": game["gameday"],
         "predicted_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        # Which over/under machinery produced model_over_prob in this
+        # snapshot. Snapshots are frozen forever, so any future NFL track
+        # record or calibration chart has to filter on this rather than
+        # pooling probabilities from different models (the same trap MLB's
+        # PROP_PROB_MODEL guards against).
+        "prop_prob_model": PROP_PROB_MODEL,
         "elo_home_prob": game["elo_home_prob"],
         "market_home_prob": game["market_home_prob"],
         "props_snapshot": game["props"],
@@ -581,17 +621,11 @@ def main():
     temp_fill, wind_fill, implied_fill = env_fill_values(games_df)
 
     print("Fitting prop models (once, reused across all weeks)...", flush=True)
-    prop_models = {
-        "passing_yards": prepare_count_model("passing_yards", ["QB"]),
-        "passing_tds": prepare_count_model("passing_tds", ["QB"]),
-        "completions": prepare_count_model("completions", ["QB"]),
-        "attempts": prepare_count_model("attempts", ["QB"]),
-        "rushing_yards": prepare_count_model("rushing_yards", ["RB"]),
-        "carries": prepare_count_model("carries", ["RB"]),
-        "receiving_yards": prepare_count_model("receiving_yards", ["RB", "WR", "TE"]),
-        "receptions": prepare_count_model("receptions", ["RB", "WR", "TE"]),
-        "td": prepare_td_model(),
-    }
+    # Positions and per-stat distribution/volume config all come from
+    # PROP_CONFIG so the generator and the backtest cannot drift apart.
+    prop_models = {stat: prepare_count_model(stat, cfg["positions"])
+                   for stat, cfg in PROP_CONFIG.items()}
+    prop_models["td"] = prepare_td_model()
     print("Prop models ready.", flush=True)
 
     print("Fetching current DraftKings game lines (one bulk call)...", flush=True)

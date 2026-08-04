@@ -54,7 +54,15 @@ def _trailing(series_by_group, window, min_games):
     return series_by_group.shift(1).rolling(window=window, min_periods=min_games).mean()
 
 
-def build_prop_table(stat_col: str, positions: list[str]):
+def build_prop_table(stat_col: str, positions: list[str], volume_col: str = None):
+    """volume_col: optional opportunity column (targets for receiving stats,
+    attempts for QB stats, carries for rushing yards) -> own_trailing_volume,
+    the player's recent real usage level. A counting stat is rate x
+    opportunities; own_trailing_avg alone blends the two, so a high-usage
+    player in a slump and a low-usage player on a hot streak can look
+    identical. Same shift(1)/window/min_games as own_trailing_avg (volume
+    columns are never NaN for a logged game -- nflverse fills 0), so
+    requesting it doesn't change which rows survive."""
     ps = _load_base()
     ps = ps[ps["position"].isin(positions)].copy()
     ps = ps.sort_values(["player_id", "game_date"]).reset_index(drop=True)
@@ -63,6 +71,12 @@ def build_prop_table(stat_col: str, positions: list[str]):
     ps["own_trailing_avg"] = ps.groupby("player_id")[stat_col].transform(
         lambda s: _trailing(s, WINDOW, MIN_GAMES)
     )
+    extra_cols = []
+    if volume_col is not None:
+        ps["own_trailing_volume"] = ps.groupby("player_id")[volume_col].transform(
+            lambda s: _trailing(s.fillna(0), WINDOW, MIN_GAMES)
+        )
+        extra_cols.append("own_trailing_volume")
 
     # defense-allowed weekly totals to this position group, then trailing avg per defense
     allowed = (
@@ -87,9 +101,9 @@ def build_prop_table(stat_col: str, positions: list[str]):
         "player_id", "player_display_name", "position", "team", "opponent_team",
         "season", "week", "game_date", stat_col, "own_trailing_avg", "opp_allowed_trailing_avg",
         "is_dome", "temp", "wind", "own_rest", "implied_team_total",
-    ]
+    ] + extra_cols
     out = ps[keep].rename(columns={stat_col: "actual"})
-    out = out.dropna(subset=["own_trailing_avg", "opp_allowed_trailing_avg"]).reset_index(drop=True)
+    out = out.dropna(subset=["own_trailing_avg", "opp_allowed_trailing_avg"] + extra_cols).reset_index(drop=True)
     return out
 
 

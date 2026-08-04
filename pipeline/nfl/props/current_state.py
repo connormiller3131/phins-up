@@ -7,7 +7,11 @@ future week that hasn't been played yet, where the model has to reason from
 from pipeline.nfl.props.prop_data import _load_base, WINDOW, MIN_GAMES
 
 
-def player_current_trailing(stat_col: str, positions: list[str]):
+def player_current_trailing(stat_col: str, positions: list[str], volume_col: str = None):
+    """volume_col mirrors prop_data.build_prop_table's own_trailing_volume so
+    a live projection feeds the model the same opportunity feature it was
+    trained on -- same window and min_periods, just un-shifted (the current
+    row IS the most recent game rather than a row being predicted)."""
     ps = _load_base()
     ps = ps[ps["position"].isin(positions)].copy()
     ps = ps.sort_values(["player_id", "game_date"])
@@ -15,10 +19,16 @@ def player_current_trailing(stat_col: str, positions: list[str]):
     ps["current_avg"] = ps.groupby("player_id")[stat_col].transform(
         lambda s: s.rolling(window=WINDOW, min_periods=MIN_GAMES).mean()
     )
+    cols = ["player_display_name", "team", "current_avg", "games_played"]
+    if volume_col is not None:
+        ps["current_volume"] = ps.groupby("player_id")[volume_col].transform(
+            lambda s: s.fillna(0).rolling(window=WINDOW, min_periods=MIN_GAMES).mean()
+        )
+        cols.append("current_volume")
     ps["games_played"] = ps.groupby("player_id").cumcount() + 1
 
     latest = ps.sort_values("game_date").groupby("player_id").tail(1)
-    return latest.set_index("player_id")[["player_display_name", "team", "current_avg", "games_played"]]
+    return latest.set_index("player_id")[cols]
 
 
 def defense_current_trailing(stat_col: str, positions: list[str]):

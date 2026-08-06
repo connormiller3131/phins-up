@@ -359,7 +359,7 @@ def main(today=None):
 
     days_out = {d: build_day_payload(d, []) for d in dates}
     if not combined_slate:
-        _write_payload(dates, anchor_iso, days_out)
+        _write_payload(dates, anchor_iso, days_out, real_today_iso=today.isoformat())
         return
 
     games_df = load_games()
@@ -387,16 +387,23 @@ def main(today=None):
     for d, day_games in by_date.items():
         days_out[d] = build_day_payload(d, day_games)
 
-    _write_payload(dates, anchor_iso, days_out, elo_params)
+    _write_payload(dates, anchor_iso, days_out, elo_params, real_today_iso=today.isoformat())
 
 
-def _write_payload(dates, today_iso, days_out, elo_params=None):
+def _write_payload(dates, today_iso, days_out, elo_params=None, real_today_iso=None):
     print("Building NHL standings + stat leaders...")
     nhl_standings = build_nhl_standings()
     nhl_title_odds = build_nhl_title_odds()
     record_title_odds("nhl", nhl_title_odds, snapshot_date=today_iso, season=nhl_standings.get("season"))
     payload = {
+        # "today" is the ANCHOR date (see main) and is what the day-picker
+        # defaults to. "real_today" is the literal wall-clock date, carried
+        # separately so the frontend can tell the two apart: in the off-season
+        # the anchor is opening night, and labelling a date eight weeks out
+        # "(today)" is simply false. During the season they converge and the
+        # label is correct again.
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
+        "real_today": real_today_iso or today_iso,
         "elo_params": elo_params,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,

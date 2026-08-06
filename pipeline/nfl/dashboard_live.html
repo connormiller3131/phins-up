@@ -3440,7 +3440,11 @@ function populateNhlDaySelect(selected){
   sel.innerHTML = NHL_WEEK_DAYS.map(d => {
     const day = NHL_DATA.days[d];
     const label = `${day.weekday}, ${fmtShortDate(d)}`;
-    return `<option value="${d}" ${d===selected?'selected':''}>${label}${d===NHL_DATA.today?' (today)':''}</option>`;
+    // Same anchor-vs-real-today distinction as the eyebrow above: in the
+    // off-season the default option is opening night, not today.
+    const anchorIsToday = !NHL_DATA.real_today || NHL_DATA.today === NHL_DATA.real_today;
+    const tag = d === NHL_DATA.today ? (anchorIsToday ? ' (today)' : ' (next games)') : '';
+    return `<option value="${d}" ${d===selected?'selected':''}>${label}${tag}</option>`;
   }).join('');
 }
 
@@ -3461,8 +3465,15 @@ function renderNHLGames(selectedDate){
     return;
   }
 
-  const isToday = selectedDate === NHL_DATA.today;
-  document.getElementById('nhl-eyebrow').textContent = `NHL · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : ''}`;
+  // NHL_DATA.today is the ANCHOR date the day-picker defaults to, which in
+  // the off-season is opening night rather than the literal date -- so it
+  // only earns the "(today)" label when it really is today. real_today
+  // carries the generator's actual wall-clock date for that comparison;
+  // older payloads without it fall back to the previous behaviour.
+  const nhlAnchorIsToday = !NHL_DATA.real_today || NHL_DATA.today === NHL_DATA.real_today;
+  const isToday = selectedDate === NHL_DATA.today && nhlAnchorIsToday;
+  const anchorNote = (selectedDate === NHL_DATA.today && !nhlAnchorIsToday) ? ' (next games)' : '';
+  document.getElementById('nhl-eyebrow').textContent = `NHL · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : anchorNote}`;
   const ep = NHL_DATA.elo_params;
   document.getElementById('nhl-meta').textContent = ep
     ? `Model basis: team Elo fit on 2018-2023, validated out-of-sample on the full 2024-25 season (K=${ep.k}, home-ice=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression}). Ratings carried forward through every completed game since, including 2025-26. Generated ${dayData.generated_at}.`

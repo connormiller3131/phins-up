@@ -47,6 +47,19 @@ def main():
     rosters = nfl.load_rosters_weekly(seasons=stats_seasons)
     save(rosters, "rosters_weekly")
 
+    # Weekly injury report: per player per week, with report_status
+    # (Out/Doubtful/Questionable/None) and gsis_id, which joins directly to
+    # player_stats' player_id and the depth chart's gsis_id (verified: 1377
+    # of 1453 2025 injury ids match player_stats -- the misses are defensive
+    # players who never appear in offensive player stats, as expected).
+    #
+    # Two distinct uses, deliberately kept separate: filtering props for
+    # players ruled Out is a pure data fix with no modelling risk, while
+    # feeding injuries into win probability is a model change that has to
+    # earn its place in a backtest first.
+    injuries = nfl.load_injuries(seasons=stats_seasons)
+    save(injuries, "injuries")
+
     print("Done.")
 
 

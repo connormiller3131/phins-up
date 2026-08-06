@@ -308,11 +308,55 @@ def _td_entry(section, team, opp_team, player_id, player_name, t):
             "opp": opp_team, "market": "Anytime TD", "model_prob": t["model_prob"]}
 
 
-def build_props_for_team(team, opp_team, starters, env, models):
+# Report statuses that mean "will not play". Questionable is deliberately NOT
+# here: the large majority of players listed Questionable do play, so treating
+# it as an absence would remove far more real projections than it saves. It
+# still gets surfaced as a badge so the reader can apply their own judgment.
+INJURY_EXCLUDE = {"Out"}
+INJURY_BADGE = {"Out", "Doubtful", "Questionable"}
+
+
+def load_injury_status(season):
+    """{(week, gsis_id): report_status} for one season, or {} when there is
+    no report yet.
+
+    Injury reports only exist for weeks at or near the present, while this
+    generator projects all 18 weeks. That asymmetry is handled by keying on
+    week: a future week simply has no entries and is left unfiltered, rather
+    than borrowing some other week's report and implying knowledge the data
+    does not have. A whole season with no reports (a season that has not
+    started, which is the case for 2026 as of this writing) is the same
+    no-op at larger scale."""
+    path = DATA_DIR / "injuries.parquet"
+    if not path.exists():
+        print("  no injuries.parquet -- prop injury filtering skipped")
+        return {}
+    inj = pl.read_parquet(path).to_pandas()
+    inj = inj[(inj["season"] == season) & inj["report_status"].notna() & inj["gsis_id"].notna()]
+    if inj.empty:
+        print(f"  no {season} injury reports yet -- prop injury filtering is a no-op for now")
+        return {}
+    out = {(int(r.week), r.gsis_id): r.report_status
+           for r in inj.itertuples(index=False)}
+    n_out = sum(1 for v in out.values() if v in INJURY_EXCLUDE)
+    print(f"  injury reports: {len(out)} player-weeks for {season} ({n_out} ruled Out)")
+    return out
+
+
+def build_props_for_team(team, opp_team, starters, env, models, injuries=None, week=None):
     entries = []
     picks = starters.get(team, {})
+    injuries = injuries or {}
+
+    def status_for(pid):
+        return injuries.get((week, pid)) if week is not None else None
+
+    def is_out(pid):
+        return status_for(pid) in INJURY_EXCLUDE
 
     for qb_id in picks.get("QB", []):
+        if is_out(qb_id):
+            continue
         r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True)
         if r:
             entries.append(_prop_entry("Passing", "Passing Yds", team, opp_team, qb_id, r, ladder=True))
@@ -327,6 +371,8 @@ def build_props_for_team(team, opp_team, starters, env, models):
             entries.append(_prop_entry("Passing", "Pass Attempts", team, opp_team, qb_id, ra))
 
     for rb_id in picks.get("RB", []):
+        if is_out(rb_id):
+            continue
         r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
         if r:
             entries.append(_prop_entry("Rushing", "Rushing Yds", team, opp_team, rb_id, r, ladder=True))
@@ -345,6 +391,8 @@ def build_props_for_team(team, opp_team, starters, env, models):
 
     for wrte_pos in ("WR", "TE"):
         for pid in picks.get(wrte_pos, []):
+            if is_out(pid):
+                continue
             r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True)
             if r:
                 entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, pid, r, ladder=True))
@@ -354,6 +402,13 @@ def build_props_for_team(team, opp_team, starters, env, models):
             t = project_td(models["td"], pid, opp_team, env)
             if t and r:
                 entries.append(_td_entry("Receiving", team, opp_team, pid, r["player_display_name"], t))
+
+    # Anyone left is playing as far as the report knows, but Questionable
+    # and Doubtful still carry real risk -- surfaced, not silently dropped.
+    for e in entries:
+        st = status_for(e.get("player_id"))
+        if st in INJURY_BADGE:
+            e["injury_status"] = st
 
     return entries
 
@@ -628,6 +683,8 @@ def main():
     prop_models["td"] = prepare_td_model()
     print("Prop models ready.", flush=True)
 
+    injury_status = load_injury_status(target_season)
+
     print("Fetching current DraftKings game lines (one bulk call)...", flush=True)
     odds_map = fetch_current_week_odds_map(names)
     print(f"DK current lines available for {len(odds_map)} games.", flush=True)
@@ -646,8 +703,10 @@ def main():
             if not already_played:
                 away_env = build_env(row, temp_fill, wind_fill, row.away_rest, is_home=False, implied_fill=implied_fill)
                 home_env = build_env(row, temp_fill, wind_fill, row.home_rest, is_home=True, implied_fill=implied_fill)
-                props = (build_props_for_team(away, home, starters, away_env, prop_models)
-                         + build_props_for_team(home, away, starters, home_env, prop_models))
+                props = (build_props_for_team(away, home, starters, away_env, prop_models,
+                                              injuries=injury_status, week=week)
+                         + build_props_for_team(home, away, starters, home_env, prop_models,
+                                                injuries=injury_status, week=week))
 
             elo_p = week_elo[i]
             market_home_prob = round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None

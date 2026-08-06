@@ -744,6 +744,18 @@
   .prop-player[open] .prop-player-name::before{content:'▾';}
   .prop-player-name .p-team{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px;}
   .prop-player-name .p-count{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:6px;}
+  .injury-badge{
+    font-family:var(--mono);
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.04em;
+    padding:1px 5px;
+    border-radius:3px;
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .injury-badge.inj-questionable{background:rgba(245,158,11,.15);color:var(--amber);border:1px solid rgba(245,158,11,.35);}
+  .injury-badge.inj-doubtful{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.35);}
   .live-only-tag{
     display:inline-block;
     margin-left:6px;
@@ -1614,6 +1626,22 @@ function sourceBadge(p){
     : `<span class="source-badge source-model" title="Our model's own estimate -- not a market line, no sportsbook has priced this">MODEL EST.</span>`;
 }
 
+// Real NFL injury-report status, straight from nflverse's weekly report.
+// Players ruled Out are dropped upstream in the generator and never reach
+// the page at all -- projecting someone who is not playing is a data bug,
+// not a judgment call. Doubtful and Questionable DO still show, badged
+// rather than removed: most Questionable players play, so hiding them would
+// throw away far more real projections than it saves, but the reader should
+// know the risk is there.
+function injuryBadge(status){
+  if(!status) return '';
+  const cls = status === 'Doubtful' ? 'inj-doubtful' : 'inj-questionable';
+  const title = status === 'Doubtful'
+    ? "Listed Doubtful on the official injury report -- more likely than not to sit"
+    : "Listed Questionable on the official injury report -- expected to play, but not certain";
+  return `<span class="injury-badge ${cls}" title="${title}">${status.toUpperCase()}</span>`;
+}
+
 function tdAdvice(p){
   // Edge vs. DK's posted price -- graded green/yellow/red. No DK line yet
   // means no market to confirm the model against, so it's a neutral "risky".
@@ -1682,12 +1710,14 @@ function propsBySection(props){
     const byPlayer = new Map();
     secProps.forEach(p => {
       const key = p.player + "|" + p.team;
-      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, rows:[]});
-      byPlayer.get(key).rows.push(p);
+      if(!byPlayer.has(key)) byPlayer.set(key, {player:p.player, team:p.team, injury:p.injury_status, rows:[]});
+      const b = byPlayer.get(key);
+      if(p.injury_status) b.injury = p.injury_status;
+      b.rows.push(p);
     });
     const playerBlocks = Array.from(byPlayer.values()).map(pl => `
       <details class="prop-player">
-        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span><span class="p-count">${pl.rows.length} props</span></summary>
+        <summary class="prop-player-name">${pl.player} <span class="p-team">${pl.team}</span>${injuryBadge(pl.injury)}<span class="p-count">${pl.rows.length} props</span></summary>
         ${pl.rows.map(propStatRow).join("")}
       </details>
     `).join("");

@@ -27,15 +27,14 @@ from pipeline.nhl.elo_model import run_elo
 from pipeline.nhl.team_map import normalize_team
 from pipeline.nhl.goalie_ratings import team_recent_save_pct
 from pipeline.common.odds_history import record_title_odds
+from pipeline.nhl.nhl_api import get_json
 
 DATA_DIR = ROOT / "data" / "nhl"
 SCHEDULE_URL = "https://api-web.nhle.com/v1/schedule"
 
 
 def _fetch_week(date_str):
-    resp = requests.get(f"{SCHEDULE_URL}/{date_str}", timeout=15)
-    resp.raise_for_status()
-    return resp.json()
+    return get_json(f"{SCHEDULE_URL}/{date_str}")
 
 
 def detect_target_date(today):
@@ -161,9 +160,7 @@ def build_nhl_standings():
     current standings (mid-season while games are being played, or the just-
     finished season's final table once it's over), so no separate
     off-season fallback is needed the way NFL's build needed one."""
-    resp = requests.get("https://api-web.nhle.com/v1/standings/now", timeout=15)
-    resp.raise_for_status()
-    data = resp.json()
+    data = get_json("https://api-web.nhle.com/v1/standings/now")
 
     by_division = {}
     for t in data["standings"]:
@@ -190,13 +187,9 @@ def build_nhl_stat_leaders(top_n=5):
     """Real current-season stat leaders straight from the league's own
     leaders endpoints -- no aggregation needed, and no separate data source
     from what build_nhl_standings already hits (same api-web.nhle.com base)."""
-    skater_resp = requests.get("https://api-web.nhle.com/v1/skater-stats-leaders/current", timeout=15)
-    skater_resp.raise_for_status()
-    skaters = skater_resp.json()
+    skaters = get_json("https://api-web.nhle.com/v1/skater-stats-leaders/current")
 
-    goalie_resp = requests.get("https://api-web.nhle.com/v1/goalie-stats-leaders/current", timeout=15)
-    goalie_resp.raise_for_status()
-    goalies = goalie_resp.json()
+    goalies = get_json("https://api-web.nhle.com/v1/goalie-stats-leaders/current")
 
     def top_leaders(entries, label, value_round=None):
         top = entries[:top_n]
@@ -314,9 +307,7 @@ def build_nhl_title_odds():
         else:
             current_wins[r["away_team"]] += 1
 
-    resp = requests.get("https://api-web.nhle.com/v1/standings/now", timeout=15)
-    resp.raise_for_status()
-    standings_data = resp.json()
+    standings_data = get_json("https://api-web.nhle.com/v1/standings/now")
     team_divisions = {normalize_team(t["teamAbbrev"]["default"]): t["divisionName"] for t in standings_data["standings"]}
     team_conferences = {normalize_team(t["teamAbbrev"]["default"]): t["conferenceName"] for t in standings_data["standings"]}
     ratings = {t: r for t, r in ratings.items() if t in team_divisions}
@@ -390,6 +381,22 @@ def main(today=None):
     _write_payload(dates, anchor_iso, days_out, elo_params, real_today_iso=today.isoformat())
 
 
+def _safe_stat_leaders():
+    """Stat leaders are a nice-to-have panel, not the reason this pipeline
+    runs. If the leaders endpoint is unavailable, degrade to empty lists and
+    keep the refresh alive rather than throwing away a complete set of
+    predictions -- a real failure mode, not a hypothetical: a 429 on
+    /skater-stats-leaders killed an entire scheduled run, taking the
+    already-generated NFL and MLB output down with it. The frontend already
+    renders an empty leaders group as "No data yet"."""
+    try:
+        return build_nhl_stat_leaders()
+    except Exception as e:
+        print(f"  NHL stat leaders unavailable ({e.__class__.__name__}: {e}) -- "
+              f"continuing without them, the rest of the payload is unaffected")
+        return {"skaters": [], "goalies": []}
+
+
 def _write_payload(dates, today_iso, days_out, elo_params=None, real_today_iso=None):
     print("Building NHL standings + stat leaders...")
     nhl_standings = build_nhl_standings()
@@ -407,7 +414,7 @@ def _write_payload(dates, today_iso, days_out, elo_params=None, real_today_iso=N
         "elo_params": elo_params,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "days": days_out,
-        "season_info": {"standings": nhl_standings, "stat_leaders": build_nhl_stat_leaders(),
+        "season_info": {"standings": nhl_standings, "stat_leaders": _safe_stat_leaders(),
                         "title_odds": nhl_title_odds},
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)

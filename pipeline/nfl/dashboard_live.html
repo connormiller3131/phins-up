@@ -322,6 +322,72 @@
     color:var(--text-dim);
   }
   .search-hidden{display:none !important;}
+
+  /* Collapse a whole game card down to just its header. Implemented by
+     hiding siblings rather than by converting .game into a <details>: every
+     card's body carries live-updating element ids (scores, box scores, now-
+     lines) plus prop tables the search filter reads through, and all of that
+     keeps working only if the nodes stay in the DOM. display:none does that;
+     unmounting would not. */
+  .game.collapsed > *:not(.game-top){display:none;}
+  .game.collapsed{padding-bottom:10px;}
+  .game.collapsed .game-top{margin-bottom:0;}
+  .collapse-toggle{
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:5px;
+    color:var(--text-dim);
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1;
+    padding:3px 7px;
+    margin-left:8px;
+    flex:0 0 auto;
+    align-self:flex-start;
+  }
+  .collapse-toggle:hover{color:var(--green);border-color:var(--green);}
+  .game-top-actions{display:flex;align-items:flex-start;gap:6px;margin-left:auto;}
+  .collapse-all-wrap{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:10px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-dim);
+  }
+  .collapse-all-btn{
+    background:var(--panel-alt);
+    border:1px solid var(--line);
+    border-radius:5px;
+    color:var(--text-dim);
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.03em;
+    padding:4px 9px;
+    text-transform:uppercase;
+  }
+  .collapse-all-btn:hover{color:var(--green);border-color:var(--green);}
+
+  .how-to-read{margin-bottom:12px;}
+  .how-to-read-body{padding-top:4px;}
+  .how-to-read-body p{
+    margin:0 0 9px;
+    font-size:12.5px;
+    line-height:1.55;
+    color:var(--text);
+  }
+  .how-to-read-body p:last-child{margin-bottom:0;}
+  .how-to-read-body b{color:var(--green);font-weight:700;}
+  .how-to-read-foot{
+    color:var(--text-dim) !important;
+    font-style:italic;
+    border-top:1px solid var(--line);
+    padding-top:8px;
+  }
+  .how-to-read-foot b{color:var(--text-dim) !important;}
   .search-empty-note{
     font-family:var(--mono);
     font-size:12px;
@@ -1072,6 +1138,13 @@
   <div class="game-search-wrap">
     <input type="search" id="nfl-search" placeholder="Search team, player, or matchup..." oninput="applySearchFilter('games', this.value)">
   </div>
+  <div class="collapse-all-wrap">
+    <span>All games:</span>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('games', true)">Collapse all</button>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('games', false)">Expand all</button>
+  </div>
+
+  <div class="how-to-read-slot" data-sport="nfl"></div>
 
   <div class="legend">
     <span><i class="sw" style="background:var(--green)"></i>Edge for you &ge; 3%</span>
@@ -1117,6 +1190,13 @@
   <div class="game-search-wrap">
     <input type="search" id="mlb-search" placeholder="Search team, player, or matchup..." oninput="applySearchFilter('mlb-games', this.value)">
   </div>
+  <div class="collapse-all-wrap">
+    <span>All games:</span>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('mlb-games', true)">Collapse all</button>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('mlb-games', false)">Expand all</button>
+  </div>
+
+  <div class="how-to-read-slot" data-sport="mlb"></div>
 
   <div class="legend">
     <span><i class="sw" style="background:var(--text-dim)"></i>Fair % — real DraftKings moneyline, where posted</span>
@@ -1160,6 +1240,13 @@
   <div class="game-search-wrap">
     <input type="search" id="nhl-search" placeholder="Search team or matchup..." oninput="applySearchFilter('nhl-games', this.value)">
   </div>
+  <div class="collapse-all-wrap">
+    <span>All games:</span>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('nhl-games', true)">Collapse all</button>
+    <button class="collapse-all-btn" onclick="setAllGamesCollapsed('nhl-games', false)">Expand all</button>
+  </div>
+
+  <div class="how-to-read-slot" data-sport="nhl"></div>
 
   <div class="legend">
     <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
@@ -1955,7 +2042,7 @@ function renderGames(week){
   document.getElementById('eyebrow').textContent = `NFL · Week ${selectedWeek} · ${DATA.season} Season`;
   const ep = DATA.elo_params;
   document.getElementById('elo-meta').textContent =
-    `Model basis: Elo rating fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, rest-day edge=${ep.rest_adv} pts/day, season carryover=${ep.season_regression}, grid-searched to minimize log loss), carried forward through every completed game since into this week. Backtested out-of-sample: Brier 0.221, 65.5% accuracy (market: 0.211 Brier, 65.9%). Props use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}) with real trailing production vs. the opponent's real trailing allowed rate. Weeks beyond what books have priced yet show model-only projections -- no market line to compare against until DraftKings posts one.`;
+    `How the win % is built: every team carries a power rating that rises when they win and falls when they lose, weighted by how strong the opponent was and how decisive the result. It was tuned on seven seasons (2019-2025) and then tested on a season it had never seen, where it called 65.5% of games correctly. The betting market got 65.9% on those same games, so it is still a little sharper than we are. Player projections use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}), comparing what a player has actually been producing against what the upcoming defense has actually been giving up to his position. Weeks the sportsbooks have not priced yet show our projection only, with nothing to compare it against. Full technical detail is at the bottom of the page.`;
 
   const root = document.getElementById("games");
   root.innerHTML = "";
@@ -1985,6 +2072,7 @@ function renderGames(week){
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
           <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}</div>
         </div>
+        <div class="game-top-actions">${collapseToggleHtml()}</div>
       </div>
       ${!hasOdds ? '<div class="no-odds-note">No market line posted yet for this game -- showing model projection only.</div>' : ''}
       <div class="result-box" id="result-box-${idx}"></div>
@@ -2190,6 +2278,60 @@ function applySearchFilter(rootId, rawQuery){
   }
 }
 
+// A plain-language primer, shown on every sport tab. The footers below carry
+// the full technical disclosure and stay that way on purpose -- but a first-
+// time reader should not have to decode "no-vig", "Elo" or "Brier" just to
+// know what a number on screen means. Every figure here is given a reference
+// point, because a score is meaningless without knowing what good looks like.
+function howToReadHtml(sport){
+  const hasOdds = sport !== 'nhl';
+  const hasProps = sport !== 'nhl';
+  return `
+  <details class="props-toggle how-to-read">
+    <summary>New here? How to read these numbers</summary>
+    <div class="how-to-read-body">
+      <p><b>Model win %</b> is our own prediction, and nothing else on the page influences it. It comes from a power rating for each team that goes up when they win and down when they lose, adjusted for how strong the opponent was and how big the result was. It never looks at a betting line, so it is a genuinely independent opinion rather than a repackaged market price.</p>
+      ${hasOdds ? `<p><b>Fair win %</b> is what the sportsbook's price implies, after removing the cut the book builds in for itself. Read it as "what the betting market currently believes". When the two columns disagree, that is the interesting part.</p>
+      <p><b>GOOD VALUE</b> appears next to a side when our number is higher than the market's for that same side. It means we think that side is more likely than the price suggests. It is a disagreement, not a guarantee, and we are wrong plenty of the time.</p>` : ''}
+      ${hasProps ? `<p><b>DK LINE</b> means the number beside it is a real, current DraftKings price we pulled. <b>MODEL EST.</b> means no sportsbook has priced it, so the number is purely our own projection. We keep those two labelled separately on purpose and never present our own estimate as if a book had set it.</p>` : ''}
+      <p><b>About the accuracy scores.</b> You will see a "Brier score" quoted below. It measures how close predictions land to what actually happens: <b>0.00 is perfect, and 0.25 is what you would score by calling every game a 50/50 coin flip</b>. Lower is better. Anything meaningfully under 0.25 is doing real work.</p>
+      ${sport === 'nfl' ? `<p>Ours is <b>0.221</b> against the betting market's <b>0.211</b> on the same games. The market is still slightly sharper than we are, and we would rather say so than quietly leave that number out.</p>` : ''}
+      ${sport === 'mlb' ? `<p>Baseball is the hardest of the three to predict: even a great team loses about 40% of the time, so the scores sit closer to 0.25 here than in football. That is the sport, not a broken model.</p>` : ''}
+      ${sport === 'nhl' ? `<p>Hockey has more randomness than football or baseball -- single-goal games and shootouts decide a lot of nights -- so the edge over guessing is real but modest, and we would rather say that plainly than oversell it.</p>` : ''}
+      <p class="how-to-read-foot">Everything here is a decision-support tool, not betting advice. It does not know your bankroll, and it cannot see news that broke after the page was built.</p>
+    </div>
+  </details>`;
+}
+
+// Collapse one game card to just its header row. Shared by all three sports
+// -- they render different bodies but an identical .game/.game-top shell.
+function toggleGameCollapse(btn){
+  const card = btn.closest('.game');
+  if(!card) return;
+  const collapsed = card.classList.toggle('collapsed');
+  btn.textContent = collapsed ? '+' : '−';
+  btn.title = collapsed ? 'Expand this game' : 'Collapse this game';
+  btn.setAttribute('aria-expanded', String(!collapsed));
+}
+
+function collapseToggleHtml(){
+  return `<button class="collapse-toggle" aria-expanded="true" title="Collapse this game" onclick="toggleGameCollapse(this)">−</button>`;
+}
+
+function setAllGamesCollapsed(rootId, collapsed){
+  const root = document.getElementById(rootId);
+  if(!root) return;
+  root.querySelectorAll('.game').forEach(card => {
+    card.classList.toggle('collapsed', collapsed);
+    const btn = card.querySelector('.collapse-toggle');
+    if(btn){
+      btn.textContent = collapsed ? '+' : '−';
+      btn.title = collapsed ? 'Expand this game' : 'Collapse this game';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    }
+  });
+}
+
 function toggleGameFocus(rootId, idx){
   const root = document.getElementById(rootId);
   const card = root.querySelector(`.game[data-game-idx="${idx}"]`);
@@ -2202,6 +2344,12 @@ function toggleGameFocus(rootId, idx){
   if(existingBack) existingBack.remove();
   if(alreadyFocused) return; // clicking the same game again un-focuses
 
+  // Focusing a collapsed card would show an empty header and nothing else,
+  // so expand it on the way in -- the two controls should not fight.
+  if(card.classList.contains("collapsed")){
+    const btn = card.querySelector(".collapse-toggle");
+    if(btn) toggleGameCollapse(btn); else card.classList.remove("collapsed");
+  }
   card.classList.add("focused");
   root.classList.add("focus-mode");
   const back = document.createElement("div");
@@ -2243,6 +2391,12 @@ async function loadGameResult(season, week, g, idx){
     </div>
   `;
 }
+
+// Populate the plain-language primer on every sport tab. Done once at load
+// rather than inside each render, since the copy never changes with the week.
+document.querySelectorAll('.how-to-read-slot').forEach(slot => {
+  slot.innerHTML = howToReadHtml(slot.dataset.sport);
+});
 
 renderGames();
 // Rendered once, not per week-render: this card is pinned to the current
@@ -3313,10 +3467,10 @@ function renderMLBGames(selectedDate){
   document.getElementById('mlb-eyebrow').textContent = `MLB · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : ''}`;
   const ep = dayData.elo_params;
   document.getElementById('mlb-meta').textContent =
-    `Model basis: team Elo fit on 2019-2025 (K=${ep.k}, home-field=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression})` +
+    `How the win % is built: every team carries a power rating that rises when they win and falls when they lose, weighted by opponent strength, tuned on seven seasons (2019-2025)` +
     (dayData.pitcher_blend_used
-      ? `, blended with real starting-pitcher/bullpen strength (Statcast run-value), starter durability (trailing innings per start), team offense quality (Statcast est_woba, PA-weighted), and a same-division flag via a logistic regression fit on 2024-2025 and validated out-of-sample on 2026: Brier 0.2478&rarr;0.2462, log loss 0.6888&rarr;0.6853 vs. team-Elo alone.`
-      : `. Pitcher/bullpen blend not available this run -- showing team-only Elo.`) +
+      ? `. On top of that it factors in who is actually pitching today -- the starter's recent quality and how deep he usually goes, the bullpen behind him, how well the lineup has been hitting, and whether it is a division game. Adding all of that beat the team rating on its own when tested on games it had never seen, though by a modest amount: baseball is genuinely hard to predict, since even a strong team loses roughly 40% of the time.`
+      : `. Today's pitching detail was not available for this run, so these are team-strength-only numbers.`) +
     ` Generated ${dayData.generated_at}.` +
     (!isToday ? ` ${dayData.finalized ? 'This day is over -- final results shown, frozen at generation time, never rewritten.' : 'Future day -- model-only projection, no live odds/lineups posted this far out yet.'}` : '');
 
@@ -3348,7 +3502,10 @@ function renderMLBGames(selectedDate){
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
           <div class="now-line" id="mlb-nowline-${selectedDate}-${idx}"></div>
         </div>
-        <div class="hold-badge" id="mlb-score-${selectedDate}-${idx}">${finalScoreBadge}</div>
+        <div class="game-top-actions">
+          <div class="hold-badge" id="mlb-score-${selectedDate}-${idx}">${finalScoreBadge}</div>
+          ${collapseToggleHtml()}
+        </div>
       </div>
 
       ${boxScoreSection(selectedDate, g, idx)}
@@ -3476,7 +3633,7 @@ function renderNHLGames(selectedDate){
   document.getElementById('nhl-eyebrow').textContent = `NHL · ${dayData.weekday}, ${selectedDate}${isToday ? ' (today)' : anchorNote}`;
   const ep = NHL_DATA.elo_params;
   document.getElementById('nhl-meta').textContent = ep
-    ? `Model basis: team Elo fit on 2018-2023, validated out-of-sample on the full 2024-25 season (K=${ep.k}, home-ice=${ep.home_adv} pts, scale=${ep.scale}, season carryover=${ep.season_regression}). Ratings carried forward through every completed game since, including 2025-26. Generated ${dayData.generated_at}.`
+    ? `How the win % is built: every team carries a power rating that rises when they win and falls when they lose, weighted by opponent strength and margin. It was tuned on 2018-19 through 2023-24, then tested on the full 2024-25 season it had never seen, where it called 58.8% of games correctly. That is a real edge over guessing but a smaller one than football gets, because hockey has more randomness -- a lot of nights are settled by a single goal or a shootout. Ratings have been carried forward through every game since, including 2025-26. Generated ${dayData.generated_at}.`
     : `Generated ${dayData.generated_at}.`;
 
   if(!dayData.games.length){
@@ -3501,7 +3658,10 @@ function renderNHLGames(selectedDate){
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('nhl-games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
         </div>
-        <div class="hold-badge">${finalScoreBadge}</div>
+        <div class="game-top-actions">
+          <div class="hold-badge">${finalScoreBadge}</div>
+          ${collapseToggleHtml()}
+        </div>
       </div>
       ${nhlBoxScoreSection(selectedDate, g, idx)}
       ${teamStatsSection('nhl', `nhl-team-stats-${selectedDate}-${idx}`, idx, selectedDate, g.awayAbbr, g.homeAbbr)}

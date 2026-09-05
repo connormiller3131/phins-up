@@ -2972,25 +2972,39 @@ function buildRealisticParlay(games, opts){
   const mlCandidates = [];
   games.forEach(g => {
     const m = g.market;
+    // The side the model actually favours, as a model-only leg. Its
+    // probability is >=50% by definition, so it is always an admissible
+    // fallback under the coin-flip floor below.
+    const homeFav = g.elo_home_prob >= 0.5;
+    const favouriteLeg = {edge: null, prob: homeFav ? g.elo_home_prob : 1-g.elo_home_prob,
+                          label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
+                          sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`, market: 'Moneyline'};
     if(m && m.mlHome != null && m.mlAway != null){
       const fairHome = noVigProb(m.mlHome, m.mlAway);
       const homeEdge = g.elo_home_prob - fairHome;
-      if(homeEdge > 0) mlCandidates.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
-      else if(-homeEdge > 0) mlCandidates.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
-      else {
-        const homeFav = g.elo_home_prob >= 0.5;
-        mlCandidates.push({edge: null, prob: homeFav ? g.elo_home_prob : 1-g.elo_home_prob,
-                            label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
-                            sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`, market: 'Moneyline'});
+      // A positive edge on a side the model still has LOSING says the price
+      // is wrong, not that the leg will hit -- and a parlay needs every leg
+      // to hit. Same floor collectNflParlayLegs applies on the NFL card;
+      // this one was live here too, with BAL ML carried at a 49.4% model
+      // probability on a 5.5% edge. A game whose only edge is on the
+      // underdog now contributes no candidate at all, so the card draws
+      // from its prop fillers instead.
+      let edgeLeg = null;
+      if(homeEdge > 0 && g.elo_home_prob > 0.5){
+        edgeLeg = {edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'};
+      } else if(-homeEdge > 0 && (1-g.elo_home_prob) > 0.5){
+        edgeLeg = {edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'};
       }
+      // alwaysIncludeMoneyline is the same-game card, which is required to
+      // carry its own game's result -- there, a rejected edge side falls
+      // back to the favourite rather than leaving the card with no team leg.
+      if(edgeLeg) mlCandidates.push(edgeLeg);
+      else if(homeEdge === 0 || opts.alwaysIncludeMoneyline) mlCandidates.push(favouriteLeg);
     } else if(opts.alwaysIncludeMoneyline){
       // Same-game parlay: still include this game's own moneyline (model
       // estimate) even with no real market posted yet, since a real same
       // game parlay always has the team result as one of its legs.
-      const homeFav = g.elo_home_prob >= 0.5;
-      mlCandidates.push({edge: null, prob: homeFav ? g.elo_home_prob : 1-g.elo_home_prob,
-                          label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
-                          sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`, market: 'Moneyline'});
+      mlCandidates.push(favouriteLeg);
     }
   });
   mlCandidates.sort((a,b) => {

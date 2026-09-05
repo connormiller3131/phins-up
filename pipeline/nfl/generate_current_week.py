@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.nfl.games import load_games, moneyline_to_prob
 from pipeline.nfl.elo_model import run_elo
-from pipeline.nfl.props.prop_data import build_prop_table
+from pipeline.nfl.props.prop_data import build_prop_table, WINDOW
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
 from pipeline.nfl.props.prop_models import (
     FEATURES, PROP_CONFIG, prop_features, prop_over_prob, yardage_over_prob,
@@ -269,13 +269,39 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
     return out
 
 
+# The anytime-TD model trains on the shared seven PLUS an opportunity
+# feature (own_trailing_volume, from prop_data's carries+targets
+# "opportunities" column). Added because the seven-feature version had no
+# way to tell a low-usage player on a scoring heater from a genuine every-
+# down threat -- both present as the same trailing TD rate -- which is
+# exactly the rate-vs-opportunities split PROP_CONFIG already handles for
+# every count prop. Justified by walk-forward backtest in
+# pipeline/nfl/props/backtest_td_volume.py, not by assumption: on the
+# untouched 2025 season, Brier 0.1448 -> 0.1409 and log loss 0.4567 ->
+# 0.4443. The whole-population move is small because anytime TD is a ~19%
+# base-rate market; the tails are where it matters. The old model
+# understated genuine workhorses (8+ carries+targets per game: predicted
+# 0.300, actually scored 0.377) as badly as it overstated depth pieces
+# (0-4 opp/gm: predicted 0.145, actually 0.082), and the opportunity
+# feature closes the workhorse gap almost entirely (-0.077 -> -0.008)
+# while cutting the depth-piece one by roughly a third (+0.063 -> +0.037).
+# Replaying the TD SPECIAL's own 3-legs-3-teams rule week by week over
+# that season, its legs went from 36/65 to 40/65.
+#
+# It does NOT fully fix the low-usage tail (+0.037 is still overstated),
+# which is why dashboard_live.html ALSO gates who may be featured on the
+# card rather than trusting the probability alone.
+TD_FEATURES = FEATURES + ["own_trailing_volume"]
+TD_VOLUME_COL = "opportunities"
+
+
 def prepare_td_model():
-    hist = build_prop_table("anytime_td", ["RB", "WR", "TE"])
+    hist = build_prop_table("anytime_td", ["RB", "WR", "TE"], volume_col=TD_VOLUME_COL)
     model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
-    model.fit(hist[FEATURES].values, hist["actual"].values)
+    model.fit(hist[TD_FEATURES].values, hist["actual"].values)
     return {
         "model": model,
-        "own": player_current_trailing("anytime_td", ["RB", "WR", "TE"]),
+        "own": player_current_trailing("anytime_td", ["RB", "WR", "TE"], volume_col=TD_VOLUME_COL),
         "defense": defense_current_trailing("anytime_td", ["RB", "WR", "TE"]),
     }
 
@@ -287,11 +313,19 @@ def project_td(prep, player_id, opp_team, env):
 
     own_avg = float(own.loc[player_id, "current_avg"])
     opp_avg = float(defense.loc[opp_team])
-    if pd.isna(own_avg) or pd.isna(opp_avg):
+    opp_per_gm = float(own.loc[player_id, "current_volume"])
+    if pd.isna(own_avg) or pd.isna(opp_avg) or pd.isna(opp_per_gm):
         return None
-    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"], env["implied_team_total"]]]
+    feat_row = [[own_avg, opp_avg, env["is_dome"], env["temp"], env["wind"], env["own_rest"],
+                 env["implied_team_total"], opp_per_gm]]
     prob = float(prep["model"].predict_proba(feat_row)[:, 1][0])
-    return {"model_prob": round(prob, 3), "games_played": int(own.loc[player_id, "games_played"])}
+    # trailing_n is the size of the window that actually produced own_avg,
+    # not career games -- capped at WINDOW because that is all the rolling
+    # mean ever looks at. Named to match the MLB props' own field so the
+    # frontend's existing isReliablePick works on NFL TD legs unchanged.
+    games_played = int(own.loc[player_id, "games_played"])
+    return {"model_prob": round(prob, 3), "games_played": games_played,
+            "trailing_n": min(games_played, WINDOW), "opp_per_gm": round(opp_per_gm, 1)}
 
 
 def _prop_entry(section, market, team, opp_team, player_id, r, ladder=False):
@@ -304,8 +338,13 @@ def _prop_entry(section, market, team, opp_team, player_id, r, ladder=False):
 
 
 def _td_entry(section, team, opp_team, player_id, player_name, t):
+    # trailing_n and opp_per_gm are carried through so the TD SPECIAL card
+    # can tell a featured pick apart from a thin-sample or low-usage one.
+    # project_td always computed the sample size; it used to be dropped here,
+    # which left the frontend's reliability gate inert for every NFL TD leg.
     return {"section": section, "player": player_name, "player_id": player_id, "team": team,
-            "opp": opp_team, "market": "Anytime TD", "model_prob": t["model_prob"]}
+            "opp": opp_team, "market": "Anytime TD", "model_prob": t["model_prob"],
+            "trailing_n": t["trailing_n"], "opp_per_gm": t["opp_per_gm"]}
 
 
 # Report statuses that mean "will not play". Questionable is deliberately NOT

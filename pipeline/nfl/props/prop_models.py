@@ -113,7 +113,12 @@ def walk_forward_yardage(df: pd.DataFrame, test_seasons: list[int]):
     return model_pred, resid_std, naive_pred
 
 
-def walk_forward_anytime_td(df: pd.DataFrame, test_seasons: list[int]):
+def walk_forward_anytime_td(df: pd.DataFrame, test_seasons: list[int], features: list[str] | None = None):
+    """features defaults to the shared seven, so existing callers are
+    unchanged; backtest_td_volume.py passes an extended list to test whether
+    an opportunity feature earns its place here the way it does for the
+    count props."""
+    features = FEATURES if features is None else features
     n = len(df)
     model_pred = np.full(n, np.nan)
 
@@ -126,12 +131,12 @@ def walk_forward_anytime_td(df: pd.DataFrame, test_seasons: list[int]):
         if len(train) < 50 or train["actual"].nunique() < 2:
             continue
 
-        X_train = train[FEATURES].values
+        X_train = train[features].values
         y_train = train["actual"].values
         model = LogisticRegressionCV(Cs=np.logspace(-2, 2, 15), cv=5, max_iter=2000, scoring="neg_log_loss")
         model.fit(X_train, y_train)
 
-        X_test = df.loc[target_idx, FEATURES].values
+        X_test = df.loc[target_idx, features].values
         preds = model.predict_proba(X_test)[:, 1]
         pos = df.index.get_indexer(target_idx)
         model_pred[pos] = preds

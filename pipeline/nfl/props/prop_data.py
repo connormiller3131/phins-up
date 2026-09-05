@@ -21,6 +21,15 @@ def _load_base():
     ps = ps.merge(sched, on="game_id", how="inner")
     ps["anytime_td"] = ((ps["rushing_tds"].fillna(0) + ps["receiving_tds"].fillna(0)) > 0).astype(float)
 
+    # Opportunity column for the anytime-TD model. Every other prop gets a
+    # single-source volume feature (targets for receiving, carries for
+    # rushing), but a TD can arrive either way, so neither column alone
+    # describes a skill player's real scoring workload: targets alone reads
+    # a goal-line back as unused, carries alone reads a slot receiver the
+    # same way. Summing them is the position-neutral version of the same
+    # rate-x-opportunities argument the other props already use.
+    ps["opportunities"] = ps["carries"].fillna(0) + ps["targets"].fillna(0)
+
     ps["is_dome"] = ps["roof"].isin(["dome", "closed"]).astype(float)
     ps["own_rest"] = np.where(ps["team"] == ps["home_team"], ps["home_rest"], ps["away_rest"]).astype(float)
 

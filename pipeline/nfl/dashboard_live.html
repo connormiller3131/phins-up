@@ -2020,9 +2020,10 @@ function nflParlayCardsHtml(weekData){
     })
     + parlayCardHtml(tdLegs, 'NFL', {
         title: 'TD SPECIAL', accentClass: 'parlay-special',
-        note: tdRealCount
+        note: (tdRealCount
           ? `top Anytime TD picks from 3 different teams -- ${tdRealCount} vs. a real DK price, ${tdLegs.length - tdRealCount} model-only where DK hasn't posted one`
-          : `model's highest Anytime TD probabilities from 3 different teams -- DraftKings hasn't posted Anytime TD prices for this week's featured game(s) yet, so these aren't graded against a real edge`,
+          : `model's highest Anytime TD probabilities from 3 different teams -- DraftKings hasn't posted Anytime TD prices for this week's featured game(s) yet, so these aren't graded against a real edge`)
+          + `. Featured picks are limited to players actually getting the ball (${TD_MIN_OPP_PER_GM}+ carries and targets per game): a backup who happened to score in half his recent games shows the same trailing rate as a starter, and grading that against a real sportsbook price manufactures a big-looking edge out of our own noise rather than a genuine mispricing`,
         emptyText: 'No Anytime TD projections available yet for this week. Check back once the model has run.',
       })
     + parlayCardHtml(flinFlonLegs, 'NFL', {
@@ -2157,7 +2158,7 @@ function renderGames(week){
 
   document.getElementById("foot").innerHTML =
     `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
-    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. The Anytime TD model also reads how much work a player is actually getting (recent carries plus targets), not just how often he has been scoring. That matters more than it sounds: on real 2022-2025 games, players carrying a hot recent scoring rate into a game went on to score 13.6% of the time when they were touching the ball under twice a game, versus 47.3% for players touching it 12+ times. Without that, a backup on a short hot streak looked identical to a genuine every-down threat, and the TD SPECIAL card kept featuring the backup. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 
   const searchBox = document.getElementById("nfl-search");
   if(searchBox && searchBox.value) applySearchFilter("games", searchBox.value);
@@ -3078,6 +3079,28 @@ function collectHrSpecialLegs(games, excludeIds){
   return picked;
 }
 
+// A hot trailing TD rate means completely different things at different
+// workloads, and the market prices that difference even though a
+// rate-only model cannot see it. Measured on real 2022-2025 rows: players
+// carrying a trailing rate of 0.400+ into a game actually scored 13.6% of
+// the time on under 2 touches per game, 22.4% on 2-4, and 47.3% on 12+ --
+// so the same "0.500 in his last 8" is mostly noise for a backup and
+// mostly real for a workhorse. Subtracting a DK price from a model
+// probability therefore produces its BIGGEST apparent edge exactly where
+// the model is least trustworthy: a Rams backup TE at +330 outranked Puka
+// Nacua on this card, and then locked Nacua out under the different-teams
+// rule despite a bigger edge and a far higher probability.
+//
+// opp_per_gm (trailing carries+targets, carried through from project_td)
+// gates who is allowed to be FEATURED. It never edits a probability, and
+// low-usage legs still fill remaining slots rather than leaving the card
+// short -- the same demote-don't-delete stance isReliablePick already
+// takes on the MLB side.
+const TD_MIN_OPP_PER_GM = 6;
+function isFeaturedTdLeg(leg){
+  return isReliablePick(leg) && (leg.opp_per_gm == null || leg.opp_per_gm >= TD_MIN_OPP_PER_GM);
+}
+
 // NFL counterpart to collectHrSpecialLegs -- 3 Anytime TD legs, different
 // teams, same real-edge-preferred/different-teams logic.
 function collectNflTdSpecialLegs(games, excludeIds){
@@ -3090,19 +3113,29 @@ function collectNflTdSpecialLegs(games, excludeIds){
       if(p.market !== "Anytime TD" || p.model_prob == null || excludeIds.has(p.player_id) || seenIds.has(p.player_id)) return;
       seenIds.add(p.player_id);
       const sub = p.opp ? `vs ${p.opp}` : p.team;
+      const base = {label: p.player, sub, market: 'Anytime TD', player_id: p.player_id, team: p.team,
+                    trailing_n: p.trailing_n, opp_per_gm: p.opp_per_gm};
       if(p.dk_implied_prob != null){
         const edge = p.model_prob - p.dk_implied_prob;
-        if(edge > 0) real.push({edge, prob: p.model_prob, label: p.player, sub, market: 'Anytime TD', player_id: p.player_id, team: p.team});
+        if(edge > 0) real.push(Object.assign({edge, prob: p.model_prob}, base));
       } else {
-        modelOnly.push({edge: null, prob: p.model_prob, label: p.player, sub, market: 'Anytime TD', player_id: p.player_id, team: p.team});
+        modelOnly.push(Object.assign({edge: null, prob: p.model_prob}, base));
       }
     });
   });
   real.sort((a,b) => b.edge - a.edge);
   modelOnly.sort((a,b) => b.prob - a.prob);
+  // Real-edge legs still outrank model-only ones, but only among legs of
+  // the same trustworthiness: a stable partition puts every featured-worthy
+  // leg ahead of every gated one while preserving the real-before-model and
+  // edge/probability ordering inside each group. Without this split the
+  // bucket order alone would let any positive-edge depth piece outrank a
+  // genuine every-down threat the book simply hasn't priced yet.
+  const pool = real.concat(modelOnly);
+  const ordered = pool.filter(isFeaturedTdLeg).concat(pool.filter(l => !isFeaturedTdLeg(l)));
   const usedTeams = new Set();
   const picked = [];
-  for(const leg of real.concat(modelOnly)){
+  for(const leg of ordered){
     if(picked.length >= 3) break;
     if(usedTeams.has(leg.team)) continue;
     usedTeams.add(leg.team);

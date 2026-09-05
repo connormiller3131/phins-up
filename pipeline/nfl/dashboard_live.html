@@ -4110,6 +4110,73 @@ function applyRouteFromLocation(){
     }
   }
 }
+// ---- gated payload -------------------------------------------------------
+// Player props, and everything derived from them, are deliberately NOT
+// inlined in this page. It is committed to a public repo that GitHub Pages
+// serves directly (connormiller3131.github.io/phins-up), so anything baked
+// in here is world-readable no matter what this script or the Worker does
+// about it, and it lands in git history permanently besides. They arrive
+// from site-worker.js instead, which is the single door an entitlement
+// check can actually be put on.
+//
+// That check does not exist yet: this endpoint is currently open, so a
+// visitor sees exactly what they saw before. What changed is that the data
+// stopped being committed and started arriving through a door that CAN be
+// locked, which is the part that had to happen first.
+const GATED_ENDPOINT = '/api/gated';
+
+function mergeGatedPayload(payload){
+  if(!payload) return 0;
+  // The page is committed by one job and the payload uploaded by another,
+  // so a stale KV value could meet a freshly deployed page and quietly
+  // merge last night's props onto today's games. Both halves carry the same
+  // build stamp; a mismatch is skipped and reported rather than shown.
+  if(payload.build && DATA.generated_at && payload.build !== DATA.generated_at){
+    console.warn(`[gated] build mismatch -- page ${DATA.generated_at}, payload ${payload.build}; not merging`);
+    return 0;
+  }
+  let merged = 0;
+  const nfl = payload.nfl || {};
+  Object.entries(DATA.weeks || {}).forEach(([week, wk]) => {
+    (wk.games || []).forEach(g => {
+      const hit = nfl[`${week}|${g.awayAbbr}|${g.homeAbbr}`];
+      if(hit){ Object.assign(g, hit); merged++; }
+    });
+  });
+  const mlb = payload.mlb || {};
+  Object.values(MLB_DATA.days || {}).forEach(day => {
+    (day.games || []).forEach(g => {
+      const hit = mlb[String(g.gamePk)];
+      if(hit){ Object.assign(g, hit); merged++; }
+    });
+  });
+  return merged;
+}
+
+function rerenderAfterGatedMerge(){
+  // Re-render from whatever the selects currently hold, not from the
+  // defaults -- a visitor who switched week or day while the fetch was in
+  // flight keeps the view they picked instead of being thrown back to today.
+  const wk = document.getElementById('week-select');
+  renderGames(wk && wk.value ? parseInt(wk.value, 10) : undefined);
+  const day = document.getElementById('mlb-day-select');
+  renderMLBGames(day && day.value ? day.value : undefined);
+}
+
+async function loadGatedPayload(){
+  const payload = await fetchJsonWithRetry(GATED_ENDPOINT);
+  if(!payload){
+    // Every props table and pick card already renders empty rather than
+    // throwing when props are absent, so a failed fetch degrades to the
+    // free tier instead of breaking the page.
+    console.warn('[gated] payload unavailable -- showing free content only');
+    return;
+  }
+  const merged = mergeGatedPayload(payload);
+  if(merged) rerenderAfterGatedMerge();
+}
+loadGatedPayload();
+
 applyRouteFromLocation();
 window.addEventListener('popstate', applyRouteFromLocation);
 </script>

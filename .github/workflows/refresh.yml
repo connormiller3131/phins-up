@@ -181,6 +181,39 @@ jobs:
       - name: Build static site
         run: python pipeline/nfl/build_static_site.py
 
+      # The paid half of the data (player props and everything derived from
+      # them) is NOT in the commit above -- build_static_site.py writes it to
+      # data/gated_payload.json, which is git-ignored, precisely so it never
+      # reaches this public repo or the GitHub Pages copy that serves it
+      # directly. It goes to Cloudflare KV instead, where site-worker.js is
+      # the only thing that can hand it out.
+      #
+      # No-ops cleanly until the namespace exists, so this can ship ahead of
+      # the Cloudflare setup without breaking a scheduled run. Set up once:
+      #   npx wrangler kv namespace create GATED
+      # then save the printed id as the GATED_KV_NAMESPACE_ID repo secret.
+      # (--namespace-id is used rather than --binding so this does not
+      # depend on the kv_namespaces block in wrangler.toml, which stays
+      # commented out until the id is real.)
+      #
+      # Published before the deploy below, so the newly built page never
+      # goes live ahead of the payload it expects. The reverse order would
+      # leave a window where the two build stamps disagree; the page treats
+      # that as "show free content", never as "show yesterday's props".
+      - name: Publish gated payload to Cloudflare KV
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GATED_KV_NAMESPACE_ID: ${{ secrets.GATED_KV_NAMESPACE_ID }}
+        run: |
+          if [ -z "$GATED_KV_NAMESPACE_ID" ]; then
+            echo "GATED_KV_NAMESPACE_ID not set -- skipping KV publish."
+            echo "The site will serve free content only until this is configured."
+            exit 0
+          fi
+          ls -lh data/gated_payload.json
+          npx wrangler kv key put current             --path data/gated_payload.json             --namespace-id "$GATED_KV_NAMESPACE_ID"             --remote
+
       # main can move forward while this ~30-40min pipeline is running (a
       # manual code push, another workflow run), which makes a plain `git
       # push` fail with a rejected non-fast-forward -- this happened for

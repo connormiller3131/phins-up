@@ -48,3 +48,21 @@ run_worker_first = true
 # this SPA-routing case: serve index.html directly for any unmatched path,
 # no redirect, URL stays as the visitor typed/bookmarked it.
 not_found_handling = "single-page-application"
+
+# Gated payload store -- the paid half of the data (player props and
+# everything derived from them), which site-worker.js serves at /api/gated
+# instead of it being inlined into the committed, publicly-served docs/.
+#
+# Deliberately left COMMENTED until the namespace really exists. wrangler
+# deploy fails outright on an unknown namespace id, and refresh.yml runs a
+# deploy twice a day -- a placeholder id here would take the site's
+# scheduled updates down with it. Until this is uncommented the Worker
+# answers 503 on that route and the page shows free content only.
+#
+# One-time setup:
+#   npx wrangler kv namespace create GATED
+# then paste the printed id below and uncomment the three lines.
+#
+# [[kv_namespaces]]
+# binding = "GATED"
+# id = "PASTE_NAMESPACE_ID_HERE"

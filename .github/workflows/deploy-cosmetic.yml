@@ -45,6 +45,24 @@ jobs:
       - name: Build static site
         run: python pipeline/nfl/build_static_site.py
 
+      # Rebuilt from the SAME cached data as the last full refresh, so the
+      # payload's build stamp is unchanged and this is normally a rewrite of
+      # an identical value. Kept anyway for two reasons: it is the fast way
+      # to populate KV for the first time without sitting through a 30-40min
+      # refresh, and it stops a cosmetic deploy from being the one path that
+      # can leave the store empty. No-ops until GATED_KV_NAMESPACE_ID is set.
+      - name: Publish gated payload to Cloudflare KV
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GATED_KV_NAMESPACE_ID: ${{ secrets.GATED_KV_NAMESPACE_ID }}
+        run: |
+          if [ -z "$GATED_KV_NAMESPACE_ID" ]; then
+            echo "GATED_KV_NAMESPACE_ID not set -- skipping KV publish."
+            exit 0
+          fi
+          npx wrangler kv key put current             --path data/gated_payload.json             --namespace-id "$GATED_KV_NAMESPACE_ID"             --remote
+
       # Same non-fast-forward retry pattern as refresh.yml's commit step --
       # only docs/index.html and docs/404.html change here, never
       # docs/results/ (this workflow never regenerates results). Uses a real

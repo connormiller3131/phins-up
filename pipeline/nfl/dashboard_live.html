@@ -4527,9 +4527,12 @@ async function showServerAuthStatus(){
     // otherwise, which looks like the cancellation silently failed.
     let tail = '';
     if(ACCOUNT.paid){
-      tail = ACCOUNT.cancelAtPeriodEnd
-        ? ` · ends ${fmtShortDate(new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10))}`
-        : ' · paid';
+      // The date can legitimately be missing, so the cancellation is still
+      // reported without it rather than rendering a 1970 epoch date.
+      const endsOn = ACCOUNT.currentPeriodEnd
+        ? ` ${fmtShortDate(new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10))}`
+        : '';
+      tail = ACCOUNT.cancelAtPeriodEnd ? ` · ends${endsOn}` : ' · paid';
     }
     badge.textContent = `· server ✓${tail}`;
     badge.style.color = 'var(--green)';

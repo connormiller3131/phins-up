@@ -284,7 +284,7 @@ async function healEntitlement(env, userId, ent) {
     const healed = {
       ...ent,
       status: sub.status,
-      currentPeriodEnd: sub.current_period_end || null,
+      currentPeriodEnd: periodEndOf(sub),
       cancelAtPeriodEnd: !!sub.cancel_at_period_end,
     };
     await writeEntitlement(env, userId, healed);
@@ -429,6 +429,14 @@ function planForPrice(priceId) {
   return Object.keys(PRICE_IDS).find((k) => PRICE_IDS[k] === priceId) || "unknown";
 }
 
+// Stripe moved current_period_end OFF the subscription and onto its items in
+// the 2025-era API versions, and this account's webhook is pinned to
+// 2026-08-26.dahlia. Reading only the old location silently yields null,
+// which then renders as a 1970 date on the "ends <date>" badge. Checks both.
+function periodEndOf(sub) {
+  return sub?.current_period_end || sub?.items?.data?.[0]?.current_period_end || null;
+}
+
 async function serveStripeWebhook(request, env) {
   if (!env.STRIPE_WEBHOOK_SECRET || !env.GATED) {
     return Response.json({ error: "not configured" }, { status: 503, headers: NO_STORE });
@@ -449,7 +457,7 @@ async function serveStripeWebhook(request, env) {
         await writeEntitlement(env, userId, {
           plan: planForPrice(sub.items?.data?.[0]?.price?.id),
           status: sub.status,
-          currentPeriodEnd: sub.current_period_end || null,
+          currentPeriodEnd: periodEndOf(sub),
           cancelAtPeriodEnd: !!sub.cancel_at_period_end,
           customerId: sub.customer,
           subscriptionId: sub.id,
@@ -463,7 +471,7 @@ async function serveStripeWebhook(request, env) {
           // A deleted subscription reports its last status, which can still
           // read "active"; force it to canceled so access actually ends.
           status: event.type.endsWith(".deleted") ? "canceled" : obj.status,
-          currentPeriodEnd: obj.current_period_end || null,
+          currentPeriodEnd: periodEndOf(obj),
           // Stripe cancels at period end by DEFAULT, which leaves status
           // "active" until the period expires -- correct behaviour, and what
           // the Terms promise, but indistinguishable from a live subscription

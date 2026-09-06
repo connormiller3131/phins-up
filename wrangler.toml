@@ -53,16 +53,12 @@ not_found_handling = "single-page-application"
 # everything derived from them), which site-worker.js serves at /api/gated
 # instead of it being inlined into the committed, publicly-served docs/.
 #
-# Deliberately left COMMENTED until the namespace really exists. wrangler
-# deploy fails outright on an unknown namespace id, and refresh.yml runs a
-# deploy twice a day -- a placeholder id here would take the site's
-# scheduled updates down with it. Until this is uncommented the Worker
-# answers 503 on that route and the page shows free content only.
-#
-# One-time setup:
-#   npx wrangler kv namespace create GATED
-# then paste the printed id below and uncomment the three lines.
-#
-# [[kv_namespaces]]
-# binding = "GATED"
-# id = "PASTE_NAMESPACE_ID_HERE"
+# This id is the single source of truth for the namespace: the workflows
+# publish with `--binding GATED`, which reads it from right here, rather
+# than carrying a duplicate copy in a repo secret that could drift out of
+# step with this one. A namespace id is addressing, not a credential --
+# reaching the data still needs the Cloudflare API token, which lives in
+# Actions secrets and never in this file.
+[[kv_namespaces]]
+binding = "GATED"
+id = "c1ca23642f584fd7a1f7f7971060134e"

@@ -204,15 +204,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          GATED_KV_NAMESPACE_ID: ${{ secrets.GATED_KV_NAMESPACE_ID }}
         run: |
-          if [ -z "$GATED_KV_NAMESPACE_ID" ]; then
-            echo "GATED_KV_NAMESPACE_ID not set -- skipping KV publish."
-            echo "The site will serve free content only until this is configured."
-            exit 0
-          fi
           ls -lh data/gated_payload.json
-          npx wrangler kv key put current             --path data/gated_payload.json             --namespace-id "$GATED_KV_NAMESPACE_ID"             --remote
+          npx wrangler kv key put current             --path data/gated_payload.json             --binding GATED             --remote
 
       # main can move forward while this ~30-40min pipeline is running (a
       # manual code push, another workflow run), which makes a plain `git

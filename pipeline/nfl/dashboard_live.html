@@ -1868,6 +1868,21 @@ function fmtKickoffLine(g){
 // its own note claimed a maximum of two. A short slate now yields a shorter
 // card instead of one quietly padded with the picks that were rejected on
 // merit a moment earlier.
+// Tuning constants for the pick cards, declared together HERE rather than
+// beside the functions that use them, because they have to be initialised
+// before the top-level renderGames() call further down. A `const` is hoisted
+// but sits in the temporal dead zone until its own line executes, so one
+// declared below that call throws ReferenceError the moment anything
+// reachable from it reads the value -- which kills every remaining top-level
+// statement in the script, not just the card that touched it. That is not
+// hypothetical: TD_MIN_OPP_PER_GM was declared 734 lines below its use in
+// the TD SPECIAL note, and the resulting throw took renderMLBGames() and
+// loadGatedPayload() down with it, leaving the whole site without props.
+// Keep new shared constants in this block.
+const TD_MIN_OPP_PER_GM = 6;     // min carries+targets per game to be a featured TD pick
+const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it can headline
+const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds"]);
+
 const NFL_PARLAY_MONEYLINES = 3;
 const NFL_PARLAY_PROPS = 2;
 const NFL_PARLAY_PROP_MARKETS = ["Passing Yds", "Rushing Yds", "Receiving Yds"];
@@ -2809,8 +2824,6 @@ async function loadBvP(date, idx){
 // P(over) sits near 0.38 by construction. Measured on the current board,
 // 0 of 178 Receiving Yds props clear 50% at or above their base line,
 // while 148 of 178 clear it one or two rungs down.
-const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds"]);
-
 function pickLine(p){
   if(p.dk_implied_prob != null || !p.ladder || !p.ladder.length){
     return {line: p.line, prob: p.model_over_prob};
@@ -2887,7 +2900,6 @@ function collectFlinFlonLegs(games){
 // stricter bar for whether a model-only pick gets to be THE featured one.
 // Missing trailing_n (props without this field, e.g. NFL's) counts as
 // reliable so this never changes behavior anywhere it isn't wired up.
-const RELIABLE_TRAILING_N = 8;
 function isReliablePick(leg){ return leg.trailing_n == null || leg.trailing_n >= RELIABLE_TRAILING_N; }
 
 // The single best candidate in one market across a pool of props (real-edge
@@ -3146,7 +3158,6 @@ function collectHrSpecialLegs(games, excludeIds){
 // low-usage legs still fill remaining slots rather than leaving the card
 // short -- the same demote-don't-delete stance isReliablePick already
 // takes on the MLB side.
-const TD_MIN_OPP_PER_GM = 6;
 function isFeaturedTdLeg(leg){
   return isReliablePick(leg) && (leg.opp_per_gm == null || leg.opp_per_gm >= TD_MIN_OPP_PER_GM);
 }

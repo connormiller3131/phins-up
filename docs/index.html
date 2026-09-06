@@ -4549,6 +4549,7 @@ async function showServerAuthStatus(){
       `period ends     ${ACCOUNT.currentPeriodEnd
           ? new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10) : '-'}`,
       `country         ${ACCOUNT.country || '-'}`,
+      `subscription    ${ACCOUNT.subscriptionId || '-'}`,
     ].join(String.fromCharCode(10));
   }else{
     badge.textContent = '· server ✗';

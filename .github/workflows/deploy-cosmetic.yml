@@ -57,7 +57,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           ls -lh data/gated_payload.json
-          npx wrangler kv key put current             --path data/gated_payload.json             --binding GATED             --remote
+          npx wrangler kv key put current --path data/gated_payload.json --binding GATED --remote
 
       # Same non-fast-forward retry pattern as refresh.yml's commit step --
       # only docs/index.html and docs/404.html change here, never

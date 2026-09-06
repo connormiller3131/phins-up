@@ -206,7 +206,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           ls -lh data/gated_payload.json
-          npx wrangler kv key put current             --path data/gated_payload.json             --binding GATED             --remote
+          npx wrangler kv key put current --path data/gated_payload.json --binding GATED --remote
 
       # main can move forward while this ~30-40min pipeline is running (a
       # manual code push, another workflow run), which makes a plain `git

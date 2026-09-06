@@ -4338,7 +4338,65 @@ async function clerkSessionToken(){
 // are two different things, and only the second one decides what a paying
 // visitor actually receives. This asks the server and shows its answer, so a
 // token the Worker rejects is visible immediately instead of silently
-// looking fine until content goes missing.
+// looking fine until content goes missing. The same answer carries the
+// subscription state, so it drives the Upgrade / Manage billing control too.
+let ACCOUNT = null;
+
+async function fetchAccountStatus(){
+  const token = await clerkSessionToken();
+  try{
+    const r = await fetch('/api/whoami', {cache: 'no-store',
+      headers: token ? {Authorization: `Bearer ${token}`} : {}});
+    return await r.json();
+  }catch(e){ return null; }
+}
+
+// Hands off to Stripe. The redirect is done from the response rather than by
+// posting a form, so a failure surfaces as a readable message instead of
+// dumping the visitor on an error page mid-checkout.
+async function goToStripe(path, label, btn){
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Opening…';
+  const token = await clerkSessionToken();
+  try{
+    const r = await fetch(path, {method: 'POST', cache: 'no-store',
+      headers: token ? {Authorization: `Bearer ${token}`} : {}});
+    const data = await r.json();
+    if(data.url){ window.location.href = data.url; return; }
+    console.warn(`[billing] ${label} failed`, data);
+    btn.textContent = 'Unavailable';
+    btn.title = data.error || 'Could not reach billing';
+  }catch(e){
+    console.warn(`[billing] ${label} error`, e);
+    btn.textContent = 'Unavailable';
+  }
+  setTimeout(() => { btn.disabled = false; btn.textContent = original; }, 2500);
+}
+
+function billingControlsHtml(slot){
+  if(!ACCOUNT) return;
+  if(ACCOUNT.paid){
+    const manage = document.createElement('button');
+    manage.className = 'auth-btn secondary';
+    manage.textContent = 'Manage billing';
+    manage.title = `${ACCOUNT.plan} plan · ${ACCOUNT.subscriptionStatus}`;
+    manage.onclick = () => goToStripe('/api/portal', 'portal', manage);
+    slot.append(manage);
+    return;
+  }
+  ['monthly', 'yearly'].forEach(plan => {
+    const b = document.createElement('button');
+    b.className = 'auth-btn';
+    b.textContent = plan === 'monthly' ? '$5/mo' : '$40/yr';
+    b.title = plan === 'monthly'
+      ? 'Full access, billed monthly'
+      : 'Full access, billed yearly';
+    b.onclick = () => goToStripe(`/api/checkout?plan=${plan}`, 'checkout', b);
+    slot.append(b);
+  });
+}
+
 async function showServerAuthStatus(){
   const slot = document.getElementById('auth-slot');
   if(!slot || !CLERK_READY || !window.Clerk.user) return;
@@ -4346,22 +4404,17 @@ async function showServerAuthStatus(){
   badge.className = 'auth-who';
   badge.textContent = '· checking…';
   slot.append(badge);
-  const token = await clerkSessionToken();
-  let who = null;
-  try{
-    const r = await fetch('/api/whoami', {cache: 'no-store',
-      headers: token ? {Authorization: `Bearer ${token}`} : {}});
-    who = await r.json();
-  }catch(e){ /* leave who null */ }
-  if(who && who.signedIn){
-    badge.textContent = '· server ✓';
+  ACCOUNT = await fetchAccountStatus();
+  if(ACCOUNT && ACCOUNT.signedIn){
+    badge.textContent = ACCOUNT.paid ? '· server ✓ · paid' : '· server ✓';
     badge.style.color = 'var(--green)';
-    badge.title = `Server verified this session (user ${who.userId})`;
+    badge.title = `Server verified this session (user ${ACCOUNT.userId})`;
   }else{
     badge.textContent = '· server ✗';
     badge.style.color = 'var(--red)';
-    badge.title = who ? `Server rejected this session: ${who.reason}` : 'Could not reach /api/whoami';
+    badge.title = ACCOUNT ? `Server rejected this session: ${ACCOUNT.reason}` : 'Could not reach /api/whoami';
   }
+  billingControlsHtml(slot);
 }
 
 async function loadGatedPayload(){

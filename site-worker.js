@@ -495,9 +495,15 @@ function periodEndOf(sub) {
  * than trading one wrong assumption for another.
  */
 function cancellationOf(sub) {
-  const explicit = sub?.cancel_at_period_end;
   const at = sub?.cancel_at || null;
-  const cancelling = explicit != null ? !!explicit : !!at;
+  // EITHER signal means it is ending. An earlier version preferred the
+  // boolean when present, which was wrong in the one combination that
+  // actually occurs here: Stripe returns cancel_at set to the end date AND
+  // cancel_at_period_end false, so trusting the boolean reported a
+  // subscription cancelling on Oct 6 as not cancelling at all. The two
+  // shapes were tested separately and that combination never was, which is
+  // why the test passed while the bug was live.
+  const cancelling = !!sub?.cancel_at_period_end || !!at;
   return { cancelling, cancelAt: at || (cancelling ? periodEndOf(sub) : null) };
 }
 

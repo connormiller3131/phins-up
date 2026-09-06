@@ -63,7 +63,7 @@ jobs:
           npx wrangler kv key put current:account --path data/gated_payload_account.json --binding GATED --remote
 
       # Same non-fast-forward retry pattern as refresh.yml's commit step --
-      # only docs/index.html and docs/404.html change here, never
+      # only docs/index.html changes here, never
       # docs/results/ (this workflow never regenerates results). Uses a real
       # `git rebase -X ours`, not `git reset --soft origin/main` -- a soft
       # reset leaves the index/working tree exactly as they were, so any
@@ -79,7 +79,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/404.html
+          git add docs/index.html
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

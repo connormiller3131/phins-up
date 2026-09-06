@@ -254,7 +254,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/404.html docs/results/ data/nhl/goalie_game_logs.parquet
+          git add docs/index.html docs/results/ data/nhl/goalie_game_logs.parquet
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else
@@ -270,11 +270,11 @@ jobs:
             done
           fi
 
-      # Cloudflare becomes the real hosting -- faster/more reliable CDN than
-      # GitHub Pages, and we hit a real GitHub Pages deploy 503 once already.
-      # Kept alongside the git push above (not replacing it) during the
-      # transition so GitHub Pages still works as a fallback until
-      # Cloudflare's been verified in production for a while.
+      # Cloudflare is the hosting. GitHub Pages was the original fallback and
+      # was disabled on 2026-09-06 -- it served a second public copy of
+      # everything in docs/, which is a liability now that some of it is paid
+      # for. The git push above stays: it is version history for the built
+      # page, and the deploy below runs from this checkout, not from Pages.
       #
       # `wrangler pages deploy` (and the cloudflare/pages-action GitHub
       # Action, tried first) both target the classic Pages Projects API,

@@ -1,18 +1,18 @@
 """Build the standalone public site (docs/index.html) from the NFL and MLB
-current-slate JSON + the dashboard_live.html template. Unlike the Claude
-Artifact version, this keeps the full <!DOCTYPE>/<html>/<head>/<body>
-document, since it's served directly by GitHub Pages rather than wrapped by
-the Artifact tool. MLB data is optional -- if it hasn't been generated yet
-(or the pull failed), the MLB tab just gets an empty slate rather than
+current-slate JSON + the dashboard_live.html template. Keeps the full
+<!DOCTYPE>/<html>/<head>/<body> document, since it is served directly rather
+than wrapped by anything. MLB data is optional -- if it hasn't been generated
+yet (or the pull failed), the MLB tab just gets an empty slate rather than
 failing the whole build.
 
-Also writes an identical copy to docs/404.html -- GitHub Pages serves that
-file (with a 404 status, but the content still loads and runs) for any
-request path it doesn't recognize, which is exactly what a client-side
-route like /mlb/monday looks like to it. Keeping this as a byte-identical
-copy generated every run means it can never drift from index.html; the
-Cloudflare side of this (site-worker.js) solves the same problem its own
-way, since GitHub Pages' 404.html convention doesn't apply there."""
+This used to also write a byte-identical docs/404.html for GitHub Pages,
+which serves that file (with a 404 status, but the content still loads) for
+any path it doesn't recognise -- which is what a client-side route like
+/mlb/monday looks like to it. GitHub Pages was disabled on 2026-09-06, so
+that copy is gone: it was 0.9 MB committed twice a day for a convention
+nothing uses any more. Cloudflare solves the same routing problem its own
+way, via wrangler.toml's not_found_handling and site-worker.js's own
+404 -> index.html fallback."""
 import pathlib
 import sys
 import json
@@ -26,7 +26,6 @@ MLB_DATA_PATH = ROOT / "data" / "mlb" / "dashboard_current_slate.json"
 NHL_DATA_PATH = ROOT / "data" / "nhl" / "dashboard_current_slate.json"
 TEMPLATE_PATH = ROOT / "pipeline" / "nfl" / "dashboard_live.html"
 OUT_PATH = ROOT / "docs" / "index.html"
-NOT_FOUND_PATH = ROOT / "docs" / "404.html"
 # Deliberately under data/ (git-ignored) and NOT docs/: anything written to
 # docs/ is committed and then served publicly twice over, once by Cloudflare
 # and once by GitHub Pages straight off the repo. refresh.yml uploads this
@@ -69,8 +68,6 @@ def main():
                .replace("__NHL_DATA_JSON__", json.dumps(nhl_data)))
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
-        f.write(out)
-    with open(NOT_FOUND_PATH, "w", encoding="utf-8") as f:
         f.write(out)
     print(f"Free page {OUT_PATH.stat().st_size/1e6:.2f} MB inlined; "
           f"gated payload {GATED_PATH.stat().st_size/1e6:.2f} MB held back "

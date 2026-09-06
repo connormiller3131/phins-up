@@ -32,10 +32,10 @@
 
 const GATED_KEY = "current";
 
-// Clerk's Frontend API for this instance, decoded from the publishable key
-// (pk_test_<base64 of "darling-toad-4960.clerk.accounts.dev$">). It is also
+// Clerk's Frontend API for the PRODUCTION instance, decoded from the
+// publishable key (pk_live_<base64 of "clerk.phinsup.net$">). It is also
 // the `iss` every session token must carry.
-const CLERK_ISSUER = "https://darling-toad-4960.clerk.accounts.dev";
+const CLERK_ISSUER = "https://clerk.phinsup.net";
 const CLERK_JWKS_URL = `${CLERK_ISSUER}/.well-known/jwks.json`;
 
 // Two-step rollout. While false, /api/gated answers everyone exactly as it

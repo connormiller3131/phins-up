@@ -195,6 +195,23 @@ function formEncode(pairs) {
   return pairs.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
 }
 
+/**
+ * Retrieval. This exists because stripeApi is a POST helper, and POSTing to
+ * /v1/subscriptions/<id> is not a read -- it is an UPDATE with an empty body.
+ * It returns 200 and the right object, so it looked correct in the code and
+ * in the logs, but it means every "fetch the subscription" was writing to a
+ * subscription, including ones scheduled to cancel. Reads use GET.
+ */
+async function stripeGet(env, path) {
+  if (!env.STRIPE_SECRET_KEY) throw new Error("Stripe is not configured yet");
+  const r = await fetch(`${STRIPE_API}${path}`, {
+    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+  });
+  const body = await r.json();
+  if (!r.ok) throw new Error(body?.error?.message || `stripe ${r.status}`);
+  return body;
+}
+
 async function stripeApi(env, path, pairs) {
   // Explicit, so a missing secret reads as "Stripe is not configured" rather
   // than surfacing as an opaque 401 from Stripe's own API.
@@ -280,7 +297,7 @@ async function stripeEventFrom(request, env) {
 async function healEntitlement(env, userId, ent) {
   if (!ent || !ent.subscriptionId || ent.cancelAtPeriodEnd !== undefined) return ent;
   try {
-    const sub = await stripeApi(env, `/subscriptions/${ent.subscriptionId}`, []);
+    const sub = await stripeGet(env, `/subscriptions/${ent.subscriptionId}`);
     const healed = {
       ...ent,
       status: sub.status,
@@ -453,7 +470,7 @@ async function serveStripeWebhook(request, env) {
       if (userId && obj.subscription) {
         // The session carries no price or period, so read the subscription it
         // just created rather than guessing at either.
-        const sub = await stripeApi(env, `/subscriptions/${obj.subscription}`, []);
+        const sub = await stripeGet(env, `/subscriptions/${obj.subscription}`);
         await writeEntitlement(env, userId, {
           plan: planForPrice(sub.items?.data?.[0]?.price?.id),
           status: sub.status,

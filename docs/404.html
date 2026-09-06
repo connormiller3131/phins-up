@@ -4300,6 +4300,36 @@ async function clerkSessionToken(){
   catch(e){ console.warn('[auth] could not mint session token', e); return null; }
 }
 
+// Being signed in to Clerk in the browser and being RECOGNISED by the server
+// are two different things, and only the second one decides what a paying
+// visitor actually receives. This asks the server and shows its answer, so a
+// token the Worker rejects is visible immediately instead of silently
+// looking fine until content goes missing.
+async function showServerAuthStatus(){
+  const slot = document.getElementById('auth-slot');
+  if(!slot || !CLERK_READY || !window.Clerk.user) return;
+  const badge = document.createElement('span');
+  badge.className = 'auth-who';
+  badge.textContent = '· checking…';
+  slot.append(badge);
+  const token = await clerkSessionToken();
+  let who = null;
+  try{
+    const r = await fetch('/api/whoami', {cache: 'no-store',
+      headers: token ? {Authorization: `Bearer ${token}`} : {}});
+    who = await r.json();
+  }catch(e){ /* leave who null */ }
+  if(who && who.signedIn){
+    badge.textContent = '· server ✓';
+    badge.style.color = 'var(--green)';
+    badge.title = `Server verified this session (user ${who.userId})`;
+  }else{
+    badge.textContent = '· server ✗';
+    badge.style.color = 'var(--red)';
+    badge.title = who ? `Server rejected this session: ${who.reason}` : 'Could not reach /api/whoami';
+  }
+}
+
 async function loadGatedPayload(){
   const token = await clerkSessionToken();
   const payload = await fetchJsonWithRetry(GATED_ENDPOINT, 2, 600,
@@ -4342,7 +4372,8 @@ async function initAccounts(){
       renderAuthUI();
       // Signing in or out mints (or drops) a token, so the payload has to be
       // re-fetched under the new identity rather than left as it was.
-      window.Clerk.addListener(() => { renderAuthUI(); loadGatedPayload(); });
+      showServerAuthStatus();
+      window.Clerk.addListener(() => { renderAuthUI(); showServerAuthStatus(); loadGatedPayload(); });
     }catch(e){
       console.warn('[auth] Clerk failed to initialise -- continuing signed out', e);
     }

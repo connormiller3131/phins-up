@@ -4555,6 +4555,9 @@ async function showServerAuthStatus(){
       `subscription    ${ACCOUNT.subscriptionId || '-'}`,
       `cancels on      ${ACCOUNT.cancelAt
           ? new Date(ACCOUNT.cancelAt * 1000).toISOString().slice(0,10) : '-'}`,
+      `last reconciled ${ACCOUNT.reconciledAt
+          ? new Date(ACCOUNT.reconciledAt).toISOString().slice(0,19).replace('T',' ') : '-'}`,
+      `reconcile error ${ACCOUNT.reconcileError || 'none'}`,
     ].join(String.fromCharCode(10));
   }else{
     badge.textContent = '· server ✗';

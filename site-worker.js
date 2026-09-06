@@ -313,9 +313,17 @@ async function serveCheckout(request, env) {
     ["subscription_data[metadata][clerk_user_id]", who.userId],
     ["success_url", `${origin}/?checkout=success`],
     ["cancel_url", `${origin}/?checkout=cancelled`],
-    // Honours the terms' promise that tax is added at checkout.
-    ["automatic_tax[enabled]", "true"],
   ];
+  // Stripe rejects a session asking for automatic tax when Stripe Tax has not
+  // been activated on the account, which fails the whole checkout rather than
+  // degrading. So this is a variable, not a constant: the code should not
+  // assume an external service is configured. Set STRIPE_AUTOMATIC_TAX=true
+  // (a plain variable, not a secret) once Stripe Tax is switched on, which
+  // has to happen before launch anyway -- the Terms promise tax is added at
+  // checkout, and that promise is only true with this enabled.
+  if (env.STRIPE_AUTOMATIC_TAX === "true") {
+    pairs.push(["automatic_tax[enabled]", "true"]);
+  }
   // Reuse the Stripe customer if this account has subscribed before, so a
   // resubscribe does not create a second customer with its own billing history.
   if (existing?.customerId) {

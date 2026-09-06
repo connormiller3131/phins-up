@@ -4529,8 +4529,11 @@ async function showServerAuthStatus(){
     if(ACCOUNT.paid){
       // The date can legitimately be missing, so the cancellation is still
       // reported without it rather than rendering a 1970 epoch date.
-      const endsOn = ACCOUNT.currentPeriodEnd
-        ? ` ${fmtShortDate(new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10))}`
+      // cancelAt is the date Stripe itself will end it; the period end is
+      // only a stand-in for older API shapes that did not carry one.
+      const endsTs = ACCOUNT.cancelAt || ACCOUNT.currentPeriodEnd;
+      const endsOn = endsTs
+        ? ` ${fmtShortDate(new Date(endsTs * 1000).toISOString().slice(0,10))}`
         : '';
       tail = ACCOUNT.cancelAtPeriodEnd ? ` · ends${endsOn}` : ' · paid';
     }
@@ -4550,6 +4553,8 @@ async function showServerAuthStatus(){
           ? new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10) : '-'}`,
       `country         ${ACCOUNT.country || '-'}`,
       `subscription    ${ACCOUNT.subscriptionId || '-'}`,
+      `cancels on      ${ACCOUNT.cancelAt
+          ? new Date(ACCOUNT.cancelAt * 1000).toISOString().slice(0,10) : '-'}`,
     ].join(String.fromCharCode(10));
   }else{
     badge.textContent = '· server ✗';

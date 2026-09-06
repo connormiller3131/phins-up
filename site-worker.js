@@ -300,9 +300,17 @@ async function stripeEventFrom(request, env) {
 // since the rewrite refreshes updatedAt.
 const RECONCILE_AFTER_MS = 10 * 60 * 1000;
 
+// Fields whose absence means the record predates the code that writes them,
+// and so should be refreshed immediately rather than waiting out the cooldown.
+// Add to this when adding a field, or existing records keep the old shape
+// until the timer happens to lapse -- which is exactly what happened with
+// cancelAt: one reconcile ran, refreshed updatedAt, and then the cooldown
+// suppressed every later attempt, so a corrected reader never got to run.
+const RECONCILE_FIELDS = ["cancelAtPeriodEnd", "currentPeriodEnd", "cancelAt"];
+
 function needsReconcile(ent) {
   if (!ent || !ent.subscriptionId) return false;
-  if (ent.cancelAtPeriodEnd === undefined || ent.currentPeriodEnd == null) return true;
+  if (RECONCILE_FIELDS.some((f) => ent[f] === undefined)) return true;
   return Date.now() - (ent.updatedAt || 0) > RECONCILE_AFTER_MS;
 }
 
@@ -321,10 +329,11 @@ async function healEntitlement(env, userId, ent) {
     };
     await writeEntitlement(env, userId, healed);
     return healed;
-  } catch {
+  } catch (e) {
     // Stripe unreachable or the subscription is gone: leave the record be
-    // rather than downgrading someone on a transient failure.
-    return ent;
+    // rather than downgrading someone on a transient failure. The reason is
+    // kept so a silent failure is visible instead of looking like "no change".
+    return { ...ent, reconcileError: String(e.message || e).slice(0, 120) };
   }
 }
 
@@ -347,6 +356,8 @@ async function serveWhoami(request, env) {
       cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
       subscriptionId: ent?.subscriptionId || null,
       cancelAt: ent?.cancelAt || null,
+      reconciledAt: ent?.updatedAt || null,
+      reconcileError: ent?.reconcileError || null,
     },
     { headers: NO_STORE },
   );

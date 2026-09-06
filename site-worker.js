@@ -288,18 +288,31 @@ async function stripeEventFrom(request, env) {
 // Reports what the gate would decide, without gating anything. Exists so the
 // token path can be proven against the real deployed Worker before
 // GATE_ENFORCED is flipped.
-// Entitlements are written by webhooks, so a record stored before a field
-// existed simply lacks it -- and nothing re-writes it until Stripe next has
-// something to say, which for a healthy yearly subscription could be months.
-// This re-reads the subscription once, only when a known field is missing,
-// then rewrites the record. Bounded: it cannot fire twice for the same
-// record, because the field is present afterwards.
+// Webhooks are best effort. A dropped delivery, an event type not subscribed,
+// a handler deployed after the fact -- any of these leave the stored record
+// permanently disagreeing with Stripe, and nothing ever corrects it because
+// nothing else writes. So rather than trusting webhooks alone, this
+// reconciles against Stripe: whenever a record is missing a known field, or
+// is simply older than RECONCILE_AFTER_MS, it is re-read and rewritten.
+// Stripe is the source of truth for billing; KV is a cache of it.
+//
+// Cost is bounded to roughly one API call per active subscriber per interval,
+// since the rewrite refreshes updatedAt.
+const RECONCILE_AFTER_MS = 10 * 60 * 1000;
+
+function needsReconcile(ent) {
+  if (!ent || !ent.subscriptionId) return false;
+  if (ent.cancelAtPeriodEnd === undefined || ent.currentPeriodEnd == null) return true;
+  return Date.now() - (ent.updatedAt || 0) > RECONCILE_AFTER_MS;
+}
+
 async function healEntitlement(env, userId, ent) {
-  if (!ent || !ent.subscriptionId || ent.cancelAtPeriodEnd !== undefined) return ent;
+  if (!needsReconcile(ent)) return ent;
   try {
     const sub = await stripeGet(env, `/subscriptions/${ent.subscriptionId}`);
     const healed = {
       ...ent,
+      plan: planForPrice(sub.items?.data?.[0]?.price?.id),
       status: sub.status,
       currentPeriodEnd: periodEndOf(sub),
       cancelAtPeriodEnd: !!sub.cancel_at_period_end,
@@ -330,6 +343,7 @@ async function serveWhoami(request, env) {
       paid: isPaid(ent),
       currentPeriodEnd: ent?.currentPeriodEnd || null,
       cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
+      subscriptionId: ent?.subscriptionId || null,
     },
     { headers: NO_STORE },
   );

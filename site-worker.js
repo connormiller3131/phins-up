@@ -31,6 +31,11 @@
  */
 
 const GATED_KEY = "current";
+// The free-account half: the same shape, but carrying only the props the pick
+// cards actually reference. Two keys rather than one payload sliced per
+// request, because slicing would mean parsing several megabytes of JSON on
+// every call; this way the right one is chosen and streamed untouched.
+const ACCOUNT_KEY = "current:account";
 
 // Clerk's Frontend API for the PRODUCTION instance, decoded from the
 // publishable key (pk_live_<base64 of "clerk.phinsup.net$">). It is also
@@ -447,13 +452,25 @@ async function serveGated(request, env) {
   // Streamed rather than buffered: the payload is several megabytes and
   // there is no reason to hold all of it in the isolate to hand it straight
   // back.
-  const body = await env.GATED.get(GATED_KEY, { type: "stream" });
+  // Subscribers get the full props; a free account gets the reduced payload,
+  // which reproduces every pick card exactly (verified per build by
+  // pipeline/nfl/verify_account_split.mjs) while withholding the prop tables.
+  const ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
+  const paid = isPaid(ent);
+  const key = paid ? GATED_KEY : ACCOUNT_KEY;
+  let body = await env.GATED.get(key, { type: "stream" });
+  // A missing account payload must not silently fall back to the paid one --
+  // that would hand every free account the full board. Fail closed.
   if (body === null) {
-    return Response.json({ error: "no gated payload published yet" }, { status: 503, headers: NO_STORE });
+    return Response.json(
+      { error: `no ${paid ? "paid" : "account"} payload published yet` },
+      { status: 503, headers: NO_STORE },
+    );
   }
   return new Response(body, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      "X-Phinsup-Tier": paid ? "paid" : "account",
       // Never let a shared cache hold this. Once the response depends on who
       // is asking, a cached copy would be a straightforward way to serve one
       // subscriber's entitlement to everybody.

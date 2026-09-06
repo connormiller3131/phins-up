@@ -1857,6 +1857,7 @@ function propsBySection(props){
 }
 
 function propsTable(g, containerId){
+  if(!PAID) return signInPromptHtml('Full player prop tables');
   const props = g.props;
   if(!props || !props.length) return "";
   return `
@@ -1939,6 +1940,10 @@ function fmtKickoffLine(g){
 // paint is always the signed-out view, and the re-render after the gated
 // payload lands is what reveals the cards.
 let SIGNED_IN = false;
+// Whether this visitor's subscription is active. The prop TABLES are the paid
+// tier; the pick cards are not, and they keep working for a free account
+// because the server sends exactly the props those cards select.
+let PAID = false;
 
 // The pick cards are account-tier content. Gating them needs saying out loud
 // because the parlay is NOT purely derived from gated data: moneylines come
@@ -2618,14 +2623,25 @@ function mlbPropsBySection(props){
   }).join("");
 }
 
-function mlbPropsTable(g, containerId){
-  const props = g.props, combo = g.hr_combo, featured = g.featured_props;
-  const hasDK = !!featured;
-  const comboHtml = combo ? `
+// The either/or homer line sits beside the HR Special and belongs to the
+// account tier, so it is built separately from the prop table it used to be
+// welded to -- a free account keeps this while the table itself is withheld.
+function mlbHrComboHtml(combo){
+  if(!combo) return "";
+  return `
     <div class="h2h-note" style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;">
       SPECIAL — ${combo.player_a} (${pct(combo.prob_a)}) or ${combo.player_b} (${pct(combo.prob_b)}) to homer:
       <b style="color:var(--blue)">${pct(combo.prob_either)}</b> either
-    </div>` : "";
+    </div>`;
+}
+
+function mlbPropsTable(g, containerId){
+  if(!PAID){
+    return mlbHrComboHtml(g.hr_combo) + signInPromptHtml('Full player prop tables');
+  }
+  const props = g.props, combo = g.hr_combo, featured = g.featured_props;
+  const hasDK = !!featured;
+  const comboHtml = mlbHrComboHtml(combo);
   if(!props || !props.length) return comboHtml;
   const tag = hasDK
     ? '(FEATURED — real DraftKings lines &amp; odds on some props; Anytime HR graded against the real price)'
@@ -4405,6 +4421,7 @@ async function showServerAuthStatus(){
   badge.textContent = '· checking…';
   slot.append(badge);
   ACCOUNT = await fetchAccountStatus();
+  PAID = !!(ACCOUNT && ACCOUNT.paid);
   if(ACCOUNT && ACCOUNT.signedIn){
     badge.textContent = ACCOUNT.paid ? '· server ✓ · paid' : '· server ✓';
     badge.style.color = 'var(--green)';
@@ -4458,7 +4475,10 @@ async function initAccounts(){
       CLERK_READY = true;
       SIGNED_IN = !!window.Clerk.user;
       renderAuthUI();
-      showServerAuthStatus();
+      // Awaited, not fired and forgotten: PAID has to be settled before the
+      // payload is fetched and the cards re-render, or a subscriber's first
+      // paint would withhold the prop tables they are paying for.
+      await showServerAuthStatus();
       // A change of identity is handled by reloading rather than by patching
       // the page in place. Signing OUT is the reason: props already merged
       // into DATA stay in memory, so re-rendering alone would keep showing

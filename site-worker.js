@@ -174,12 +174,249 @@ async function identify(request) {
 
 const NO_STORE = { "Cache-Control": "no-store" };
 
+// --- Stripe -----------------------------------------------------------------
+// Entitlements live in KV, not D1: an entitlement is one key-value lookup per
+// user, not a relational query, and the KV namespace already exists. Keys are
+// prefixed so they cannot collide with the gated payload's own "current" key.
+//   ent:<clerk user id>   -> the subscription record below
+//   cust:<stripe cust id> -> clerk user id, a reverse lookup used only as a
+//                            fallback when a webhook arrives without metadata
+const STRIPE_API = "https://api.stripe.com/v1";
+const PRICE_IDS = {
+  monthly: "price_1UCZq5QcsqR0UNig0qCoKtbi",
+  yearly: "price_1UCZq5QcsqR0UNigp3LRNDZH",
+};
+// Stripe statuses that actually grant access. past_due is deliberately absent:
+// a failed renewal should lose access, and Stripe retries for days before
+// giving up, which would otherwise be days of unpaid access.
+const ACTIVE_STATUSES = new Set(["active", "trialing"]);
+
+function formEncode(pairs) {
+  return pairs.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
+}
+
+async function stripeApi(env, path, pairs) {
+  // Explicit, so a missing secret reads as "Stripe is not configured" rather
+  // than surfacing as an opaque 401 from Stripe's own API.
+  if (!env.STRIPE_SECRET_KEY) throw new Error("Stripe is not configured yet");
+  const r = await fetch(`${STRIPE_API}${path}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formEncode(pairs),
+  });
+  const body = await r.json();
+  if (!r.ok) throw new Error(body?.error?.message || `stripe ${r.status}`);
+  return body;
+}
+
+async function entitlementFor(env, userId) {
+  if (!env.GATED || !userId) return null;
+  return await env.GATED.get(`ent:${userId}`, { type: "json" });
+}
+
+function isPaid(ent) {
+  return !!(ent && ACTIVE_STATUSES.has(ent.status));
+}
+
+// Constant-time comparison. A plain === on a signature leaks, through timing,
+// how many leading bytes an attacker guessed right, which is enough to forge
+// one byte at a time.
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+async function hmacHex(secret, message) {
+  const key = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" }, false, ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Verifies Stripe's webhook signature over the RAW body. This has to be the
+ * exact bytes Stripe sent -- parsing and re-serialising the JSON first would
+ * change key order or spacing and the signature would never match.
+ * Also enforces a timestamp tolerance, without which a captured webhook could
+ * be replayed back at us forever with a signature that still verifies.
+ */
+async function stripeEventFrom(request, env) {
+  const header = request.headers.get("Stripe-Signature") || "";
+  const raw = await request.text();
+  const parts = Object.fromEntries(
+    header.split(",").map((kv) => kv.split("=").map((s) => s.trim())),
+  );
+  if (!parts.t || !parts.v1) return { error: "malformed signature header" };
+
+  const age = Math.abs(Math.floor(Date.now() / 1000) - Number(parts.t));
+  if (!Number.isFinite(age) || age > 300) return { error: "timestamp outside tolerance" };
+
+  const expected = await hmacHex(env.STRIPE_WEBHOOK_SECRET, `${parts.t}.${raw}`);
+  if (!timingSafeEqual(expected, parts.v1)) return { error: "bad signature" };
+
+  try {
+    return { event: JSON.parse(raw) };
+  } catch {
+    return { error: "unparseable body" };
+  }
+}
+
 // Reports what the gate would decide, without gating anything. Exists so the
 // token path can be proven against the real deployed Worker before
 // GATE_ENFORCED is flipped.
-async function serveWhoami(request) {
+async function serveWhoami(request, env) {
   const who = await identify(request);
-  return Response.json({ ...who, enforced: GATE_ENFORCED }, { headers: NO_STORE });
+  const ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
+  return Response.json(
+    {
+      ...who,
+      enforced: GATE_ENFORCED,
+      plan: ent?.plan || "free",
+      subscriptionStatus: ent?.status || null,
+      paid: isPaid(ent),
+      currentPeriodEnd: ent?.currentPeriodEnd || null,
+    },
+    { headers: NO_STORE },
+  );
+}
+
+// Starts a subscription. The Clerk user id rides along in two places:
+// client_reference_id, which comes back on checkout.session.completed, and
+// subscription metadata, which is the only one of the two that later
+// customer.subscription.* events carry -- without it a cancellation months
+// from now could not be matched to an account.
+async function serveCheckout(request, env) {
+  const who = await identify(request);
+  if (!who.signedIn) {
+    return Response.json({ error: "sign in first" }, { status: 401, headers: NO_STORE });
+  }
+  const plan = new URL(request.url).searchParams.get("plan");
+  const price = PRICE_IDS[plan];
+  if (!price) {
+    return Response.json({ error: "unknown plan" }, { status: 400, headers: NO_STORE });
+  }
+
+  const origin = new URL(request.url).origin;
+  const existing = await entitlementFor(env, who.userId);
+  const pairs = [
+    ["mode", "subscription"],
+    ["line_items[0][price]", price],
+    ["line_items[0][quantity]", "1"],
+    ["client_reference_id", who.userId],
+    ["subscription_data[metadata][clerk_user_id]", who.userId],
+    ["success_url", `${origin}/?checkout=success`],
+    ["cancel_url", `${origin}/?checkout=cancelled`],
+    // Honours the terms' promise that tax is added at checkout.
+    ["automatic_tax[enabled]", "true"],
+  ];
+  // Reuse the Stripe customer if this account has subscribed before, so a
+  // resubscribe does not create a second customer with its own billing history.
+  if (existing?.customerId) {
+    pairs.push(["customer", existing.customerId], ["customer_update[address]", "auto"]);
+  }
+
+  try {
+    const session = await stripeApi(env, "/checkout/sessions", pairs);
+    return Response.json({ url: session.url }, { headers: NO_STORE });
+  } catch (e) {
+    return Response.json({ error: e.message }, { status: 502, headers: NO_STORE });
+  }
+}
+
+// Stripe's hosted billing portal. This is what actually delivers the
+// cancellation the Terms promise ("cancel any time from your account page"),
+// rather than us building a billing UI.
+async function servePortal(request, env) {
+  const who = await identify(request);
+  if (!who.signedIn) {
+    return Response.json({ error: "sign in first" }, { status: 401, headers: NO_STORE });
+  }
+  const ent = await entitlementFor(env, who.userId);
+  if (!ent?.customerId) {
+    return Response.json({ error: "no subscription to manage" }, { status: 404, headers: NO_STORE });
+  }
+  try {
+    const session = await stripeApi(env, "/billing_portal/sessions", [
+      ["customer", ent.customerId],
+      ["return_url", new URL(request.url).origin + "/"],
+    ]);
+    return Response.json({ url: session.url }, { headers: NO_STORE });
+  } catch (e) {
+    return Response.json({ error: e.message }, { status: 502, headers: NO_STORE });
+  }
+}
+
+async function writeEntitlement(env, userId, record) {
+  await env.GATED.put(`ent:${userId}`, JSON.stringify({ ...record, updatedAt: Date.now() }));
+  if (record.customerId) await env.GATED.put(`cust:${record.customerId}`, userId);
+}
+
+// Resolves which account a subscription belongs to. Metadata is the primary
+// route; the customer reverse-lookup covers a subscription created outside
+// this checkout flow (a Stripe dashboard edit, say) that never got metadata.
+async function userIdForSubscription(env, sub) {
+  const fromMeta = sub?.metadata?.clerk_user_id;
+  if (fromMeta) return fromMeta;
+  if (sub?.customer) return await env.GATED.get(`cust:${sub.customer}`);
+  return null;
+}
+
+function planForPrice(priceId) {
+  return Object.keys(PRICE_IDS).find((k) => PRICE_IDS[k] === priceId) || "unknown";
+}
+
+async function serveStripeWebhook(request, env) {
+  if (!env.STRIPE_WEBHOOK_SECRET || !env.GATED) {
+    return Response.json({ error: "not configured" }, { status: 503, headers: NO_STORE });
+  }
+  const { event, error } = await stripeEventFrom(request, env);
+  // 400, never 200: a signature failure means this did not come from Stripe,
+  // and answering 200 would tell a prober their forgery was accepted.
+  if (error) return Response.json({ error }, { status: 400, headers: NO_STORE });
+
+  const obj = event.data?.object || {};
+  try {
+    if (event.type === "checkout.session.completed") {
+      const userId = obj.client_reference_id;
+      if (userId && obj.subscription) {
+        // The session carries no price or period, so read the subscription it
+        // just created rather than guessing at either.
+        const sub = await stripeApi(env, `/subscriptions/${obj.subscription}`, []);
+        await writeEntitlement(env, userId, {
+          plan: planForPrice(sub.items?.data?.[0]?.price?.id),
+          status: sub.status,
+          currentPeriodEnd: sub.current_period_end || null,
+          customerId: sub.customer,
+          subscriptionId: sub.id,
+        });
+      }
+    } else if (event.type.startsWith("customer.subscription.")) {
+      const userId = await userIdForSubscription(env, obj);
+      if (userId) {
+        await writeEntitlement(env, userId, {
+          plan: planForPrice(obj.items?.data?.[0]?.price?.id),
+          // A deleted subscription reports its last status, which can still
+          // read "active"; force it to canceled so access actually ends.
+          status: event.type.endsWith(".deleted") ? "canceled" : obj.status,
+          currentPeriodEnd: obj.current_period_end || null,
+          customerId: obj.customer,
+          subscriptionId: obj.id,
+        });
+      }
+    }
+  } catch (e) {
+    // 500 makes Stripe retry with backoff, which is what we want for a
+    // transient failure -- swallowing it would silently lose the entitlement.
+    return Response.json({ error: e.message }, { status: 500, headers: NO_STORE });
+  }
+  return Response.json({ received: true }, { headers: NO_STORE });
 }
 
 async function serveGated(request, env) {
@@ -221,7 +458,10 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api/gated") return serveGated(request, env);
-    if (url.pathname === "/api/whoami") return serveWhoami(request);
+    if (url.pathname === "/api/whoami") return serveWhoami(request, env);
+    if (url.pathname === "/api/stripe-webhook") return serveStripeWebhook(request, env);
+    if (url.pathname === "/api/checkout") return serveCheckout(request, env);
+    if (url.pathname === "/api/portal") return servePortal(request, env);
 
     let response = await env.ASSETS.fetch(request);
     if (response.status === 404) {

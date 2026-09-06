@@ -1879,7 +1879,7 @@ function fmtKickoffLine(g){
 // the TD SPECIAL note, and the resulting throw took renderMLBGames() and
 // loadGatedPayload() down with it, leaving the whole site without props.
 // Keep new shared constants in this block.
-const TD_MIN_OPP_PER_GM = 6;     // min carries+targets per game to be a featured TD pick
+const TD_MIN_OPP_PER_GM = 8;     // min carries+targets per game to be a featured TD pick
 const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it can headline
 const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds"]);
 
@@ -3158,6 +3158,17 @@ function collectHrSpecialLegs(games, excludeIds){
 // low-usage legs still fill remaining slots rather than leaving the card
 // short -- the same demote-don't-delete stance isReliablePick already
 // takes on the MLB side.
+//
+// The bar is 8 rather than the 6 first shipped. 6 was set at the point
+// realized TD rate clears the market's own base rate, but on a real board
+// it still admitted a 6.9-opp/gm back at a 22.5% model probability, in on
+// edge alone -- the exact thing this gate exists to stop, and the same
+// mistake the parlay made by ranking on edge without a probability floor.
+// 8 is also where backtest_td_volume.py found the model best calibrated:
+// its 8+ opp/gm tier came in at -0.008 predicted-vs-actual, against +0.037
+// for the low-usage bucket. Checked for sensitivity before changing, and
+// the card is IDENTICAL at 8, 10 and 12 on the current board, so this is
+// not a number balanced on a knife edge.
 function isFeaturedTdLeg(leg){
   return isReliablePick(leg) && (leg.opp_per_gm == null || leg.opp_per_gm >= TD_MIN_OPP_PER_GM);
 }

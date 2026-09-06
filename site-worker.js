@@ -310,12 +310,14 @@ async function healEntitlement(env, userId, ent) {
   if (!needsReconcile(ent)) return ent;
   try {
     const sub = await stripeGet(env, `/subscriptions/${ent.subscriptionId}`);
+    const c = cancellationOf(sub);
     const healed = {
       ...ent,
       plan: planForPrice(sub.items?.data?.[0]?.price?.id),
       status: sub.status,
       currentPeriodEnd: periodEndOf(sub),
-      cancelAtPeriodEnd: !!sub.cancel_at_period_end,
+      cancelAtPeriodEnd: c.cancelling,
+      cancelAt: c.cancelAt,
     };
     await writeEntitlement(env, userId, healed);
     return healed;
@@ -344,6 +346,7 @@ async function serveWhoami(request, env) {
       currentPeriodEnd: ent?.currentPeriodEnd || null,
       cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
       subscriptionId: ent?.subscriptionId || null,
+      cancelAt: ent?.cancelAt || null,
     },
     { headers: NO_STORE },
   );
@@ -468,6 +471,25 @@ function periodEndOf(sub) {
   return sub?.current_period_end || sub?.items?.data?.[0]?.current_period_end || null;
 }
 
+/**
+ * Whether this subscription is scheduled to end, and when.
+ *
+ * Stripe's older shape was a cancel_at_period_end boolean; newer API versions
+ * (this account is pinned to 2026-08-26.dahlia) express the same thing as a
+ * cancel_at timestamp. Reading only the boolean returned undefined, which
+ * !!-ed to false, so a subscription the dashboard clearly showed as
+ * "Cancels Oct 6" was reported as not cancelling at all.
+ *
+ * Both are read, boolean first, so this is correct on either version rather
+ * than trading one wrong assumption for another.
+ */
+function cancellationOf(sub) {
+  const explicit = sub?.cancel_at_period_end;
+  const at = sub?.cancel_at || null;
+  const cancelling = explicit != null ? !!explicit : !!at;
+  return { cancelling, cancelAt: at || (cancelling ? periodEndOf(sub) : null) };
+}
+
 async function serveStripeWebhook(request, env) {
   if (!env.STRIPE_WEBHOOK_SECRET || !env.GATED) {
     return Response.json({ error: "not configured" }, { status: 503, headers: NO_STORE });
@@ -485,11 +507,13 @@ async function serveStripeWebhook(request, env) {
         // The session carries no price or period, so read the subscription it
         // just created rather than guessing at either.
         const sub = await stripeGet(env, `/subscriptions/${obj.subscription}`);
+        const c = cancellationOf(sub);
         await writeEntitlement(env, userId, {
           plan: planForPrice(sub.items?.data?.[0]?.price?.id),
           status: sub.status,
           currentPeriodEnd: periodEndOf(sub),
-          cancelAtPeriodEnd: !!sub.cancel_at_period_end,
+          cancelAtPeriodEnd: c.cancelling,
+          cancelAt: c.cancelAt,
           customerId: sub.customer,
           subscriptionId: sub.id,
         });
@@ -503,12 +527,13 @@ async function serveStripeWebhook(request, env) {
           // read "active"; force it to canceled so access actually ends.
           status: event.type.endsWith(".deleted") ? "canceled" : obj.status,
           currentPeriodEnd: periodEndOf(obj),
+          cancelAtPeriodEnd: cancellationOf(obj).cancelling,
+          cancelAt: cancellationOf(obj).cancelAt,
           // Stripe cancels at period end by DEFAULT, which leaves status
           // "active" until the period expires -- correct behaviour, and what
           // the Terms promise, but indistinguishable from a live subscription
           // unless this flag travels. Without it the page says "paid" to
           // someone who just cancelled and looks like the cancellation failed.
-          cancelAtPeriodEnd: !!obj.cancel_at_period_end,
           customerId: obj.customer,
           subscriptionId: obj.id,
         });

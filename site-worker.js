@@ -44,7 +44,13 @@ const CLERK_JWKS_URL = `${CLERK_ISSUER}/.well-known/jwks.json`;
 // anything depends on it -- a verification bug flipped straight on would
 // take every prop off the site for every visitor, which is precisely the
 // failure this site already had once tonight.
-const GATE_ENFORCED = false;
+// Now enforced. The rollout ran in two steps on purpose: /api/whoami shipped
+// first with this false and was confirmed returning signedIn:true for a real
+// signed-in session against the live Worker, before anything depended on it.
+// identify() is the same code path in both endpoints, so that check exercised
+// exactly what now guards the payload. Setting this back to false unlocks the
+// site for everyone again without touching any other logic.
+const GATE_ENFORCED = true;
 
 // --- Clerk session tokens ---------------------------------------------------
 // Verified against Clerk's public JWKS, so no secret key is involved and none

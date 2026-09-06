@@ -1920,6 +1920,23 @@ function fmtKickoffLine(g){
 // loader has always worked purely because renderNHLGames() happens to run
 // after its set is declared -- so eager loading is the intended, proven
 // pattern here and NFL was the one broken by file ordering.
+// Whether Clerk has a signed-in user. Read by the pick-card renderers, which
+// run from renderGames() well above where accounts are initialised, so it
+// lives in this block with the other early constants. Starts false: the first
+// paint is always the signed-out view, and the re-render after the gated
+// payload lands is what reveals the cards.
+let SIGNED_IN = false;
+
+// The pick cards are account-tier content. Gating them needs saying out loud
+// because the parlay is NOT purely derived from gated data: moneylines come
+// from the free page payload, so without this the suggested parlay would
+// still render three legs to a signed-out visitor and the free tier would
+// quietly hand over more than "game cards and that's it".
+function signInPromptHtml(what){
+  return `<div class="placeholder">${what} come with a free account.
+    <button class="auth-btn" onclick="window.Clerk && window.Clerk.openSignIn()">Sign in</button></div>`;
+}
+
 const nflBoxScoreLoaded = new Map();   // idx -> Promise<html>, survives re-render
 
 // Up here for the same reason: fetchEspnLinescores reads this on its first
@@ -2078,6 +2095,7 @@ function renderNflWeeklyPicks(){
   if(!root) return;
   const week = DATA.current_week;
   const weekData = DATA.weeks[String(week)];
+  if(!SIGNED_IN){ root.innerHTML = signInPromptHtml('Weekly picks'); return; }
   const groups = weekData ? nflWeeklyPicksGroups(weekData) : [];
   if(!groups.length){
     root.innerHTML = `<div class="placeholder">No projections available for week ${week}.</div>`;
@@ -2093,6 +2111,7 @@ function renderNflWeeklyPicks(){
 }
 
 function nflParlayCardsHtml(weekData){
+  if(!SIGNED_IN) return signInPromptHtml('The suggested parlay, TD Special and same-game parlays');
   const legs = collectNflParlayLegs(weekData.games);
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
@@ -3600,6 +3619,7 @@ function mlbHrSpecialPicksForDate(date){
 // Suggested Parlay / HR Special using the same exact logic, not a
 // reimplementation of it.
 function mlbParlayCardsHtml(dayData, selectedDate){
+  if(!SIGNED_IN) return signInPromptHtml('The suggested parlay, HR Special and same-game parlays');
   const hrLegs = mlbHrSpecialPicksForDate(selectedDate);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   const flinFlonLegs = collectFlinFlonLegs(dayData.games);
@@ -4250,6 +4270,7 @@ function rerenderAfterGatedMerge(){
   renderGames(wk && wk.value ? parseInt(wk.value, 10) : undefined);
   const day = document.getElementById('mlb-day-select');
   renderMLBGames(day && day.value ? day.value : undefined);
+  renderNflWeeklyPicks();
 }
 
 // ---- accounts ------------------------------------------------------------
@@ -4369,11 +4390,21 @@ async function initAccounts(){
     try{
       await window.Clerk.load();
       CLERK_READY = true;
+      SIGNED_IN = !!window.Clerk.user;
       renderAuthUI();
-      // Signing in or out mints (or drops) a token, so the payload has to be
-      // re-fetched under the new identity rather than left as it was.
       showServerAuthStatus();
-      window.Clerk.addListener(() => { renderAuthUI(); showServerAuthStatus(); loadGatedPayload(); });
+      // A change of identity is handled by reloading rather than by patching
+      // the page in place. Signing OUT is the reason: props already merged
+      // into DATA stay in memory, so re-rendering alone would keep showing
+      // account-tier content to someone who just left. A reload starts from
+      // the free payload again and cannot get that wrong. Seeded before the
+      // listener is attached, since Clerk fires it once on registration and
+      // that must not count as a change.
+      let lastUserId = window.Clerk.user ? window.Clerk.user.id : null;
+      window.Clerk.addListener(() => {
+        const id = window.Clerk.user ? window.Clerk.user.id : null;
+        if(id !== lastUserId){ lastUserId = id; location.reload(); }
+      });
     }catch(e){
       console.warn('[auth] Clerk failed to initialise -- continuing signed out', e);
     }

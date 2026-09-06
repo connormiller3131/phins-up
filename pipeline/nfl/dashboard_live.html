@@ -3210,7 +3210,16 @@ function buildRealisticParlay(games, opts){
     // post the market, and it makes for a poor headline leg. Walks stays a
     // fully supported prop in the props table and the build-your-own parlay
     // -- this only stops it being auto-selected onto the suggested card.
-    const fillers = ["Anytime HR", "Hits", "RBI"]
+    // Anytime HR is NOT a filler. It has its own HR SPECIAL card, exactly as
+    // Anytime TD is kept off the NFL parlay for the same reason -- but it was
+    // also being FORCED onto every single card, 94 of 94 on a real slate.
+    // The mechanism is worth remembering: the coin-flip floor added to
+    // bestPropInMarket rejects Hits and RBI candidates under 50%, and RBI
+    // never clears it at all, while Anytime HR is a binary market and
+    // therefore exempt from that floor. So HR was the one filler that could
+    // never be rejected, and it filled the slot every time. A ~17% leg on
+    // every card, arrived at by exemption rather than by merit.
+    const fillers = ["Hits", "RBI"]
       .map(mk => bestPropInMarket(allProps, mk, used))
       .filter(Boolean);
     fillers.sort((a,b) => {
@@ -3650,7 +3659,7 @@ function mlbSameGameParlaySection(date, g, idx){
     <details class="props-toggle" id="mlb-sgp-${date}-${idx}">
       <summary>Same Game Parlay</summary>
       ${parlayCardHtml(legs, 'MLB', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp',
-        note: "shaped like a real same-game parlay -- moneyline, best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"})}
+        note: "shaped like a real same-game parlay -- this game's moneyline, its best Total Bases pick, plus the best remaining props that the model itself makes better than a coin flip. Anytime HR has its own card, so it is not forced in here. Real edge is preferred over a model estimate wherever DraftKings has posted a price"})}
     </details>
   `;
 }

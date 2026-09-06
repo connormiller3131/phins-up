@@ -199,7 +199,7 @@ export function collectKeptIds(DATA, MLB_DATA, sel) {
       const lineupKnown = (g.props || []).some((p) => p.section === 'Batting' && p.confirmed_starter === true);
       const gamePool = (g.props || []).map((p) => (p.section === 'Batting' ? { ...p, __lineup_known: lineupKnown } : p));
       const usedGame = new Set();
-      for (const mk of ['Total Bases', 'Anytime HR', 'Hits', 'RBI']) {
+      for (const mk of ['Total Bases', 'Hits', 'RBI']) {
         const pick = sel.bestPropInMarket(gamePool, mk, usedGame);
         if (!pick) continue;
         usedGame.add(pick.player_id);

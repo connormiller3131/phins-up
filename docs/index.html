@@ -1879,6 +1879,29 @@ function fmtKickoffLine(g){
 // the TD SPECIAL note, and the resulting throw took renderMLBGames() and
 // loadGatedPayload() down with it, leaving the whole site without props.
 // Keep new shared constants in this block.
+// Dedupe set for the NFL box-score loader. It lives up here for the same
+// reason as the tuning constants: renderGames() calls loadNflBoxScore() for
+// every game as it builds the cards, and that call sits ABOVE the loader's
+// own definition further down the file. Declared next to the loader, this
+// set was still in the temporal dead zone at that point, so every one of
+// those calls threw inside its promise and the Box Score panel on all 16
+// game cards sat on its loading skeleton forever. NHL's identical eager
+// loader has always worked purely because renderNHLGames() happens to run
+// after its set is declared -- so eager loading is the intended, proven
+// pattern here and NFL was the one broken by file ordering.
+const nflBoxScoreLoaded = new Map();   // idx -> Promise<html>, survives re-render
+
+// Up here for the same reason: fetchEspnLinescores reads this on its first
+// line, and renderGames() reaches that function through loadNflBoxScore
+// before the declaration's original position further down. The throw was
+// swallowed by that loader's own try/catch, so instead of an obvious error
+// every NFL card quietly read "Box score unavailable right now" while the
+// NHL tab worked perfectly -- its render simply runs later in the file.
+const ESPN_ABBR_RENAME = {
+  nfl: {LA: "LAR", WAS: "WSH"},
+  nhl: {LAK: "LA", NJD: "NJ", SJS: "SJ", TBL: "TB", UTA: "UTAH"},
+};
+
 const TD_MIN_OPP_PER_GM = 8;     // min carries+targets per game to be a featured TD pick
 const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it can headline
 const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds"]);
@@ -2644,11 +2667,6 @@ async function loadBoxScore(date, idx, attempt=0){
 // abbreviations only need remapping for a handful of teams where ESPN's
 // convention differs from this project's own data source -- confirmed by
 // diffing full team lists, not guessed at.
-const ESPN_ABBR_RENAME = {
-  nfl: {LA: "LAR", WAS: "WSH"},
-  nhl: {LAK: "LA", NJD: "NJ", SJS: "SJ", TBL: "TB", UTA: "UTAH"},
-};
-
 async function fetchEspnLinescores(sportPath, dateStr, awayAbbr, homeAbbr, sportKey){
   const rename = ESPN_ABBR_RENAME[sportKey] || {};
   const espnAway = rename[awayAbbr] || awayAbbr;
@@ -2703,23 +2721,37 @@ function nflBoxScoreSection(g, idx){
   `;
 }
 
-const nflBoxScoreLoaded = new Set();
 async function loadNflBoxScore(idx){
-  if(nflBoxScoreLoaded.has(idx)) return;
-  nflBoxScoreLoaded.add(idx);
   const g = CURRENT_NFL_WEEK_DATA && CURRENT_NFL_WEEK_DATA.games[idx];
-  const body = document.getElementById(`nfl-box-body-${idx}`);
-  if(!g || !body) return;
-
-  let match;
-  try{
-    match = await fetchEspnLinescores('football/nfl', g.gameday.replace(/-/g, ''), g.awayAbbr, g.homeAbbr, 'nfl');
-  }catch(e){
-    body.innerHTML = '<span class="p-exp">Box score unavailable right now.</span>';
-    return;
+  if(!g) return;
+  // Caches the RESULT (as a promise), not merely the fact that a load was
+  // started. A plain "already started" guard breaks the moment a card is
+  // re-rendered: renderGames() rebuilds every card with a fresh skeleton and
+  // calls this again, the guard returns early, and those new skeletons stay
+  // stuck forever while the first render's fetches resolve into DOM nodes
+  // that have since been thrown away. The gated-payload merge re-renders on
+  // every single page load, so that is not a corner case. Holding the
+  // promise means a re-render paints the cached result at once, an in-flight
+  // fetch is awaited rather than duplicated, and ESPN is still called only
+  // once per game.
+  if(!nflBoxScoreLoaded.has(idx)){
+    nflBoxScoreLoaded.set(idx, (async () => {
+      let match;
+      try{
+        match = await fetchEspnLinescores('football/nfl', g.gameday.replace(/-/g, ''), g.awayAbbr, g.homeAbbr, 'nfl');
+      }catch(e){
+        return '<span class="p-exp">Box score unavailable right now.</span>';
+      }
+      return (match && periodBoxScoreHtml(match, g.awayAbbr, g.homeAbbr, n => n <= 4 ? `Q${n}` : 'OT', 4))
+        || '<span class="p-exp">Game hasn\'t started yet -- no box score to show.</span>';
+    })());
   }
-  const html = match && periodBoxScoreHtml(match, g.awayAbbr, g.homeAbbr, n => n <= 4 ? `Q${n}` : 'OT', 4);
-  body.innerHTML = html || '<span class="p-exp">Game hasn\'t started yet -- no box score to show.</span>';
+  const html = await nflBoxScoreLoaded.get(idx);
+  // Re-queried after the await: a re-render may have replaced the element
+  // while the fetch was in flight, and writing into the detached one is
+  // precisely how these skeletons got stuck.
+  const body = document.getElementById(`nfl-box-body-${idx}`);
+  if(body) body.innerHTML = html;
 }
 
 function nhlBoxScoreSection(date, g, idx){

@@ -70,8 +70,30 @@
     margin-right:14px;
   }
   .tabnav button.active{color:var(--text);border-bottom-color:var(--green);}
-  .site-author{
+  .auth-slot{
     margin-left:auto;
+    align-self:center;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-height:26px;   /* reserved before Clerk loads, so the bar doesn't jump */
+  }
+  .auth-btn{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border-radius:5px;
+    border:1px solid var(--green);
+    background:var(--green-dim);
+    color:var(--green);
+    cursor:pointer;
+  }
+  .auth-btn.secondary{border-color:var(--line);background:transparent;color:var(--text-dim);}
+  .auth-btn:hover{filter:brightness(1.25);}
+  .auth-who{font-family:var(--mono);font-size:11px;color:var(--text-dim);}
+  .site-author{
+    margin-left:0;
     align-self:center;
     font-family:var(--mono);
     font-size:12px;
@@ -1092,6 +1114,14 @@
   .legal-footer-bottom a{color:var(--text-dim);text-decoration:underline;}
   .legal-footer-bottom a:hover{color:var(--blue);}
 </style>
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_ZGFybGluZy10b2FkLTQ5NjAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://darling-toad-4960.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+  type="text/javascript"
+  onload="window.__clerkScriptReady && window.__clerkScriptReady()"
+></script>
 </head>
 <body>
 <div class="wrap">
@@ -1101,6 +1131,7 @@
     <button id="tabbtn-mlb" onclick="showTab('mlb')">MLB</button>
     <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
     <span class="site-author">By Connor Miller</span>
+    <div class="auth-slot" id="auth-slot"></div>
   </div>
 
   <div id="tab-nfl" class="tab-panel active">
@@ -3270,7 +3301,7 @@ const CALIBRATION_PROP_MODEL = 'negbin-v1';
 // transient blip, or a request that raced a mid-deploy moment) shouldn't
 // permanently show "No graded MLB props yet" for the rest of the page
 // session -- retries a couple times with a short backoff before giving up.
-async function fetchJsonWithRetry(url, retries=2, delayMs=600){
+async function fetchJsonWithRetry(url, retries=2, delayMs=600, headers=null){
   // cache: 'no-store' stops the BROWSER's own HTTP cache from serving a
   // stale local copy across reloads within the same session. Note: tested
   // directly and a cache-busting query param does NOT bypass Cloudflare's
@@ -3280,8 +3311,12 @@ async function fetchJsonWithRetry(url, retries=2, delayMs=600){
   const bustUrl = url + (url.includes('?') ? '&' : '?') + '_=' + Date.now();
   for(let attempt=0; attempt<=retries; attempt++){
     try{
-      const r = await fetch(bustUrl, {cache: 'no-store'});
+      const r = await fetch(bustUrl, headers ? {cache: 'no-store', headers} : {cache: 'no-store'});
       if(r.ok) return await r.json();
+      // 401 is a real answer, not a blip: the caller is not signed in, and
+      // retrying twice more cannot change that. Give up immediately so the
+      // page settles on free content instead of stalling for two backoffs.
+      if(r.status === 401) return null;
     }catch(e){ /* fall through to retry */ }
     if(attempt < retries) await new Promise(res => setTimeout(res, delayMs));
   }
@@ -4217,19 +4252,106 @@ function rerenderAfterGatedMerge(){
   renderMLBGames(day && day.value ? day.value : undefined);
 }
 
+// ---- accounts ------------------------------------------------------------
+// Clerk handles sign-in. The session token is sent to /api/gated as a bearer
+// header rather than relying on a cookie: Clerk development instances issue
+// sessions on a *.clerk.accounts.dev domain, and a header sidesteps every
+// cross-domain cookie question in both dev and production.
+//
+// The Worker is currently running with GATE_ENFORCED = false, so signing in
+// changes nothing a visitor can see yet. That is deliberate -- the token
+// path gets proven against the real deployment before anything depends on
+// it, because a verification bug flipped straight on would take every prop
+// off the site for everyone.
+let CLERK_READY = false;
+
+function clerkUserLabel(u){
+  return (u && (u.primaryEmailAddress?.emailAddress || u.username || u.firstName)) || 'Signed in';
+}
+
+function renderAuthUI(){
+  const slot = document.getElementById('auth-slot');
+  if(!slot) return;
+  slot.textContent = '';
+  if(!CLERK_READY) return;   // stays empty rather than showing a dead button
+  const user = window.Clerk.user;
+  if(user){
+    const who = document.createElement('span');
+    who.className = 'auth-who';
+    // textContent, not innerHTML -- this string is a user-supplied email.
+    who.textContent = clerkUserLabel(user);
+    const out = document.createElement('button');
+    out.className = 'auth-btn secondary';
+    out.textContent = 'Sign out';
+    out.onclick = () => window.Clerk.signOut();
+    slot.append(who, out);
+  } else {
+    const inBtn = document.createElement('button');
+    inBtn.className = 'auth-btn';
+    inBtn.textContent = 'Sign in';
+    inBtn.onclick = () => window.Clerk.openSignIn();
+    slot.append(inBtn);
+  }
+}
+
+async function clerkSessionToken(){
+  if(!CLERK_READY || !window.Clerk || !window.Clerk.session) return null;
+  try{ return await window.Clerk.session.getToken(); }
+  catch(e){ console.warn('[auth] could not mint session token', e); return null; }
+}
+
 async function loadGatedPayload(){
-  const payload = await fetchJsonWithRetry(GATED_ENDPOINT);
+  const token = await clerkSessionToken();
+  const payload = await fetchJsonWithRetry(GATED_ENDPOINT, 2, 600,
+    token ? {Authorization: `Bearer ${token}`} : null);
   if(!payload){
     // Every props table and pick card already renders empty rather than
-    // throwing when props are absent, so a failed fetch degrades to the
-    // free tier instead of breaking the page.
+    // throwing when props are absent, so a failed fetch -- including a 401
+    // once the gate is enforced -- degrades to the free tier instead of
+    // breaking the page.
     console.warn('[gated] payload unavailable -- showing free content only');
     return;
   }
   const merged = mergeGatedPayload(payload);
   if(merged) rerenderAfterGatedMerge();
 }
-loadGatedPayload();
+
+// Clerk is loaded async from its own CDN, so it may be ready before or after
+// this point, or never (blocked, offline). Whichever happens, the payload
+// fetch still runs exactly once: with a token if we got one, without if we
+// did not. Waiting forever on a script that may never arrive would be the
+// one outcome that leaves the page permanently empty.
+const CLERK_WAIT_MS = 4000;
+let gatedStarted = false;
+function startGatedLoad(){
+  if(gatedStarted) return;
+  gatedStarted = true;
+  loadGatedPayload();
+}
+
+async function initAccounts(){
+  const ready = new Promise(resolve => {
+    if(window.Clerk) return resolve(true);
+    window.__clerkScriptReady = () => resolve(true);
+    setTimeout(() => resolve(false), CLERK_WAIT_MS);
+  });
+  if(await ready){
+    try{
+      await window.Clerk.load();
+      CLERK_READY = true;
+      renderAuthUI();
+      // Signing in or out mints (or drops) a token, so the payload has to be
+      // re-fetched under the new identity rather than left as it was.
+      window.Clerk.addListener(() => { renderAuthUI(); loadGatedPayload(); });
+    }catch(e){
+      console.warn('[auth] Clerk failed to initialise -- continuing signed out', e);
+    }
+  }else{
+    console.warn('[auth] Clerk script did not load -- continuing signed out');
+  }
+  startGatedLoad();
+}
+initAccounts();
 
 applyRouteFromLocation();
 window.addEventListener('popstate', applyRouteFromLocation);

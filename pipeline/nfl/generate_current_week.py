@@ -39,6 +39,9 @@ from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 
 DATA_DIR = ROOT / "data" / "nfl"
 RESULTS_DIR = ROOT / "docs" / "results"
+# Under data/ (git-ignored) precisely because docs/ is not: this holds the
+# pregame props until the game has been played.
+PENDING_PROPS_PATH = ROOT / "data" / "pending_props.json"
 
 # Identifies the over/under machinery behind model_over_prob, stamped into
 # every frozen prediction snapshot. "mixed-v1" is the per-stat split
@@ -476,6 +479,23 @@ def snapshot_path(season, week, away, home):
     return RESULTS_DIR / f"nfl_{season}_wk{week:02d}_{away}_{home}.json"
 
 
+def load_pending_props():
+    """Frozen pregame props for games not yet played, keyed by snapshot
+    filename. One bundled file rather than one per game so refresh.yml moves
+    it to and from Cloudflare KV in a single call instead of one per
+    fixture."""
+    if PENDING_PROPS_PATH.exists():
+        with open(PENDING_PROPS_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def save_pending_props(store):
+    PENDING_PROPS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(PENDING_PROPS_PATH, "w", encoding="utf-8") as f:
+        json.dump(store, f)
+
+
 def write_prediction_snapshot(season, week, game):
     """Freezes this game's pregame prediction (win probs + full props array)
     the first time it's generated. Never overwritten on later runs, so it
@@ -484,6 +504,20 @@ def write_prediction_snapshot(season, week, game):
     outcome once the game is in the books."""
     path = snapshot_path(season, week, game["awayAbbr"], game["homeAbbr"])
     if path.exists():
+        # The public snapshot is never rewritten -- that is what makes it a
+        # freeze. But the private props can go missing from it: the KV bundle
+        # was empty on the run that split them apart, and a lost or expired
+        # key would do the same. Re-freeze in that case, but ONLY while the
+        # game is still unplayed, so this can never quietly rewrite history
+        # for a fixture whose result is already known.
+        with open(path, encoding="utf-8") as f:
+            existing = json.load(f)
+        if not existing.get("graded"):
+            store = load_pending_props()
+            if path.name not in store:
+                store[path.name] = game["props"]
+                save_pending_props(store)
+                print(f"  re-froze pregame props for {path.name} (missing from the bundle)")
         return
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     snapshot = {
@@ -500,12 +534,28 @@ def write_prediction_snapshot(season, week, game):
         "prop_prob_model": PROP_PROB_MODEL,
         "elo_home_prob": game["elo_home_prob"],
         "market_home_prob": game["market_home_prob"],
-        "props_snapshot": game["props"],
         "graded": False,
         "actual": None,
     }
     with open(path, "w") as f:
         json.dump(snapshot, f, indent=2)
+
+    # The frozen props go to a git-ignored file, NOT into the snapshot above.
+    # docs/results/ is committed and served publicly by both Cloudflare and
+    # GitHub Pages, so a pregame snapshot carrying props published the entire
+    # paid product for the only week anyone would pay for -- verified live:
+    # 780 Week 1 props were readable anonymously at
+    # phinsup.net/results/nfl_2026_wk01_*.json.
+    #
+    # The freeze itself still matters and is preserved: refresh.yml pushes
+    # this file to Cloudflare KV and restores it before grading, so the
+    # graded numbers are still the model's true pregame call rather than
+    # something regenerated after the fact. Once graded the props become
+    # historical and grade_results.py writes them back into the public file,
+    # which is where the track record reads them from.
+    store = load_pending_props()
+    store[path.name] = game["props"]
+    save_pending_props(store)
 
 
 def rebuild_results_manifest():

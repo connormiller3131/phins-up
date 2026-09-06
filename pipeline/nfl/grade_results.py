@@ -18,6 +18,29 @@ sys.path.insert(0, str(ROOT))
 
 DATA_DIR = ROOT / "data" / "nfl"
 RESULTS_DIR = ROOT / "docs" / "results"
+# Where generate_current_week.py parks the frozen pregame props. Git-ignored,
+# and restored from Cloudflare KV by refresh.yml before this runs, because
+# docs/results/ is committed and served publicly -- a pregame prop list there
+# is the paid product given away.
+PENDING_PROPS_PATH = ROOT / "data" / "pending_props.json"
+
+
+def load_pending_props():
+    if PENDING_PROPS_PATH.exists():
+        with open(PENDING_PROPS_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def drop_pending_props(names):
+    """Once a game is graded its props live in the public snapshot as
+    props_graded, so the private copy is dead weight -- and dropping it keeps
+    the bundle to just the fixtures still unplayed."""
+    store = load_pending_props()
+    for n in names:
+        store.pop(n, None)
+    with open(PENDING_PROPS_PATH, "w", encoding="utf-8") as f:
+        json.dump(store, f)
 
 STAT_COL_BY_MARKET = {
     "Passing Yds": "passing_yards",
@@ -60,7 +83,7 @@ def grade_prop(prop, stats_row):
     return {**prop, "actual_value": actual_value, "hit": actual_value > line}
 
 
-def grade_snapshot(snap, sched, player_stats):
+def grade_snapshot(snap, sched, player_stats, path):
     match = sched[(sched["season"] == snap["season"]) & (sched["week"] == snap["week"])
                   & (sched["away_team"] == snap["awayAbbr"]) & (sched["home_team"] == snap["homeAbbr"])]
     if match.empty or pd.isna(match.iloc[0]["home_score"]):
@@ -80,8 +103,20 @@ def grade_snapshot(snap, sched, player_stats):
     if snap["market_home_prob"] is not None:
         market_pick = snap["homeAbbr"] if snap["market_home_prob"] >= 0.5 else snap["awayAbbr"]
 
+    # Props live in the git-ignored private snapshot until the game is played
+    # (docs/results/ is public, and a pregame prop list there is the paid
+    # product given away). Falls back to the file's own props_snapshot for
+    # snapshots written before that split, so older games still grade.
+    frozen_props = load_pending_props().get(path.name)
+    if frozen_props is None:
+        # Snapshots written before the public/private split carried their own
+        # props, and still grade from them.
+        frozen_props = snap.get("props_snapshot", [])
+    if not frozen_props:
+        print(f"  {path.name}: no frozen props found, grading game result only")
+
     props_graded = []
-    for prop in snap["props_snapshot"]:
+    for prop in frozen_props:
         pid = prop.get("player_id")
         key = (snap["season"], snap["week"], pid)
         stats_row = player_stats.loc[key] if pid is not None and key in player_stats.index else None
@@ -109,18 +144,22 @@ def main():
 
     files = sorted(p for p in RESULTS_DIR.glob("nfl_*.json"))
     graded_now = 0
+    graded_names = []
     for path in files:
         with open(path) as f:
             snap = json.load(f)
         if snap.get("graded"):
             continue
-        if grade_snapshot(snap, sched, player_stats):
+        if grade_snapshot(snap, sched, player_stats, path):
             with open(path, "w") as f:
                 json.dump(snap, f, indent=2)
             graded_now += 1
+            graded_names.append(path.name)
             print(f"  graded {path.name}: {snap['actual']['winner']} won, "
                   f"model {'correct' if snap['actual']['model_correct'] else 'wrong'}")
 
+    if graded_names:
+        drop_pending_props(graded_names)
     print(f"Graded {graded_now} newly-completed games out of {len(files)} snapshot(s) on disk.")
 
 

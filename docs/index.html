@@ -4264,7 +4264,7 @@ setInterval(updateMLBLiveStats, 60000);
 // /nhl[/{weekday-or-ISO-date}] -- client-side only, since this is a static
 // single-page site. The hosting layer (wrangler.toml's
 // not_found_handling = "single-page-application" for the Cloudflare custom
-// domain, docs/404.html for GitHub Pages) serves this same page for any
+// domain) serves this same page for any
 // path under the domain, so a direct or bookmarked deep link still loads
 // this page; this script then reads location.pathname once on load (and on
 // back/forward navigation) and switches to whatever it names, silently

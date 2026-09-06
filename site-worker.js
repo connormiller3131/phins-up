@@ -271,9 +271,35 @@ async function stripeEventFrom(request, env) {
 // Reports what the gate would decide, without gating anything. Exists so the
 // token path can be proven against the real deployed Worker before
 // GATE_ENFORCED is flipped.
+// Entitlements are written by webhooks, so a record stored before a field
+// existed simply lacks it -- and nothing re-writes it until Stripe next has
+// something to say, which for a healthy yearly subscription could be months.
+// This re-reads the subscription once, only when a known field is missing,
+// then rewrites the record. Bounded: it cannot fire twice for the same
+// record, because the field is present afterwards.
+async function healEntitlement(env, userId, ent) {
+  if (!ent || !ent.subscriptionId || ent.cancelAtPeriodEnd !== undefined) return ent;
+  try {
+    const sub = await stripeApi(env, `/subscriptions/${ent.subscriptionId}`, []);
+    const healed = {
+      ...ent,
+      status: sub.status,
+      currentPeriodEnd: sub.current_period_end || null,
+      cancelAtPeriodEnd: !!sub.cancel_at_period_end,
+    };
+    await writeEntitlement(env, userId, healed);
+    return healed;
+  } catch {
+    // Stripe unreachable or the subscription is gone: leave the record be
+    // rather than downgrading someone on a transient failure.
+    return ent;
+  }
+}
+
 async function serveWhoami(request, env) {
   const who = await identify(request);
-  const ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
+  let ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
+  if (ent) ent = await healEntitlement(env, who.userId, ent);
   return Response.json(
     {
       ...who,

@@ -1857,7 +1857,7 @@ function propsBySection(props){
 }
 
 function propsTable(g, containerId){
-  if(!PAID) return signInPromptHtml('Full player prop tables');
+  if(!PAID) return upgradePromptHtml('Full player prop tables');
   const props = g.props;
   if(!props || !props.length) return "";
   return `
@@ -1944,6 +1944,18 @@ let SIGNED_IN = false;
 // tier; the pick cards are not, and they keep working for a free account
 // because the server sends exactly the props those cards select.
 let PAID = false;
+// The /api/whoami answer. Up here rather than beside the account code at the
+// bottom of the file because upgradePromptHtml reads it, and renderGames()
+// reaches that helper long before the bottom of the script has executed --
+// declared down there it would sit in the temporal dead zone and throw.
+let ACCOUNT = null;
+// Also up here, and for a duller reason than it looks: the upgrade prompt's
+// onclick strings mention goToStripe, which reads this. Those strings only
+// run on click, so it was never a real dead-zone bug -- but the audit that
+// catches the real ones cannot tell a handler string from a call, and an
+// audit that cries wolf is one that gets ignored. Cheaper to hoist it than
+// to train ourselves to skip warnings.
+let CLERK_READY = false;
 
 // The pick cards are account-tier content. Gating them needs saying out loud
 // because the parlay is NOT purely derived from gated data: moneylines come
@@ -1953,6 +1965,20 @@ let PAID = false;
 function signInPromptHtml(what){
   return `<div class="placeholder">${what} come with a free account.
     <button class="auth-btn" onclick="window.Clerk && window.Clerk.openSignIn()">Sign in</button></div>`;
+}
+
+// For content behind the PAID tier rather than behind having an account at
+// all. A signed-in free user being told to "sign in" for something they are
+// already signed in for reads as a bug, so this offers the actual next step.
+function upgradePromptHtml(what){
+  if(!SIGNED_IN) return signInPromptHtml(what);
+  if(ACCOUNT && ACCOUNT.canSubscribe === false){
+    return `<div class="placeholder">${what} come with a subscription, which isn't
+      available in your country yet.</div>`;
+  }
+  return `<div class="placeholder">${what} come with a subscription.
+    <button class="auth-btn" onclick="goToStripe('/api/checkout?plan=monthly','checkout',this)">$5/mo</button>
+    <button class="auth-btn" onclick="goToStripe('/api/checkout?plan=yearly','checkout',this)">$40/yr</button></div>`;
 }
 
 const nflBoxScoreLoaded = new Map();   // idx -> Promise<html>, survives re-render
@@ -2637,7 +2663,7 @@ function mlbHrComboHtml(combo){
 
 function mlbPropsTable(g, containerId){
   if(!PAID){
-    return mlbHrComboHtml(g.hr_combo) + signInPromptHtml('Full player prop tables');
+    return mlbHrComboHtml(g.hr_combo) + upgradePromptHtml('Full player prop tables');
   }
   const props = g.props, combo = g.hr_combo, featured = g.featured_props;
   const hasDK = !!featured;
@@ -4313,8 +4339,6 @@ function rerenderAfterGatedMerge(){
 // path gets proven against the real deployment before anything depends on
 // it, because a verification bug flipped straight on would take every prop
 // off the site for everyone.
-let CLERK_READY = false;
-
 function clerkUserLabel(u){
   return (u && (u.primaryEmailAddress?.emailAddress || u.username || u.firstName)) || 'Signed in';
 }
@@ -4356,8 +4380,6 @@ async function clerkSessionToken(){
 // token the Worker rejects is visible immediately instead of silently
 // looking fine until content goes missing. The same answer carries the
 // subscription state, so it drives the Upgrade / Manage billing control too.
-let ACCOUNT = null;
-
 async function fetchAccountStatus(){
   const token = await clerkSessionToken();
   try{

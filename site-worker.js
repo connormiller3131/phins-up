@@ -286,6 +286,7 @@ async function serveWhoami(request, env) {
       subscriptionStatus: ent?.status || null,
       paid: isPaid(ent),
       currentPeriodEnd: ent?.currentPeriodEnd || null,
+      cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
     },
     { headers: NO_STORE },
   );
@@ -423,6 +424,7 @@ async function serveStripeWebhook(request, env) {
           plan: planForPrice(sub.items?.data?.[0]?.price?.id),
           status: sub.status,
           currentPeriodEnd: sub.current_period_end || null,
+          cancelAtPeriodEnd: !!sub.cancel_at_period_end,
           customerId: sub.customer,
           subscriptionId: sub.id,
         });
@@ -436,6 +438,12 @@ async function serveStripeWebhook(request, env) {
           // read "active"; force it to canceled so access actually ends.
           status: event.type.endsWith(".deleted") ? "canceled" : obj.status,
           currentPeriodEnd: obj.current_period_end || null,
+          // Stripe cancels at period end by DEFAULT, which leaves status
+          // "active" until the period expires -- correct behaviour, and what
+          // the Terms promise, but indistinguishable from a live subscription
+          // unless this flag travels. Without it the page says "paid" to
+          // someone who just cancelled and looks like the cancellation failed.
+          cancelAtPeriodEnd: !!obj.cancel_at_period_end,
           customerId: obj.customer,
           subscriptionId: obj.id,
         });

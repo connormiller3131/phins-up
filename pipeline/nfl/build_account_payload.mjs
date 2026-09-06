@@ -71,7 +71,9 @@ const NEEDED = [
   'function collectNflParlayLegs', 'function collectNflTdSpecialLegs',
   'function collectNflSameGameParlayLegs',
   'const NFL_PICK_MARKETS', 'function nflWeeklyPicksGroups',
-  'function noVigProb', 'function buildRealisticParlay', 'function collectMlbParlayLegs',
+  'function noVigProb', 'function mlbMoneylineCandidates', 'function buildRealisticParlay',
+  'const MLB_PARLAY_MONEYLINES', 'const MLB_PARLAY_PROPS', 'const MLB_PARLAY_PROP_MARKETS',
+  'function collectMlbParlayLegs',
   'function collectHrSpecialLegs', 'function collectMlbSameGameParlayLegs',
   'function mlbPrevDateStr', 'function mlbHrSpecialPicksForDate',
 ];
@@ -180,12 +182,29 @@ export function collectKeptIds(DATA, MLB_DATA, sel) {
       const lineupKnown = (g.props || []).some((p) => p.section === 'Batting' && p.confirmed_starter === true);
       return (g.props || []).map((p) => (p.section === 'Batting' ? { ...p, __lineup_known: lineupKnown } : p));
     });
-    const usedMlb = new Set();
-    for (const mk of ['Total Bases', 'Anytime HR', 'Hits', 'RBI']) {
-      const pick = sel.bestPropInMarket(pool, mk, usedMlb);
+    // Cross-game card: same market order and accumulating `used` set as
+    // collectMlbParlayLegs, keeping every winner including the one its
+    // two-prop cap discards.
+    const usedDay = new Set();
+    for (const mk of sel.MLB_PARLAY_PROP_MARKETS) {
+      const pick = sel.bestPropInMarket(pool, mk, usedDay);
       if (!pick) continue;
-      usedMlb.add(pick.player_id);
+      usedDay.add(pick.player_id);
       scatter(mlb, keyOf, games, [pick]);
+    }
+    // Same-game card runs buildRealisticParlay per game, which reserves
+    // Total Bases then draws fillers and caps the card at four legs -- so it
+    // discards too, and against a single game's props rather than the day's.
+    for (const g of games) {
+      const lineupKnown = (g.props || []).some((p) => p.section === 'Batting' && p.confirmed_starter === true);
+      const gamePool = (g.props || []).map((p) => (p.section === 'Batting' ? { ...p, __lineup_known: lineupKnown } : p));
+      const usedGame = new Set();
+      for (const mk of ['Total Bases', 'Anytime HR', 'Hits', 'RBI']) {
+        const pick = sel.bestPropInMarket(gamePool, mk, usedGame);
+        if (!pick) continue;
+        usedGame.add(pick.player_id);
+        scatter(mlb, keyOf, [g], [pick]);
+      }
     }
   }
   return { nfl, mlb };

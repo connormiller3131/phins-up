@@ -1996,7 +1996,19 @@ const ESPN_ABBR_RENAME = {
 
 const TD_MIN_OPP_PER_GM = 8;     // min carries+targets per game to be a featured TD pick
 const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it can headline
-const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds"]);
+// Total Bases joins the NFL yardage markets here. Same structural reason:
+// its line is set at the model's own projection and the distribution is
+// right-skewed, so 0 of 2122 Total Bases props on a real board clear 50% at
+// or above their base line, and the market could never appear on a parlay
+// that requires better-than-coin-flip legs. Its ladder is 1/1.5/2/2.5, so a
+// step down lands on "1+ total base" at roughly 70% -- the same range as the
+// Derrick Henry 80+ leg already carried on the NFL card.
+//
+// Hits is deliberately NOT here: its ladder bottoms out at 0.5, and "1+ hit"
+// is exactly the near-lock the original no-step-down rule was written to
+// avoid. RBI and the pitcher markets carry no ladder at all, so they are
+// unaffected either way and simply do not qualify.
+const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds", "Total Bases"]);
 
 const NFL_PARLAY_MONEYLINES = 3;
 const NFL_PARLAY_PROPS = 2;
@@ -2161,7 +2173,7 @@ function nflParlayCardsHtml(weekData){
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
   const flinFlonLegs = collectFlinFlonLegs(weekData.games);
   return parlayCardHtml(legs, 'NFL', {
-      note: `shaped like a realistic parlay -- up to ${NFL_PARLAY_MONEYLINES} moneylines plus ${NFL_PARLAY_PROPS} player props from different markets (a passing-yards leg and a receiving-yards one, say), never two of the same stat. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit, and a parlay needs every leg to hit. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
+      note: `shaped like a realistic parlay -- up to ${NFL_PARLAY_MONEYLINES} moneylines plus up to ${NFL_PARLAY_PROPS} player props from different markets (a passing-yards leg and a receiving-yards one, say), never two of the same stat. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit, and a parlay needs every leg to hit. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
     })
     + parlayCardHtml(tdLegs, 'NFL', {
         title: 'TD SPECIAL', accentClass: 'parlay-special',
@@ -3113,11 +3125,12 @@ function bestPropInMarket(props, marketName, used){
 // cross-game caller can supply more than one game; the same-game caller
 // only ever has its own one game to draw from), 1 Anytime HR, and 1 Total
 // Bases, then fills any remaining slot with the next-best other prop.
-function buildRealisticParlay(games, opts){
+// Shared by the cross-game MLB card and the same-game one. Pulled out of
+// buildRealisticParlay so collectMlbParlayLegs could take the NFL card's
+// shape without either duplicating this logic or reshaping the same-game
+// card, which genuinely does want a different one.
+function mlbMoneylineCandidates(games, opts){
   opts = opts || {};
-  const legs = [];
-  const used = new Set();
-
   const mlCandidates = [];
   games.forEach(g => {
     const m = g.market;
@@ -3161,7 +3174,14 @@ function buildRealisticParlay(games, opts){
     if(aReal !== bReal) return aReal ? -1 : 1;
     return (aReal ? b.edge - a.edge : b.prob - a.prob);
   });
-  mlCandidates.slice(0, opts.maxMoneylines || 2).forEach(l => legs.push(l));
+  return mlCandidates;
+}
+
+function buildRealisticParlay(games, opts){
+  opts = opts || {};
+  const legs = [];
+  const used = new Set();
+  mlbMoneylineCandidates(games, opts).slice(0, opts.maxMoneylines || 2).forEach(l => legs.push(l));
 
   // Anytime HR is no longer a guaranteed slot here -- HR Special already
   // covers home runs on its own, so forcing one into this parlay too was
@@ -3207,8 +3227,48 @@ function buildRealisticParlay(games, opts){
   return legs;
 }
 
+// Mirrors collectNflParlayLegs: 3 moneylines plus 2 player props from two
+// DIFFERENT markets, every leg one the model itself makes better than a coin
+// flip before anything is ranked by edge.
+//
+// Anytime HR is deliberately not among the markets, for the same reason
+// Anytime TD is absent from the NFL card: it has its own HR SPECIAL card
+// directly below, so reserving a slot here too just crowds out a better
+// pick. It also cannot clear the coin-flip floor -- nobody is 50% to homer --
+// so including it would either force an exception or guarantee it never
+// appeared. Walks stays excluded on the same judgement as before: it is the
+// outcome a hitter least controls, and books rarely post it.
+const MLB_PARLAY_MONEYLINES = 3;
+const MLB_PARLAY_PROPS = 2;
+const MLB_PARLAY_PROP_MARKETS = ["Total Bases", "Hits", "RBI"];
+
 function collectMlbParlayLegs(games){
-  return buildRealisticParlay(games, {maxMoneylines: 2});
+  const legs = [];
+  const used = new Set();
+  mlbMoneylineCandidates(games, {})
+    .filter(l => l.prob > 0.5)
+    .slice(0, MLB_PARLAY_MONEYLINES)
+    .forEach(l => legs.push(l));
+
+  // Same per-game lineup annotation buildRealisticParlay does: a bench
+  // player is only skipped once THAT game's real lineup is posted, never
+  // because some other game happens to have one.
+  const allProps = games.flatMap(g => {
+    const lineupKnown = (g.props || []).some(p => p.section === 'Batting' && p.confirmed_starter === true);
+    return (g.props || []).map(p => p.section === 'Batting' ? {...p, __lineup_known: lineupKnown} : p);
+  });
+  const propPicks = [];
+  for(const mk of MLB_PARLAY_PROP_MARKETS){
+    const pick = bestPropInMarket(allProps, mk, used);
+    if(pick){ propPicks.push(pick); used.add(pick.player_id); }
+  }
+  propPicks.sort((a,b) => {
+    const aReal = a.edge != null, bReal = b.edge != null;
+    if(aReal !== bReal) return aReal ? -1 : 1;
+    return aReal ? b.edge - a.edge : b.prob - a.prob;
+  });
+  propPicks.slice(0, MLB_PARLAY_PROPS).forEach(l => legs.push(l));
+  return legs;
 }
 
 // A dedicated HR-only special (up to 3 legs), separate from the mixed
@@ -3679,7 +3739,7 @@ function mlbParlayCardsHtml(dayData, selectedDate){
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   const flinFlonLegs = collectFlinFlonLegs(dayData.games);
   return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
-      note: "shaped like a real parlay -- up to 2 moneylines, the day's best Total Bases pick, plus 2 more best-available props -- real edge preferred over model estimate wherever DraftKings has posted a price"
+      note: `shaped like a realistic parlay -- up to ${MLB_PARLAY_MONEYLINES} moneylines plus up to ${MLB_PARLAY_PROPS} player props from different markets (Total Bases, Hits or RBI), never two of the same stat, and fewer when no pick in a market clears the coin-flip bar. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit. Anytime HR has its own card below. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
     })
     + parlayCardHtml(hrLegs, 'MLB', {
         title: 'HR SPECIAL', accentClass: 'parlay-special',
@@ -4454,7 +4514,15 @@ async function showServerAuthStatus(){
   ACCOUNT = await fetchAccountStatus();
   PAID = !!(ACCOUNT && ACCOUNT.paid);
   if(ACCOUNT && ACCOUNT.signedIn){
-    badge.textContent = ACCOUNT.paid ? '· server ✓ · paid' : '· server ✓';
+    // A cancelled-but-still-running subscription reads as plain "paid"
+    // otherwise, which looks like the cancellation silently failed.
+    let tail = '';
+    if(ACCOUNT.paid){
+      tail = ACCOUNT.cancelAtPeriodEnd
+        ? ` · ends ${fmtShortDate(new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10))}`
+        : ' · paid';
+    }
+    badge.textContent = `· server ✓${tail}`;
     badge.style.color = 'var(--green)';
     badge.title = `Server verified this session (user ${ACCOUNT.userId})`;
   }else{

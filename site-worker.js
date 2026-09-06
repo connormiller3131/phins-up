@@ -26,8 +26,9 @@
  * matter what any check here did. Routing it through the Worker gives the
  * paid tiers a single door to lock.
  *
- * Fourth job: Clerk session verification, at /api/whoami. See GATE_ENFORCED
- * below for why the lock is not yet turned on.
+ * Fourth job: accounts and billing. Clerk session verification backs
+ * /api/whoami; Stripe checkout, the billing portal and the subscription
+ * webhook decide which of the two payloads above a visitor receives.
  */
 
 const GATED_KEY = "current";
@@ -43,13 +44,7 @@ const ACCOUNT_KEY = "current:account";
 const CLERK_ISSUER = "https://clerk.phinsup.net";
 const CLERK_JWKS_URL = `${CLERK_ISSUER}/.well-known/jwks.json`;
 
-// Two-step rollout. While false, /api/gated answers everyone exactly as it
-// did before, and /api/whoami reports what verification WOULD have decided.
-// That lets the token path be proven against the real deployed Worker before
-// anything depends on it -- a verification bug flipped straight on would
-// take every prop off the site for every visitor, which is precisely the
-// failure this site already had once tonight.
-// Now enforced. The rollout ran in two steps on purpose: /api/whoami shipped
+// Enforced. The rollout ran in two steps on purpose: /api/whoami shipped
 // first with this false and was confirmed returning signedIn:true for a real
 // signed-in session against the live Worker, before anything depended on it.
 // identify() is the same code path in both endpoints, so that check exercised
@@ -283,6 +278,10 @@ async function serveWhoami(request, env) {
     {
       ...who,
       enforced: GATE_ENFORCED,
+      // So the page can say "US only" up front instead of showing buy
+      // buttons that are going to 403 the moment they are clicked.
+      country: (request.cf && request.cf.country) || null,
+      canSubscribe: !request.cf || !request.cf.country || request.cf.country === "US",
       plan: ent?.plan || "free",
       subscriptionStatus: ent?.status || null,
       paid: isPaid(ent),
@@ -306,6 +305,24 @@ async function serveCheckout(request, env) {
   const price = PRICE_IDS[plan];
   if (!price) {
     return Response.json({ error: "unknown plan" }, { status: 400, headers: NO_STORE });
+  }
+
+  // Sales are limited to the US for now. This is a tax decision, not a
+  // product one: a non-EU seller owes VAT on digital services to EU consumers
+  // from the FIRST sale, with no threshold and no grace period, which would
+  // mean an OSS registration the day one European subscribes. US
+  // economic-nexus thresholds, by contrast, are high enough to be a long way
+  // off. Cloudflare resolves the country at the edge, so this costs nothing.
+  //
+  // Deliberately at checkout only: existing subscribers who travel keep their
+  // access, because the obligation attaches to where a sale is made, not to
+  // where the page is later read from.
+  const country = request.cf && request.cf.country;
+  if (country && country !== "US") {
+    return Response.json(
+      { error: "Subscriptions are currently available in the US only.", country },
+      { status: 403, headers: NO_STORE },
+    );
   }
 
   const origin = new URL(request.url).origin;

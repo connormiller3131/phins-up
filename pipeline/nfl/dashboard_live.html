@@ -4401,6 +4401,15 @@ function billingControlsHtml(slot){
     slot.append(manage);
     return;
   }
+  // Non-US visitors are told before they click, rather than after a 403.
+  if(ACCOUNT.canSubscribe === false){
+    const note = document.createElement('span');
+    note.className = 'auth-who';
+    note.textContent = '· subscriptions US only';
+    note.title = `Not yet available in ${ACCOUNT.country || 'your country'}`;
+    slot.append(note);
+    return;
+  }
   ['monthly', 'yearly'].forEach(plan => {
     const b = document.createElement('button');
     b.className = 'auth-btn';

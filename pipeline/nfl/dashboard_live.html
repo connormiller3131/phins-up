@@ -4536,7 +4536,20 @@ async function showServerAuthStatus(){
     }
     badge.textContent = `· server ✓${tail}`;
     badge.style.color = 'var(--green)';
-    badge.title = `Server verified this session (user ${ACCOUNT.userId})`;
+    // The full server-side view of this account, on hover. Inferring
+    // subscription state from a two-word badge is how an evening gets lost;
+    // this is also the first thing worth asking a real customer for when
+    // they report that something they paid for is missing.
+    badge.title = [
+      `user            ${ACCOUNT.userId}`,
+      `plan            ${ACCOUNT.plan}`,
+      `status          ${ACCOUNT.subscriptionStatus || '-'}`,
+      `paid            ${ACCOUNT.paid}`,
+      `cancelling      ${ACCOUNT.cancelAtPeriodEnd}`,
+      `period ends     ${ACCOUNT.currentPeriodEnd
+          ? new Date(ACCOUNT.currentPeriodEnd * 1000).toISOString().slice(0,10) : '-'}`,
+      `country         ${ACCOUNT.country || '-'}`,
+    ].join(String.fromCharCode(10));
   }else{
     badge.textContent = '· server ✗';
     badge.style.color = 'var(--red)';

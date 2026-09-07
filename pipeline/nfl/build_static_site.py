@@ -13,6 +13,7 @@ that copy is gone: it was 0.9 MB committed twice a day for a convention
 nothing uses any more. Cloudflare solves the same routing problem its own
 way, via wrangler.toml's not_found_handling and site-worker.js's own
 404 -> index.html fallback."""
+import datetime
 import pathlib
 import sys
 import json
@@ -21,6 +22,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.common.gated_payload import build_gated_payload
+from pipeline.nfl import build_game_pages
 NFL_DATA_PATH = ROOT / "data" / "nfl" / "dashboard_current_week.json"
 MLB_DATA_PATH = ROOT / "data" / "mlb" / "dashboard_current_slate.json"
 NHL_DATA_PATH = ROOT / "data" / "nhl" / "dashboard_current_slate.json"
@@ -88,6 +90,13 @@ def main():
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         f.write(out)
+    # AFTER build_gated_payload, which has already popped `props` off every
+    # game -- so the dicts handed to the page builder physically cannot carry
+    # paid data into a publicly served file. Reordering these two would turn
+    # a safe-by-construction guarantee into a review problem.
+    build_game_pages.build(nfl_data, OUT_PATH.parent, OUT_PATH.parent / "results",
+                           datetime.date.today().isoformat())
+
     print(f"Free page {OUT_PATH.stat().st_size/1e6:.2f} MB inlined; "
           f"gated payload {GATED_PATH.stat().st_size/1e6:.2f} MB held back "
           f"({len(gated['nfl'])} NFL games, {len(gated['mlb'])} MLB games)")

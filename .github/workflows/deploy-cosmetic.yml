@@ -79,7 +79,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html
+          # docs/nfl/ holds the pre-rendered per-game pages, and -A inside
+          # it is required rather than optional: build_game_pages.py wipes
+          # and rebuilds that tree, so a game that disappears has to be
+          # staged as a DELETION or its page stays live serving numbers the
+          # pipeline no longer produces.
+          git add docs/index.html docs/sitemap.xml docs/robots.txt
+          git add -A docs/nfl
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

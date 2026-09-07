@@ -205,6 +205,7 @@ const ACTIVE_STATUSES = new Set(["active", "trialing"]);
 // by Clerk, which nobody else can mint.
 const COMP_USER_IDS = new Set([
   "user_3IwWOrT9zXWv6gaUIdJKRSkFecU",   // Connor - site owner
+  "user_3Iyh6kdAQ7CMH8rso3SOXZGEcoz",   // comp - friend, 2026 season
 ]);
 
 // Comp can also be granted WITHOUT a deploy by writing a KV key named

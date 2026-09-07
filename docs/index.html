@@ -341,6 +341,8 @@
     border-radius:4px;
     vertical-align:middle;
   }
+  .game-permalink{color:var(--text-dim);text-decoration:none;border-bottom:1px dotted var(--line);}
+  .game-permalink:hover{color:var(--green);border-bottom-color:var(--green);}
   .venue-line{
     font-family:var(--mono);
     font-size:11px;
@@ -1950,10 +1952,32 @@ function populateWeekSelect(selected){
   ).join('');
 }
 
+// Link to the pre-rendered page for a fixture (build_game_pages.py). Without
+// this the generated pages are orphans: reachable from sitemap.xml and from
+// each other, but with no link from the site itself, which both hides them
+// from readers and tells search engines nothing on the site considers them
+// worth pointing at.
+//
+// The slug rule is duplicated from that script's game_slug() rather than
+// shared, since one is Python at build time and the other JavaScript in the
+// browser. It is kept deliberately trivial -- lowercase the last word of each
+// full team name -- because a clever rule is one that drifts and 404s.
+function nflGamePageUrl(g, week){
+  const nick = (full, abbr) => {
+    const parts = String(full || '').trim().split(/\s+/);
+    return (parts.length > 1 ? parts[parts.length - 1] : (abbr || 'team')).toLowerCase();
+  };
+  return `/nfl/${DATA.season}/week-${week}/${nick(g.awayName, g.awayAbbr)}-vs-${nick(g.homeName, g.homeAbbr)}`;
+}
+
 function fmtKickoffLine(g){
   const parts = [];
   if(g.weekday || g.gameday) parts.push([g.weekday, g.gameday].filter(Boolean).join(', '));
-  if(g.gametime) parts.push(g.gametime + ' local');
+  // nflverse's gametime is EASTERN, not stadium-local -- the slate clusters
+  // on 13:00 / 16:25 / 20:20, which are the league's ET windows and would be
+  // meaningless as local times across four time zones. Labelled 'local' this
+  // told a Seattle reader a 20:20 ET kickoff started at 8:20 their time.
+  if(g.gametime) parts.push(g.gametime + ' ET');
   return parts.join(' · ');
 }
 
@@ -2305,7 +2329,7 @@ function renderGames(week){
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
-          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}</div>
+          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')} · <a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
         </div>
         <div class="game-top-actions">${collapseToggleHtml()}</div>
       </div>

@@ -706,6 +706,64 @@ async function serveGated(request, env) {
   });
 }
 
+// ---- crawler-facing routing ---------------------------------------------
+// wrangler.toml sets not_found_handling = "single-page-application", so the
+// asset layer answers EVERY unmatched path with index.html at 200. That is
+// correct for the client-side router (/nfl/week1 has to survive a refresh)
+// and wrong for everything else: /robots.txt, /sitemap.xml, and any typo'd,
+// stale or scraped URL all came back as 414 KB of HTML with a 200 status.
+// To a crawler that is a soft 404 -- an unbounded space of URLs that all
+// claim to exist and all return the same page -- which is one of the few
+// things Google will actively demote a site for.
+//
+// So the paths the app genuinely owns are enumerated here and everything
+// else gets an honest 404. This is the same route table as
+// applyRouteFromLocation() in dashboard_live.html, seen from the server;
+// adding a route there means adding it here.
+const APP_ROUTES = /^\/(?:(?:nfl|mlb|nhl)(?:\/(?:season|week\d{1,2}|\d{4}-\d{2}-\d{2}))?)?\/?$/;
+
+// A path with an extension is asking for a real file (/og.png,
+// /results/nfl_2026_wk01_MIA_BUF.json). Those still go to ASSETS -- but the
+// SPA fallback means a MISSING one comes back as index.html at 200 too, so
+// a non-.html path answered with HTML is that fallback and is really a 404.
+const FILE_PATH = /\.[a-z0-9]{2,6}$/i;
+
+const ROBOTS_TXT = `User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://phinsup.net/sitemap.xml
+`;
+
+function notFound() {
+  return new Response(
+    `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">` +
+    `<title>Not found - Phins Up</title>` +
+    `<body style="background:#0E1A1C;color:#EDEFF2;font:14px system-ui;padding:48px">` +
+    `<h1 style="font-size:20px">Not found</h1>` +
+    `<p>No page at this address. <a style="color:#00C2B8" href="/">Go to Phins Up</a>.</p>`,
+    { status: 404, headers: { "Content-Type": "text/html; charset=utf-8", ...NO_STORE } });
+}
+
+function serveSitemap() {
+  // Only "/" is listed, and that is deliberate rather than an oversight.
+  // Every other path serves byte-identical HTML whose <link rel="canonical">
+  // points back at "/", so listing them would be asking Google to crawl
+  // pages it is then explicitly told to ignore. This file grows the day the
+  // site renders real per-page content with per-page canonicals.
+  const today = new Date().toISOString().slice(0, 10);
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?>
+` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+` +
+    `  <url><loc>https://phinsup.net/</loc><lastmod>${today}</lastmod>` +
+    `<changefreq>daily</changefreq></url>
+</urlset>
+`,
+    { status: 200, headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -715,7 +773,22 @@ export default {
     if (url.pathname === "/api/checkout") return serveCheckout(request, env);
     if (url.pathname === "/api/portal") return servePortal(request, env);
 
+    if (url.pathname === "/robots.txt") {
+      return new Response(ROBOTS_TXT, { status: 200, headers: {
+        "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+    }
+    if (url.pathname === "/sitemap.xml") return serveSitemap();
+
+    const isFile = FILE_PATH.test(url.pathname);
+    if (!isFile && !APP_ROUTES.test(url.pathname)) return notFound();
+
     let response = await env.ASSETS.fetch(request);
+    // The SPA fallback hands back index.html for a missing asset, so a path
+    // that asked for a file and got HTML is a 404 wearing a 200.
+    if (isFile && !url.pathname.endsWith(".html") &&
+        (response.headers.get("content-type") || "").includes("text/html")) {
+      return notFound();
+    }
     if (response.status === 404) {
       const indexUrl = new URL(request.url);
       indexUrl.pathname = "/index.html";

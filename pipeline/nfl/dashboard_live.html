@@ -1139,9 +1139,9 @@
     <p class="eyebrow" id="eyebrow"></p>
     <h1>PHINS <span>UP</span></h1>
     <p class="sub">Real upcoming games, real posted opening lines, and a real fitted model — no hand-typed ratings or guessed constants. "Model %" is the Elo rating from the backtested pipeline, carried forward through every completed game into this week. Edit "Your %" if you know something the model doesn't.</p>
-    <div class="metabar">
+    <div class="metabar" id="nfl-status-meta">
       <span class="dot"></span>
-      <b>Not yet played</b> — this is a genuine future-week projection, not a replay. Opening lines shown were pulled from nflverse's live schedule feed.
+      <b>Not yet played</b> — a real projection made before kickoff, not a replay. Opening lines shown were pulled from nflverse's live schedule feed.
     </div>
     <div class="metabar model">
       <span class="dot"></span>
@@ -1250,7 +1250,7 @@
   <header>
     <p class="eyebrow" id="nhl-eyebrow"></p>
     <h1>PHINS <span>UP</span></h1>
-    <p class="sub">Same Elo architecture as NFL/MLB, fit and backtested on real 2018-2026 game results (api-web.nhle.com), carried forward daily. Phase 1 — model win probability only; no player props or real market odds wired up here yet.</p>
+    <p class="sub">Same Elo architecture as NFL/MLB, fit and backtested on real 2018-2026 game results (api-web.nhle.com), carried forward daily. Win probability only for now — no player props or real market odds are wired up here yet.</p>
     <div class="metabar">
       <span class="dot"></span>
       <b id="nhl-meta"></b>
@@ -1303,10 +1303,11 @@
       </details>
       <details>
         <summary>Subscriptions &amp; Payments</summary>
-        <p><b>What's free and what isn't.</b> Anyone can view game cards, box scores and team stats without an account. A free account adds the model's picks — the suggested parlay, the TD and HR Specials, and weekly picks. Paid plans add the full player-prop tables and everything built from them.</p>
+        <p><b>What's free and what isn't.</b> Anyone can view game cards, box scores, team stats, standings and the track record without an account. A free account adds the model's picks — the suggested parlay, the same-game parlays, the TD and HR Specials, and weekly picks. Paid plans add the full player-prop tables, and the build-your-own parlay that runs off them.</p>
         <p><b>Plans and prices.</b> $5 per month, or $40 per year, in US dollars. Prices exclude any sales tax or VAT, which is added at checkout where it applies.</p>
+        <p><b>Where you can subscribe.</b> Subscriptions are currently sold in the United States only. Everything that's free stays available everywhere; outside the US the site says so rather than offering you a plan you can't buy. If you subscribe in the US and then travel, your access travels with you.</p>
         <p><b>Renewal.</b> Both plans renew automatically — monthly plans on the same date each month, yearly plans on the same date each year — and keep renewing until you cancel. We'll email you before a yearly plan renews.</p>
-        <p><b>Cancelling.</b> Cancel any time from your account page. Cancellation takes effect at the end of the period you have already paid for, and you keep full access until then. There is no cancellation fee, and you don't have to email anyone or give a reason.</p>
+        <p><b>Cancelling.</b> Cancel any time from the Manage billing button at the top of the site, which opens your billing page at Stripe. Cancellation takes effect at the end of the period you have already paid for, and you keep full access until then. There is no cancellation fee, and you don't have to email anyone or give a reason.</p>
         <p><b>Refunds.</b> Subscription payments aren't refundable, including partial periods. If you cancel, you keep access until the end of the period you've already paid for, but the payment already taken isn't returned. Cancel before your renewal date and you're never charged for a period you didn't want.</p>
         <p>Two exceptions. If we charge you in error — a double charge, or a charge after you cancelled — we refund it in full whenever we find out, however long it's been. And if you're in the UK or EU, you have a statutory right to cancel a digital purchase within 14 days; nothing here removes that.</p>
         <p><b>Price changes.</b> If a price changes, we'll email you at least 30 days before it applies to you, so you can cancel first if you'd rather not pay it.</p>
@@ -1596,7 +1597,12 @@ function renderParlayBuilderPanel(sport){
   if(!root) return;
   const legs = PARLAY_BUILDER[sport];
   if(!legs.length){
-    root.innerHTML = `<div class="placeholder">Tap "+ parlay" on any prop below to build your own combination -- you'll see the model's combined probability here, plus the real combined odds whenever every leg you've picked has a real DraftKings price.</div>`;
+    // The "+ parlay" buttons live on prop rows, which are behind the paid
+    // tier -- telling a free visitor to tap one sends them looking for a
+    // control that isn't on their page.
+    root.innerHTML = PAID
+      ? `<div class="placeholder">Tap "+ parlay" on any prop below to build your own combination -- you'll see the model's combined probability here, plus the real combined odds whenever every leg you've picked has a real DraftKings price.</div>`
+      : upgradePromptHtml('Build-your-own parlays');
     return;
   }
   const rows = legs.map(l => `
@@ -1753,7 +1759,7 @@ function sourceBadge(p){
   // through the projection model) -- never label the latter like a
   // sportsbook line, since it isn't one.
   return p.dk_line != null
-    ? `<span class="source-badge source-dk" title="Real DraftKings line, pulled at generation time">DK LINE</span>`
+    ? `<span class="source-badge source-dk" title="Real DraftKings line, as of the last site refresh">DK LINE</span>`
     : `<span class="source-badge source-model" title="Our model's own estimate -- not a market line, no sportsbook has priced this">MODEL EST.</span>`;
 }
 
@@ -1979,7 +1985,14 @@ function signInPromptHtml(what){
 // all. A signed-in free user being told to "sign in" for something they are
 // already signed in for reads as a bug, so this offers the actual next step.
 function upgradePromptHtml(what){
-  if(!SIGNED_IN) return signInPromptHtml(what);
+  // Signed out, this used to fall through to signInPromptHtml -- which told
+  // the visitor these came with a FREE account. They don't, and they would
+  // only have found that out after signing up. Name the real tier either
+  // way; only the next step they can actually take changes.
+  if(!SIGNED_IN){
+    return `<div class="placeholder">${what} come with a subscription ($5/mo or $40/yr) -- sign in first, then pick a plan.
+      <button class="auth-btn" onclick="window.Clerk && window.Clerk.openSignIn()">Sign in</button></div>`;
+  }
   if(ACCOUNT && ACCOUNT.canSubscribe === false){
     return `<div class="placeholder">${what} come with a subscription, which isn't
       available in your country yet.</div>`;
@@ -2094,9 +2107,9 @@ function parlayCardHtml(legs, sport, opts){
 
 let CURRENT_NFL_WEEK_DATA = null; // set below, read by loadNflBoxScore -- avoids threading week number through the inline ontoggle string
 
-// Mirrors MLB's mlbParlayCardsHtml: Suggested Parlay (5 legs -- up to 2
-// moneylines plus one best pick each from Rushing/Passing/Receiving Yds)
-// and a TD Special (3 Anytime TD legs, different teams).
+// Mirrors MLB's mlbParlayCardsHtml: Suggested Parlay (up to 3 moneylines the
+// model itself has winning, plus up to 2 player props from different yardage
+// markets) and a TD Special (3 Anytime TD legs, different teams).
 // Third tab level, nested inside the NFL Games sub-panel. Scoped to that
 // panel's own class names so switching here never touches the sport tabs
 // above it or the per-game prop toggles below it.
@@ -2149,11 +2162,10 @@ function nflWeeklyPicksGroups(weekData, topN){
 }
 
 // Deliberately pinned to the CURRENT week and not to the week dropdown.
-// Every future week is projected off today's depth chart, so a Week 15 card
-// built in August would be a list of players who may not even be starters
-// by then -- presenting that as "picks" would dress up a stale roster as a
-// forecast. Browsing other weeks' games still works; the picks card just
-// stays on the week that's actually actionable.
+// Future weeks are no longer published at all (build_static_site drops
+// them), so the dropdown only ever offers completed weeks plus this one --
+// and a "picks" card that followed it back into a played week would be
+// offering picks on games that already have results.
 function renderNflWeeklyPicks(){
   const root = document.getElementById('nfl-weekly-picks');
   if(!root) return;
@@ -2168,7 +2180,7 @@ function renderNflWeeklyPicks(){
   root.innerHTML = `
     <div class="season-section">
       <div class="season-section-title">Week ${week} Projected Leaders <span class="props-sample-tag">(current week)</span></div>
-      <div class="picks-note">The model's highest projected producers for week ${week}, across every starter on every team's depth chart. This card always shows the current week, even while you browse another week's games -- later weeks are projected off today's depth chart, so they would list players who may not still be starting by then. Ranked by projected production, not by how likely each is to clear his own line: that line is set from the projection itself, so it sits near 50% for everyone and says nothing about who is actually good. Anytime TD is the exception and ranks by real probability, since it is a yes/no with no line to clear. These are projections, not market prices.</div>
+      <div class="picks-note">The model's highest projected producers for week ${week}, across every starter on every team's depth chart. Weeks that haven't been played yet aren't published, so this is always the week actually coming up; the week dropdown only goes back to completed weeks, and this card stays pinned to the upcoming one. Ranked by projected production, not by how likely each is to clear his own line: that line is set from the projection itself, so it sits near 50% for everyone and says nothing about who is actually good. Anytime TD is the exception and ranks by real probability, since it is a yes/no with no line to clear. These are projections, not market prices.</div>
       ${leadersGridHtml(groups)}
     </div>
   `;
@@ -2186,7 +2198,7 @@ function nflParlayCardsHtml(weekData){
         title: 'TD SPECIAL', accentClass: 'parlay-special',
         note: (tdRealCount
           ? `top Anytime TD picks from 3 different teams -- ${tdRealCount} vs. a real DK price, ${tdLegs.length - tdRealCount} model-only where DK hasn't posted one`
-          : `model's highest Anytime TD probabilities from 3 different teams -- DraftKings hasn't posted Anytime TD prices for this week's featured game(s) yet, so these aren't graded against a real edge`)
+          : `model's highest Anytime TD probabilities from 3 different teams -- DraftKings hadn't posted Anytime TD prices for any of this week's games as of the last refresh, so these aren't graded against a real edge`)
           + `. Featured picks are limited to players actually getting the ball (${TD_MIN_OPP_PER_GM}+ carries and targets per game): a backup who happened to score in half his recent games shows the same trailing rate as a starter, and grading that against a real sportsbook price manufactures a big-looking edge out of our own noise rather than a genuine mispricing`,
         emptyText: 'No Anytime TD projections available yet for this week. Check back once the model has run.',
       });
@@ -2199,9 +2211,18 @@ function renderGames(week){
   populateWeekSelect(selectedWeek);
 
   document.getElementById('eyebrow').textContent = `NFL · Week ${selectedWeek} · ${DATA.season} Season`;
+
+  // Completed weeks stay in the dropdown, so this banner cannot be static:
+  // left as "Not yet played" it would sit directly above final scores.
+  const statusMeta = document.getElementById('nfl-status-meta');
+  if(statusMeta){
+    statusMeta.innerHTML = selectedWeek < DATA.current_week
+      ? `<span class="dot"></span><b>Already played</b> — week ${selectedWeek} is finished. Final scores and how the model's pick did show on each game once it has been graded.`
+      : `<span class="dot"></span><b>Not yet played</b> — a real projection made before kickoff, not a replay. Opening lines shown were pulled from nflverse's live schedule feed.`;
+  }
   const ep = DATA.elo_params;
   document.getElementById('elo-meta').textContent =
-    `How the win % is built: every team carries a power rating that rises when they win and falls when they lose, weighted by how strong the opponent was and how decisive the result. It was tuned on seven seasons (2019-2025) and then tested on a season it had never seen, where it called 65.5% of games correctly. The betting market got 65.9% on those same games, so it is still a little sharper than we are. Player projections use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}), comparing what a player has actually been producing against what the upcoming defense has actually been giving up to his position. Weeks the sportsbooks have not priced yet show our projection only, with nothing to compare it against. Full technical detail is at the bottom of the page.`;
+    `How the win % is built: every team carries a power rating that rises when they win and falls when they lose, weighted by how strong the opponent was and how decisive the result. It was tuned on seven seasons (2019-2025) and then tested on a season it had never seen, where it called 65.5% of games correctly. The betting market got 65.9% on those same games, so it is still a little sharper than we are. Player projections use each team's current depth chart (as of ${DATA.depth_chart_as_of.slice(0,10)}), comparing what a player has actually been producing against what the upcoming defense has actually been giving up to his position. Anything the sportsbooks have not priced shows our projection only, with nothing to compare it against. Full technical detail is at the bottom of the page.`;
 
   const root = document.getElementById("games");
   root.innerHTML = "";
@@ -2315,8 +2336,8 @@ function renderGames(week){
   });
 
   document.getElementById("foot").innerHTML =
-    `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is a live DraftKings line pulled at generation time, where DK has one posted -- for most weeks this shows "—" since books don't price a game that far out. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
-    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price pulled at generation time; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real coverage is currently Anytime TD for the current week only (per-event odds pulls cost API credits, and books don't post most props for future weeks anyway) -- everything else is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. The Anytime TD model also reads how much work a player is actually getting (recent carries plus targets), not just how often he has been scoring. That matters more than it sounds: on real 2022-2025 games, players carrying a hot recent scoring rate into a game went on to score 13.6% of the time when they were touching the ball under twice a game, versus 47.3% for players touching it 12+ times. Without that, a backup on a short hot streak looked identical to a genuine every-down threat, and the TD SPECIAL card kept featuring the backup. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
+    `<b>Fair win % (pregame)</b> is the real no-vig probability from this week's actual posted opening moneylines. <b>Fair win % (current)</b> is the DraftKings line as of the last site refresh, where DK has one posted. Both show "—" until a line exists. <b>Model win %</b> is our Elo rating, fit on 2019-2025 and backtested out-of-sample, then carried forward through every real completed game since. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own pregame fair % -- pregame only, by design, so it reflects the model's read at the same moment the line was set rather than chasing whatever the market has since moved to. "Your %" pre-fills with the model number — edit it if you know something it doesn't (injuries, coaching changes, roster moves since the depth chart snapshot). Edge = Your % minus pregame Fair %. ` +
+    `<b>Player props:</b> each team's full starting offense (QB, RB1-2, WR1-3, TE1) as of ${DATA.depth_chart_as_of.slice(0,10)}, with Model % from a ridge/logistic model fit on the same 2019-2025 data (real production vs. real opponent-allowed rates, plus each team's real Vegas-implied point total for that game -- spread and total pulled from the same real line data, no extra cost -- since a team implied for 30 throws/runs more than one implied for 17, the same signal real books lean on to set these lines). A <b>DK LINE</b> badge means that number is a real DraftKings price, as of the last site refresh; a <b>MODEL EST.</b> badge means it's our own projection with no market line behind it yet -- we don't dress up a trailing average as if it were a real sportsbook number. Real prop odds currently cover one market, Anytime TD, and only for the week being played: per-event odds pulls cost API credits, and books don't post player props until close to kickoff. Every other market is model-only until we expand real-odds coverage. Yardage props show a ladder of lines in steps of 10 around the model's projection. <b>TAKE/MAYBE/PASS/RISKY</b> on Anytime TD grades the model's edge against the real DK price: TAKE &ge;5% edge, MAYBE 0-5%, PASS &lt;0% edge, RISKY means no DK line is posted yet so there's nothing to grade against. The Anytime TD model also reads how much work a player is actually getting (recent carries plus targets), not just how often he has been scoring. That matters more than it sounds: on real 2022-2025 games, players carrying a hot recent scoring rate into a game went on to score 13.6% of the time when they were touching the ball under twice a game, versus 47.3% for players touching it 12+ times. Without that, a backup on a short hot streak looked identical to a genuine every-down threat, and the TD SPECIAL card kept featuring the backup. Team changes since last season (trades, free agency) are reflected via the current depth chart, but scheme/QB-fit effects on a player's new team aren't modeled. This is a decision-support tool, not betting advice, and it doesn't know your bankroll.`;
 
   const searchBox = document.getElementById("nfl-search");
   if(searchBox && searchBox.value) applySearchFilter("games", searchBox.value);
@@ -3141,10 +3162,10 @@ function buildRealisticParlay(games, opts){
   const used = new Set();
   mlbMoneylineCandidates(games, opts).slice(0, opts.maxMoneylines || 2).forEach(l => legs.push(l));
 
-  // Anytime HR is no longer a guaranteed slot here -- HR Special already
-  // covers home runs on its own, so forcing one into this parlay too was
-  // redundant. It can still show up below via the filler pool if it's
-  // genuinely the best remaining pick, just not reserved.
+  // Anytime HR is not a slot here at all -- HR Special already covers home
+  // runs on its own, and it is not in the filler pool below either (see the
+  // note on `fillers`, which explains why leaving it there meant it won
+  // every time by exemption rather than by merit).
   // Annotate each game's Batting props with whether THAT game's real lineup
   // is actually posted (per-game, not pool-wide -- a cross-game parlay can
   // mix a game with a posted lineup and one without, and the "no lineup
@@ -3611,6 +3632,10 @@ function collectMlbSameGameParlayLegs(g){
 }
 
 function mlbSameGameParlaySection(date, g, idx){
+  // Account-tier content. This one needs the explicit check: it always
+  // reserves its own game's moneyline, which lives in the FREE payload, so
+  // without it a signed-out visitor got a one-leg parlay on every game.
+  if(!SIGNED_IN) return "";
   const legs = collectMlbSameGameParlayLegs(g);
   if(!legs.length) return "";
   return `
@@ -3647,6 +3672,9 @@ function collectNflSameGameParlayLegs(g){
 }
 
 function nflSameGameParlaySection(g, idx){
+  // Prop-only, so it already collapses to nothing without the gated payload
+  // -- gated explicitly anyway rather than resting on that side effect.
+  if(!SIGNED_IN) return "";
   const legs = collectNflSameGameParlayLegs(g);
   if(!legs.length) return "";
   return `
@@ -3739,7 +3767,7 @@ function renderMLBGames(selectedDate){
       ? `. On top of that it factors in who is actually pitching today -- the starter's recent quality and how deep he usually goes, the bullpen behind him, how well the lineup has been hitting, and whether it is a division game. Adding all of that beat the team rating on its own when tested on games it had never seen, though by a modest amount: baseball is genuinely hard to predict, since even a strong team loses roughly 40% of the time.`
       : `. Today's pitching detail was not available for this run, so these are team-strength-only numbers.`) +
     ` Generated ${dayData.generated_at}.` +
-    (!isToday ? ` ${dayData.finalized ? 'This day is over -- final results shown, frozen at generation time, never rewritten.' : 'Future day -- model-only projection, no live odds/lineups posted this far out yet.'}` : '');
+    (!isToday ? ` ${dayData.finalized ? 'This day is over. The model numbers are the ones that were on screen before first pitch, never rewritten afterwards.' : 'Future day -- model-only projection, no live odds/lineups posted this far out yet.'}` : '');
 
   if(!dayData.games.length){
     root.innerHTML = `<div class="placeholder">No MLB games scheduled for ${selectedDate}.</div>`;
@@ -3817,7 +3845,7 @@ function renderMLBGames(selectedDate){
   });
 
   document.getElementById("mlb-foot").innerHTML =
-    `<b>Fair win %</b> comes from DraftKings' current moneyline, converted to a no-vig probability, whenever a line is posted (some games don't have one yet at generation time). <b>GOOD VALUE</b> flags a side where Model win % beats that market's fair %. <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons, including the shortened 60-game 2020 season), refined by a starting-pitcher/bullpen/offense blend and backtested out-of-sample on every 2026 game played so far: Brier 0.2462, 55.4% accuracy vs. team-Elo-alone's 0.2478 and 54.6%. When the blend isn't available for a game it falls back to team-only Elo. ` +
+    `<b>Fair win %</b> comes from DraftKings' current moneyline, converted to a no-vig probability, whenever a line is posted (some games don't have one yet at the last refresh). <b>GOOD VALUE</b> flags a side where Model win % beats that market's fair %. <b>Model win %</b> is our Elo rating, fit on 2019-2025 (seven seasons, including the shortened 60-game 2020 season), refined by a starting-pitcher/bullpen/offense blend and backtested out-of-sample on every 2026 game played so far: Brier 0.2462, 55.4% accuracy vs. team-Elo-alone's 0.2478 and 54.6%. When the blend isn't available for a game it falls back to team-only Elo. ` +
     `<b>Player props:</b> each team's probable starting pitcher (from MLB's own schedule feed) and every hitter on the real active 26-man roster. Injured or inactive players don't show up. Once a real lineup is posted, the 9 confirmed starters are grouped above the rest of the roster, in their real batting order, with a <span class="hit" style="font-family:var(--mono);font-size:9.5px;">&#10003; Confirmed starter</span> badge. Everyone else is grouped below as bench, sorted by recent playing time, badged <span class="miss" style="font-family:var(--mono);font-size:9.5px;">&#9888; Not in today's confirmed lineup</span>, so a platoon partner or reserve is still shown, just not presented as if they're starting. If no lineup is posted yet, nobody's grouped or badged rather than guessing. That badge updates live, straight from MLB's own real lineup, usually well before first pitch (see Live Batter/Pitcher Stats below). Batting props: Hits and Total Bases (shown as a small ladder of lines), Walks, RBI, Anytime HR. Pitching props: Strikeouts, Hits Allowed, Walks Allowed, Runs Allowed, Outs Recorded. RBI and the Runs/Hits/Walks Allowed pitching props are derived from Statcast's play-by-play data, checked against a real box score before shipping. Outs Recorded is just innings pitched, relabeled. Stolen bases and earned-run splits aren't included: Statcast's pitch-level feed doesn't reliably attribute steals to a specific player, and separating earned from unearned runs needs an official scorer's judgment call we can't get from the data. Model % comes from a ridge/logistic model fit on 2024-2026 Statcast data, comparing a player's real production to the opponent's real allowed rate, the same approach as NFL. One thing we tried and didn't ship: matching batters to pitchers by real Statcast pitch-style similarity, not just which side they bat or throw from. It made total-bases and home-run projections measurably worse in testing, not better, likely too few at-bats per style group to trust. The Anytime HR "either/or" special multiplies each player's own model probability together, assuming independence, which slightly overstates the real combined chance. ` +
     `<b>★ Featured games:</b> a couple of the day's most competitive matchups also show real DraftKings prop lines and prices, for markets with a direct match (Hits, Total Bases, Walks, RBI, Anytime HR, Pitcher Strikeouts/Hits/Walks/Outs). Model % gets recomputed against DK's actual line where available, marked with a <b>DK LINE</b> badge; everything else carries a <b>MODEL EST.</b> badge and is our own trailing-average projection, never dressed up to look like a real market number. Anytime HR gets a TAKE/MAYBE/PASS/RISKY grade against the real price, the same edge-based tiers as NFL's Anytime TD. Only a couple of games get real odds each refresh, since per-game prop-odds API calls cost credits per market on the free tier. Those odds are a snapshot from the last site refresh (about twice daily), not live: the odds API key can't be exposed on a public page the way the free scores feed can. ` +
     `<b>Live Batter/Pitcher Stats</b> (separate dropdown per game) is genuinely live: who's currently batting or pitching, and each shown player's real in-game stat line, fetched straight from MLB's free public API in your browser every 60 seconds, independent of the site's own refresh schedule.`;
@@ -3958,7 +3986,7 @@ function renderNHLGames(selectedDate){
   });
 
   document.getElementById("nhl-foot").innerHTML =
-    `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. No real DraftKings odds or player props are wired up yet for NHL -- that's a real, its own future phase of this pipeline, not left out to hide anything.`;
+    `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. No real DraftKings odds or player props are wired up yet for NHL -- that is a genuine gap and its own future phase of this pipeline, not something left out to hide anything.`;
 
   const searchBox = document.getElementById("nhl-search");
   if(searchBox && searchBox.value) applySearchFilter("nhl-games", searchBox.value);
@@ -4346,6 +4374,10 @@ function rerenderAfterGatedMerge(){
   const day = document.getElementById('mlb-day-select');
   renderMLBGames(day && day.value ? day.value : undefined);
   renderNflWeeklyPicks();
+  // Drawn once at load, before PAID was known -- redraw it here or a paying
+  // subscriber keeps the upgrade prompt above cards they can actually use.
+  renderParlayBuilderPanel('nfl');
+  renderParlayBuilderPanel('mlb');
 }
 
 // ---- accounts ------------------------------------------------------------
@@ -4354,11 +4386,10 @@ function rerenderAfterGatedMerge(){
 // sessions on a *.clerk.accounts.dev domain, and a header sidesteps every
 // cross-domain cookie question in both dev and production.
 //
-// The Worker is currently running with GATE_ENFORCED = false, so signing in
-// changes nothing a visitor can see yet. That is deliberate -- the token
-// path gets proven against the real deployment before anything depends on
-// it, because a verification bug flipped straight on would take every prop
-// off the site for everyone.
+// The Worker runs with GATE_ENFORCED = true: /api/gated serves the reduced
+// account payload to a signed-in free user and the full one to a paid or
+// comp user, and refuses both to an anonymous visitor. Flipping that flag
+// false in site-worker.js unlocks the whole site in one move.
 function clerkUserLabel(u){
   return (u && (u.primaryEmailAddress?.emailAddress || u.username || u.firstName)) || 'Signed in';
 }

@@ -215,13 +215,16 @@ def game_page(g, season, week, result):
     # A duplicated description across 16 pages would defeat the point of
     # splitting them up in the first place.
     if eh is not None and mh is not None:
+        # Name the favourite and the OTHER team -- an earlier version read
+        # "the Dolphins 57.9% to win Dolphins at Raiders", repeating the away
+        # side, which is exactly the tell that a description was generated.
         if eh >= 0.5:
-            fav, fp, imp = hn, eh, mh
+            fav, dog, fp, imp = hn, an, eh, mh
         else:
-            fav, fp, imp = an, 1 - eh, 1 - mh
-        desc = ("Our Elo model makes the %s %.1f%% to win %s at %s in NFL Week %d. "
+            fav, dog, fp, imp = an, hn, 1 - eh, 1 - mh
+        desc = ("Our Elo model makes the %s %.1f%% to beat the %s in NFL Week %d. "
                 "The opening moneyline implies %.1f%%. Model vs market, the edge, "
-                "and both teams' season stats." % (fav, fp * 100, an, hn, week, imp * 100))
+                "and both teams' season stats." % (fav, fp * 100, dog, week, imp * 100))
     else:
         desc = ("%s at %s, NFL Week %d %s: model win probability, the real posted "
                 "line, and both teams' season stats." % (an, hn, week, season))

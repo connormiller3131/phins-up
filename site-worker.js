@@ -753,28 +753,41 @@ export default {
     const isFile = FILE_PATH.test(url.pathname);
     let response = await env.ASSETS.fetch(request);
 
-    // wrangler.toml now sets not_found_handling = "none", so a miss is a real
-    // 404 from the asset layer rather than index.html wearing a 200, and the
-    // routing decision happens here where it can be reasoned about.
-    if (response.status === 404 && !isFile) {
-      // Pre-rendered pages (build_game_pages.py) live at <path>/index.html.
-      // Resolved explicitly rather than leaning on the asset layer's own
-      // directory-index convention, which is a separate setting that could
-      // change underneath us and would take every game page down with it.
-      const idx = new URL(request.url);
-      idx.pathname = url.pathname.replace(/\/+$/, "") + "/index.html";
-      const viaIndex = await env.ASSETS.fetch(new Request(idx, request));
-      if (viaIndex.status === 200) response = viaIndex;
-    }
+    // The asset layer does NOT report a miss as a 404. It answers an
+    // unmatched path with a 307 to "/", and a directory missing its trailing
+    // slash with a 307 to the slashed form. Passing either through is wrong:
+    // the first stranded every deep link (/nfl/week1 -> "/" , week lost --
+    // measured against the live site, not assumed), and the second makes the
+    // canonical URL of a game page a redirect rather than a 200.
+    //
+    // So a redirect is treated exactly like a 404: "the asset layer could not
+    // serve this", and routing is decided below instead.
+    const assetMissed = response.status === 404 ||
+      (response.status >= 300 && response.status < 400);
 
-    if (response.status === 404) {
-      // Left: either a client-side route of the single-page app, which gets
-      // the app so its own router can read the path, or a URL that genuinely
-      // does not exist and must say so.
-      if (!APP_ROUTES.test(url.pathname)) return notFound();
-      const indexUrl = new URL(request.url);
-      indexUrl.pathname = "/index.html";
-      response = await env.ASSETS.fetch(new Request(indexUrl, request));
+    if (assetMissed) {
+      response = null;
+
+      // 1. A pre-rendered page (build_game_pages.py), stored at
+      //    <path>/index.html. Fetched directly rather than followed via the
+      //    redirect, so the canonical URL is the one that returns 200.
+      if (!isFile) {
+        const idx = new URL(request.url);
+        idx.pathname = url.pathname.replace(/\/+$/, "") + "/index.html";
+        const viaIndex = await env.ASSETS.fetch(new Request(idx, request));
+        if (viaIndex.status === 200) response = viaIndex;
+      }
+
+      // 2. A client-side route of the app: hand over the app and let its own
+      //    router read the path.
+      if (!response && APP_ROUTES.test(url.pathname)) {
+        const indexUrl = new URL(request.url);
+        indexUrl.pathname = "/index.html";
+        response = await env.ASSETS.fetch(new Request(indexUrl, request));
+      }
+
+      // 3. Nothing owns this path.
+      if (!response) return notFound();
     }
     const headers = new Headers(response.headers);
     headers.set("Cache-Control", "no-cache, no-store, must-revalidate");

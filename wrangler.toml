@@ -50,9 +50,13 @@ run_worker_first = true
 # fallback logic somewhere else -- deep links break the moment it is "none"
 # with no Worker-side handling.
 #
-# (An earlier note here recorded a 307 redirect to "/" coming from the asset
-# layer before the Worker ran. That was with this key absent entirely, not
-# with "none"; the routes above and run_worker_first settle it now.)
+# The 307-to-"/" behaviour an earlier note recorded here is REAL and still
+# happens under "none" -- it was dismissed once during this change and it
+# immediately broke every deep link on the live site. env.ASSETS.fetch()
+# returns that 307 rather than a 404, so site-worker.js treats any redirect
+# from the binding as a miss and resolves the path itself. Verified against
+# production: /nfl/week1 serves the app, /nfl/2026/week-1/<game> serves its
+# page at 200 with no redirect, /wp-admin is a real 404.
 not_found_handling = "none"
 
 # Gated payload store -- the paid half of the data (player props and

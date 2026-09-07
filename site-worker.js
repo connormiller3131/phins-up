@@ -235,7 +235,12 @@ async function stripeApi(env, path, pairs) {
     body: formEncode(pairs),
   });
   const body = await r.json();
-  if (!r.ok) throw new Error(body?.error?.message || `stripe ${r.status}`);
+  if (!r.ok) {
+    const err = new Error(body?.error?.message || `stripe ${r.status}`);
+    err.status = r.status;
+    err.code = body?.error?.code || null;
+    throw err;
+  }
   return body;
 }
 
@@ -448,6 +453,24 @@ async function serveCheckout(request, env) {
     const session = await stripeApi(env, "/checkout/sessions", pairs);
     return Response.json({ url: session.url }, { headers: NO_STORE });
   } catch (e) {
+    // A stored customer id Stripe does not recognise must not block a sale.
+    // It happens whenever the record outlives the customer -- most obviously
+    // at the test-to-live switch, where every stored customer is a test one
+    // and checkout died with "No such customer". Drop the reuse and let
+    // Stripe create a fresh customer, then forget the dead id so the next
+    // attempt does not repeat the round trip.
+    const missing = e.status === 404 || e.code === "resource_missing" ||
+                    /No such customer/i.test(e.message || "");
+    if (missing && existing?.customerId) {
+      await writeEntitlement(env, who.userId, { ...existing, customerId: null });
+      const retry = pairs.filter(([k]) => k !== "customer" && k !== "customer_update[address]");
+      try {
+        const session = await stripeApi(env, "/checkout/sessions", retry);
+        return Response.json({ url: session.url }, { headers: NO_STORE });
+      } catch (e2) {
+        return Response.json({ error: e2.message }, { status: 502, headers: NO_STORE });
+      }
+    }
     return Response.json({ error: e.message }, { status: 502, headers: NO_STORE });
   }
 }

@@ -182,9 +182,13 @@ const NO_STORE = { "Cache-Control": "no-store" };
 //   cust:<stripe cust id> -> clerk user id, a reverse lookup used only as a
 //                            fallback when a webhook arrives without metadata
 const STRIPE_API = "https://api.stripe.com/v1";
+// LIVE mode price ids. These are mode-scoped: the test-mode ids that came
+// before them do not exist here, and vice versa, so this file and the
+// STRIPE_SECRET_KEY secret have to change in the same deploy or checkout
+// fails with "No such price".
 const PRICE_IDS = {
-  monthly: "price_1UCZq5QcsqR0UNig0qCoKtbi",
-  yearly: "price_1UCZq5QcsqR0UNigp3LRNDZH",
+  monthly: "price_1UCpqQHo8gAhueTWLhfT4Oaa",
+  yearly: "price_1UCpqSHo8gAhueTW8mvqrfLY",
 };
 // Stripe statuses that actually grant access. past_due is deliberately absent:
 // a failed renewal should lose access, and Stripe retries for days before
@@ -208,7 +212,13 @@ async function stripeGet(env, path) {
     headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
   });
   const body = await r.json();
-  if (!r.ok) throw new Error(body?.error?.message || `stripe ${r.status}`);
+  if (!r.ok) {
+    const err = new Error(body?.error?.message || `stripe ${r.status}`);
+    // Callers need to tell "this no longer exists" from "Stripe is down".
+    err.status = r.status;
+    err.code = body?.error?.code || null;
+    throw err;
+  }
   return body;
 }
 
@@ -330,9 +340,19 @@ async function healEntitlement(env, userId, ent) {
     await writeEntitlement(env, userId, healed);
     return healed;
   } catch (e) {
-    // Stripe unreachable or the subscription is gone: leave the record be
-    // rather than downgrading someone on a transient failure. The reason is
-    // kept so a silent failure is visible instead of looking like "no change".
+    // A subscription Stripe says does not exist is not a transient failure,
+    // and must not keep granting access. This matters most at the test-to-live
+    // switch: every entitlement written against a test subscription would
+    // otherwise 404 forever and stay "paid" on the strength of a record
+    // pointing at something that no longer exists.
+    if (e.status === 404 || e.code === "resource_missing") {
+      const dead = { ...ent, status: "canceled", cancelAtPeriodEnd: false,
+                     reconcileError: "subscription not found" };
+      await writeEntitlement(env, userId, dead);
+      return dead;
+    }
+    // Anything else -- Stripe down, a network blip -- leaves the record alone
+    // rather than downgrading a paying customer over a transient error.
     return { ...ent, reconcileError: String(e.message || e).slice(0, 120) };
   }
 }

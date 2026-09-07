@@ -2,7 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Phins Up — NFL &amp; MLB Weekly Projections</title>
+<title>Phins Up — NFL, MLB &amp; NHL Model Projections</title>
+<meta name="description" content="Independent Elo and player-prop models for NFL, MLB and NHL, fit on real historical results and carried forward through every completed game. Model win % sits next to the real no-vig market price, our own projections are labelled separately from real DraftKings lines, and the track record is public.">
+<link rel="canonical" href="https://phinsup.net/">
+
+<!-- Link unfurl card. Without these, a link pasted into Reddit, X, Discord or
+     a group chat renders as a bare URL with no title, image or description,
+     which is most of the click-through gone on the only channels that are
+     realistic for a site like this.
+
+     og:image MUST be an absolute https URL to a real raster file: scrapers
+     do not run JavaScript, do not resolve relative paths reliably, and will
+     not accept the SVG data: URI used for the favicon above. docs/og.png is
+     a committed 1200x630 PNG built by pipeline/nfl/build_og_image.py -- and
+     it has to actually exist, because wrangler.toml sets
+     not_found_handling = "single-page-application", so a missing /og.png
+     would quietly serve this HTML page back to the scraper instead of 404ing
+     and the card would fail with no obvious cause. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Phins Up">
+<meta property="og:url" content="https://phinsup.net/">
+<meta property="og:title" content="Phins Up — NFL, MLB &amp; NHL Model Projections">
+<meta property="og:description" content="Independent Elo and player-prop models for NFL, MLB and NHL, fit on real historical results and carried forward through every completed game. Model win % sits next to the real no-vig market price, our own projections are labelled separately from real DraftKings lines, and the track record is public.">
+<meta property="og:image" content="https://phinsup.net/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Phins Up — model projections for NFL, MLB and NHL, backtested and graded in public.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Phins Up — NFL, MLB &amp; NHL Model Projections">
+<meta name="twitter:description" content="Independent Elo and player-prop models for NFL, MLB and NHL, fit on real historical results and carried forward through every completed game. Model win % sits next to the real no-vig market price, our own projections are labelled separately from real DraftKings lines, and the track record is public.">
+<meta name="twitter:image" content="https://phinsup.net/og.png">
+<meta name="twitter:image:alt" content="Phins Up — model projections for NFL, MLB and NHL, backtested and graded in public.">
+<meta name="theme-color" content="#0E1A1C">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D%22512%22%20height%3D%22512%22%20viewBox%3D%220%200%20512%20512%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22%230E1A1C%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M%20176%20372%0A%20%20%20%20%20%20%20%20%20%20%20C%20176%20300%20186%20214%20236%20118%0A%20%20%20%20%20%20%20%20%20%20%20L%20258%2096%0A%20%20%20%20%20%20%20%20%20%20%20C%20284%20148%20316%20240%20332%20336%0A%20%20%20%20%20%20%20%20%20%20%20C%20306%20372%20246%20380%20176%20372%0A%20%20%20%20%20%20%20%20%20%20%20Z%22%0A%20%20%20%20%20%20%20%20fill%3D%22%2300C2B8%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M%20236%20118%20C%20224%20190%20216%20268%20214%20340%22%20fill%3D%22none%22%20stroke%3D%22%230E1A1C%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.35%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M%20356%20300%20L%20388%20268%20M%20388%20268%20L%20388%20296%20M%20388%20268%20L%20360%20268%22%0A%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22%23F5821F%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>

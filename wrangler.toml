@@ -59,6 +59,21 @@ run_worker_first = true
 # page at 200 with no redirect, /wp-admin is a real 404.
 not_found_handling = "none"
 
+# The asset layer must do exactly ONE thing: serve the file at the exact path
+# asked for. "auto-trailing-slash" (the default) also rewrites URLs, and two
+# of its rewrites are actively hostile to a Worker that does its own routing:
+#   /index.html            -> 307 /
+#   /some/dir              -> 307 /some/dir/
+# The first is the one that cost real time. site-worker.js resolves a route
+# by fetching "/index.html" (for the app) or "<path>/index.html" (for a
+# pre-rendered game page) -- and the asset layer answered BOTH of those with
+# a redirect instead of the file, so the Worker handed the browser a 307 to
+# "/" and every deep link on the live site lost its path.
+#
+# "none" removes all of it. Nothing is rewritten, a miss is a miss, and every
+# routing decision lives in site-worker.js where it can be read.
+html_handling = "none"
+
 # Gated payload store -- the paid half of the data (player props and
 # everything derived from them), which site-worker.js serves at /api/gated
 # instead of it being inlined into the committed, publicly-served docs/.

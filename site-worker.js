@@ -753,15 +753,14 @@ export default {
     const isFile = FILE_PATH.test(url.pathname);
     let response = await env.ASSETS.fetch(request);
 
-    // The asset layer does NOT report a miss as a 404. It answers an
-    // unmatched path with a 307 to "/", and a directory missing its trailing
-    // slash with a 307 to the slashed form. Passing either through is wrong:
-    // the first stranded every deep link (/nfl/week1 -> "/" , week lost --
-    // measured against the live site, not assumed), and the second makes the
-    // canonical URL of a game page a redirect rather than a 200.
-    //
-    // So a redirect is treated exactly like a 404: "the asset layer could not
-    // serve this", and routing is decided below instead.
+    // wrangler.toml pins the asset layer to exact-path serving
+    // (html_handling / not_found_handling both "none"), so a miss is a clean
+    // 404 and nothing is silently rewritten. The redirect case is still
+    // treated as a miss rather than trusted: with the default settings the
+    // binding answered "/index.html" itself with a 307 to "/", which turned
+    // the fallback below into a redirect loop back to the homepage and
+    // stripped the path off every deep link on the live site. If that config
+    // ever drifts back, this degrades to a 404 instead of a broken link.
     const assetMissed = response.status === 404 ||
       (response.status >= 300 && response.status < 400);
 

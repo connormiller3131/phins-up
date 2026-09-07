@@ -195,6 +195,22 @@ const PRICE_IDS = {
 // giving up, which would otherwise be days of unpaid access.
 const ACTIVE_STATUSES = new Set(["active", "trialing"]);
 
+// Accounts with permanent access and no Stripe subscription behind them --
+// the owner, and any comp given out later. Deliberately code, not a KV
+// record: reconcile treats Stripe as the source of truth and would revoke a
+// hand-written entitlement within ten minutes for having no subscription.
+//
+// Safe to commit to a public repo. A Clerk user id identifies an account but
+// does not authenticate one; using it still requires a session token signed
+// by Clerk, which nobody else can mint.
+const COMP_USER_IDS = new Set([
+  "user_3IwWOrT9zXWv6gaUIdJKRSkFecU",   // Connor - site owner
+]);
+
+function hasComp(userId) {
+  return !!userId && COMP_USER_IDS.has(userId);
+}
+
 function formEncode(pairs) {
   return pairs.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
 }
@@ -374,9 +390,9 @@ async function serveWhoami(request, env) {
       // buttons that are going to 403 the moment they are clicked.
       country: (request.cf && request.cf.country) || null,
       canSubscribe: !request.cf || !request.cf.country || request.cf.country === "US",
-      plan: ent?.plan || "free",
+      plan: hasComp(who.userId) ? "comp" : (ent?.plan || "free"),
       subscriptionStatus: ent?.status || null,
-      paid: isPaid(ent),
+      paid: hasComp(who.userId) || isPaid(ent),
       currentPeriodEnd: ent?.currentPeriodEnd || null,
       cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
       subscriptionId: ent?.subscriptionId || null,
@@ -653,7 +669,7 @@ async function serveGated(request, env) {
   // which reproduces every pick card exactly (verified per build by
   // pipeline/nfl/verify_account_split.mjs) while withholding the prop tables.
   const ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
-  const paid = isPaid(ent);
+  const paid = hasComp(who.userId) || isPaid(ent);
   const key = paid ? GATED_KEY : ACCOUNT_KEY;
   let body = await env.GATED.get(key, { type: "stream" });
   // A missing account payload must not silently fall back to the paid one --

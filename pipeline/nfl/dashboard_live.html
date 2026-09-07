@@ -1965,16 +1965,16 @@ function populateWeekSelect(selected){
 // from readers and tells search engines nothing on the site considers them
 // worth pointing at.
 //
-// The slug rule is duplicated from that script's game_slug() rather than
-// shared, since one is Python at build time and the other JavaScript in the
-// browser. It is kept deliberately trivial -- lowercase the last word of each
-// full team name -- because a clever rule is one that drifts and 404s.
-function nflGamePageUrl(g, week){
-  const nick = (full, abbr) => {
-    const parts = String(full || '').trim().split(/\s+/);
-    return (parts.length > 1 ? parts[parts.length - 1] : (abbr || 'team')).toLowerCase();
-  };
-  return `/nfl/${DATA.season}/week-${week}/${nick(g.awayName, g.awayAbbr)}-vs-${nick(g.homeName, g.homeAbbr)}`;
+// The URL is READ, not recomputed. build_game_pages stamps `page_url` onto
+// each game as it writes that game's page, so the slug rule lives in exactly
+// one place. It has to: the NFL rule (last word of the team name) is wrong
+// for MLB, where "Boston Red Sox" and "Chicago White Sox" both end in "Sox"
+// and would collide, so MLB strips a city prefix from a list instead. Two
+// languages holding two different versions of that list is a bug waiting to
+// happen, and it would show up as a 404 rather than anything loud.
+function gamePageLink(g){
+  if(!g || !g.page_url) return '';
+  return `<a class="game-permalink" href="${g.page_url}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a>`;
 }
 
 function fmtKickoffLine(g){
@@ -2336,7 +2336,7 @@ function renderGames(week){
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
-          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')} <a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
+          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')} ${gamePageLink(g)}</div>
         </div>
         <div class="game-top-actions">${collapseToggleHtml()}</div>
       </div>
@@ -3880,7 +3880,7 @@ function renderMLBGames(selectedDate){
       <div class="game-top">
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('mlb-games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}<span class="expand-hint">🔍 Focus</span></div>
-          <div class="kickoff">${fmtGameTime(g.gameDatetime)}</div>
+          <div class="kickoff">${fmtGameTime(g.gameDatetime)} ${gamePageLink(g)}</div>
           <div class="now-line" id="mlb-nowline-${selectedDate}-${idx}"></div>
         </div>
         <div class="game-top-actions">

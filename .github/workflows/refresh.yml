@@ -256,8 +256,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # See deploy-cosmetic.yml: docs/nfl is rebuilt wholesale, so it
           # needs -A to stage removals, not just additions.
-          git add docs/index.html docs/results/ docs/sitemap.xml docs/robots.txt \n                  data/nhl/goalie_game_logs.parquet
-          git add -A docs/nfl
+          git add docs/index.html docs/results/ docs/sitemap.xml docs/robots.txt data/nhl/goalie_game_logs.parquet
+          git add -A docs/nfl docs/mlb
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

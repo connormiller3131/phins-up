@@ -84,18 +84,28 @@ def main():
     with open(GATED_PATH, "w", encoding="utf-8") as f:
         json.dump(gated, f)
 
+    # AFTER build_gated_payload, which has already popped `props` off every
+    # game -- so the dicts handed to the page builder physically cannot carry
+    # paid data into a publicly served file. Reordering those two would turn a
+    # safe-by-construction guarantee into a review problem.
+    #
+    # And BEFORE the template is serialised, because the builder stamps a
+    # `page_url` onto each game as it writes that game's page. The page then
+    # reads that field instead of recomputing the slug in JavaScript. The two
+    # rules are not the same -- NFL takes the last word of a team name, MLB
+    # has to strip a city prefix or the Red Sox and the White Sox both come
+    # out as "sox" -- so having one source of truth is worth the ordering
+    # constraint.
+    build_game_pages.build(nfl_data, mlb_data, OUT_PATH.parent,
+                           OUT_PATH.parent / "results",
+                           datetime.date.today().isoformat())
+
     out = (tmpl.replace("__DATA_JSON__", json.dumps(nfl_data))
                .replace("__MLB_DATA_JSON__", json.dumps(mlb_data))
                .replace("__NHL_DATA_JSON__", json.dumps(nhl_data)))
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         f.write(out)
-    # AFTER build_gated_payload, which has already popped `props` off every
-    # game -- so the dicts handed to the page builder physically cannot carry
-    # paid data into a publicly served file. Reordering these two would turn
-    # a safe-by-construction guarantee into a review problem.
-    build_game_pages.build(nfl_data, OUT_PATH.parent, OUT_PATH.parent / "results",
-                           datetime.date.today().isoformat())
 
     print(f"Free page {OUT_PATH.stat().st_size/1e6:.2f} MB inlined; "
           f"gated payload {GATED_PATH.stat().st_size/1e6:.2f} MB held back "

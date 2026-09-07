@@ -85,7 +85,7 @@ jobs:
           # staged as a DELETION or its page stays live serving numbers the
           # pipeline no longer produces.
           git add docs/index.html docs/sitemap.xml docs/robots.txt
-          git add -A docs/nfl
+          git add -A docs/nfl docs/mlb
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

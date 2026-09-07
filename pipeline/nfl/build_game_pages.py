@@ -373,7 +373,221 @@ def season_index(season, weeks):
     return "".join(out)
 
 
-def build(nfl_data, docs_dir, results_dir, today_iso):
+# ---------------------------------------------------------------- MLB ------
+# The NFL rule (last word of the team name) is WRONG here: "Boston Red Sox"
+# and "Chicago White Sox" both end in "Sox", so they would collide on one slug
+# and overwrite each other's page. Strip the city instead and keep the whole
+# nickname. Longest prefix wins, so "Kansas City" is not read as "Kansas".
+MLB_CITIES = [
+    "Arizona", "Atlanta", "Baltimore", "Boston", "Chicago", "Cincinnati",
+    "Cleveland", "Colorado", "Detroit", "Houston", "Kansas City",
+    "Los Angeles", "Miami", "Milwaukee", "Minnesota", "New York", "Oakland",
+    "Philadelphia", "Pittsburgh", "San Diego", "San Francisco", "Seattle",
+    "St. Louis", "Tampa Bay", "Texas", "Toronto", "Washington",
+]
+
+
+def mlb_nickname(full_name, abbr):
+    """'Boston Red Sox' -> 'Red Sox'. 'Athletics' -> 'Athletics'."""
+    name = (full_name or "").strip()
+    if not name:
+        return abbr or "Team"
+    for city in sorted(MLB_CITIES, key=len, reverse=True):
+        if name.startswith(city + " "):
+            return name[len(city) + 1:]
+    return name
+
+
+def slugify(text):
+    out = []
+    for ch in (text or "").lower():
+        if ch.isalnum():
+            out.append(ch)
+        elif ch in " -_" and out and out[-1] != "-":
+            out.append("-")
+    return "".join(out).strip("-") or "team"
+
+
+def mlb_game_slug(g):
+    return (slugify(mlb_nickname(g.get("awayName"), g.get("awayAbbr"))) + "-vs-"
+            + slugify(mlb_nickname(g.get("homeName"), g.get("homeAbbr"))))
+
+
+def mlb_team_stats_table(stats, label):
+    if not stats:
+        return ""
+    bat = ((stats.get("offense") or {}).get("batting")) or {}
+    pit = ((stats.get("defense") or {}).get("pitching")) or {}
+    rows = [
+        ("Hits / game", bat.get("hits_per_game")),
+        ("Total bases / game", bat.get("total_bases_per_game")),
+        ("Home runs / game", bat.get("hr_per_game")),
+        ("Walks / game", bat.get("bb_per_game")),
+        ("ERA", pit.get("era")),
+        ("Runs allowed / game", pit.get("runs_allowed_per_game")),
+        ("Hits allowed / game", pit.get("hits_allowed_per_game")),
+    ]
+    body = "".join("<tr><td>%s</td><td class='num'>%s</td></tr>"
+                   % (e(n), "-" if v is None else v) for n, v in rows)
+    return ("<div class='card'><table><thead><tr><th>%s</th><th>Season</th></tr>"
+            "</thead><tbody>%s</tbody></table></div>" % (e(label), body))
+
+
+def mlb_game_page(g, date, slug):
+    away = g.get("awayName") or g["awayAbbr"]
+    home = g.get("homeName") or g["homeAbbr"]
+    an = mlb_nickname(away, g["awayAbbr"])
+    hn = mlb_nickname(home, g["homeAbbr"])
+    canonical = "%s/mlb/%s/%s" % (SITE, date, slug)
+    nice_date = pretty_date(date)
+
+    mkt = g.get("market") or {}
+    mh = mkt.get("home_fair_prob")
+    eh = g.get("elo_home_prob")
+    ma = None if mh is None else 1 - mh
+    ea = None if eh is None else 1 - eh
+
+    title = "%s vs %s Prediction - MLB %s Model Odds | Phins Up" % (an, hn, nice_date)
+
+    if eh is not None and mh is not None:
+        if eh >= 0.5:
+            fav, dog, fp, imp = hn, an, eh, mh
+        else:
+            fav, dog, fp, imp = an, hn, 1 - eh, 1 - mh
+        desc = ("Our model makes the %s %.1f%% to beat the %s on %s. The "
+                "DraftKings moneyline implies %.1f%%. Probable pitchers, model vs "
+                "market, and both teams' season stats."
+                % (fav, fp * 100, dog, nice_date, imp * 100))
+    else:
+        desc = ("%s at %s on %s: model win probability, probable pitchers, and "
+                "both teams' season stats." % (an, hn, nice_date))
+
+    ld = {
+        "@context": "https://schema.org", "@type": "SportsEvent",
+        "name": "%s at %s" % (away, home), "sport": "Baseball",
+        "startDate": g.get("gameDatetime") or date, "url": canonical,
+        "homeTeam": {"@type": "SportsTeam", "name": home},
+        "awayTeam": {"@type": "SportsTeam", "name": away},
+    }
+
+    out = [head(title, desc, canonical, ld)]
+    out.append("<div class='crumb'><a href='%s/'>Phins Up</a> / "
+               "<a href='%s/mlb/%s'>MLB &middot; %s</a></div>"
+               % (SITE, SITE, date, e(nice_date)))
+    out.append("<h1>%s vs %s &mdash; MLB Model Projection</h1>" % (e(an), e(hn)))
+    out.append("<p class='kick'>%s</p>" % e(nice_date))
+
+    ap, hp = g.get("awayProbablePitcher"), g.get("homeProbablePitcher")
+    if ap or hp:
+        out.append("<h2>Probable pitchers</h2><div class='card'><table><tbody>"
+                   "<tr><td>%s</td><td>%s</td></tr><tr><td>%s</td><td>%s</td></tr>"
+                   "</tbody></table></div>"
+                   % (e(away), e(ap or "not announced"),
+                      e(home), e(hp or "not announced")))
+
+    out.append("<h2>Model vs market</h2><div class='card'><table><thead><tr>"
+               "<th>Team</th><th>Model win %</th><th>Fair win %</th><th>Edge</th>"
+               "</tr></thead><tbody>")
+    gv_a = " <span class='tag good'>GOOD VALUE</span>" if g.get("good_value_away") else ""
+    gv_h = " <span class='tag good'>GOOD VALUE</span>" if g.get("good_value_home") else ""
+    for name, ep, mp, gv in ((away, ea, ma, gv_a), (home, eh, mh, gv_h)):
+        ed = None if (ep is None or mp is None) else ep - mp
+        eds = "-" if ed is None else "%s%.1f%%" % ("+" if ed >= 0 else "", ed * 100)
+        out.append("<tr><td>%s%s</td><td class='num big'>%s</td>"
+                   "<td class='num'>%s</td><td class='num'>%s</td></tr>"
+                   % (e(name), gv, pct(ep), pct(mp), eds))
+    out.append("</tbody></table></div>")
+    out.append(
+        "<p class='note'><b>Model win %</b> is our own rating -- an Elo fit on real "
+        "2019-2025 results, refined by who is actually pitching, the bullpen behind "
+        "him and how the lineup has been hitting. It never looks at a betting line. "
+        "<b>Fair win %</b> is what DraftKings' moneyline implies once the book's own "
+        "margin is removed. <b>GOOD VALUE</b> means the model is higher than the "
+        "market on that side &mdash; a disagreement, not a guarantee.</p>")
+
+    if mkt.get("mlHome") is not None or mkt.get("total_line") is not None:
+        out.append("<h2>The posted line</h2><div class='card'><table><tbody>")
+        if mkt.get("run_line_home") is not None:
+            out.append("<tr><td>Run line (home)</td><td class='num'>%s</td></tr>"
+                       % mkt["run_line_home"])
+        if mkt.get("total_line") is not None:
+            out.append("<tr><td>Total</td><td class='num'>%s</td></tr>" % mkt["total_line"])
+        out.append("<tr><td>%s moneyline</td><td class='num'>%s</td></tr>"
+                   % (e(away), odds(mkt.get("mlAway"))))
+        out.append("<tr><td>%s moneyline</td><td class='num'>%s</td></tr>"
+                   % (e(home), odds(mkt.get("mlHome"))))
+        out.append("</tbody></table></div>")
+
+    if g.get("already_played") and g.get("home_score") is not None:
+        aw, hs = g.get("away_score"), g.get("home_score")
+        model_home = eh is not None and eh >= 0.5
+        correct = None if (eh is None or hs == aw) else ((hs > aw) == model_home)
+        out.append("<h2>Result</h2><div class='card'>")
+        out.append("<p class='big'>Final: %s %s &mdash; %s %s</p>"
+                   % (e(g["awayAbbr"]), e(aw), e(hs), e(g["homeAbbr"])))
+        if correct is not None:
+            out.append("<p>The model favoured <b>%s</b> &mdash; <span class='%s'>%s</span>.</p>"
+                       % (e(home if model_home else away),
+                          "win" if correct else "loss",
+                          "correct" if correct else "wrong"))
+        out.append("<p class='note'>These are the numbers that were on screen "
+                   "before first pitch. They are not rewritten afterwards.</p></div>")
+
+    stats = (mlb_team_stats_table(g.get("awayTeamStats"), away)
+             + mlb_team_stats_table(g.get("homeTeamStats"), home))
+    if stats:
+        out.append("<h2>Season stats</h2>" + stats)
+
+    out.append(
+        "<div class='cta'><b>Player props for this game</b> &mdash; every hitter on "
+        "the active roster plus the probable starter, with Hits, Total Bases, RBI, "
+        "strikeouts and Anytime HR &mdash; are on the live site. The model's picks "
+        "need a free account; the full prop tables are part of a subscription. "
+        "<a href='%s/mlb/%s'>Open %s vs %s on Phins Up</a>.</div>"
+        % (SITE, date, e(an), e(hn)))
+    out.append(FOOT)
+    return "".join(out)
+
+
+def build_mlb(mlb_data, docs_dir):
+    """Write a page per game for every day in the current slate payload.
+
+    Deliberately does NOT wipe docs/mlb wholesale the way the NFL tree is
+    rebuilt. The slate is a rolling ~7-day window, so wiping would delete the
+    page for every game older than a week -- finished games whose pages are
+    correct, permanent, and possibly already indexed. Only days present in
+    this payload are rebuilt; anything older is left untouched.
+
+    There is also NO day-index page, and there must not be: /mlb/<date> is a
+    live client-side route of the app, so writing docs/mlb/<date>/index.html
+    would shadow it and replace that day's whole slate with one static page.
+    """
+    built = []
+    for date, day in sorted((mlb_data.get("days") or {}).items()):
+        games = day.get("games") or []
+        if not games:
+            continue
+        ddir = docs_dir / "mlb" / date
+        if ddir.exists():
+            shutil.rmtree(ddir)
+        ddir.mkdir(parents=True, exist_ok=True)
+        seen = {}
+        for g in games:
+            slug = mlb_game_slug(g)
+            # Doubleheaders are two games between the same teams on the same
+            # date. Without this the second silently overwrites the first.
+            seen[slug] = seen.get(slug, 0) + 1
+            if seen[slug] > 1:
+                slug = "%s-game-%d" % (slug, seen[slug])
+            gdir = ddir / slug
+            gdir.mkdir(parents=True, exist_ok=True)
+            (gdir / "index.html").write_text(mlb_game_page(g, date, slug), encoding="utf-8")
+            g["page_url"] = "/mlb/%s/%s" % (date, slug)
+            built.append(("%s/mlb/%s/%s" % (SITE, date, slug), date))
+    return built
+
+
+def build(nfl_data, mlb_data, docs_dir, results_dir, today_iso):
     season = nfl_data["season"]
     current = int(nfl_data["current_week"])
     nfl_root = docs_dir / "nfl" / str(season)
@@ -407,6 +621,11 @@ def build(nfl_data, docs_dir, results_dir, today_iso):
             gdir = wdir / slug
             gdir.mkdir(parents=True, exist_ok=True)
             (gdir / "index.html").write_text(page, encoding="utf-8")
+            # Stamped onto the game itself so the page can link to it by
+            # reading a field, instead of reimplementing the slug rule in
+            # JavaScript -- which for MLB would mean duplicating the city
+            # -stripping list too, and getting the Red Sox wrong if it drifted.
+            g["page_url"] = "/nfl/%s/week-%d/%s" % (season, w, slug)
             # lastmod is the game's own date, not today's: a finished game's
             # page never changes again, and telling Google otherwise twice a
             # day teaches it to ignore the signal.
@@ -422,6 +641,22 @@ def build(nfl_data, docs_dir, results_dir, today_iso):
     (nfl_root / "index.html").write_text(season_index(season, weeks), encoding="utf-8")
     urls.append(("%s/nfl/%s/" % (SITE, season), today_iso))
 
+    mlb_built = build_mlb(mlb_data, docs_dir)
+
+    # The sitemap is built by SCANNING what is on disk, not from the list this
+    # run happened to write. MLB keeps a rolling ~7-day payload but its pages
+    # are never deleted, so days that dropped out of the slate still exist and
+    # still belong in the sitemap -- listing only this run's output would
+    # silently drop the whole archive every day. The date is read back out of
+    # the URL, which is why it is a path segment.
+    mlb_urls = []
+    mlb_root = docs_dir / "mlb"
+    if mlb_root.exists():
+        for f in sorted(mlb_root.glob("*/*/index.html")):
+            date, slug = f.parent.parent.name, f.parent.name
+            mlb_urls.append(("%s/mlb/%s/%s" % (SITE, date, slug), date))
+    urls.extend(mlb_urls)
+
     body = "".join("  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n"
                    % (html.escape(u, quote=True), m) for u, m in urls)
     (docs_dir / "sitemap.xml").write_text(
@@ -432,6 +667,7 @@ def build(nfl_data, docs_dir, results_dir, today_iso):
         "User-agent: *\nAllow: /\nDisallow: /api/\n\n"
         "Sitemap: %s/sitemap.xml\n" % SITE, encoding="utf-8")
 
-    print("Game pages: %d games across %d week(s), %d URLs in sitemap.xml"
-          % (pages, len(weeks), len(urls)))
+    print("Game pages: NFL %d games across %d week(s); MLB %d games this run, "
+          "%d on disk; %d URLs in sitemap.xml"
+          % (pages, len(weeks), len(mlb_built), len(mlb_urls), len(urls)))
     return pages

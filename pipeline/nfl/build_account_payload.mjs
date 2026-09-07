@@ -92,9 +92,7 @@ export function loadSelectors(DATA, MLB_DATA) {
 /**
  * Every prop the account-tier cards reference, as a set of player ids per
  * game. Runs the real selectors over the FULL data, then records who they
- * chose. Flin Flon is deliberately excluded: it draws at random on every page
- * load, so no fixed subset can reproduce it, and it is a novelty rather than
- * part of the tier.
+ * chose.
  */
 // Keyed per PROP, not per player: "<player_id>|<market>". Keeping a player
 // wholesale would hand over every market they appear in -- a third of the

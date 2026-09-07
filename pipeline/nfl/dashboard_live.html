@@ -341,8 +341,15 @@
     border-radius:4px;
     vertical-align:middle;
   }
-  .game-permalink{color:var(--text-dim);text-decoration:none;border-bottom:1px dotted var(--line);}
-  .game-permalink:hover{color:var(--green);border-bottom-color:var(--green);}
+  .game-permalink{
+    display:inline-block;font-family:var(--mono);font-size:11px;
+    letter-spacing:.03em;color:var(--green);text-decoration:none;
+    padding:2px 8px;margin-left:6px;border:1px solid var(--line);
+    border-radius:999px;white-space:nowrap;
+  }
+  .game-permalink:hover,.game-permalink:focus-visible{
+    border-color:var(--green);background:rgba(0,194,184,.12);
+  }
   .venue-line{
     font-family:var(--mono);
     font-size:11px;
@@ -2329,7 +2336,7 @@ function renderGames(week){
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
-          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')} · <a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
+          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}<a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
         </div>
         <div class="game-top-actions">${collapseToggleHtml()}</div>
       </div>

@@ -4483,6 +4483,16 @@ async function goToStripe(path, label, btn){
 
 function billingControlsHtml(slot){
   if(!ACCOUNT) return;
+  // Comp accounts have no Stripe customer, so there is no billing to manage
+  // and nothing to upgrade -- offering either would just 404.
+  if(ACCOUNT.plan === 'comp'){
+    const note = document.createElement('span');
+    note.className = 'auth-who';
+    note.textContent = '· comp';
+    note.title = 'Full access, no subscription';
+    slot.append(note);
+    return;
+  }
   if(ACCOUNT.paid){
     const manage = document.createElement('button');
     manage.className = 'auth-btn secondary';
@@ -4535,7 +4545,8 @@ async function showServerAuthStatus(){
       const endsOn = endsTs
         ? ` ${fmtShortDate(new Date(endsTs * 1000).toISOString().slice(0,10))}`
         : '';
-      tail = ACCOUNT.cancelAtPeriodEnd ? ` · ends${endsOn}` : ' · paid';
+      tail = ACCOUNT.plan === 'comp' ? ' · full access'
+           : ACCOUNT.cancelAtPeriodEnd ? ` · ends${endsOn}` : ' · paid';
     }
     badge.textContent = `· server ✓${tail}`;
     badge.style.color = 'var(--green)';

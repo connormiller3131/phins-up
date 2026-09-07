@@ -560,9 +560,28 @@ async function serveStripeWebhook(request, env) {
   if (error) return Response.json({ error }, { status: 400, headers: NO_STORE });
 
   const obj = event.data?.object || {};
+  // What the handler actually did, returned in the 200 body. Stripe shows the
+  // response in its delivery log, which makes this the only practical way to
+  // see inside a Worker that has no readable logs. It exists because a bare
+  // {received:true} was returned even when nothing was written -- a paid
+  // customer got no access and the delivery log said 200, which is the most
+  // misleading thing it could have said.
+  let action = `ignored ${event.type}`;
   try {
     if (event.type === "checkout.session.completed") {
-      const userId = obj.client_reference_id;
+      let userId = obj.client_reference_id;
+      // client_reference_id is set at checkout, but a session can arrive
+      // without it. The subscription's own metadata carries the same id and
+      // is the more durable of the two, so fall back to it rather than
+      // dropping a sale on the floor.
+      if (!userId && obj.subscription) {
+        try {
+          const s0 = await stripeGet(env, `/subscriptions/${obj.subscription}`);
+          userId = s0?.metadata?.clerk_user_id || null;
+        } catch { /* handled by the report below */ }
+      }
+      if (!userId) action = "skipped: no clerk user id on session or subscription";
+      else if (!obj.subscription) action = `skipped: session ${obj.id} has no subscription`;
       if (userId && obj.subscription) {
         // The session carries no price or period, so read the subscription it
         // just created rather than guessing at either.
@@ -577,9 +596,11 @@ async function serveStripeWebhook(request, env) {
           customerId: sub.customer,
           subscriptionId: sub.id,
         });
+        action = `wrote entitlement for ${userId} (${sub.status})`;
       }
     } else if (event.type.startsWith("customer.subscription.")) {
       const userId = await userIdForSubscription(env, obj);
+      if (!userId) action = `skipped: no clerk user id for subscription ${obj.id}`;
       if (userId) {
         await writeEntitlement(env, userId, {
           plan: planForPrice(obj.items?.data?.[0]?.price?.id),
@@ -597,6 +618,7 @@ async function serveStripeWebhook(request, env) {
           customerId: obj.customer,
           subscriptionId: obj.id,
         });
+        action = `updated entitlement for ${userId} (${obj.status})`;
       }
     }
   } catch (e) {
@@ -604,7 +626,7 @@ async function serveStripeWebhook(request, env) {
     // transient failure -- swallowing it would silently lose the entitlement.
     return Response.json({ error: e.message }, { status: 500, headers: NO_STORE });
   }
-  return Response.json({ received: true }, { headers: NO_STORE });
+  return Response.json({ received: true, action }, { headers: NO_STORE });
 }
 
 async function serveGated(request, env) {

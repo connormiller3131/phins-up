@@ -22,7 +22,12 @@ import { loadSelectors } from './build_account_payload.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 
-const FULL_NFL = read('data/nfl/dashboard_current_week.json');
+// Compares against what is PUBLISHED, not the raw pipeline output -- the
+// build drops future weeks, and comparing trimmed against untrimmed would
+// report every withheld week as a mismatch.
+const FULL_NFL = fs.existsSync(path.join(ROOT, 'data/dashboard_published_nfl.json'))
+  ? read('data/dashboard_published_nfl.json')
+  : read('data/nfl/dashboard_current_week.json');
 const FULL_MLB = fs.existsSync(path.join(ROOT, 'data/mlb/dashboard_current_slate.json'))
   ? read('data/mlb/dashboard_current_slate.json') : { days: {} };
 const account = read('data/gated_payload_account.json');

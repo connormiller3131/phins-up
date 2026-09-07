@@ -28,7 +28,12 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const TEMPLATE = path.join(ROOT, 'pipeline', 'nfl', 'dashboard_live.html');
-const NFL_DATA_PATH = path.join(ROOT, 'data', 'nfl', 'dashboard_current_week.json');
+// The PUBLISHED NFL data, i.e. after build_static_site.py drops future
+// weeks. Reading the raw pipeline file instead would build account entries
+// for weeks that never reach the page.
+const NFL_DATA_PATH = fs.existsSync(path.join(ROOT, 'data', 'dashboard_published_nfl.json'))
+  ? path.join(ROOT, 'data', 'dashboard_published_nfl.json')
+  : path.join(ROOT, 'data', 'nfl', 'dashboard_current_week.json');
 const MLB_DATA_PATH = path.join(ROOT, 'data', 'mlb', 'dashboard_current_slate.json');
 const PAID_PATH = path.join(ROOT, 'data', 'gated_payload.json');
 const OUT_PATH = path.join(ROOT, 'data', 'gated_payload_account.json');

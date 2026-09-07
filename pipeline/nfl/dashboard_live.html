@@ -1876,6 +1876,14 @@ const WEEK_NUMS = Object.keys(DATA.weeks).map(Number).sort((a,b)=>a-b);
 
 function populateWeekSelect(selected){
   const sel = document.getElementById('week-select');
+  // Future weeks are not published, so early in a season there is exactly one
+  // week to choose from. A dropdown with a single option is furniture, not a
+  // control -- hide the whole thing until there is a real choice, which
+  // happens naturally once week 2 makes week 1 a past week.
+  // style.display rather than the hidden attribute: the wrapper is a flex
+  // container, and display:flex wins over [hidden].
+  const wrap = sel.closest('.week-select-wrap');
+  if(wrap) wrap.style.display = WEEK_NUMS.length > 1 ? '' : 'none';
   sel.innerHTML = WEEK_NUMS.map(w =>
     `<option value="${w}" ${w===selected?'selected':''}>Week ${w}${w===DATA.current_week?' (current)':''}</option>`
   ).join('');

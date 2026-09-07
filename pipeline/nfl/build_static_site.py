@@ -32,6 +32,11 @@ OUT_PATH = ROOT / "docs" / "index.html"
 # file to Cloudflare KV instead, which is the only path a browser can reach
 # it by.
 GATED_PATH = ROOT / "data" / "gated_payload.json"
+# The NFL data as actually PUBLISHED, after future weeks are dropped. The Node
+# scripts that build and verify the account payload read this rather than the
+# raw pipeline output, so "what got published" has one definition instead of
+# the same trim being reimplemented in two languages.
+PUBLISHED_NFL_PATH = ROOT / "data" / "dashboard_published_nfl.json"
 
 _EMPTY_DAY_SLATE = {"week_start": None, "week_end": None, "today": None, "generated_at": None, "days": {}}
 
@@ -54,6 +59,20 @@ def main():
 
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         tmpl = f.read()
+
+    # Future weeks are not published at all. Hiding the week dropdown would
+    # not do: every future week's games and props would still be sitting in
+    # the page source and the gated payload for anyone who looked. On a real
+    # board that is 256 games and 12,448 props -- 94% of everything published
+    # -- so dropping them is both the privacy fix and by far the largest size
+    # win available. Past weeks stay: they are completed games and they are
+    # what the track record is built from.
+    current_week = int(nfl_data["current_week"])
+    dropped = [w for w in nfl_data["weeks"] if int(w) > current_week]
+    nfl_data["weeks"] = {w: v for w, v in nfl_data["weeks"].items() if int(w) <= current_week}
+    with open(PUBLISHED_NFL_PATH, "w", encoding="utf-8") as f:
+        json.dump(nfl_data, f)
+    print(f"Publishing weeks <= {current_week}; withheld {len(dropped)} future week(s)")
 
     # Lift the paid half out BEFORE anything is serialised into the page --
     # nfl_data/mlb_data are mutated into their free form here, so there is no

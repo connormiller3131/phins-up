@@ -2336,7 +2336,7 @@ function renderGames(week){
         <div>
           <div class="matchup" role="button" tabindex="0" onclick="toggleGameFocus('games', ${idx})">${g.awayAbbr}<span class="at">@</span>${g.homeAbbr}${g.primetime ? `<span class="primetime-badge">${g.primetime}</span>` : ''}<span class="expand-hint">🔍 Focus</span></div>
           <div class="kickoff">${fmtKickoffLine(g)}${g.already_played ? '<span class="final-badge">FINAL</span>' : ''}</div>
-          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')}<a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
+          <div class="venue-line">${[g.stadium, g.location].filter(Boolean).join(' · ')} <a class="game-permalink" href="${nflGamePageUrl(g, selectedWeek)}" title="A standalone page for this matchup -- shareable, and readable without an account">Game page ↗</a></div>
         </div>
         <div class="game-top-actions">${collapseToggleHtml()}</div>
       </div>

@@ -207,8 +207,20 @@ const COMP_USER_IDS = new Set([
   "user_3IwWOrT9zXWv6gaUIdJKRSkFecU",   // Connor - site owner
 ]);
 
-function hasComp(userId) {
-  return !!userId && COMP_USER_IDS.has(userId);
+// Comp can also be granted WITHOUT a deploy by writing a KV key named
+// `comp:<clerk user id>` (any value -- the name is the grant; a short note
+// like "friend, 2026 season" is useful for remembering why later). Checked
+// before any entitlement lookup, so it is unaffected by reconcile: there is
+// no subscription behind it and none is expected.
+//
+// Revoking is deleting the key. Both are one action in the Cloudflare
+// dashboard, which is the point -- comping a friend should not require a
+// code change.
+async function hasComp(env, userId) {
+  if (!userId) return false;
+  if (COMP_USER_IDS.has(userId)) return true;
+  if (!env.GATED) return false;
+  return (await env.GATED.get(`comp:${userId}`)) !== null;
 }
 
 function formEncode(pairs) {
@@ -382,6 +394,7 @@ async function serveWhoami(request, env) {
   const who = await identify(request);
   let ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
   if (ent) ent = await healEntitlement(env, who.userId, ent);
+  const comp = who.signedIn ? await hasComp(env, who.userId) : false;
   return Response.json(
     {
       ...who,
@@ -390,9 +403,9 @@ async function serveWhoami(request, env) {
       // buttons that are going to 403 the moment they are clicked.
       country: (request.cf && request.cf.country) || null,
       canSubscribe: !request.cf || !request.cf.country || request.cf.country === "US",
-      plan: hasComp(who.userId) ? "comp" : (ent?.plan || "free"),
+      plan: comp ? "comp" : (ent?.plan || "free"),
       subscriptionStatus: ent?.status || null,
-      paid: hasComp(who.userId) || isPaid(ent),
+      paid: comp || isPaid(ent),
       currentPeriodEnd: ent?.currentPeriodEnd || null,
       cancelAtPeriodEnd: !!ent?.cancelAtPeriodEnd,
       subscriptionId: ent?.subscriptionId || null,
@@ -669,7 +682,7 @@ async function serveGated(request, env) {
   // which reproduces every pick card exactly (verified per build by
   // pipeline/nfl/verify_account_split.mjs) while withholding the prop tables.
   const ent = who.signedIn ? await entitlementFor(env, who.userId) : null;
-  const paid = hasComp(who.userId) || isPaid(ent);
+  const paid = (await hasComp(env, who.userId)) || isPaid(ent);
   const key = paid ? GATED_KEY : ACCOUNT_KEY;
   let body = await env.GATED.get(key, { type: "stream" });
   // A missing account payload must not silently fall back to the paid one --

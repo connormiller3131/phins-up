@@ -45,6 +45,25 @@ NFL_MODEL_KEYS = ("elo_home_prob", "good_value_home", "good_value_away")
 MLB_GATED_GAME_KEYS = ("props", "hr_combo", "featured_props")
 
 
+def summarise_props(game):
+    """Describe the gated prop table without publishing any of it.
+
+    A count, the markets and the number of players are METADATA -- "47 props
+    across 9 markets for 13 players" tells a visitor what they would be buying
+    and gives away no projection, price or edge. The upgrade prompt used to say
+    only "full player prop tables come with a subscription", which asks someone
+    to pay for a thing it declines to describe.
+    """
+    props = game.get("props") or []
+    if not props:
+        return
+    game["prop_summary"] = {
+        "count": len(props),
+        "players": len({p.get("player") for p in props if p.get("player")}),
+        "markets": sorted({p["market"] for p in props if p.get("market")}),
+    }
+
+
 def _lift(game, keys):
     """Pop every gated key present on one game. Returns None when the game
     carries none of them, so an already-played or propless game doesn't
@@ -73,6 +92,7 @@ def split_nfl(data):
     gated = {}
     for week, wk in (data.get("weeks") or {}).items():
         for game in wk.get("games") or []:
+            summarise_props(game)
             keys = NFL_GATED_GAME_KEYS
             # Primetime games keep their model number in the free page. Every
             # other game gives it up, so an anonymous visitor cannot read it
@@ -90,6 +110,7 @@ def split_mlb(data):
     gated = {}
     for day in (data.get("days") or {}).values():
         for game in day.get("games") or []:
+            summarise_props(game)
             lifted = _lift(game, MLB_GATED_GAME_KEYS)
             if lifted:
                 gated[mlb_game_key(game)] = lifted

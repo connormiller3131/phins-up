@@ -180,7 +180,7 @@ def compose_pregame(nfl):
         return None, None
 
     text = (
-        "NFL Week %d — where our model disagrees most with the market.\n\n"
+        "NFL Week %d. Where our model disagrees most with the market.\n\n"
         "%s vs %s\n"
         "Model: %s %.1f%%\n"
         "Market implies: %s %.1f%%\n\n"
@@ -213,7 +213,7 @@ def compose_results(nfl, results_dir):
              "The model called %d of %d winners." % (correct, graded)]
     if mkt_n:
         lines.append("The betting market called %d." % mkt_correct)
-    lines.append("\nEvery prediction we have made, graded — including the "
+    lines.append("\nEvery prediction we have made, graded, including the "
                  "misses:\n%s/track-record" % SITE)
     return "\n".join(lines), "x_posted:nfl-%s-wk%d-results" % (season, week)
 

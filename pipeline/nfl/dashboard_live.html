@@ -4524,7 +4524,10 @@ const SOCIAL_X = "PhinsUpDotNet";   // also in build_game_pages.py FOOT, for the
   a.textContent = '@' + SOCIAL_X;
   const sep = document.createElement('span');
   sep.textContent = '\u00b7';
-  slot.append(a, sep);
+  // Explicit spaces: the neighbouring separators in the static markup get
+  // theirs from source indentation collapsing to a single space, and nodes
+  // built here have none, which rendered as "@handle· © 2026".
+  slot.append(a, ' ', sep, ' ');
 })();
 
 function clerkUserLabel(u){

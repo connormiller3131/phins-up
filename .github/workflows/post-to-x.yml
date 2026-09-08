@@ -1,0 +1,107 @@
+name: Post to X
+
+# Posts model projections and results to @PhinsUpDotNet.
+#
+# SAFE BY DEFAULT, AND STAYS THAT WAY UNTIL YOU SAY OTHERWISE. The schedule
+# below is live from the moment this file lands, but the job only DRY RUNS --
+# it prints the exact text it would post and sends nothing. Every scheduled run
+# shows up in the Actions log so you can read a few weeks of real proposed
+# posts before anything reaches the account.
+#
+# To go live, set a repository VARIABLE (not a secret):
+#   Settings -> Secrets and variables -> Actions -> Variables tab
+#   X_POSTING_ENABLED = true
+# Setting it back to anything else returns to dry run. No code change either
+# way, and no need to remember which commit turned it on.
+#
+# A manual run can also force it with the `live` input, which overrides the
+# variable in both directions.
+
+on:
+  schedule:
+    # Saturday midday ET -- ahead of the main Sunday slate, so the prediction
+    # is public and timestamped well before any of it kicks off.
+    - cron: "0 16 * * 6"
+    # Tuesday and Wednesday mornings ET. Results only post once EVERY game of
+    # the week is graded, so Tuesday usually wins and Wednesday is a free retry
+    # for the weeks where Monday night grades late. The KV ledger makes the
+    # second run a no-op rather than a duplicate.
+    - cron: "0 15 * * 2"
+    - cron: "0 15 * * 3"
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "Which post to compose"
+        type: choice
+        options: [pregame, results]
+        default: pregame
+      live:
+        description: "Actually post it (leave false to dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The poster reads data/dashboard_published_nfl.json, which is
+      # git-ignored, and checks its composed link against the generated pages
+      # in docs/. Both come from the same cached data every other workflow
+      # uses, so this posts about exactly what the site is currently showing.
+      - name: Restore most recent dashboard data
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/nfl/dashboard_current_week.json
+            data/mlb/dashboard_current_slate.json
+            data/nhl/dashboard_current_slate.json
+          key: dashboard-data-cache-none
+          restore-keys: |
+            dashboard-data-cache-
+          fail-on-cache-miss: true
+
+      - name: Rebuild published data and pages
+        run: python pipeline/nfl/build_static_site.py
+
+      - name: Compose and post
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          LIVE_INPUT: ${{ github.event.inputs.live }}
+          ENABLED_VAR: ${{ vars.X_POSTING_ENABLED }}
+          # Saturday's cron is the pre-game post; the weekday ones are results.
+          CRON: ${{ github.event.schedule }}
+          KIND_INPUT: ${{ github.event.inputs.kind }}
+        run: |
+          KIND="${KIND_INPUT:-}"
+          if [ -z "$KIND" ]; then
+            if [ "$CRON" = "0 16 * * 6" ]; then KIND=pregame; else KIND=results; fi
+          fi
+
+          # A manual `live` input wins in both directions; otherwise the repo
+          # variable decides. Anything other than an explicit "true" is a dry
+          # run, so a typo or an unset variable fails safe.
+          if [ "$LIVE_INPUT" = "true" ]; then
+            export POST_TO_X=true
+          elif [ -z "$LIVE_INPUT" ] && [ "$ENABLED_VAR" = "true" ]; then
+            export POST_TO_X=true
+          fi
+
+          echo "kind=$KIND  live=${POST_TO_X:-false}"
+          python -m pipeline.social --kind "$KIND"

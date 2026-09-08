@@ -194,6 +194,7 @@ Phins Up provides statistical projections for informational and entertainment
 purposes only. Nothing here is betting advice, and no projection guarantees an
 outcome. Not affiliated with the NFL or any sportsbook.
 &middot; <a href="%s/">phinsup.net</a>
+&middot; <a href="https://x.com/PhinsUpDotNet" rel="noopener">@PhinsUpDotNet</a>
 </footer>
 </div></body></html>
 """ % SITE

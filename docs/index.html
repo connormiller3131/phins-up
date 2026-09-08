@@ -670,6 +670,20 @@
     white-space:nowrap;
   }
 
+  .props-upsell{
+    background:var(--panel-alt);border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px;margin-top:10px;
+  }
+  .props-upsell-head{font-size:15px;margin-bottom:8px;}
+  .props-upsell-head b{color:var(--green);}
+  .props-upsell-body{
+    display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;
+  }
+  .props-upsell-body span{
+    font-family:var(--mono);font-size:11px;color:var(--text-dim);
+    border:1px solid var(--line);border-radius:999px;padding:2px 8px;
+  }
+  .props-upsell-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
   .props-toggle{
     margin-top:12px;
     padding-top:10px;
@@ -1942,7 +1956,7 @@ function propsBySection(props){
 }
 
 function propsTable(g, containerId){
-  if(!PAID) return upgradePromptHtml('Full player prop tables');
+  if(!PAID) return propsUpgradeHtml(g, 'NFL');
   const props = g.props;
   if(!props || !props.length) return "";
   return `
@@ -2085,6 +2099,39 @@ function signInPromptHtml(what){
 // For content behind the PAID tier rather than behind having an account at
 // all. A signed-in free user being told to "sign in" for something they are
 // already signed in for reads as a bug, so this offers the actual next step.
+// Upgrade prompt for a gated PROP TABLE specifically. It reads the summary
+// gated_payload.py leaves on the free game (count, markets, players), so the
+// numbers are this game's real ones rather than a marketing round number, and
+// none of the actual projections are published to produce them.
+//
+// Asking someone to pay for "full player prop tables" without saying how many,
+// for whom, or in which markets is asking them to buy an unspecified thing.
+function propsUpgradeHtml(g, sport){
+  const sum = g && g.prop_summary;
+  if(!sum || !sum.count) return upgradePromptHtml('Full player prop tables');
+  const markets = sum.markets.slice(0, 6).join(', ')
+    + (sum.markets.length > 6 ? ` and ${sum.markets.length - 6} more` : '');
+  const cta = !SIGNED_IN
+    ? `<button class="auth-btn" onclick="window.Clerk && window.Clerk.openSignIn()">Sign in</button>`
+    : (ACCOUNT && ACCOUNT.canSubscribe === false
+        ? `<span class="p-exp">Subscriptions aren't available in your country yet.</span>`
+        : `<button class="auth-btn" onclick="goToStripe('/api/checkout?plan=monthly','checkout',this)">$5/mo</button>
+           <button class="auth-btn" onclick="goToStripe('/api/checkout?plan=yearly','checkout',this)">$40/yr</button>`);
+  return `<div class="props-upsell">
+    <div class="props-upsell-head"><b>${sum.count} player props</b> for this game</div>
+    <div class="props-upsell-body">
+      <span>${sum.players} players</span>
+      <span>${sum.markets.length} markets</span>
+      <span>${markets}</span>
+    </div>
+    <div class="p-exp">Every one carries the model's own projection and probability, and
+      a real DraftKings price wherever one is posted. ${sport === 'NFL'
+        ? 'Anytime TD is graded against that price as TAKE / MAYBE / PASS.'
+        : 'Anytime HR is graded against that price as TAKE / MAYBE / PASS.'}</div>
+    <div class="props-upsell-cta">${cta}</div>
+  </div>`;
+}
+
 function upgradePromptHtml(what){
   // Signed out, this used to fall through to signInPromptHtml -- which told
   // the visitor these came with a FREE account. They don't, and they would
@@ -2831,7 +2878,7 @@ function mlbHrComboHtml(combo){
 
 function mlbPropsTable(g, containerId){
   if(!PAID){
-    return mlbHrComboHtml(g.hr_combo) + upgradePromptHtml('Full player prop tables');
+    return mlbHrComboHtml(g.hr_combo) + propsUpgradeHtml(g, 'MLB');
   }
   const props = g.props, combo = g.hr_combo, featured = g.featured_props;
   const hasDK = !!featured;

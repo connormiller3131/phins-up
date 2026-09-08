@@ -83,11 +83,14 @@ def tweet_length(text):
 
 
 def credentials():
+    # .strip() is not paranoia: a trailing newline pasted into a GitHub secret
+    # is invisible in the UI, changes the signature, and surfaces only as a
+    # bare 401 with no detail.
     keys = {
-        "api_key": os.environ.get("X_API_KEY", ""),
-        "api_secret": os.environ.get("X_API_SECRET", ""),
-        "access_token": os.environ.get("X_ACCESS_TOKEN", ""),
-        "access_secret": os.environ.get("X_ACCESS_TOKEN_SECRET", ""),
+        "api_key": os.environ.get("X_API_KEY", "").strip(),
+        "api_secret": os.environ.get("X_API_SECRET", "").strip(),
+        "access_token": os.environ.get("X_ACCESS_TOKEN", "").strip(),
+        "access_secret": os.environ.get("X_ACCESS_TOKEN_SECRET", "").strip(),
     }
     missing = [k for k, v in keys.items() if not v]
     return (None, missing) if missing else (keys, [])
@@ -248,3 +251,39 @@ def post(text, idem_key, live):
         return 0
     print("  FAILED %d: %s" % (r.status_code, r.text[:600]))
     return 1
+
+
+# ---- diagnostics ----------------------------------------------------------
+
+def verify():
+    """Check the credentials with a READ, so diagnosing auth never costs a
+    public post.
+
+    Tries both hosts on purpose. The OAuth 1.0a signature covers the request
+    URL, so signing for one host and having the gateway validate against the
+    other fails with exactly the bare "Unauthorized" this was written to
+    diagnose -- and which of the two works is not something to guess at.
+    """
+    creds, missing = credentials()
+    if not creds:
+        print("MISSING credentials: %s" % ", ".join(missing))
+        return 1
+    for name, value in sorted(creds.items()):
+        print("  %-14s len=%-3d starts=%s" % (name, len(value), value[:4]))
+
+    ok = False
+    for host in ("https://api.twitter.com", "https://api.x.com"):
+        url = host + "/2/users/me"
+        try:
+            r = requests.get(url, timeout=30,
+                             headers={"Authorization": oauth1_header("GET", url, creds)})
+        except Exception as exc:
+            print("  %-24s network error: %s" % (host, exc))
+            continue
+        if r.status_code == 200:
+            who = (r.json().get("data") or {}).get("username")
+            print("  %-24s OK -- authenticated as @%s" % (host, who))
+            ok = True
+        else:
+            print("  %-24s %d %s" % (host, r.status_code, " ".join(r.text[:200].split())))
+    return 0 if ok else 1

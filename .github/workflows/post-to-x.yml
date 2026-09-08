@@ -33,7 +33,7 @@ on:
       kind:
         description: "Which post to compose"
         type: choice
-        options: [pregame, results]
+        options: [pregame, results, verify]
         default: pregame
       live:
         description: "Actually post it (leave false to dry run)"

@@ -15,7 +15,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from pipeline.social.post_to_x import compose_pregame, compose_results, post
+from pipeline.social.post_to_x import compose_pregame, compose_results, post, verify
 
 NFL_PUBLISHED = ROOT / "data" / "dashboard_published_nfl.json"
 RESULTS_DIR = ROOT / "docs" / "results"
@@ -23,8 +23,11 @@ RESULTS_DIR = ROOT / "docs" / "results"
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--kind", choices=["pregame", "results"], required=True)
+    ap.add_argument("--kind", choices=["pregame", "results", "verify"], required=True)
     args = ap.parse_args()
+
+    if args.kind == "verify":
+        return verify()
 
     if not NFL_PUBLISHED.exists():
         print("No published NFL data at %s -- run build_static_site.py first." % NFL_PUBLISHED)

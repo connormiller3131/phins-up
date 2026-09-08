@@ -139,6 +139,17 @@ def collect_nfl(results_dir, cal):
     return store, games, market_n, market_correct
 
 
+# Markets no longer offered. Their history stays on this page -- deleting the
+# rows would be exactly the selective editing this page exists to argue
+# against -- but a reader has to be able to tell "we sell this and it is bad"
+# apart from "we sold this, it was bad, we stopped".
+WITHDRAWN = {
+    "Pitcher Runs Allowed": "withdrawn Sep 2026",
+    "Pitcher Outs Recorded": "withdrawn Sep 2026",
+    "Pitcher Hits Allowed": "withdrawn Sep 2026",
+}
+
+
 def rows_html(store):
     if not store:
         return ""
@@ -152,10 +163,13 @@ def rows_html(store):
         brier = b["brier_sum"] / n
         delta = acc - base
         cls = "win" if delta > 0.02 else ("loss" if delta < -0.02 else "")
+        label = e(market)
+        if market in WITHDRAWN:
+            label += " <span class='tag'>%s</span>" % e(WITHDRAWN[market])
         out.append("<tr><td>%s</td><td class='num'>%s</td>"
                    "<td class='num %s'>%.0f%%</td><td class='num'>%.0f%%</td>"
                    "<td class='num'>%.4f</td></tr>"
-                   % (e(market), f"{n:,}", cls, acc * 100, base * 100, brier))
+                   % (label, f"{n:,}", cls, acc * 100, base * 100, brier))
     return "".join(out)
 
 
@@ -244,6 +258,15 @@ def build(docs_dir, results_dir):
         out.append(table("MLB", mlb,
                          "Graded from every finalized day, %s (%d days)."
                          % (span, len(mlb_dates))))
+
+    if any(m in WITHDRAWN for m in mlb):
+        out.append(
+            "<p class='note'><b>On the withdrawn markets.</b> Three pitcher props "
+            "were pulled in September 2026 because of what this page showed: their "
+            "Brier scores sat above 0.25, which is worse than calling every one a "
+            "coin flip, so the probabilities were misleading rather than merely "
+            "weak. Their history stays here rather than being deleted. They are "
+            "not offered again until the models behind them are rebuilt.</p>")
 
     out.append(calibration_table(cal))
 

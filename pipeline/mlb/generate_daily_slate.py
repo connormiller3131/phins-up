@@ -71,10 +71,22 @@ BATTER_COUNT_STATS = {
     "hits": "Hits", "total_bases": "Total Bases", "walks": "Walks", "rbi": "RBI",
 }
 LADDER_STATS = {"hits", "total_bases", "strikeouts"}
+# Three pitcher markets were WITHDRAWN on 2026-09-08 after the public track
+# record showed their Brier scores above 0.25 -- worse than calling everything
+# a coin flip, which means the probabilities were actively misleading rather
+# than merely unskilled: Runs Allowed 0.2635, Outs Recorded 0.2593 (42%
+# accuracy against a 60% zero-skill baseline), Hits Allowed 0.2562. They were
+# part of a paid product while the site's own evidence page marked them red,
+# which is the one thing that could undercut publishing a track record at all.
+#
+# Strikeouts (0.2474) and Walks Allowed (0.2414) stay: both under the line, and
+# Walks Allowed beats its baseline. Restore a withdrawn market by putting it
+# back here AND in PROP_MARKET_KEYS below, but only with a rebuilt model --
+# grade_props.py still knows how to score all five, so the track record will
+# start reporting it again the moment it reappears.
 PITCHER_COUNT_STATS = {
-    "strikeouts": "Pitcher Strikeouts", "hits_allowed": "Pitcher Hits Allowed",
-    "walks_allowed": "Pitcher Walks Allowed", "runs_allowed": "Pitcher Runs Allowed",
-    "outs_recorded": "Pitcher Outs Recorded",
+    "strikeouts": "Pitcher Strikeouts",
+    "walks_allowed": "Pitcher Walks Allowed",
 }
 
 # Only stats with a real matching DraftKings market get odds wired up.
@@ -84,8 +96,8 @@ PITCHER_COUNT_STATS = {
 PROP_MARKET_KEYS = {
     "Hits": "batter_hits", "Total Bases": "batter_total_bases", "Walks": "batter_walks",
     "RBI": "batter_rbis", "Anytime HR": "batter_home_runs",
-    "Pitcher Strikeouts": "pitcher_strikeouts", "Pitcher Hits Allowed": "pitcher_hits_allowed",
-    "Pitcher Walks Allowed": "pitcher_walks", "Pitcher Outs Recorded": "pitcher_outs",
+    "Pitcher Strikeouts": "pitcher_strikeouts",
+    "Pitcher Walks Allowed": "pitcher_walks",
 }
 
 # A real everyday hitter gets roughly this many plate appearances per game

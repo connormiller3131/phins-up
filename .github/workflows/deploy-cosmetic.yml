@@ -79,13 +79,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # docs/nfl/ holds the pre-rendered per-game pages, and -A inside
-          # it is required rather than optional: build_game_pages.py wipes
-          # and rebuilds that tree, so a game that disappears has to be
-          # staged as a DELETION or its page stays live serving numbers the
-          # pipeline no longer produces.
-          git add docs/index.html docs/sitemap.xml docs/robots.txt
-          git add -A docs/nfl docs/mlb
+          # -A over the whole of docs/ rather than a list of paths. It has
+          # to be -A: build_game_pages.py wipes and rebuilds its trees, so a
+          # game that disappears must be staged as a DELETION or its page
+          # stays live serving numbers the pipeline no longer produces. And it
+          # has to be the whole directory, not "docs/nfl docs/mlb" -- naming a
+          # tree that does not exist is a fatal pathspec error, which is
+          # exactly what happened the first time BUILD_MLB_PAGES was switched
+          # off and docs/mlb stopped being written.
+          git add -A docs
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

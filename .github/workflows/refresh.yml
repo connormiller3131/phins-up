@@ -254,10 +254,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # See deploy-cosmetic.yml: docs/nfl is rebuilt wholesale, so it
-          # needs -A to stage removals, not just additions.
-          git add docs/index.html docs/results/ docs/sitemap.xml docs/robots.txt data/nhl/goalie_game_logs.parquet
-          git add -A docs/nfl docs/mlb
+          # See deploy-cosmetic.yml: -A over all of docs/, because the
+          # generated trees are rebuilt wholesale (removals must be staged)
+          # and naming a tree that a feature flag has turned off is a fatal
+          # pathspec error.
+          git add -A docs
+          git add data/nhl/goalie_game_logs.parquet
           if git diff --quiet --cached; then
             echo "Nothing to commit."
           else

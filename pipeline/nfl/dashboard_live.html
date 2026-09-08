@@ -249,6 +249,11 @@
   .parlay-leg-market{color:var(--text-dim);min-width:90px;}
   .parlay-leg-edge{color:var(--green);font-weight:600;}
   .parlay-leg-prob{color:var(--blue);margin-left:auto;}
+  .parlay-locked{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    flex-wrap:wrap;margin-top:10px;padding-top:10px;
+    border-top:1px dashed var(--line);color:var(--text-dim);font-size:12.5px;
+  }
   .parlay-combined{
     font-family:var(--mono);
     font-size:11px;
@@ -1389,6 +1394,9 @@
       </details>
     </div>
     <div class="legal-footer-bottom">
+      <a href="/track-record">Track record</a>
+      <span>&middot;</span>
+      <span id="social-slot"></span>
       <span>&copy; 2026 Connor Miller</span>
       <span>·</span>
       <a href="mailto:phinsupdotnet2@gmail.com">phinsupdotnet2@gmail.com</a>
@@ -2164,7 +2172,15 @@ function parlayCardHtml(legs, sport, opts){
     return `<div class="placeholder parlay-empty">${opts.emptyText || `No real market lines to compare against yet for ${sport} -- suggested parlay needs at least one leg with a real price behind it (not just a model projection). Check back once DraftKings has posted more.`}</div>`;
   }
   const combinedProb = legs.reduce((p, l) => p * l.prob, 1);
-  const rows = legs.map(l => `
+  // A signed-out visitor gets the first leg for real rather than a wall. The
+  // whole card was previously replaced by a sign-in prompt, which meant the
+  // very first thing on the page -- to a stranger and to Googlebot -- was a
+  // list of things they could not have, before they had seen anything worth
+  // wanting. One real pick is enough to judge the product by and small enough
+  // not to be the product.
+  const preview = opts.freePreview || 0;
+  const shownLegs = preview ? legs.slice(0, preview) : legs;
+  const rows = shownLegs.map(l => `
     <div class="parlay-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
       <span class="parlay-leg-market">${l.market}</span>
@@ -2185,7 +2201,12 @@ function parlayCardHtml(legs, sport, opts){
     <div class="parlay-card ${accentClass}">
       <div class="parlay-title">${title} <span class="props-sample-tag">(${note})</span></div>
       ${rows}
-      <div class="parlay-combined">Combined probability (assuming independence, which overstates it in practice): <b>${pct(combinedProb)}</b></div>
+      ${preview && legs.length > preview ? `
+        <div class="parlay-locked">
+          <span>+ ${legs.length - preview} more leg${legs.length - preview === 1 ? '' : 's'} on this card, plus the ${sport === 'NFL' ? 'TD Special' : 'HR Special'} and every same-game parlay.</span>
+          <button class="auth-btn" onclick="window.Clerk && window.Clerk.openSignIn()">Free account</button>
+        </div>`
+        : `<div class="parlay-combined">Combined probability (assuming independence, which overstates it in practice): <b>${pct(combinedProb)}</b></div>`}
       <div class="p-exp" style="margin-top:4px;">Not betting advice -- ${rankingNote}.</div>
     </div>
   `;
@@ -2273,8 +2294,13 @@ function renderNflWeeklyPicks(){
 }
 
 function nflParlayCardsHtml(weekData){
-  if(!SIGNED_IN) return signInPromptHtml('The suggested parlay, TD Special and same-game parlays');
   const legs = collectNflParlayLegs(weekData.games);
+  if(!SIGNED_IN){
+    return parlayCardHtml(legs, 'NFL', {
+      freePreview: 1,
+      note: `the model's single best pick this week, free \u2014 one leg of a ${legs.length}-leg card`,
+    });
+  }
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(legs, 'NFL', {
@@ -3815,7 +3841,12 @@ function mlbHrSpecialPicksForDate(date){
 // Suggested Parlay / HR Special using the same exact logic, not a
 // reimplementation of it.
 function mlbParlayCardsHtml(dayData, selectedDate){
-  if(!SIGNED_IN) return signInPromptHtml('The suggested parlay, HR Special and same-game parlays');
+  if(!SIGNED_IN){
+    return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
+      freePreview: 1,
+      note: `the model's single best pick today, free \u2014 one leg of a ${collectMlbParlayLegs(dayData.games).length}-leg card`,
+    });
+  }
   const hrLegs = mlbHrSpecialPicksForDate(selectedDate);
   const hrRealCount = hrLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(collectMlbParlayLegs(dayData.games), 'MLB', {
@@ -4476,6 +4507,25 @@ function rerenderAfterGatedMerge(){
 // account payload to a signed-in free user and the full one to a paid or
 // comp user, and refuses both to an anonymous visitor. Flipping that flag
 // false in site-worker.js unlocks the whole site in one move.
+// X/Twitter handle, WITHOUT the leading @. Leave empty and no link renders --
+// pointing people at an account that does not exist is worse than pointing
+// them nowhere. Setting this is the whole change; the slot is already in the
+// footer markup above.
+const SOCIAL_X = "";
+
+(function renderSocialLink(){
+  const slot = document.getElementById('social-slot');
+  if(!slot || !SOCIAL_X) return;
+  const a = document.createElement('a');
+  a.href = 'https://x.com/' + SOCIAL_X;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.textContent = '@' + SOCIAL_X;
+  const sep = document.createElement('span');
+  sep.textContent = '\u00b7';
+  slot.append(a, sep);
+})();
+
 function clerkUserLabel(u){
   return (u && (u.primaryEmailAddress?.emailAddress || u.username || u.firstName)) || 'Signed in';
 }

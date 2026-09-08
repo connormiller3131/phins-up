@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.common.gated_payload import build_gated_payload
 from pipeline.nfl import build_game_pages
+from pipeline.nfl import build_track_record
 NFL_DATA_PATH = ROOT / "data" / "nfl" / "dashboard_current_week.json"
 MLB_DATA_PATH = ROOT / "data" / "mlb" / "dashboard_current_slate.json"
 NHL_DATA_PATH = ROOT / "data" / "nhl" / "dashboard_current_slate.json"
@@ -99,6 +100,8 @@ def main():
     build_game_pages.build(nfl_data, mlb_data, OUT_PATH.parent,
                            OUT_PATH.parent / "results",
                            datetime.date.today().isoformat())
+
+    build_track_record.build(OUT_PATH.parent, OUT_PATH.parent / "results")
 
     out = (tmpl.replace("__DATA_JSON__", json.dumps(nfl_data))
                .replace("__MLB_DATA_JSON__", json.dumps(mlb_data))

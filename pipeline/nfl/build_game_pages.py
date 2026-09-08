@@ -623,7 +623,7 @@ def build(nfl_data, mlb_data, docs_dir, results_dir, today_iso):
     if nfl_root.exists():
         shutil.rmtree(nfl_root)
 
-    urls = [("%s/" % SITE, today_iso)]
+    urls = [("%s/" % SITE, today_iso), ("%s/track-record" % SITE, today_iso)]
     weeks = []
     pages = 0
 

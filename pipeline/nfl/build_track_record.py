@@ -8,12 +8,21 @@ until now it lived inside a collapsed <details> on the MLB tab -- unreachable
 by a link, invisible to search, and impossible to point at when someone says
 "prove it".
 
-THE GRADING RULES ARE MIRRORED, NOT INVENTED. Every number here is computed
-the same way loadMlbTrackRecord() in dashboard_live.html computes it, from the
-same finalized snapshots in docs/results/. That duplication is a real risk --
-two languages, one definition -- so build_track_record_check.mjs runs the
-JavaScript version over the same files and fails if the two disagree. If you
-change a rule in either place, that check is what tells you.
+THE MLB GRADING RULES ARE MIRRORED, NOT INVENTED. collect_mlb computes every
+number the same way loadMlbTrackRecord() in dashboard_live.html does, from the
+same finalized snapshots. That duplication is a real risk -- two languages,
+one definition -- and it was verified by running the site's own JavaScript
+against the live deployment and comparing every market to this module's output
+(identical across all 11, 38,230 predictions). There is no automated check;
+if you change a rule on either side, redo that comparison by hand.
+
+THE NFL SIDE IS SCORED DIFFERENTLY FROM ITS OWN STORED `hit`, deliberately.
+grade_results.py grades a laddered prop against the MIDDLE RUNG of its ladder,
+while model_over_prob is the probability of clearing the prop's own `line`,
+and those are different numbers on 260 of 268 laddered props. Scoring one
+against the other would pair a probability for one threshold with an outcome
+for another, so collect_nfl recomputes from actual_value against the base
+line. Anytime TD has no line and uses `hit` directly.
 
 Baseline matters more than accuracy. "Anytime HR is 89% accurate" sounds
 excellent until you notice that always guessing "no" scores 89% too. Every row
@@ -104,12 +113,29 @@ def collect_nfl(results_dir, cal):
             market_n += 1
             market_correct += 1 if a.get("market_correct") else 0
         for p in snap.get("props_graded") or []:
-            if p.get("hit") is None:
+            market = p.get("market") or "Prop"
+            if market == "Anytime TD":
+                # Binary, and its own probability field. hit is trustworthy
+                # here because there is no line involved.
+                if p.get("hit") is None or p.get("model_prob") is None:
+                    continue
+                _record(store, market, p["model_prob"], 1 if p["hit"] else 0, cal)
                 continue
-            prob = p.get("model_prob")
-            if prob is None:
+
+            # Everything else is an over/under, and the stored `hit` CANNOT be
+            # used. grade_results grades a laddered prop against the middle
+            # rung, while model_over_prob is the probability of clearing the
+            # prop's own `line` -- 260 of 268 laddered props this week have
+            # those two at different numbers (e.g. line 212.5, midpoint 210).
+            # Scoring one against the other would put a probability for one
+            # threshold next to an outcome for a different one. Recomputed
+            # from actual_value against the base line instead, which is also
+            # exactly how the MLB side scores its props.
+            prob, line, actual = (p.get("model_over_prob"), p.get("line"),
+                                  p.get("actual_value"))
+            if prob is None or line is None or actual is None:
                 continue
-            _record(store, p.get("market") or "Prop", prob, 1 if p["hit"] else 0, cal)
+            _record(store, market, prob, 1 if actual > line else 0, cal)
     return store, games, market_n, market_correct
 
 

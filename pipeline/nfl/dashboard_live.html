@@ -1340,7 +1340,7 @@
   <header>
     <p class="eyebrow" id="nhl-eyebrow"></p>
     <h1>PHINS <span>UP</span></h1>
-    <p class="sub">Same Elo architecture as NFL/MLB, fit and backtested on real 2018-2026 game results (api-web.nhle.com), carried forward daily. Win probability only for now — no player props or real market odds are wired up here yet.</p>
+    <p class="sub">Same Elo architecture as NFL/MLB, fit and backtested on real 2018-2026 game results (api-web.nhle.com), carried forward daily. Real DraftKings moneylines are wired up, pulled from ESPN's public scoreboard, so Model % sits next to the market's price here the same way it does for NFL and MLB. No player props: hockey scoring is low and volatile enough that a goal-scorer model would mostly be measuring noise, and our own MLB track record is the reason we would rather not ship one than ship one that cannot beat a coin flip.</p>
     <div class="metabar">
       <span class="dot"></span>
       <b id="nhl-meta"></b>
@@ -1370,6 +1370,7 @@
   <div class="how-to-read-slot" data-sport="nhl"></div>
 
   <div class="legend">
+    <span><i class="sw" style="background:var(--text-dim)"></i>Fair % — real DraftKings moneyline, where posted</span>
     <span><i class="sw" style="background:var(--green)"></i>Model % — fitted Elo win probability</span>
   </div>
 
@@ -4133,6 +4134,13 @@ function renderNHLGames(selectedDate){
       ? `FINAL<span class="pct">${g.awayAbbr} ${g.away_score} – ${g.homeAbbr} ${g.home_score}</span>`
       : (isToday ? '' : '<span style="color:var(--text-dim)">Scheduled</span>');
 
+    // ESPN only carries odds for upcoming games, so a played game -- or one
+    // the book has not opened -- simply has no market fields. Every market row
+    // is conditional rather than rendering a dash where a price should be.
+    const nhlHasOdds = g.market_home_prob != null;
+    const nhlHasCurrent = g.current_market_home_prob != null;
+    const nhlValueTag = `<span class="value-tag" title="Model win % beats this side's pregame fair %">GOOD VALUE</span>`;
+
     card.innerHTML = `
       <div class="game-top">
         <div>
@@ -4157,14 +4165,21 @@ function renderNHLGames(selectedDate){
       <div class="rowgrid">
         <div class="side" style="--team-accent:${teamAccent('nhl', g.awayAbbr)}">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
+          ${nhlHasOdds ? `<div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlAway)}</b></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${pct(1-g.market_home_prob)}</b>${g.good_value_away ? nhlValueTag : ''}</div>` : ''}
+          ${nhlHasCurrent ? `<div class="stat-line"><span>Fair win % (current)</span><b>${pct(1-g.current_market_home_prob)}</b></div>` : ''}
           <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
         </div>
         <div class="side" style="--team-accent:${teamAccent('nhl', g.homeAbbr)}">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
+          ${nhlHasOdds ? `<div class="stat-line"><span>Moneyline</span><b>${fmtOdds(g.mlHome)}</b></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${pct(g.market_home_prob)}</b>${g.good_value_home ? nhlValueTag : ''}</div>` : ''}
+          ${nhlHasCurrent ? `<div class="stat-line"><span>Fair win % (current)</span><b>${pct(g.current_market_home_prob)}</b></div>` : ''}
           <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
         </div>
       </div>
-      <div class="h2h-note">No real market line or player props yet for NHL -- model win probability only.</div>
+      ${g.total_line != null ? `<div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line}</b></div>` : ''}
+      ${nhlHasOdds ? '' : '<div class="h2h-note">No market line posted for this game yet -- showing model projection only. DraftKings prices appear once the book opens the game.</div>'}
     `;
     root.appendChild(card);
     loadNhlBoxScore(selectedDate, idx);
@@ -4172,7 +4187,7 @@ function renderNHLGames(selectedDate){
   });
 
   document.getElementById("nhl-foot").innerHTML =
-    `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. No real DraftKings odds or player props are wired up yet for NHL -- that is a genuine gap and its own future phase of this pipeline, not something left out to hide anything.`;
+    `<b>Model win %</b> is a team Elo rating (same margin-of-victory architecture as NFL/MLB), fit on 2018-19 through 2023-24 and validated out-of-sample on the full, untouched 2024-25 season: Brier 0.2386 vs. a naive flat-home-ice-rate baseline's 0.2469, log loss 0.6698 vs. 0.6869, 58.8% accuracy -- a real but modest edge, since hockey has more parity and single-goal/shootout variance than football or baseball. Ratings carry forward chronologically through every completed game since, including all of 2025-26, into these predictions. <b>Fair win %</b> comes from real DraftKings moneylines, read from ESPN's public scoreboard, which carries both the opening price and the current one. Odds exist only on games the book has opened and are stripped once a game is final, so a line is captured before puck drop and kept. <b>GOOD VALUE</b> flags a side where Model win % beats that side's own PREGAME fair % -- pregame by design, so it reflects the model's read at the moment the price was set rather than chasing where the market has since moved. There are deliberately no player props: hockey's scoring is low and volatile, an Anytime Goal Scorer market would have the same structural problem as Anytime HR (a low base rate makes high accuracy meaningless against its own baseline), and our MLB track record is the evidence we would rather act on than repeat.`;
 
   const searchBox = document.getElementById("nhl-search");
   if(searchBox && searchBox.value) applySearchFilter("nhl-games", searchBox.value);

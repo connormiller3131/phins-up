@@ -23,6 +23,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.nhl.games import load_games
+from pipeline.nhl import nhl_odds
 from pipeline.nhl.elo_model import run_elo
 from pipeline.nhl.team_map import normalize_team
 from pipeline.nhl.goalie_ratings import team_recent_save_pct
@@ -374,6 +375,12 @@ def main(today=None):
             "homeTeamStats": team_stats_for_dropdown(scoring_rates, g["home_team"]),
         }
         by_date.setdefault(g["target_date"], []).append(out_game)
+
+    # Real DraftKings moneylines, free, from ESPN's scoreboard. Must run on
+    # EVERY generation and before the payload is built: ESPN only carries odds
+    # for upcoming games and strips them once a game is final, so a line not
+    # captured before puck drop cannot be recovered afterwards.
+    nhl_odds.attach(by_date)
 
     for d, day_games in by_date.items():
         days_out[d] = build_day_payload(d, day_games)

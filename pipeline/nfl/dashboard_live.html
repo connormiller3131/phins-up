@@ -623,6 +623,12 @@
   .team-stats-cat{font-weight:700;color:var(--text);min-width:90px;text-transform:uppercase;font-size:10.5px;letter-spacing:.03em;}
   .team-stats-item b{color:var(--text);font-weight:600;}
 
+  .model-lock{color:var(--green);text-decoration:none;border-bottom:1px dotted var(--green);}
+  .model-lock:hover{color:var(--text);}
+  .prob-bar-locked{
+    padding:9px 12px;border:1px dashed var(--line);border-radius:8px;
+    color:var(--text-dim);font-size:12.5px;text-align:center;
+  }
   .prob-bar-wrap{margin:10px 0 6px;}
   .prob-bar{
     display:flex;height:20px;border-radius:5px;overflow:hidden;
@@ -2357,6 +2363,16 @@ function renderGames(week){
     const hasCurrent = pHomeCurrent !== null && pHomeCurrent !== undefined;
     const valueTag = `<span class="value-tag" title="Model win % beats this side's pregame fair %">GOOD VALUE</span>`;
 
+    // Model win % is a paid feature, except on primetime games (TNF/SNF/MNF)
+    // which stay free as the sample. For an anonymous visitor the number is
+    // not merely hidden here: gated_payload.py lifts it out of the page
+    // entirely, so g.elo_home_prob is undefined and there is nothing to read
+    // out of the source. A signed-in FREE account does receive it, because the
+    // suggested parlay and TD Special are built from it, so for them this
+    // check is the whole gate.
+    const showModel = (!!g.primetime || PAID) && g.elo_home_prob != null;
+    const modelLock = `<a class="model-lock" href="#" onclick="event.preventDefault();${SIGNED_IN ? "goToStripe('/api/checkout?plan=monthly','checkout',this)" : 'window.Clerk && window.Clerk.openSignIn()'}">subscribers</a>`;
+
     card.dataset.gameIdx = idx;
     card.innerHTML = `
       <div class="game-top">
@@ -2373,38 +2389,38 @@ function renderGames(week){
       ${teamStatsSection('nfl', `nfl-team-stats-${idx}`, idx, null, g.awayAbbr, g.homeAbbr)}
 
       <div class="prob-bar-wrap">
-        <div class="prob-bar">
+        ${showModel ? `<div class="prob-bar">
           <div style="width:${(1-g.elo_home_prob)*100}%;background:var(--text-dim)">${g.awayAbbr} ${pct(1-g.elo_home_prob)}</div>
           <div style="width:${g.elo_home_prob*100}%;background:var(--green)">${g.homeAbbr} ${pct(g.elo_home_prob)}</div>
-        </div>
+        </div>` : `<div class="prob-bar-locked">Model win % for this game is for ${modelLock}. Primetime games are free.</div>`}
       </div>
 
       <div class="rowgrid">
         <div class="side" style="--team-accent:${teamAccent('nfl', g.awayAbbr)}">
           <div class="team">${g.awayName} <small>${g.awayAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,false)}</b></div>
-          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlAway)}</b>${parlayAddBtn('nfl', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, g.mlAway, mlImpliedProb(g.mlAway))}</span></div>
-          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b>${g.good_value_away ? valueTag : ''}</div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlAway)}</b>${showModel ? parlayAddBtn('nfl', `ml-${idx}-away`, g.awayName, `@ ${g.homeAbbr}`, 'Moneyline', 1-g.elo_home_prob, g.mlAway, mlImpliedProb(g.mlAway)) : ''}</span></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(1-pHomeRaw) : "—"}</b>${showModel && g.good_value_away ? valueTag : ''}</div>
           <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(1-pHomeCurrent) : "—"}</b></div>
-          <div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
+          ${showModel ? `<div class="stat-line model"><span>Model win %</span><b>${pct(1-g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
             <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="away" value="${((1-g.elo_home_prob)*100).toFixed(1)}">
             <span class="edge-tag" data-tag="${idx}-away">—</span>
-          </div>
+          </div>` : `<div class="stat-line model locked"><span>Model win %</span><b>${modelLock}</b></div>`}
         </div>
         <div class="side" style="--team-accent:${teamAccent('nfl', g.homeAbbr)}">
           <div class="team">${g.homeName} <small>${g.homeAbbr}</small></div>
           <div class="stat-line"><span>Spread</span><b>${fmtSpread(g.spread_line,true)}</b></div>
-          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlHome)}</b>${parlayAddBtn('nfl', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, g.mlHome, mlImpliedProb(g.mlHome))}</span></div>
-          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b>${g.good_value_home ? valueTag : ''}</div>
+          <div class="stat-line"><span>Moneyline</span><span style="display:flex;align-items:center;gap:6px;"><b>${fmtOdds(g.mlHome)}</b>${showModel ? parlayAddBtn('nfl', `ml-${idx}-home`, g.homeName, `vs ${g.awayAbbr}`, 'Moneyline', g.elo_home_prob, g.mlHome, mlImpliedProb(g.mlHome)) : ''}</span></div>
+          <div class="stat-line"><span>Fair win % (pregame)</span><b>${hasOdds ? pct(pHomeRaw) : "—"}</b>${showModel && g.good_value_home ? valueTag : ''}</div>
           <div class="stat-line"><span>Fair win % (current)</span><b>${hasCurrent ? pct(pHomeCurrent) : "—"}</b></div>
-          <div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
+          ${showModel ? `<div class="stat-line model"><span>Model win %</span><b>${pct(g.elo_home_prob)}</b></div>
           <div class="model-row">
             <label>Your %</label>
             <input type="number" min="0" max="100" step="0.5" data-idx="${idx}" data-side="home" value="${(g.elo_home_prob*100).toFixed(1)}">
             <span class="edge-tag" data-tag="${idx}-home">—</span>
-          </div>
+          </div>` : `<div class="stat-line model locked"><span>Model win %</span><b>${modelLock}</b></div>`}
         </div>
       </div>
       <div class="stat-line" style="margin-top:10px;justify-content:flex-start;gap:6px;"><span>Point total</span><b>${g.total_line ?? "—"}</b></div>
@@ -2416,7 +2432,12 @@ function renderGames(week){
     if(g.gameday) loadNflBoxScore(idx);
     updateTeamStatsView('nfl', `nfl-team-stats-${idx}`);
 
+    // A locked card renders no "Your %" input at all, so there is nothing to
+    // wire up. Without this guard the first non-primetime game threw on a null
+    // addEventListener and the render loop stopped there, leaving exactly one
+    // card on the page.
     const yourPctInputs = {};
+    if(!card.querySelector('input[data-side]')) return;
     ["away","home"].forEach(side=>{
       yourPctInputs[side] = {
         input: card.querySelector(`input[data-side="${side}"]`),

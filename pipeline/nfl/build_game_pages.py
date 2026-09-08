@@ -236,12 +236,21 @@ def game_page(g, season, week, result):
     ma = None if mh is None else 1 - mh
     ea = None if eh is None else 1 - eh
 
-    title = "%s vs %s Prediction - NFL Week %d Model Odds | Phins Up" % (an, hn, week)
+    free_model = bool(g.get("primetime"))
+    # "Model Odds" is a false promise in the title of a page carrying none.
+    title = ("%s vs %s Prediction - NFL Week %d Model Odds | Phins Up" % (an, hn, week)
+             if free_model else
+             "%s vs %s - NFL Week %d Odds, Line and Team Stats | Phins Up" % (an, hn, week))
 
     # Built from this game's own numbers, so no two pages share a description.
     # A duplicated description across 16 pages would defeat the point of
     # splitting them up in the first place.
-    if eh is not None and mh is not None:
+    if not free_model:
+        desc = ("The real posted opening line for %s at %s in NFL Week %d, plus"
+                " both teams' season stats. Our own model's win probability for"
+                " this game is part of a subscription; the three primetime games"
+                " each week are free." % (an, hn, week))
+    elif eh is not None and mh is not None:
         # Name the favourite and the OTHER team -- an earlier version read
         # "the Dolphins 57.9% to win Dolphins at Raiders", repeating the away
         # side, which is exactly the tell that a description was generated.
@@ -290,23 +299,40 @@ def game_page(g, season, week, result):
     out.append("<h1>%s vs %s &mdash; NFL Week %d Model Projection</h1>" % (e(an), e(hn), week))
     out.append("<p class='kick'>%s</p>" % kick)
 
-    out.append("<h2>Model vs market</h2><div class='card'><table><thead><tr>"
-               "<th>Team</th><th>Model win %</th><th>Fair win %</th><th>Edge</th>"
-               "</tr></thead><tbody>")
-    for name, ep, mp, gv in ((away, ea, ma, gv_a), (home, eh, mh, gv_h)):
-        ed = None if (ep is None or mp is None) else ep - mp
-        eds = "-" if ed is None else "%s%.1f%%" % ("+" if ed >= 0 else "", ed * 100)
-        out.append("<tr><td>%s%s</td><td class='num big'>%s</td>"
-                   "<td class='num'>%s</td><td class='num'>%s</td></tr>"
-                   % (e(name), gv, pct(ep), pct(mp), eds))
-    out.append("</tbody></table></div>")
-    out.append(
-        "<p class='note'><b>Model win %</b> is our own Elo rating, fit on real "
-        "2019-2025 results and carried forward through every completed game "
-        "since. It never looks at a betting line. <b>Fair win %</b> is what this "
-        "game's real posted opening moneyline implies once the sportsbook's own "
-        "margin is removed. <b>GOOD VALUE</b> means the model is higher than the "
-        "market on that side &mdash; a disagreement, not a guarantee.</p>")
+    if free_model:
+        out.append("<h2>Model vs market</h2><div class='card'><table><thead><tr>"
+                   "<th>Team</th><th>Model win %</th><th>Fair win %</th><th>Edge</th>"
+                   "</tr></thead><tbody>")
+        for name, ep, mp, gv in ((away, ea, ma, gv_a), (home, eh, mh, gv_h)):
+            ed = None if (ep is None or mp is None) else ep - mp
+            eds = "-" if ed is None else "%s%.1f%%" % ("+" if ed >= 0 else "", ed * 100)
+            out.append("<tr><td>%s%s</td><td class='num big'>%s</td>"
+                       "<td class='num'>%s</td><td class='num'>%s</td></tr>"
+                       % (e(name), gv, pct(ep), pct(mp), eds))
+        out.append("</tbody></table></div>")
+        out.append(
+            "<p class='note'><b>Model win %</b> is our own Elo rating, fit on real "
+            "2019-2025 results and carried forward through every completed game "
+            "since. It never looks at a betting line. <b>Fair win %</b> is what this "
+            "game's real posted opening moneyline implies once the sportsbook's own "
+            "margin is removed. <b>GOOD VALUE</b> means the model is higher than the "
+            "market on that side &mdash; a disagreement, not a guarantee.</p>")
+    else:
+        out.append("<h2>What the market says</h2><div class='card'><table><thead>"
+                   "<tr><th>Team</th><th>Fair win %</th></tr></thead><tbody>")
+        for name, mp in ((away, ma), (home, mh)):
+            out.append("<tr><td>%s</td><td class='num big'>%s</td></tr>"
+                       % (e(name), pct(mp)))
+        out.append("</tbody></table></div>")
+        out.append(
+            "<p class='note'><b>Fair win %%</b> is what this game's real posted "
+            "opening moneyline implies once the sportsbook's own margin is "
+            "removed. It is the market's number, not ours. <b>Our model's own "
+            "win probability for this game is part of a subscription.</b> The "
+            "three primetime games each week, Thursday, Sunday and Monday night, "
+            "are free to everyone: "
+            "<a href='%s/nfl/%s/week-%d/'>see this week's</a>.</p>"
+            % (SITE, season, week))
 
     if g.get("mlHome") is not None or g.get("spread_line") is not None:
         out.append("<h2>The posted line</h2><div class='card'><table><tbody>")

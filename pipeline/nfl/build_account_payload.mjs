@@ -239,7 +239,14 @@ function main() {
 
   // hr_combo is the MLB "either/or homer" line shown beside the HR Special,
   // so it belongs to the account tier and is carried through.
-  const n = reduce(paid.nfl, nfl, []);
+  // elo_home_prob and the good_value flags are lifted out of the free page
+  // for non-primetime games (see gated_payload.py), but a free account still
+  // has to BUILD the suggested parlay and TD Special, and the moneyline legs
+  // are made of exactly those numbers. So they travel in the account payload
+  // and the page hides them behind PAID at render time instead. Listing them
+  // as extra keys also stops a game whose props were all filtered out from
+  // being dropped entirely, which would take its model number with it.
+  const n = reduce(paid.nfl, nfl, ['elo_home_prob', 'good_value_home', 'good_value_away']);
   const m = reduce(paid.mlb, mlb, ['hr_combo']);
 
   const account = { build: paid.build, nfl: n.out, mlb: m.out };

@@ -150,8 +150,14 @@ def compose_pregame(nfl):
     graded cleanly afterwards. A slate dump is noise nobody can hold you to.
     """
     week = int(nfl["current_week"])
+    # PRIMETIME ONLY. Model win % is a paid feature for every other game, and
+    # this module reads data/dashboard_published_nfl.json, which is written
+    # BEFORE gated_payload.py lifts those numbers out. Without this filter the
+    # account would publish, to everyone, the exact figure the site charges
+    # for. TNF/SNF/MNF are the free sample, so they are the only safe ones.
     games = [g for g in nfl["weeks"][str(week)]["games"]
-             if g.get("elo_home_prob") is not None
+             if g.get("primetime")
+             and g.get("elo_home_prob") is not None
              and g.get("market_home_prob") is not None
              and not g.get("already_played")]
     if not games:

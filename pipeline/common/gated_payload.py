@@ -29,6 +29,19 @@ is never a second copy of an 8 MB payload in memory.
 # mlbPropsTable still reads it, so it is listed here rather than left as a
 # hole that silently opens if it comes back.
 NFL_GATED_GAME_KEYS = ("props",)
+
+# Model win % is paid, EXCEPT on primetime games (TNF/SNF/MNF), which stay
+# free as the sample. These have to be lifted at the DATA layer, not hidden in
+# the UI: the free half is inlined into a page committed to a public repo, so a
+# number left in it is readable by anyone who opens view-source, and it lives
+# in git history forever. Same lesson as the props leak.
+#
+# market_home_prob (Fair win %) deliberately stays free -- it is the
+# sportsbook's number, not ours, and it is what makes the locked row
+# understandable rather than blank. good_value_* go WITH the model number:
+# each one states that our probability beat the market's on that side, which
+# leaks the comparison the paywall exists to sell.
+NFL_MODEL_KEYS = ("elo_home_prob", "good_value_home", "good_value_away")
 MLB_GATED_GAME_KEYS = ("props", "hr_combo", "featured_props")
 
 
@@ -60,7 +73,13 @@ def split_nfl(data):
     gated = {}
     for week, wk in (data.get("weeks") or {}).items():
         for game in wk.get("games") or []:
-            lifted = _lift(game, NFL_GATED_GAME_KEYS)
+            keys = NFL_GATED_GAME_KEYS
+            # Primetime games keep their model number in the free page. Every
+            # other game gives it up, so an anonymous visitor cannot read it
+            # out of the source.
+            if not game.get("primetime"):
+                keys = keys + NFL_MODEL_KEYS
+            lifted = _lift(game, keys)
             if lifted:
                 gated[nfl_game_key(week, game)] = lifted
     return gated

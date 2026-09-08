@@ -11,11 +11,16 @@ least reliable way for a new domain to get its content seen.
 These pages fix both: real content in the HTML, and a separate indexable URL
 per game with its own title, description, canonical and heading.
 
-SCOPED TO NFL ON PURPOSE. MLB would be ~94 pages a day and NHL similar. Mass
--producing thousands of near-identical daily pages is the doorway-page
-pattern search engines demote sites for, and it would add tens of thousands
-of files to the repo over a season. NFL is 16 games a week, the pages stay
-useful for days rather than hours, and it is where the search volume is.
+NFL ONLY, for now, via BUILD_MLB_PAGES below. The MLB builder is written and
+works; it is switched off because of proportion, not quality -- see the note
+on that flag. The short version: 185 MLB URLs against 18 NFL meant almost all
+of a new domain's crawl budget went to games with a six-hour relevance window.
+
+(An earlier version of this note blamed doorway-page penalties and repo size.
+Both were overstated. These pages carry real per-game data and plenty of
+established sites publish one page per fixture; the repo cost is real but
+manageable at ~8 KB a page. Crawl budget was the argument that actually
+decided it.)
 
 SAFE BY CONSTRUCTION. build_static_site calls this AFTER build_gated_payload
 has already popped `props` off every game, so the game dicts reaching this
@@ -30,6 +35,27 @@ changes only when that game's data does.
 import html
 import json
 import shutil
+
+# MLB per-game pages are OFF.
+#
+# Not because they are wrong. They are built, they work, and the content is
+# real -- probable pitchers, model vs market, final scores. The problem is
+# PROPORTION. With them on the sitemap was 185 MLB URLs against 18 NFL, so
+# ~91% of a brand-new domain's small crawl allocation went to baseball games
+# with a six-hour relevance window, in the middle of football season. That is
+# budget not being spent on the NFL pages, which are the ones with a realistic
+# chance of ranking. MLB was not neutral here, it was crowding them out.
+#
+# Switched off while nothing MLB had been indexed yet, which is exactly what
+# made removal free: no 404s on pages Google had already decided to keep. The
+# same change in a month would have cost something.
+#
+# Turn back on (set True) when BOTH are true:
+#   - the NFL pages are indexed and drawing impressions in Search Console
+#   - the domain has a few months of history, so ~94 new pages a day reads as
+#     a growing site rather than a spike
+# Spring training is the natural moment.
+BUILD_MLB_PAGES = False
 
 SITE = "https://phinsup.net"
 
@@ -641,7 +667,17 @@ def build(nfl_data, mlb_data, docs_dir, results_dir, today_iso):
     (nfl_root / "index.html").write_text(season_index(season, weeks), encoding="utf-8")
     urls.append(("%s/nfl/%s/" % (SITE, season), today_iso))
 
-    mlb_built = build_mlb(mlb_data, docs_dir)
+    if BUILD_MLB_PAGES:
+        mlb_built = build_mlb(mlb_data, docs_dir)
+    else:
+        # Authoritative, not merely inert: with the flag off the tree is
+        # REMOVED, so a stale working copy or an old CI cache cannot quietly
+        # keep serving pages the sitemap no longer lists. Both workflows stage
+        # docs/mlb with -A, so the deletions are committed rather than left
+        # behind on the deployed site.
+        mlb_built = []
+        if (docs_dir / "mlb").exists():
+            shutil.rmtree(docs_dir / "mlb")
 
     # The sitemap is built by SCANNING what is on disk, not from the list this
     # run happened to write. MLB keeps a rolling ~7-day payload but its pages

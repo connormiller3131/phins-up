@@ -11,6 +11,8 @@ from sklearn.linear_model import RidgeCV, LogisticRegressionCV
 from pipeline.common.count_dist import count_over_prob, empirical_over_prob
 
 
+from pipeline.nfl.props import availability
+
 FEATURES = ["own_trailing_avg", "opp_allowed_trailing_avg", "is_dome", "temp", "wind", "own_rest", "implied_team_total"]
 
 # Per-stat configuration, every value chosen by walk-forward backtest on the
@@ -56,7 +58,14 @@ PROP_CONFIG = {
     "completions":     {"positions": ["QB"],             "dist": "normal",    "volume": None},
     "attempts":        {"positions": ["QB"],             "dist": "normal",    "volume": None},
     "rushing_yards":   {"positions": ["RB"],             "dist": "empirical", "volume": "carries"},
-    "carries":         {"positions": ["RB"],             "dist": "empirical", "volume": None},
+    # "availability" -- own_trailing_share + vacated_share, i.e. who else on
+    # this depth chart is ruled Out. Carries ONLY: the same walk-forward that
+    # supported it here (-1.9% ordinary weeks, -1.7% with a starter out) found
+    # rushing yards +4.7% WORSE when a starter is out, and both target markets
+    # worse throughout. Volume redistributes; efficiency does not transfer.
+    # See props/availability.py and backtest_injury_redistribution.py.
+    "carries":         {"positions": ["RB"],             "dist": "empirical", "volume": None,
+                        "availability": True},
     "receiving_yards": {"positions": ["RB", "WR", "TE"], "dist": "empirical", "volume": "targets"},
     "receptions":      {"positions": ["RB", "WR", "TE"], "dist": "negbin",    "volume": "targets"},
 }
@@ -66,7 +75,8 @@ def prop_features(stat_col):
     """Feature list for one stat: the shared seven, plus the opportunity
     feature where the backtest showed it earns its place."""
     cfg = PROP_CONFIG.get(stat_col, {})
-    return FEATURES + (["own_trailing_volume"] if cfg.get("volume") else [])
+    feats = FEATURES + (["own_trailing_volume"] if cfg.get("volume") else [])
+    return feats + (availability.FEATURES if cfg.get("availability") else [])
 
 
 def prop_over_prob(prep, mean, line):

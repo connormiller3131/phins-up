@@ -2,6 +2,7 @@
 upcoming opponent's trailing allowed-rate to that position group. All trailing
 stats use only games strictly before the row's game_date (walk-forward safe)."""
 import pathlib
+from pipeline.nfl.props import availability
 import numpy as np
 import pandas as pd
 import polars as pl
@@ -113,6 +114,12 @@ def build_prop_table(stat_col: str, positions: list[str], volume_col: str = None
     ] + extra_cols
     out = ps[keep].rename(columns={stat_col: "actual"})
     out = out.dropna(subset=["own_trailing_avg", "opp_allowed_trailing_avg"] + extra_cols).reset_index(drop=True)
+
+    # Availability features, for the markets a backtest supports. Added after
+    # the dropna so the share denominator sees every teammate with usable
+    # history, not only those surviving this stat's own filters.
+    if stat_col in availability.AVAILABILITY_STATS:
+        out = availability.add_features(out, value_col="actual")
     return out
 
 

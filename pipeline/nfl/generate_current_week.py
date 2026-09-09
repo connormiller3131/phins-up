@@ -28,6 +28,7 @@ from pipeline.nfl.games import load_games, moneyline_to_prob
 from pipeline.nfl.elo_model import run_elo
 from pipeline.nfl.props.prop_data import build_prop_table, WINDOW
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
+from pipeline.nfl.props import availability
 from pipeline.nfl.props.prop_models import (
     FEATURES, PROP_CONFIG, prop_features, prop_over_prob, yardage_over_prob,
 )
@@ -232,10 +233,11 @@ def prepare_count_model(stat_col, positions):
         "resid_sorted": np.sort(resid),
         "own": player_current_trailing(stat_col, positions, volume_col=cfg["volume"]),
         "defense": defense_current_trailing(stat_col, positions),
+        "availability": bool(cfg.get("availability")),
     }
 
 
-def project_count(prep, player_id, opp_team, env, with_ladder=False):
+def project_count(prep, player_id, opp_team, env, with_ladder=False, shares=None):
     own, defense = prep["own"], prep["defense"]
     if player_id not in own.index or opp_team not in defense.index:
         return None
@@ -250,6 +252,11 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False):
         if pd.isna(own_vol):
             return None  # same reason as above, for the opportunity feature
         row.append(own_vol)
+    if prep.get("availability"):
+        # Order matters: prop_features() lists these last, after the optional
+        # volume feature, and the model was fitted on that exact ordering.
+        own_share, vacated = (shares or {}).get(player_id, (0.0, 0.0))
+        row.extend([own_share, vacated])
     pred_mean = float(prep["model"].predict([row])[0])
     # Anchored on the model's own predicted mean (which already blends own
     # average, opponent, weather, rest, and implied team total), not the
@@ -412,15 +419,30 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
         if ra:
             entries.append(_prop_entry("Passing", "Pass Attempts", team, opp_team, qb_id, ra))
 
+    # Who on this depth chart is unavailable, as the carries model sees it.
+    # Computed once per team rather than per player: it is a team-week fact.
+    carry_prep = models["carries"]
+    out_ids = {pid for pid in picks.get("RB", [])
+               if status_for(pid) in INJURY_EXCLUDE}
+    carry_shares = (availability.live_shares(carry_prep["own"], picks.get("RB", []), out_ids)
+                    if carry_prep.get("availability") else {})
+
     for rb_id in picks.get("RB", []):
         if is_out(rb_id):
             continue
         r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
         if r:
             entries.append(_prop_entry("Rushing", "Rushing Yds", team, opp_team, rb_id, r, ladder=True))
-        rc = project_count(models["carries"], rb_id, opp_team, env)
+        rc = project_count(models["carries"], rb_id, opp_team, env, shares=carry_shares)
         if rc:
-            entries.append(_prop_entry("Rushing", "Carries", team, opp_team, rb_id, rc))
+            entry = _prop_entry("Rushing", "Carries", team, opp_team, rb_id, rc)
+            # Surfaced rather than silently applied. A visitor comparing this
+            # to a raw season average should be able to see why it differs.
+            vac = carry_shares.get(rb_id, (0.0, 0.0))[1]
+            if vac >= availability.SURFACE_MIN:
+                entry["volume_note"] = ("%d%% of this backfield's recent carries "
+                                        "belong to players ruled Out" % round(vac * 100))
+            entries.append(entry)
         t = project_td(models["td"], rb_id, opp_team, env)
         if t and r:
             entries.append(_td_entry("Rushing", team, opp_team, rb_id, r["player_display_name"], t))

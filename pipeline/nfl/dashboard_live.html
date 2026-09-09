@@ -969,6 +969,10 @@
     white-space:nowrap;
   }
   .ladder-chip b{color:var(--blue);font-weight:600;}
+  .volume-note{
+    flex-basis:100%;margin-top:3px;color:var(--amber);font-size:11px;
+    font-family:var(--mono);letter-spacing:.02em;
+  }
   .count-chip{
     background:var(--panel-alt);
     border:1px solid var(--line);
@@ -1912,6 +1916,7 @@ function propStatRow(p){
     <span class="count-chip">${p.line}+ <b>${pct(p.model_over_prob)}</b></span>
     <span class="p-exp">proj ${p.projected}</span>
     ${parlayAddBtn('nfl', `${p.player_id}-${p.market}`, p.player, `${p.line}+${p.opp ? ' vs '+p.opp : ''}`, p.market, p.model_over_prob, p.dk_odds, p.dk_implied_prob)}
+    ${p.volume_note ? `<span class="volume-note" title="Carries is the only market adjusted for who is unavailable. Yardage is not: a backup inheriting touches does not inherit the starter's yards per carry, and the backtest showed adjusting it made yardage worse.">↻ ${p.volume_note}</span>` : ''}
   </div>`;
 }
 

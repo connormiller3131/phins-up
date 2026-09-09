@@ -80,77 +80,25 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.nfl.props.prop_data import build_prop_table  # noqa: E402
 from pipeline.nfl.props.prop_models import FEATURES  # noqa: E402
+from pipeline.nfl.props import availability  # noqa: E402
 
 DATA_DIR = ROOT / "data" / "nfl"
 TEST_SEASONS = [2022, 2023, 2024, 2025]
-EXTRA = ["own_trailing_share", "vacated_share"]
+EXTRA = list(availability.FEATURES)
 
 
-def load_out_map():
-    """{(season, week, player_id)} for everyone ruled Out."""
-    inj = (pl.read_parquet(DATA_DIR / "injuries.parquet")
-           .filter(pl.col("report_status") == "Out")
-           .filter(pl.col("gsis_id").is_not_null())
-           .with_columns(pl.col("season").cast(pl.Int64), pl.col("week").cast(pl.Int64))
-           .select(["season", "week", "gsis_id"]).unique())
-    return {(r[0], r[1], r[2]) for r in inj.iter_rows()}
+def add_availability_features(df, out_keys=None, volume_col="actual"):
+    """Thin wrapper over the shipped implementation.
 
-
-def add_availability_features(df, out_keys, volume_col):
-    """Attach own_trailing_share and vacated_share.
-
-    A player ruled Out has NO stat line that week, so his own row is absent
-    from df -- which is exactly why the share has to be built from each
-    player's TRAILING volume rather than from the current week's box score.
-    Every player who appeared for the team recently carries a trailing volume
-    forward, and that is what gets marked available or not.
+    This used to hold its own copy. Once availability.py became the module the
+    generator actually uses, a second copy here would be measuring something
+    other than what ships -- and build_prop_table now adds these columns for
+    the carries market itself, so re-adding them produced _x/_y suffixes and a
+    KeyError. Guarded, so this scores exactly the feature that is live.
     """
-    df = df.sort_values(["team", "season", "week"]).reset_index(drop=True)
-    df["is_out"] = [
-        (s, w, p) in out_keys
-        for s, w, p in zip(df["season"], df["week"], df["player_id"])
-    ]
-
-    # Roster-carrying: for each team-week, every player with a trailing volume
-    # who has played for this team this season, whether or not he suited up.
-    vol = df[["season", "week", "team", "player_id", volume_col]].copy()
-    vol["trailing_vol"] = (
-        vol.sort_values(["player_id", "season", "week"])
-           .groupby("player_id")[volume_col]
-           .transform(lambda s: s.shift(1).rolling(6, min_periods=2).mean())
-    )
-    roster = vol.dropna(subset=["trailing_vol"])
-
-    # Carry each player's latest trailing volume forward across his team's
-    # weeks, so a player who is Out (and therefore missing from that week)
-    # still contributes the share he is vacating.
-    frames = []
-    for (season, team), grp in roster.groupby(["season", "team"], sort=False):
-        weeks = sorted(grp["week"].unique())
-        for wk in weeks:
-            hist = grp[grp["week"] <= wk].sort_values("week")
-            latest = hist.groupby("player_id")["trailing_vol"].last()
-            if latest.empty or latest.sum() <= 0:
-                continue
-            share = latest / latest.sum()
-            is_out = pd.Series(
-                [(season, wk, pid) in out_keys for pid in share.index], index=share.index)
-            frames.append(pd.DataFrame({
-                "season": season, "week": wk, "team": team,
-                "player_id": share.index,
-                "own_trailing_share": share.values,
-                "vacated_share": float(share[is_out].sum()),
-            }))
-    if not frames:
-        raise SystemExit("no roster shares built -- check volume column")
-    shares = pd.concat(frames, ignore_index=True)
-
-    out = df.merge(shares, on=["season", "week", "team", "player_id"], how="left")
-    out["own_trailing_share"] = out["own_trailing_share"].fillna(0.0)
-    # A player's OWN absence is not opportunity he can absorb, so remove it.
-    out["vacated_share"] = (out["vacated_share"].fillna(0.0)
-                            - np.where(out["is_out"], out["own_trailing_share"], 0.0)).clip(lower=0.0)
-    return out
+    if "vacated_share" in df.columns:
+        return df
+    return availability.add_features(df, out_keys=out_keys, value_col=volume_col)
 
 
 def walk_forward(df, features):
@@ -192,7 +140,7 @@ def report(label, df, base, cand):
 
 def run(stat_col, positions, volume_col, label):
     df = build_prop_table(stat_col, positions, volume_col=volume_col)
-    df = add_availability_features(df, load_out_map(), volume_col="actual")
+    df = add_availability_features(df)
     df = df.dropna(subset=FEATURES).reset_index(drop=True)
     base = walk_forward(df, FEATURES)
     cand = walk_forward(df, FEATURES + EXTRA)

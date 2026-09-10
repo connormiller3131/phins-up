@@ -51,6 +51,12 @@ STAT_COL_BY_MARKET = {
     "Carries": "carries",
     "Receiving Yds": "receiving_yards",
     "Receptions": "receptions",
+    # Without an entry here a market is projected, shown, and then NEVER
+    # graded -- it silently never reaches the track record. That exact hole
+    # cost the NFL props a week already.
+    "FG Made": "fg_made",
+    "Kicking Points": "kicking_points",
+    "Rush + Rec Yds": "rush_rec_yards",
 }
 
 
@@ -62,6 +68,12 @@ def load_schedule_results():
 def load_player_stats():
     ps = pl.read_parquet(DATA_DIR / "player_stats.parquet").to_pandas()
     ps["anytime_td"] = ((ps["rushing_tds"].fillna(0) + ps["receiving_tds"].fillna(0)) > 0)
+    # Derived exactly as prop_data._load_base derives them. They are NOT
+    # columns in player_stats.parquet, so without this the two markets that
+    # use them would be projected and displayed but never graded, which is the
+    # silent-hole failure STAT_COL_BY_MARKET exists to prevent.
+    ps["rush_rec_yards"] = ps["rushing_yards"].fillna(0) + ps["receiving_yards"].fillna(0)
+    ps["kicking_points"] = 3 * ps["fg_made"].fillna(0) + ps["pat_made"].fillna(0)
     ps = ps.drop_duplicates(subset=["season", "week", "player_id"])
     return ps.set_index(["season", "week", "player_id"])
 

@@ -1941,7 +1941,14 @@ function switchPropsTeam(containerId, btn){
 }
 
 function propsBySection(props){
-  const sections = ["Passing", "Rushing", "Receiving"];
+  // Display order for the sections we know about, then anything else the
+  // generator emitted, appended rather than dropped. A hardcoded list silently
+  // swallows a new market: it gets projected, graded, and never rendered, and
+  // nothing anywhere errors. Adding a section server-side is now enough.
+  const ORDER = ["Passing", "Rushing", "Receiving", "Kicking"];
+  const seen = Array.from(new Set(props.map(p => p.section).filter(Boolean)));
+  const sections = ORDER.filter(s => seen.includes(s))
+    .concat(seen.filter(s => !ORDER.includes(s)).sort());
   return sections.map(sec => {
     const secProps = props.filter(p => p.section === sec);
     if(!secProps.length) return "";
@@ -2185,10 +2192,14 @@ const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it c
 // is exactly the near-lock the original no-step-down rule was written to
 // avoid. RBI and the pitcher markets carry no ladder at all, so they are
 // unaffected either way and simply do not qualify.
-const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds", "Total Bases"]);
+const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds", "Rush + Rec Yds", "Total Bases"]);
 
 const NFL_PARLAY_MONEYLINES = 3;
 const NFL_PARLAY_PROPS = 2;
+// Rush + Rec Yds is deliberately excluded. It is the SUM of two markets
+// already in this list, so a parlay could take a back's rushing yards and his
+// rush+rec yards as two "independent" legs when they are very nearly the same
+// bet -- which quietly inflates the card's stated combined probability.
 const NFL_PARLAY_PROP_MARKETS = ["Passing Yds", "Rushing Yds", "Receiving Yds"];
 
 function collectNflParlayLegs(games){
@@ -2304,9 +2315,17 @@ const NFL_PICK_MARKETS = [
   {market: 'Completions',   label: 'Completions',     unit: ''},
   {market: 'Rushing Yds',   label: 'Rushing Yards',   unit: 'yds'},
   {market: 'Carries',       label: 'Carries',         unit: ''},
+  {market: 'Rush + Rec Yds', label: 'Rush + Rec Yards', unit: 'yds'},
   {market: 'Receiving Yds', label: 'Receiving Yards', unit: 'yds'},
   {market: 'Receptions',    label: 'Receptions',      unit: ''},
   {market: 'Anytime TD',    label: 'Anytime TD',      unit: '', binary: true},
+  // FG Made and Kicking Points are deliberately NOT here. Kicker volume is a
+  // function of the offence in front of him, not of the kicker, and the model
+  // reflects that honestly: every kicker in the league projects between 1.5
+  // and 2.0 field goals. Ranking "leaders" on a 0.2-field-goal spread is
+  // ranking noise. They still appear on the game cards, where the number that
+  // actually moves is the over% at a fixed 1.5 line -- that ranges from 26% to
+  // 52% across kickers and matchups, which is real discrimination.
 ];
 
 function nflWeeklyPicksGroups(weekData, topN){

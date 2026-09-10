@@ -30,9 +30,10 @@ from pipeline.nfl.props.prop_data import build_prop_table, WINDOW
 from pipeline.nfl.props.current_state import player_current_trailing, defense_current_trailing
 from pipeline.nfl.props import availability
 from pipeline.nfl.props.prop_models import (
-    FEATURES, PROP_CONFIG, prop_features, prop_over_prob, yardage_over_prob,
+    FEATURES, PROP_CONFIG, prop_column, prop_features, prop_over_prob, yardage_over_prob,
 )
 from pipeline.common.count_dist import estimate_dispersion
+from pipeline.nfl.grade_results import STAT_COL_BY_MARKET
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_history import record_title_odds
@@ -166,7 +167,11 @@ def elo_predictions_for_season(games_df, season_sched):
     return out, elo_params
 
 
-STARTER_DEPTH = {"QB": 1, "RB": 2, "WR": 3, "TE": 1}  # how many ranks deep to pull per position
+# How many ranks deep to pull per position. "PK" is the depth chart's own
+# abbreviation for the placekicker (not "K", which is what player_stats calls
+# the position); all 32 teams list exactly one, with a gsis_id that joins
+# straight through to the stats.
+STARTER_DEPTH = {"QB": 1, "RB": 2, "WR": 3, "TE": 1, "PK": 1}
 
 
 def get_starters(target_season):
@@ -217,7 +222,12 @@ def prepare_count_model(stat_col, positions):
     the full sorted residual vector for the empirical yardage props."""
     cfg = PROP_CONFIG[stat_col]
     features = prop_features(stat_col)
-    hist = build_prop_table(stat_col, positions, volume_col=cfg["volume"])
+    # The parquet column this market reads. Usually the same string as the
+    # market key, but not always: qb_rushing_yards and rushing_yards are the
+    # same column fit on two populations that share almost nothing
+    # distributionally, so the key is the market and prop_column is the data.
+    col = prop_column(stat_col)
+    hist = build_prop_table(col, positions, volume_col=cfg["volume"])
     model = RidgeCV(alphas=np.logspace(-1, 3, 25))
     X, y = hist[features].values, hist["actual"].values
     model.fit(X, y)
@@ -231,8 +241,8 @@ def prepare_count_model(stat_col, positions):
         "resid_std": max(float(np.std(resid)), 1e-6),
         "dispersion": float(estimate_dispersion(y, fitted)),
         "resid_sorted": np.sort(resid),
-        "own": player_current_trailing(stat_col, positions, volume_col=cfg["volume"]),
-        "defense": defense_current_trailing(stat_col, positions),
+        "own": player_current_trailing(col, positions, volume_col=cfg["volume"]),
+        "defense": defense_current_trailing(col, positions),
         "availability": bool(cfg.get("availability")),
     }
 
@@ -418,6 +428,9 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
         ra = project_count(models["attempts"], qb_id, opp_team, env)
         if ra:
             entries.append(_prop_entry("Passing", "Pass Attempts", team, opp_team, qb_id, ra))
+        rq = project_count(models["qb_rushing_yards"], qb_id, opp_team, env)
+        if rq:
+            entries.append(_prop_entry("Rushing", "Rushing Yds", team, opp_team, qb_id, rq))
 
     # Who on this depth chart is unavailable, as the carries model sees it.
     # Computed once per team rather than per player: it is a team-week fact.
@@ -446,6 +459,9 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
         t = project_td(models["td"], rb_id, opp_team, env)
         if t and r:
             entries.append(_td_entry("Rushing", team, opp_team, rb_id, r["player_display_name"], t))
+        rrec = project_count(models["rush_rec_yards"], rb_id, opp_team, env, with_ladder=True)
+        if rrec:
+            entries.append(_prop_entry("Rushing", "Rush + Rec Yds", team, opp_team, rb_id, rrec, ladder=True))
         rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True)
         if rr:
             entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, rb_id, rr, ladder=True))
@@ -466,6 +482,19 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
             t = project_td(models["td"], pid, opp_team, env)
             if t and r:
                 entries.append(_td_entry("Receiving", team, opp_team, pid, r["player_display_name"], t))
+
+    # Kickers. One per team, and the only position group whose props do not
+    # depend on the offence's own volume features, so they are built last and
+    # independently of everything above.
+    for k_id in picks.get("PK", []):
+        if is_out(k_id):
+            continue
+        fg = project_count(models["fg_made"], k_id, opp_team, env)
+        if fg:
+            entries.append(_prop_entry("Kicking", "FG Made", team, opp_team, k_id, fg))
+        kp = project_count(models["kicking_points"], k_id, opp_team, env)
+        if kp:
+            entries.append(_prop_entry("Kicking", "Kicking Points", team, opp_team, k_id, kp))
 
     # Anyone left is playing as far as the report knows, but Questionable
     # and Doubtful still carry real risk -- surfaced, not silently dropped.
@@ -892,10 +921,24 @@ def main():
         "season_info": {"standings": build_nfl_standings(), "stat_leaders": build_nfl_stat_leaders(),
                         "title_odds": nfl_title_odds},
     }
+    # A market that is projected but has no grading column is invisible: it
+    # renders on the card, never grades, and never reaches the track record,
+    # and nothing anywhere raises. That hole cost the NFL props a week once
+    # already, so it fails the refresh here instead of being a comment.
+    # Anytime TD is exempt because it grades from a binary, not a stat column.
+    emitted = {p["market"] for wk in weeks_out.values()
+               for g in wk["games"] for p in (g.get("props") or [])}
+    ungradable = emitted - set(STAT_COL_BY_MARKET) - {"Anytime TD"}
+    if ungradable:
+        raise SystemExit(
+            f"Refusing to write: {sorted(ungradable)} would be shown but never "
+            f"graded. Add each to STAT_COL_BY_MARKET in pipeline/nfl/grade_results.py."
+        )
+
     out_path = DATA_DIR / "dashboard_current_week.json"
     with open(out_path, "w") as f:
         json.dump(payload, f, indent=2)
-    print(f"\nWrote {out_path}")
+    print(f"\nWrote {out_path} ({len(emitted)} markets, all gradable)")
 
 
 if __name__ == "__main__":

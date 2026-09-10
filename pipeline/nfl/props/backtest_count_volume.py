@@ -55,7 +55,34 @@ STATS = {
     "receiving_yards": (["RB", "WR", "TE"], "targets"),
     "rushing_yards": (["RB"], "carries"),
     "passing_yards": (["QB"], "attempts"),
+
+    # Candidate markets, added 2026-09-10. Same two questions as everything
+    # above, answered the same way rather than assumed.
+    #
+    # Kickers sit deeper in the discrete regime than any prop already shipped:
+    # fg_made averages 1.65 a game against Receptions' ~3.0, and a symmetric
+    # Normal over a variable that is almost always 0, 1, 2 or 3 is exactly the
+    # shape that ran MLB's small counts ~15 points hot. fg_att is the natural
+    # opportunity feature: makes are attempts times a rate, and a kicker on a
+    # bad offence attempts fewer.
+    "fg_made": (["K"], "fg_att"),
+    "kicking_points": (["K"], "fg_att"),
+
+    # Combined yards for backs. Volume here is `opportunities` (carries +
+    # targets) rather than either alone, because the whole point of the market
+    # is that it does not care which way the yards arrived -- the same
+    # position-neutral argument the anytime-TD model already uses.
+    "rush_rec_yards": (["RB"], "opportunities"),
+
+    # QB rushing reads the same column as RB rushing but is a different
+    # population: a scrambling quarterback and a running back share almost
+    # nothing distributionally, which is why it needs its own config rather
+    # than widening rushing_yards' position list.
+    "qb_rushing_yards": (["QB"], "carries"),
 }
+
+# Config key -> the player_stats column it actually reads, where they differ.
+COLUMN = {"qb_rushing_yards": "rushing_yards"}
 
 
 def walk_forward(df, features, min_train=50):
@@ -152,8 +179,11 @@ def main():
     print(f"Walk-forward, untouched test season(s) {TEST_SEASONS}\n")
     results = {}
 
+    only = set(sys.argv[1:])
     for stat, (positions, volume_col) in STATS.items():
-        df = build_prop_table(stat, positions, volume_col=volume_col)
+        if only and stat not in only:
+            continue
+        df = build_prop_table(COLUMN.get(stat, stat), positions, volume_col=volume_col)
         base_feats = FEATURES
         vol_feats = FEATURES + ["own_trailing_volume"] if volume_col else None
 

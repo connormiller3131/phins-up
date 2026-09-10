@@ -68,6 +68,40 @@ PROP_CONFIG = {
                         "availability": True},
     "receiving_yards": {"positions": ["RB", "WR", "TE"], "dist": "empirical", "volume": "targets"},
     "receptions":      {"positions": ["RB", "WR", "TE"], "dist": "negbin",    "volume": "targets"},
+
+    # Added 2026-09-10, same two questions answered the same way
+    # (backtest_count_volume.py, walk-forward on 2025).
+    #
+    # fg_made is the most discrete prop on the board, averaging 1.65 a game,
+    # and it behaves exactly as that predicts: the Normal runs it hot by 10.7
+    # calibration points (Brier 0.2264, gap +0.107) and negbin fixes both
+    # (0.2112, gap -0.018). Poisson scored IDENTICALLY to negbin because the
+    # fitted dispersion collapses to ~0, which is the cleanest possible
+    # confirmation that field goals are a plain Poisson count -- so negbin is
+    # used and no new distribution code was needed. fg_att as a volume feature
+    # moved Brier by 0.0001, i.e. nothing, so it is not carried.
+    "fg_made":          {"positions": ["K"],  "dist": "negbin",    "volume": None},
+
+    # Kicking points is the same night weighted by what each kick was worth,
+    # and being a sum of 3s and 1s it is no longer Poisson-shaped: empirical
+    # wins (0.2247, gap -0.000) where negbin is worse than the Normal it
+    # replaces (0.2258). Two closely related markets, two different answers,
+    # which is the whole reason this is tested per stat rather than assumed.
+    "kicking_points":   {"positions": ["K"],  "dist": "empirical", "volume": None},
+
+    # Combined yards for backs. Right-skewed like every other yardage prop, so
+    # empirical again (0.2519 -> 0.2403). Volume genuinely helps here, the
+    # largest volume gain of any market tested (RMSE -0.218, Brier 0.2403 ->
+    # 0.2378), and it is `opportunities` rather than carries or targets alone
+    # because the market deliberately does not care which way the yards came.
+    "rush_rec_yards":   {"positions": ["RB"], "dist": "empirical", "volume": "opportunities"},
+
+    # Same column as rushing_yards, different population: a scrambling QB and
+    # a running back share almost nothing distributionally. Hence "column"
+    # rather than widening rushing_yards' position list. Empirical again
+    # (0.2508 -> 0.2406, gap +0.107 -> -0.018).
+    "qb_rushing_yards": {"positions": ["QB"], "dist": "empirical", "volume": "carries",
+                         "column": "rushing_yards"},
 }
 
 

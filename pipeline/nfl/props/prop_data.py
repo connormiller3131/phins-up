@@ -31,6 +31,22 @@ def _load_base():
     # rate-x-opportunities argument the other props already use.
     ps["opportunities"] = ps["carries"].fillna(0) + ps["targets"].fillna(0)
 
+    # Derived stat columns. Neither exists in nflverse; both are real markets
+    # sportsbooks post, and both are sums of columns that do exist.
+    #
+    # rush_rec_yards is the combined-yards market for backs. It is NOT the
+    # same as projecting rushing and receiving separately and adding them: a
+    # back's split between the two moves week to week with game script, and
+    # the sum is far steadier than either half, which is precisely why the
+    # market exists.
+    #
+    # kicking_points is the scoring version of a kicker's night, 3 per field
+    # goal plus 1 per extra point. Kept alongside fg_made rather than instead
+    # of it because they answer different questions: fg_made is volume, points
+    # is volume weighted by what each kick was worth.
+    ps["rush_rec_yards"] = ps["rushing_yards"].fillna(0) + ps["receiving_yards"].fillna(0)
+    ps["kicking_points"] = 3 * ps["fg_made"].fillna(0) + ps["pat_made"].fillna(0)
+
     ps["is_dome"] = ps["roof"].isin(["dome", "closed"]).astype(float)
     ps["own_rest"] = np.where(ps["team"] == ps["home_team"], ps["home_rest"], ps["away_rest"]).astype(float)
 

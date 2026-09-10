@@ -71,6 +71,17 @@ PROP_CONFIG = {
 }
 
 
+def prop_column(stat_col):
+    """The player_stats column a config key reads from.
+
+    Usually the key itself. The exception is a market that reuses a column for
+    a different position group: "qb_rushing_yards" and "rushing_yards" are the
+    same column projected for QBs and RBs, and they need separate configs
+    because the distribution and the useful volume feature differ between a
+    quarterback scrambling and a running back carrying."""
+    return PROP_CONFIG.get(stat_col, {}).get("column", stat_col)
+
+
 def prop_features(stat_col):
     """Feature list for one stat: the shared seven, plus the opportunity
     feature where the backtest showed it earns its place."""

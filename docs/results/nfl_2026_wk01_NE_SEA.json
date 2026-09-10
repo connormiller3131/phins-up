@@ -9,6 +9,970 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.6329,
   "market_home_prob": 0.6309,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 10,
+    "home_score": 13,
+    "winner": "SEA",
+    "model_pick": "SEA",
+    "model_correct": true,
+    "market_pick": "SEA",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-10T10:56:45",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Passing Yds",
+      "line": 212.5,
+      "projected": 212.4,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 190.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.557
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.511
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.465
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.419
+        }
+      ],
+      "actual_value": 178.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.386,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.497,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.3,
+      "model_over_prob": 0.491,
+      "actual_value": 33.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 51.0,
+      "projected": 50.8,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.811
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.393
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 51.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Carries",
+      "line": 10.5,
+      "projected": 10.6,
+      "model_over_prob": 0.415,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.379,
+      "trailing_n": 8,
+      "opp_per_gm": 14.4,
+      "dk_odds": 120,
+      "dk_implied_prob": 0.4545,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.82
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.604
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.335
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.217
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.145
+        }
+      ],
+      "actual_value": 44.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.459,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 41.0,
+      "projected": 41.1,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.814
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.647
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.398
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.19
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 9.9,
+      "model_over_prob": 0.401,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.25,
+      "trailing_n": 8,
+      "opp_per_gm": 11.4,
+      "dk_odds": 370,
+      "dk_implied_prob": 0.2128,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 7.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.218
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.146
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.275,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 68.0,
+      "projected": 68.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.829
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.618
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.344
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.147
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.6,
+      "model_over_prob": 0.46,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.248,
+      "trailing_n": 8,
+      "opp_per_gm": 9.2,
+      "dk_odds": 155,
+      "dk_implied_prob": 0.3922,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 41.5,
+      "projected": 41.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.873
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.705
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.413
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.256
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.168
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.387,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.186,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 16.0,
+      "projected": 16.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.553
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.203
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.135
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.442,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.115,
+      "trailing_n": 8,
+      "opp_per_gm": 2.5,
+      "dk_odds": 750,
+      "dk_implied_prob": 0.1176,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 30.5,
+      "projected": 30.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.859
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.676
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.384
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.243
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.16
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.489,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.175,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "dk_odds": 310,
+      "dk_implied_prob": 0.2439,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Passing Yds",
+      "line": 198.0,
+      "projected": 197.9,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 180.0,
+          "over_prob": 0.582
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.537
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.49
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.444
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.399
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.405,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.1,
+      "model_over_prob": 0.503,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 29.0,
+      "model_over_prob": 0.499,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 10.0,
+      "projected": 10.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.381
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.264
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Carries",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.39,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.136,
+      "trailing_n": 8,
+      "opp_per_gm": 2.8,
+      "dk_odds": 170,
+      "dk_implied_prob": 0.3704,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.19
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.128
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.446,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 72.0,
+      "projected": 71.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.877
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.713
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 122.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 5.9,
+      "model_over_prob": 0.383,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.331,
+      "trailing_n": 8,
+      "opp_per_gm": 9.9,
+      "dk_odds": 135,
+      "dk_implied_prob": 0.4255,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 24.5,
+      "projected": 24.7,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.768
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.293
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.28,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.127,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "dk_odds": 350,
+      "dk_implied_prob": 0.2222,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.803
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.573
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.207
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.138
+        }
+      ],
+      "actual_value": 35.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.399,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.191,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "dk_odds": 250,
+      "dk_implied_prob": 0.2857,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 26.0,
+      "projected": 26.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.792
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.551
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.202
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.135
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.417,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.198,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "dk_odds": 255,
+      "dk_implied_prob": 0.2817,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

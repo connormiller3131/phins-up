@@ -269,10 +269,6 @@
   .parlay-special .parlay-leg-edge{color:var(--amber);}
   .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
   .parlay-sgp .parlay-title{color:var(--blue);}
-  .result-props-head{margin-top:10px;color:var(--text-dim);font-size:12.5px;}
-  .result-props-head b{color:var(--text);}
-  .result-prop-detail{margin-top:8px;}
-  .result-prop-detail > summary{font-size:11.5px;}
   .track-record-row{
     display:flex;
     align-items:center;
@@ -1280,6 +1276,8 @@
     <span><i class="sw" style="background:var(--amber)"></i>Edge within &plusmn;3%</span>
     <span><i class="sw" style="background:var(--red)"></i>Edge against you &ge; 3%</span>
   </div>
+
+  <div id="nfl-track-record-wrap"></div>
 
   <div id="parlay-builder-nfl"></div>
 
@@ -2749,61 +2747,109 @@ async function loadGameResult(season, week, g, idx){
   const marketHtml = a.market_pick
     ? ` &middot; Market picked <span class="pick ${a.market_correct?'correct':'wrong'}">${a.market_pick}</span> (${a.market_correct?'correct':'wrong'})`
     : "";
-  // Graded the same way /track-record grades it, so a game card and the record
-  // page never disagree about the same prop. Over/unders are scored against
-  // the line the card actually SHOWED (actual > line) rather than the stored
-  // `hit`, which grade_results computes against the middle rung of the ladder
-  // -- a threshold nobody was ever shown. Differs on about two props a game.
-  const graded = (snap.props_graded||[]).map(p => {
-    if(p.market === "Anytime TD"){
-      if(p.hit === null || p.hit === undefined) return null;
-      return {...p, ok: !!p.hit, shown: p.actual_scored ? "scored" : "no TD"};
-    }
-    if(p.line == null || p.actual_value == null) return null;
-    return {...p, ok: p.actual_value > p.line, shown: p.actual_value};
-  }).filter(Boolean);
-
-  // Grouped by market rather than one row per prop. Forty-odd HIT/MISS lines
-  // is a wall of text nobody reads; a per-market hit rate is the same
-  // information in the shape the MLB Track Record already uses.
-  const byMarket = {};
-  graded.forEach(p => {
-    const b = byMarket[p.market] || (byMarket[p.market] = {n:0, hit:0});
-    b.n++; if(p.ok) b.hit++;
-  });
-  const total = graded.length;
-  const hits = graded.filter(p => p.ok).length;
-
-  const marketRows = Object.keys(byMarket).sort((x,y) => byMarket[y].n - byMarket[x].n)
-    .map(mk => {
-      const b = byMarket[mk], rate = b.hit / b.n;
-      const cls = rate >= 0.6 ? 'hit' : (rate <= 0.35 ? 'miss' : '');
-      return `<div class="track-record-row">
-        <span class="track-record-market">${mk}</span>
-        <span class="track-record-n">${b.hit}/${b.n}</span>
-        <span class="track-record-acc ${cls}">${(rate*100).toFixed(0)}%</span>
-      </div>`;
-    }).join("");
-
-  const detailRows = graded.map(p =>
-    `<div class="prop-stat-row"><span class="prop-stat-label">${p.player} · ${p.market}</span>` +
-    `<span class="${p.ok?'prop-hit':'prop-miss'}">${p.ok?'HIT':'MISS'}</span>` +
-    `<span class="p-exp">${p.market === "Anytime TD" ? '' : `line ${p.line}, `}actual ${p.shown}</span></div>`
-  ).join("");
-
+  // Props are NOT graded here. Forty-odd HIT/MISS lines per card was a wall
+  // of text, and the aggregate is more informative anyway: one prop landing is
+  // noise, a market's hit rate over hundreds is a record. That lives in the
+  // Track Record at the top of the tab, exactly where MLB puts it.
   el.innerHTML = `
     <div class="result-summary">
       <b>FINAL: ${g.awayAbbr} ${a.away_score} — ${a.home_score} ${g.homeAbbr}</b><br>
       Model picked <span class="pick ${modelCls}">${a.model_pick}</span> (${a.model_correct?'correct':'wrong'})${marketHtml}
-      ${total ? `
-        <div class="result-props-head">Player props: <b>${hits} of ${total}</b> hit (${(hits/total*100).toFixed(0)}%)</div>
-        <div class="track-record-table">${marketRows}</div>
-        <details class="props-toggle result-prop-detail">
-          <summary>Every prop, one by one</summary>
-          <div>${detailRows}</div>
-        </details>` : ""}
     </div>
   `;
+}
+
+// ---- NFL Track Record -------------------------------------------------------
+// The NFL counterpart to loadMlbTrackRecord, and deliberately the same shape:
+// every graded prediction with a real result, grouped by market, each row shown
+// against the zero-skill baseline that market would score by always guessing
+// whichever side happens more often.
+//
+// Grading matches build_track_record.py rather than the stored `hit` field.
+// Over/unders are scored against the line the card actually SHOWED
+// (actual > line); grade_results computes `hit` against the middle rung of the
+// ladder, a threshold nobody was ever shown, and the two disagree on about two
+// props a game.
+let NFL_TRACK_RECORD_CACHE = null;
+
+async function loadNflTrackRecord(){
+  if(NFL_TRACK_RECORD_CACHE) return NFL_TRACK_RECORD_CACHE;
+  const manifest = await fetchJsonWithRetry('results/manifest.json');
+  if(manifest === null) return {byMarket: {}, games: 0, calBins: [], calDays: 0};
+
+  const byMarket = {};
+  const calBins = Array.from({length: 10}, (_, i) => ({lo: i/10, hi: (i+1)/10, n: 0, predSum: 0, actualSum: 0}));
+  const addCal = (prob, outcome) => {
+    const b = calBins[Math.min(9, Math.max(0, Math.floor(prob * 10)))];
+    b.n++; b.predSum += prob; b.actualSum += outcome;
+  };
+  const record = (market, prob, outcome) => {
+    const b = byMarket[market] || (byMarket[market] = {n: 0, correct: 0, actualOverSum: 0, brierSum: 0});
+    b.n++;
+    b.correct += ((prob >= 0.5 ? 1 : 0) === outcome) ? 1 : 0;
+    b.actualOverSum += outcome;
+    b.brierSum += (prob - outcome) ** 2;
+    addCal(prob, outcome);
+  };
+
+  let games = 0;
+  for(const f of (manifest.files || [])){
+    const snap = await fetchJsonWithRetry(`results/${f}`);
+    if(!snap || !snap.graded || !snap.actual) continue;
+    games++;
+    const a = snap.actual;
+    if(snap.elo_home_prob != null && a.home_score != null && a.away_score != null){
+      record('Moneyline', snap.elo_home_prob, a.home_score > a.away_score ? 1 : 0);
+    }
+    (snap.props_graded || []).forEach(p => {
+      if(p.market === 'Anytime TD'){
+        if(p.hit == null || p.model_prob == null) return;
+        record(p.market, p.model_prob, p.hit ? 1 : 0);
+        return;
+      }
+      if(p.model_over_prob == null || p.line == null || p.actual_value == null) return;
+      record(p.market, p.model_over_prob, p.actual_value > p.line ? 1 : 0);
+    });
+  }
+  NFL_TRACK_RECORD_CACHE = {byMarket, games, calBins, calDays: games};
+  return NFL_TRACK_RECORD_CACHE;
+}
+
+function nflTrackRecordTableHtml(byMarket, games, calBins){
+  const markets = Object.keys(byMarket).sort();
+  if(!markets.length){
+    return `<div class="placeholder parlay-empty">No graded NFL predictions yet -- the first land once week 1 is played.</div>`;
+  }
+  let totalN = 0, totalCorrect = 0;
+  const rows = markets.map(mk => {
+    const b = byMarket[mk];
+    totalN += b.n; totalCorrect += b.correct;
+    const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n;
+    const baseline = Math.max(actualRate, 1 - actualRate);
+    const cls = (acc - baseline) > 0.02 ? 'hit' : ((acc - baseline) < -0.02 ? 'miss' : '');
+    return `<div class="track-record-row">
+      <span class="track-record-market">${mk}</span>
+      <span class="track-record-n">n=${b.n}</span>
+      <span class="track-record-acc ${cls}">${(acc*100).toFixed(0)}% accuracy</span>
+      <span class="p-exp">baseline ${(baseline*100).toFixed(0)}%</span>
+    </div>`;
+  }).join('');
+  const overall = totalCorrect / totalN;
+  return `
+    <details class="props-toggle" id="nfl-track-record">
+      <summary>Track Record <span class="props-sample-tag">(${games} graded game${games===1?'':'s'} &middot; ${totalN} predictions &middot; ${(overall*100).toFixed(0)}% accuracy)</span></summary>
+      <div class="track-record-table">${rows}</div>
+      ${calibrationChartSvg(calBins, games)}
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result, not just the ones that made it onto a card. "Accuracy" is whether the side the model favoured matched reality; "baseline" is what you would score guessing whichever side happens more often, with no skill at all. A market sitting near its baseline (red) is not showing real edge however high the number looks. Clearly ahead of it (green) is the tell.</div>
+    </details>`;
+}
+
+async function renderNflTrackRecord(){
+  const wrap = document.getElementById('nfl-track-record-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = `<div class="placeholder">Loading track record...</div>`;
+  const {byMarket, games, calBins} = await loadNflTrackRecord();
+  wrap.innerHTML = nflTrackRecordTableHtml(byMarket, games, calBins);
 }
 
 // Populate the plain-language primer on every sport tab. Done once at load
@@ -2818,6 +2864,7 @@ renderGames();
 // must not rebuild it.
 renderNflWeeklyPicks();
 renderParlayBuilderPanel('nfl');
+renderNflTrackRecord();
 
 // ============ MLB ============
 function hrAdvice(p){

@@ -269,6 +269,10 @@
   .parlay-special .parlay-leg-edge{color:var(--amber);}
   .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
   .parlay-sgp .parlay-title{color:var(--blue);}
+  .result-props-head{margin-top:10px;color:var(--text-dim);font-size:12.5px;}
+  .result-props-head b{color:var(--text);}
+  .result-prop-detail{margin-top:8px;}
+  .result-prop-detail > summary{font-size:11.5px;}
   .track-record-row{
     display:flex;
     align-items:center;
@@ -2745,16 +2749,59 @@ async function loadGameResult(season, week, g, idx){
   const marketHtml = a.market_pick
     ? ` &middot; Market picked <span class="pick ${a.market_correct?'correct':'wrong'}">${a.market_pick}</span> (${a.market_correct?'correct':'wrong'})`
     : "";
-  const propRows = (snap.props_graded||[]).filter(p => p.hit !== null && p.hit !== undefined).map(p => {
-    const val = p.market === "Anytime TD" ? (p.actual_scored ? "scored" : "no TD") : p.actual_value;
-    return `<div class="prop-stat-row"><span class="prop-stat-label">${p.player} — ${p.market}</span><span class="${p.hit?'prop-hit':'prop-miss'}">${p.hit?'HIT':'MISS'}</span><span class="p-exp">actual: ${val}</span></div>`;
-  }).join("");
+  // Graded the same way /track-record grades it, so a game card and the record
+  // page never disagree about the same prop. Over/unders are scored against
+  // the line the card actually SHOWED (actual > line) rather than the stored
+  // `hit`, which grade_results computes against the middle rung of the ladder
+  // -- a threshold nobody was ever shown. Differs on about two props a game.
+  const graded = (snap.props_graded||[]).map(p => {
+    if(p.market === "Anytime TD"){
+      if(p.hit === null || p.hit === undefined) return null;
+      return {...p, ok: !!p.hit, shown: p.actual_scored ? "scored" : "no TD"};
+    }
+    if(p.line == null || p.actual_value == null) return null;
+    return {...p, ok: p.actual_value > p.line, shown: p.actual_value};
+  }).filter(Boolean);
+
+  // Grouped by market rather than one row per prop. Forty-odd HIT/MISS lines
+  // is a wall of text nobody reads; a per-market hit rate is the same
+  // information in the shape the MLB Track Record already uses.
+  const byMarket = {};
+  graded.forEach(p => {
+    const b = byMarket[p.market] || (byMarket[p.market] = {n:0, hit:0});
+    b.n++; if(p.ok) b.hit++;
+  });
+  const total = graded.length;
+  const hits = graded.filter(p => p.ok).length;
+
+  const marketRows = Object.keys(byMarket).sort((x,y) => byMarket[y].n - byMarket[x].n)
+    .map(mk => {
+      const b = byMarket[mk], rate = b.hit / b.n;
+      const cls = rate >= 0.6 ? 'hit' : (rate <= 0.35 ? 'miss' : '');
+      return `<div class="track-record-row">
+        <span class="track-record-market">${mk}</span>
+        <span class="track-record-n">${b.hit}/${b.n}</span>
+        <span class="track-record-acc ${cls}">${(rate*100).toFixed(0)}%</span>
+      </div>`;
+    }).join("");
+
+  const detailRows = graded.map(p =>
+    `<div class="prop-stat-row"><span class="prop-stat-label">${p.player} · ${p.market}</span>` +
+    `<span class="${p.ok?'prop-hit':'prop-miss'}">${p.ok?'HIT':'MISS'}</span>` +
+    `<span class="p-exp">${p.market === "Anytime TD" ? '' : `line ${p.line}, `}actual ${p.shown}</span></div>`
+  ).join("");
 
   el.innerHTML = `
     <div class="result-summary">
       <b>FINAL: ${g.awayAbbr} ${a.away_score} — ${a.home_score} ${g.homeAbbr}</b><br>
       Model picked <span class="pick ${modelCls}">${a.model_pick}</span> (${a.model_correct?'correct':'wrong'})${marketHtml}
-      ${propRows ? `<div style="margin-top:8px;">${propRows}</div>` : ""}
+      ${total ? `
+        <div class="result-props-head">Player props: <b>${hits} of ${total}</b> hit (${(hits/total*100).toFixed(0)}%)</div>
+        <div class="track-record-table">${marketRows}</div>
+        <details class="props-toggle result-prop-detail">
+          <summary>Every prop, one by one</summary>
+          <div>${detailRows}</div>
+        </details>` : ""}
     </div>
   `;
 }
@@ -3846,7 +3893,14 @@ function mlbSameGameParlaySection(date, g, idx){
 function collectNflSameGameParlayLegs(g){
   const used = new Set();
   const picks = [];
-  for(const mk of ["Anytime TD", "Rushing Yds", "Passing Yds", "Receiving Yds"]){
+  // Anytime TD is deliberately NOT here. It has its own TD SPECIAL card, and
+  // reserving a slot on every same-game card forced one onto all 16 games a
+  // week whether or not it was the best pick available. Exactly the rule
+  // already applied to the cross-game NFL parlay and to MLB's Anytime HR:
+  // a market with its own dedicated card does not also get a guaranteed seat
+  // here, or a mediocre TD leg crowds out a better yardage one purely to
+  // fill a quota.
+  for(const mk of ["Rushing Yds", "Passing Yds", "Receiving Yds"]){
     const pick = bestPropInMarket(g.props || [], mk, used);
     if(pick){ picks.push(pick); used.add(pick.player_id); }
   }

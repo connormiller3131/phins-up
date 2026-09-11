@@ -193,18 +193,45 @@ def get_starters(target_season):
     return starters, latest_dt
 
 
-YARDAGE_LADDER_OFFSETS = (-20, -10, 0, 10, 20)
+# Ladder step per market, in yards. A rung only means something if moving to
+# it moves the probability, and that depends entirely on how wide the market's
+# residual distribution is. Measured fitted residual std:
+#
+#   passing_yards    86.1     rushing_yards    28.7
+#   rush_rec_yards   33.8     receiving_yards  24.8
+#
+# A flat 10-yard step was wrong at BOTH ends of that range.
+#
+# Too fine for passing, which is three times as spread out as the rest: a real
+# QB ladder ran 210/220/230/240/250 at 0.595/0.549/0.503/0.456/0.411, eighteen
+# points of probability across the whole thing. Stepping passing by 25 spans
+# 0.29 to 0.73 instead.
+#
+# Too COARSE for the rest, which is the less obvious failure. James Cook,
+# projected 75.7, went 60+:0.74 then 70+:0.51 -- twenty-three points of
+# probability inside one rung, with nothing in between. Any target between
+# those two numbers is simply unreachable for him, so a card looking for a
+# realistic line had to skip the best back in the game and take a backup whose
+# ladder happened to land better. Halving the step to 5 closes that gap.
+#
+# Seven rungs rather than five keeps the outer reach roughly where it was
+# despite the smaller step, and the ladder is user-facing (there is a rung
+# picker), so the extra density is useful in its own right.
+LADDER_STEP = {"Passing Yds": 25}
+LADDER_STEP_DEFAULT = 5
+LADDER_RUNGS = (-3, -2, -1, 0, 1, 2, 3)
 
 
-def yardage_ladder(prep, pred_mean):
-    """Lines in steps of 10 around the model's own predicted mean, e.g.
+def yardage_ladder(prep, pred_mean, market=None):
+    """Lines in steps around the model's own predicted mean, e.g.
     190/200/210/220/230 for a game the model projects at ~207 yds. Priced
     with the same distribution as the main line (prop_over_prob), so a
     ladder rung and the headline number can never disagree about shape."""
-    base = max(round(pred_mean / 10) * 10, 10)
+    step = LADDER_STEP.get(market, LADDER_STEP_DEFAULT)
+    base = max(round(pred_mean / step) * step, step)
     ladder = []
-    for off in YARDAGE_LADDER_OFFSETS:
-        line = base + off
+    for mult in LADDER_RUNGS:
+        line = base + mult * step
         if line <= 0:
             continue
         ladder.append({"line": float(line), "over_prob": round(prop_over_prob(prep, pred_mean, line), 3)})
@@ -247,7 +274,7 @@ def prepare_count_model(stat_col, positions):
     }
 
 
-def project_count(prep, player_id, opp_team, env, with_ladder=False, shares=None):
+def project_count(prep, player_id, opp_team, env, with_ladder=False, shares=None, market=None):
     own, defense = prep["own"], prep["defense"]
     if player_id not in own.index or opp_team not in defense.index:
         return None
@@ -285,7 +312,7 @@ def project_count(prep, player_id, opp_team, env, with_ladder=False, shares=None
         "games_played": int(own.loc[player_id, "games_played"]),
     }
     if with_ladder:
-        out["ladder"] = yardage_ladder(prep, pred_mean)
+        out["ladder"] = yardage_ladder(prep, pred_mean, market)
     return out
 
 
@@ -416,7 +443,7 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
     for qb_id in picks.get("QB", []):
         if is_out(qb_id):
             continue
-        r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True)
+        r = project_count(models["passing_yards"], qb_id, opp_team, env, with_ladder=True, market="Passing Yds")
         if r:
             entries.append(_prop_entry("Passing", "Passing Yds", team, opp_team, qb_id, r, ladder=True))
         rt = project_count(models["passing_tds"], qb_id, opp_team, env)
@@ -443,7 +470,7 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
     for rb_id in picks.get("RB", []):
         if is_out(rb_id):
             continue
-        r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True)
+        r = project_count(models["rushing_yards"], rb_id, opp_team, env, with_ladder=True, market="Rushing Yds")
         if r:
             entries.append(_prop_entry("Rushing", "Rushing Yds", team, opp_team, rb_id, r, ladder=True))
         rc = project_count(models["carries"], rb_id, opp_team, env, shares=carry_shares)
@@ -459,10 +486,10 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
         t = project_td(models["td"], rb_id, opp_team, env)
         if t and r:
             entries.append(_td_entry("Rushing", team, opp_team, rb_id, r["player_display_name"], t))
-        rrec = project_count(models["rush_rec_yards"], rb_id, opp_team, env, with_ladder=True)
+        rrec = project_count(models["rush_rec_yards"], rb_id, opp_team, env, with_ladder=True, market="Rush + Rec Yds")
         if rrec:
             entries.append(_prop_entry("Rushing", "Rush + Rec Yds", team, opp_team, rb_id, rrec, ladder=True))
-        rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True)
+        rr = project_count(models["receiving_yards"], rb_id, opp_team, env, with_ladder=True, market="Receiving Yds")
         if rr:
             entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, rb_id, rr, ladder=True))
         rec = project_count(models["receptions"], rb_id, opp_team, env)
@@ -473,7 +500,7 @@ def build_props_for_team(team, opp_team, starters, env, models, injuries=None, w
         for pid in picks.get(wrte_pos, []):
             if is_out(pid):
                 continue
-            r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True)
+            r = project_count(models["receiving_yards"], pid, opp_team, env, with_ladder=True, market="Receiving Yds")
             if r:
                 entries.append(_prop_entry("Receiving", "Receiving Yds", team, opp_team, pid, r, ladder=True))
             rec = project_count(models["receptions"], pid, opp_team, env)

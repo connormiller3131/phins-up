@@ -2202,7 +2202,17 @@ const NFL_PARLAY_PROPS = 2;
 // bet -- which quietly inflates the card's stated combined probability.
 const NFL_PARLAY_PROP_MARKETS = ["Passing Yds", "Rushing Yds", "Receiving Yds"];
 
-function collectNflParlayLegs(games){
+// Sunday only. A suggested parlay is meant to be a card someone could
+// actually place as one ticket, and a week's games are spread across
+// Thursday, Sunday, Monday and occasionally Wednesday or Saturday -- mixing
+// them means the first leg has settled days before the last one is even
+// kicked off. Sunday is where the overwhelming majority of the slate lives,
+// so it is the one day that gives a real multi-game card. SNF is a Sunday
+// game and stays in; TNF and MNF are out.
+function isSundayGame(g){ return g.weekday === 'Sunday'; }
+
+function collectNflParlayLegs(allGames){
+  const games = (allGames || []).filter(isSundayGame);
   const legs = [];
   const used = new Set();
 
@@ -2379,13 +2389,14 @@ function nflParlayCardsHtml(weekData){
   if(!SIGNED_IN){
     return parlayCardHtml(legs, 'NFL', {
       freePreview: 1,
-      note: `the model's single best pick this week, free \u2014 one leg of a ${legs.length}-leg card`,
+      note: `the model's single best pick from this week's Sunday slate, free \u2014 one leg of a ${legs.length}-leg card`,
     });
   }
   const tdLegs = collectNflTdSpecialLegs(weekData.games);
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(legs, 'NFL', {
-      note: `shaped like a realistic parlay -- up to ${NFL_PARLAY_MONEYLINES} moneylines plus up to ${NFL_PARLAY_PROPS} player props from different markets (a passing-yards leg and a receiving-yards one, say), never two of the same stat. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit, and a parlay needs every leg to hit. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
+      emptyText: "No Sunday games left to build a card from this week. The suggested parlay is Sunday-only so it settles as one ticket, which means once Sunday's slate has kicked off there is nothing here until next week.",
+      note: `Sunday games only, so it is one ticket that settles the same afternoon rather than a card strung from Thursday to Monday. Shaped like a realistic parlay -- up to ${NFL_PARLAY_MONEYLINES} moneylines plus up to ${NFL_PARLAY_PROPS} player props from different markets (a passing-yards leg and a receiving-yards one, say), never two of the same stat. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit, and a parlay needs every leg to hit. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
     })
     + parlayCardHtml(tdLegs, 'NFL', {
         title: 'TD SPECIAL', accentClass: 'parlay-special',
@@ -3947,35 +3958,140 @@ function mlbSameGameParlaySection(date, g, idx){
   `;
 }
 
-// NFL counterpart -- one best pick per market (Anytime TD, Rushing/Passing/
-// Receiving Yds), same reasoning as collectNflParlayLegs: TD and yardage
-// probabilities aren't on comparable scales post-fix, so picking one best
-// candidate per market (via bestPropInMarket) instead of pooling every
-// player and sorting by raw probability keeps a yardage prop from getting
-// crowded out by TD every time. The only market that ever carries a real DK
-// price is Anytime TD (yardage props are model-only, no per-market odds
-// pull for those), so most legs here will be MODEL EST. unless this game
-// happens to be one of the ~2/week that got real TD odds.
+// NFL same-game parlay: exactly 3 legs, at least one from each team, each leg
+// shaped to a realistic 65-70% rather than a coin flip.
+//
+// The old version leaned on pickLine, whose only bar is "more likely than
+// not", so it routinely shipped a 54% leg (Stafford 280+) and called it a
+// pick. Three of those multiply to 16%, which is not a card anyone would
+// place. The target here is a BAND, not a maximum, which matters in both
+// directions: the rung nearest 68% is chosen, so a leg cannot be a coin flip
+// AND cannot be a 90% freebie of the "1+ total base" kind the older comments
+// already complain about. Three legs near 68% combine to about 31%.
+//
+// Anytime TD is deliberately excluded: it has its own TD SPECIAL card, and
+// reserving a seat here forced one onto all 16 games a week whether or not it
+// was the best pick available. Rush + Rec Yds is excluded for the reason it
+// is excluded from the cross-game parlay -- it is the sum of two markets
+// already eligible, so it can double the same player's exposure while being
+// presented as an independent leg.
+const SGP_LEGS = 3;
+const SGP_TARGET_PROB = 0.68;
+// Band swept against the real board rather than picked by feel. Asking for
+// 65-70% exactly costs one game its card entirely (13 of the 14 unplayed
+// games fill); one point either side fills all 14 with legs running 64-71%,
+// median 68%. A leg at 64% instead of 65% is imperceptible, a missing card
+// is not.
+//
+// Tightening the CEILING is what pushes picks up a rung, so it matters as
+// much as the floor: capping at 71 turns a "Javonte Williams 50+ at 77%"
+// into a longer line at the same realistic strength. Median chosen line
+// comes out at 81% of the player's projection.
+const SGP_PROB_BAND = [0.64, 0.71];
+const SGP_MARKETS = ["Passing Yds", "Rushing Yds", "Receiving Yds"];
+const SGP_MAX_PER_MARKET = 2;   // one per team at most; three WRs is not a card
+
+// The ladder rung closest to `target` and inside `band`, or null if this prop
+// cannot reach the band at all. A real posted DK line is never ladder-shifted
+// -- that is an actual market line, not ours to move -- so it qualifies only
+// on its own merits, matching the rule pickLine already follows.
+function ladderRungNearTarget(p, target, band){
+  const rungs = (p.dk_implied_prob != null || !p.ladder || !p.ladder.length)
+    ? (p.model_over_prob != null && p.line != null ? [{line: p.line, over_prob: p.model_over_prob}] : [])
+    : p.ladder;
+  const inBand = rungs.filter(r => r.line > 0 && r.over_prob >= band[0] && r.over_prob <= band[1]);
+  if(!inBand.length) return null;
+  // Equidistant rungs go to the HIGHER line: same probability, more meaningful pick.
+  inBand.sort((a, b) => {
+    const d = Math.abs(a.over_prob - target) - Math.abs(b.over_prob - target);
+    return d !== 0 ? d : b.line - a.line;
+  });
+  return inBand[0];
+}
+
+function nflSgpCandidates(g){
+  const out = [];
+  (g.props || []).forEach(p => {
+    if(!SGP_MARKETS.includes(p.market)) return;
+    if(p.line == null || p.line <= 0 || p.model_over_prob == null) return;
+    const rung = ladderRungNearTarget(p, SGP_TARGET_PROB, SGP_PROB_BAND);
+    if(!rung) return;
+    const real = p.dk_implied_prob != null;
+    if(real && p.model_over_prob - p.dk_implied_prob <= 0) return; // a real price with no edge isn't a pick
+    out.push({
+      edge: real ? p.model_over_prob - p.dk_implied_prob : null,
+      prob: rung.over_prob,
+      label: p.player,
+      sub: `${rung.line}+${p.opp ? ` vs ${p.opp}` : ''}`,
+      market: p.market, player_id: p.player_id, projected: p.projected,
+      trailing_n: p.trailing_n, team: p.team,
+    });
+  });
+  return out;
+}
+
 function collectNflSameGameParlayLegs(g){
-  const used = new Set();
-  const picks = [];
-  // Anytime TD is deliberately NOT here. It has its own TD SPECIAL card, and
-  // reserving a slot on every same-game card forced one onto all 16 games a
-  // week whether or not it was the best pick available. Exactly the rule
-  // already applied to the cross-game NFL parlay and to MLB's Anytime HR:
-  // a market with its own dedicated card does not also get a guaranteed seat
-  // here, or a mediocre TD leg crowds out a better yardage one purely to
-  // fill a quota.
-  for(const mk of ["Rushing Yds", "Passing Yds", "Receiving Yds"]){
-    const pick = bestPropInMarket(g.props || [], mk, used);
-    if(pick){ picks.push(pick); used.add(pick.player_id); }
-  }
-  picks.sort((a,b) => {
+  const cands = nflSgpCandidates(g);
+  const teams = Array.from(new Set(cands.map(c => c.team)));
+  // Both requirements are hard. A game that cannot field three in-band legs
+  // across both teams shows no card at all, rather than a card that quietly
+  // breaks the shape it claims to have.
+  if(cands.length < SGP_LEGS || teams.length < 2) return [];
+
+  // The band is a FILTER, not the ranking. Ranking by nearness to 68% alone
+  // picks the marginal player every time: in ATL @ PIT it took Brian Robinson
+  // 10+ rushing yards at 66% over Bijan Robinson 70+ at 75%, purely because
+  // 66 is nearer 68 than 75 is. Every surviving candidate is already a
+  // realistic price by construction, so what is left to choose on is whether
+  // the player is actually going to be handed the ball.
+  //
+  // Production is compared WITHIN a market, never across one: a QB projects
+  // 230 passing yards and a slot receiver 40, so a raw sort on `projected`
+  // would simply rank every quarterback first. Scoring each candidate against
+  // the best projection in its own market in this game puts a WR1 and an RB1
+  // on the same footing.
+  const marketMax = {};
+  cands.forEach(c => {
+    const v = c.projected || 0;
+    if(v > (marketMax[c.market] || 0)) marketMax[c.market] = v;
+  });
+  const quality = (c) => (c.projected || 0) / (marketMax[c.market] || 1);
+
+  cands.sort((a, b) => {
+    const aReal = a.edge != null, bReal = b.edge != null;
+    if(aReal !== bReal) return aReal ? -1 : 1;
+    const aRel = isReliablePick(a), bRel = isReliablePick(b);
+    if(aRel !== bRel) return aRel ? -1 : 1;
+    const q = quality(b) - quality(a);
+    if(Math.abs(q) > 0.05) return q;
+    return Math.abs(a.prob - SGP_TARGET_PROB) - Math.abs(b.prob - SGP_TARGET_PROB);
+  });
+
+  const picked = [], usedPlayers = new Set(), perMarket = {};
+  const takeOne = (pool) => {
+    for(const c of pool){
+      if(usedPlayers.has(c.player_id)) continue;
+      if((perMarket[c.market] || 0) >= SGP_MAX_PER_MARKET) continue;
+      picked.push(c);
+      usedPlayers.add(c.player_id);
+      perMarket[c.market] = (perMarket[c.market] || 0) + 1;
+      return true;
+    }
+    return false;
+  };
+
+  // One from each side FIRST. Filling greedily and repairing afterwards lets
+  // two strong legs from the same team crowd the other side off the card.
+  for(const t of teams) if(picked.length < SGP_LEGS) takeOne(cands.filter(c => c.team === t));
+  while(picked.length < SGP_LEGS) if(!takeOne(cands)) break;
+  if(picked.length < SGP_LEGS || new Set(picked.map(p => p.team)).size < 2) return [];
+
+  picked.sort((a, b) => {
     const aReal = a.edge != null, bReal = b.edge != null;
     if(aReal !== bReal) return aReal ? -1 : 1;
     return aReal ? b.edge - a.edge : b.prob - a.prob;
   });
-  return picks;
+  return picked;
 }
 
 function nflSameGameParlaySection(g, idx){
@@ -3987,7 +4103,8 @@ function nflSameGameParlaySection(g, idx){
   return `
     <details class="props-toggle" id="nfl-sgp-${idx}">
       <summary>Same Game Parlay</summary>
-      ${parlayCardHtml(legs, 'NFL', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp'})}
+      ${parlayCardHtml(legs, 'NFL', {title: 'SAME GAME PARLAY', accentClass: 'parlay-sgp',
+        note: "three legs, at least one from each side, each one shaped to land near 65-70% rather than a coin flip. Lines are stepped to the rung the model puts closest to that mark, so a leg is neither a toss-up nor a freebie"})}
     </details>
   `;
 }

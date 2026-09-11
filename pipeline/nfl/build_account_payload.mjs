@@ -73,7 +73,14 @@ const NEEDED = [
   'const LADDER_STEP_DOWN_MARKETS', 'function pickLine', 'function bestPropInMarket',
   'const TD_MIN_OPP_PER_GM', 'function isFeaturedTdLeg',
   'const NFL_PARLAY_MONEYLINES', 'const NFL_PARLAY_PROPS', 'const NFL_PARLAY_PROP_MARKETS',
+  'function isSundayGame',
   'function collectNflParlayLegs', 'function collectNflTdSpecialLegs',
+  // The same-game parlay's own helpers. It stopped going through
+  // bestPropInMarket when it moved to a target probability band, so its
+  // constants and rung picker have to come across too or it cannot run here.
+  'const SGP_LEGS', 'const SGP_TARGET_PROB', 'const SGP_PROB_BAND',
+  'const SGP_MARKETS', 'const SGP_MAX_PER_MARKET',
+  'function ladderRungNearTarget', 'function nflSgpCandidates',
   'function collectNflSameGameParlayLegs',
   'const NFL_PICK_MARKETS', 'function nflWeeklyPicksGroups',
   'function noVigProb', 'function mlbMoneylineCandidates', 'function buildRealisticParlay',

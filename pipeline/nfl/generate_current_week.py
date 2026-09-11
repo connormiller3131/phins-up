@@ -174,8 +174,63 @@ def elo_predictions_for_season(games_df, season_sched):
 STARTER_DEPTH = {"QB": 1, "RB": 2, "WR": 3, "TE": 1, "PK": 1}
 
 
-def get_starters(target_season):
-    """Full starting-offense depth chart per team: QB1, RB1-2, WR1-3, TE1."""
+STARTER_OVERRIDES_PATH = pathlib.Path(__file__).resolve().parent / "starter_overrides.json"
+
+
+def _resolve_player_ids(names, where):
+    """Player names -> gsis ids, via player_stats.
+
+    Deliberately strict. A name that matches nothing, or matches more than one
+    player, raises instead of being skipped: the whole point of an override is
+    that someone asserted the depth chart is wrong, and silently falling back
+    to the depth chart would restore exactly the error being corrected, with
+    no indication anything had happened."""
+    ps = pl.read_parquet(DATA_DIR / "player_stats.parquet").select(
+        ["player_id", "player_display_name"]
+    ).unique().to_pandas()
+    lower = ps["player_display_name"].str.lower()
+    ids = []
+    for name in names:
+        hit = ps[lower == name.strip().lower()]
+        found = sorted(set(hit["player_id"]))
+        if len(found) != 1:
+            raise SystemExit(
+                f"starter_overrides.json {where}: '{name}' matched {len(found)} players"
+                f"{' (' + ', '.join(found) + ')' if found else ''}. "
+                "Use the exact player_display_name from player_stats."
+            )
+        ids.append(found[0])
+    return ids
+
+
+def load_starter_overrides(season, week):
+    """{team: {pos: [player_id, ...]}} for this season/week, or {}."""
+    if not STARTER_OVERRIDES_PATH.exists():
+        return {}
+    with open(STARTER_OVERRIDES_PATH, encoding="utf-8") as f:
+        raw = json.load(f)
+    block = (raw.get(str(season)) or {}).get(str(week)) or {}
+    out = {}
+    for team, positions in block.items():
+        if team.startswith("_"):
+            continue
+        picks = {}
+        for pos, names in positions.items():
+            if pos.startswith("_"):      # "_why" notes live alongside the data
+                continue
+            picks[pos] = _resolve_player_ids(names, f"{season}/{week}/{team}/{pos}")
+        out[team] = picks
+    return out
+
+
+def get_starters(target_season, target_week=None):
+    """Full starting-offense depth chart per team: QB1, RB1-2, WR1-3, TE1, PK1.
+
+    The nflverse depth chart is the source of truth, with manual overrides from
+    starter_overrides.json applied on top. Those exist because the depth chart
+    lags real news: it is refreshed on nflverse's schedule and only reflects
+    official designations, so a Friday benching or a late starter announcement
+    will not reach it before Sunday."""
     import nflreadpy as nfl
     dc = nfl.load_depth_charts(seasons=[target_season]).to_pandas()
     latest_dt = dc["dt"].max()
@@ -190,6 +245,17 @@ def get_starters(target_season):
             if ids:
                 picks[pos] = ids
         starters[team] = picks
+
+    if target_week is not None:
+        for team, positions in load_starter_overrides(target_season, target_week).items():
+            for pos, ids in positions.items():
+                was = starters.setdefault(team, {}).get(pos, [])
+                if ids:
+                    starters[team][pos] = ids
+                else:
+                    starters[team].pop(pos, None)
+                print(f"  override: {team} {pos} {was} -> {ids or '(dropped)'}")
+
     return starters, latest_dt
 
 
@@ -838,7 +904,14 @@ def main():
     print(f"Season {target_season}: generating weeks {all_weeks[0]}-{all_weeks[-1]}, current={current_week}")
 
     elo_preds, elo_params = elo_predictions_for_season(games_df, season_sched)
-    starters, depth_chart_dt = get_starters(target_season)
+    # The override file is keyed by week and we read the CURRENT week's
+    # entries. Note that `starters` is then reused for every week this run
+    # builds, so an override reaches them all -- exactly like the depth chart
+    # itself, which is a single as-of snapshot applied the same way. That is
+    # fine in practice because only weeks <= current_week are published and
+    # past weeks' predictions are already frozen in their own snapshots, but
+    # it does mean this is not a way to reconstruct who started in week 3.
+    starters, depth_chart_dt = get_starters(target_season, current_week)
     print(f"Depth charts as of {depth_chart_dt}", flush=True)
     temp_fill, wind_fill, implied_fill = env_fill_values(games_df)
 

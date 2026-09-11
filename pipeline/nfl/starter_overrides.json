@@ -1,0 +1,39 @@
+{
+  "_README": [
+    "Manual starter overrides, applied on top of the nflverse depth chart.",
+    "",
+    "WHY THIS EXISTS. The depth chart is pulled fresh every refresh, but it",
+    "lags real news by a day or more, and it only ever reflects injuries and",
+    "official designations. A midweek benching, a trade, or a coach naming a",
+    "different starter on Friday will not show up in it before Sunday. Without",
+    "this file the site publishes a full set of passing props for a quarterback",
+    "who is not playing, on a paid product, and nothing anywhere errors.",
+    "",
+    "FORMAT: season -> week -> team -> position -> list of player names, in",
+    "depth order. The list REPLACES the depth chart for that position, so give",
+    "as many names as the position normally carries (QB 1, RB 2, WR 3, TE 1,",
+    "PK 1). An empty list drops the position entirely, which is the right move",
+    "when a team's starter is out and you do not trust anyone behind him.",
+    "",
+    "Names are matched against player_stats, case-insensitively. A name that",
+    "does not resolve to exactly one player FAILS THE REFRESH rather than being",
+    "skipped -- a typo here would otherwise silently put the depth chart back.",
+    "A player with too little recent history simply will not project, which is",
+    "the same behaviour as any other thin-history player.",
+    "",
+    "Entries for past weeks are harmless and worth keeping as a record of what",
+    "was overridden and why.",
+    "",
+    "Delete an entry once the depth chart catches up. Nothing breaks if you",
+    "forget, but the file is easier to trust when it is short."
+  ],
+
+  "2026": {
+    "1": {
+      "ATL": {
+        "_why": "Cooper Rush named the starter for Sunday at PIT. The depth chart pulled 2026-09-10 still had Tua Tagovailoa QB1, so the board was carrying four passing props for the wrong quarterback two days before kickoff.",
+        "QB": ["Cooper Rush"]
+      }
+    }
+  }
+}

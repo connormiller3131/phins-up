@@ -3756,6 +3756,29 @@ async function fetchJsonWithRetry(url, retries=2, delayMs=600, headers=null){
   return null;
 }
 
+// Markets pulled from the site in September 2026 because their Brier scores
+// were above 0.25 -- worse than calling every one a coin flip, so the
+// probabilities were misleading rather than merely weak.
+//
+// Finalized snapshots are frozen forever and still contain them, so they have
+// to be filtered at read time rather than deleted from history. They are named
+// in the note under the table, and in the MLB methodology section, so this
+// removes dead markets from a list of live ones without quietly burying the
+// fact that we shipped three that did not work.
+//
+// DELIBERATELY DIFFERENT FROM /track-record. That page keeps these rows and
+// tags them "withdrawn Sep 2026", on the documented grounds that deleting them
+// is the selective editing the page exists to argue against. Both are honest,
+// and they answer different questions: this card sits inside the live product
+// and should describe what is on sale now, while that page is the permanent
+// public record. build_track_record.py's header says the two are mirrored --
+// they no longer are, on this one rule, and that is intentional. Anyone
+// re-running the cross-check described there should expect these three markets
+// to be the only difference.
+const WITHDRAWN_MLB_MARKETS = new Set([
+  'Pitcher Hits Allowed', 'Pitcher Runs Allowed', 'Pitcher Outs Recorded',
+]);
+
 async function loadMlbTrackRecord(){
   if(MLB_TRACK_RECORD_CACHE) return MLB_TRACK_RECORD_CACHE;
   const manifest = await fetchJsonWithRetry('results/mlb_index.json');
@@ -3812,6 +3835,11 @@ async function loadMlbTrackRecord(){
       }
       (g.props || []).forEach(p => {
         if(p.actual == null) return;
+        // Withdrawn markets are excluded from the record AND from the
+        // calibration curve. Their probabilities are the reason they were
+        // pulled, so leaving them in the chart let three dead markets drag
+        // the calibration of the nine live ones.
+        if(WITHDRAWN_MLB_MARKETS.has(p.market)) return;
         const isHr = p.market === 'Anytime HR';
         const modelProb = isHr ? p.model_prob : p.model_over_prob;
         if(modelProb == null || (!isHr && (p.line == null || p.line <= 0))) return;
@@ -3884,7 +3912,10 @@ function calibrationChartSvg(calBins, calDays){
 }
 
 function mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays){
-  const markets = Object.keys(byMarket).sort();
+  // Belt and braces: loadMlbTrackRecord already drops these, but this table is
+  // the thing a reader actually judges the model by, so it does not depend on
+  // an upstream filter staying correct.
+  const markets = Object.keys(byMarket).filter(m => !WITHDRAWN_MLB_MARKETS.has(m)).sort();
   if(!markets.length){
     return `<div class="placeholder parlay-empty">No graded MLB props yet -- check back once a day has finished.</div>`;
   }
@@ -3915,7 +3946,7 @@ function mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays){
       <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
       ${calibrationChartSvg(calBins, calDays)}
-      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- a market whose accuracy sits close to its baseline (colored red) isn't showing real edge no matter how high the number looks; clearly ahead of baseline (green) is the real tell.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- a market whose accuracy sits close to its baseline (colored red) isn't showing real edge no matter how high the number looks; clearly ahead of baseline (green) is the real tell. Three pitcher markets (Hits Allowed, Runs Allowed, Outs Recorded) were withdrawn in September 2026 after scoring worse than a coin flip, and are excluded here and from the calibration chart because they are no longer offered; the methodology notes at the bottom of the MLB tab say what went wrong with them.</div>
     </details>
   `;
 }

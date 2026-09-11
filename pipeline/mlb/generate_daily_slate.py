@@ -309,6 +309,42 @@ def week_dates(today=None):
     return [(monday + datetime.timedelta(days=i)).isoformat() for i in range(7)]
 
 
+# How far back to hunt for days that ARE old enough to finalize but never
+# got a snapshot. Must comfortably exceed FINALIZE_GRACE_DAYS plus a week,
+# because of the bug this exists to fix.
+#
+# week_dates() only ever returns the CURRENT Monday-Sunday week, and a day is
+# only finalized once it is FINALIZE_GRACE_DAYS old. Those two rules quietly
+# fought each other: on Sunday, the newest day old enough to finalize is
+# Thursday, and by Monday the window has rolled to a new week, so Friday,
+# Saturday and Sunday aged out of the window before they aged into being
+# finalizable. They were never written and never revisited.
+#
+# It was invisible from the inside -- every run looked healthy and every
+# snapshot it did write was correct -- but the public Track Record was
+# silently missing three days in seven. Measured when found: 31 of 50 days
+# present between 2026-07-20 and 2026-09-07, with EVERY Sunday and six of
+# seven Fridays and Saturdays gone, and the moneyline record showing 393
+# games instead of roughly 800.
+FINALIZE_CATCHUP_DAYS = 14
+
+
+def catchup_dates(today, horizon_days=FINALIZE_CATCHUP_DAYS):
+    """Past dates that are old enough to finalize but have no snapshot yet.
+
+    Returned in addition to the current week so a day can never age out of
+    the processing window before it ages into being finalizable."""
+    today_iso = today.isoformat()
+    out = []
+    for i in range(FINALIZE_GRACE_DAYS, horizon_days + 1):
+        d = (today - datetime.timedelta(days=i)).isoformat()
+        if not eligible_to_finalize(d, today_iso):
+            continue
+        if load_finalized_snapshot(d) is None:
+            out.append(d)
+    return sorted(out)
+
+
 def snapshot_path(target_date):
     return RESULTS_DIR / f"mlb_{target_date}.json"
 
@@ -388,22 +424,55 @@ def attach_prop_actuals(day_games):
 
 
 def elo_predictions(games_df, slate):
+    """Elo win probability for every game on the slate, each one computed from
+    history strictly BEFORE its own game date.
+
+    That "strictly before" is load-bearing and was a real bug. Every game used
+    to be stamped with `today` and appended to the end of full history, which
+    is right for a game that has not been played but wrong for a past one --
+    and past days are exactly what gets written into the permanent snapshots,
+    because a day is only finalized FINALIZE_GRACE_DAYS after it is played.
+    The stored probability for a completed game was therefore recomputed from
+    an Elo table that had already absorbed that very game's result.
+
+    Measured directly on a real slate (15 games, 2026-07-20): predicting them
+    three days late moved EVERY SINGLE ONE toward the team that actually won,
+    mean +0.0076, and Brier from 0.2347 to 0.2274. Small per game, but it is a
+    one-directional leak, and it flattered a public track record whose entire
+    claim is that it is graded honestly.
+
+    Grouping by date costs one Elo pass per distinct date instead of one
+    overall. run_elo over the full history is cheap, and correctness here is
+    worth more than the milliseconds."""
     with open(ROOT / "notebooks_out" / "mlb_win_prob_backtest.json") as f:
         elo_params = json.load(f)["elo_params"]
 
-    today = pd.Timestamp.today().normalize()
-    future_rows = pd.DataFrame({
-        "season": [today.year] * len(slate),
-        "game_date": [today] * len(slate),
-        "home_team": [g["home_team"] for g in slate],
-        "away_team": [g["away_team"] for g in slate],
-        "margin": np.nan, "home_win": np.nan,
-    })
     cols = ["season", "game_date", "home_team", "away_team", "margin", "home_win"]
-    combined = pd.concat([games_df[cols], future_rows], ignore_index=True)
-    preds = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"], scale=elo_params["scale"],
+    today = pd.Timestamp.today().normalize()
+    by_date = {}
+    for i, g in enumerate(slate):
+        by_date.setdefault(g.get("target_date"), []).append(i)
+
+    preds = np.full(len(slate), np.nan)
+    for d, idxs in by_date.items():
+        stamp = pd.Timestamp(d) if d else today
+        # Strictly before the game's own date, so a completed game can never
+        # contribute to the rating that predicts it.
+        hist = games_df[games_df["game_date"] < stamp]
+        rows = pd.DataFrame({
+            "season": [stamp.year] * len(idxs),
+            "game_date": [stamp] * len(idxs),
+            "home_team": [slate[i]["home_team"] for i in idxs],
+            "away_team": [slate[i]["away_team"] for i in idxs],
+            "margin": np.nan, "home_win": np.nan,
+        })
+        combined = pd.concat([hist[cols], rows], ignore_index=True)
+        p = run_elo(combined, k=elo_params["k"], home_adv=elo_params["home_adv"],
+                    scale=elo_params["scale"],
                     season_regression=elo_params.get("season_regression", 0.65))
-    return preds[-len(slate):], elo_params
+        for slot, i in enumerate(idxs):
+            preds[i] = p[-len(idxs) + slot]
+    return preds, elo_params
 
 
 def logit(p, eps=1e-6):
@@ -1137,7 +1206,7 @@ def build_day_payload(date, games, elo_params, pitcher_blend_used, finalized):
     }
 
 
-def main(today=None):
+def main(today=None, catchup_days=FINALIZE_CATCHUP_DAYS):
     """`today` is an override point for tests -- real runs always take the
     default (real `datetime.date.today()`); nothing about normal operation
     (including the `python generate_daily_slate.py` CLI entry point below)
@@ -1146,6 +1215,15 @@ def main(today=None):
     today_iso = today.isoformat()
     dates = week_dates(today)
     print(f"Week: {dates[0]} to {dates[-1]} (today={today_iso})")
+    # Days that fell through the window/grace-period gap. Processed and
+    # snapshotted exactly like the week's own past days, but deliberately kept
+    # OUT of the week payload below -- they belong in the permanent Track
+    # Record, not in this week's day dropdown.
+    catchup = [d for d in catchup_dates(today, catchup_days) if d not in dates]
+    if catchup:
+        print(f"Catch-up: {len(catchup)} past day(s) eligible to finalize but never snapshotted: "
+              + ", ".join(catchup))
+    process_dates = sorted(set(dates) | set(catchup))
 
     repair_stale_finalized_snapshots()
 
@@ -1155,7 +1233,7 @@ def main(today=None):
 
     days_out = {}
     combined_slate = []
-    for d in dates:
+    for d in process_dates:
         if d < today_iso and eligible_to_finalize(d, today_iso):
             snap = load_finalized_snapshot(d)
             if snap is not None:
@@ -1323,7 +1401,10 @@ def _write_week_payload(dates, today_iso, days_out):
     payload = {
         "week_start": dates[0], "week_end": dates[-1], "today": today_iso,
         "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
-        "days": days_out,
+        # Only the week's own days. days_out can also hold catch-up days
+        # finalized from earlier weeks, and those belong in the Track Record
+        # (via their snapshots on disk), not in this week's day dropdown.
+        "days": {d: days_out[d] for d in dates if d in days_out},
         "season_info": season_section,
     }
     out_path = DATA_DIR / "dashboard_current_slate.json"
@@ -1334,4 +1415,12 @@ def _write_week_payload(dates, today_iso, days_out):
 
 
 if __name__ == "__main__":
-    main()
+    # --catchup-days N widens the hunt for past days that were never
+    # snapshotted. The default is sized for ordinary operation; a larger value
+    # is for a one-off recovery after a gap, e.g. the Friday/Saturday/Sunday
+    # hole that FINALIZE_CATCHUP_DAYS documents. It only ever ADDS days that
+    # have no finalized snapshot, so re-running it is harmless.
+    _days = FINALIZE_CATCHUP_DAYS
+    if "--catchup-days" in sys.argv:
+        _days = int(sys.argv[sys.argv.index("--catchup-days") + 1])
+    main(catchup_days=_days)

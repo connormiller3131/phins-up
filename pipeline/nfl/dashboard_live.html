@@ -267,6 +267,7 @@
   .parlay-special{border-color:var(--amber);}
   .parlay-special .parlay-title{color:var(--amber);}
   .parlay-special .parlay-leg-edge{color:var(--amber);}
+  .parlay-leg-edge-neg{color:var(--text-dim);font-weight:500;}
   .parlay-sgp{border-color:var(--blue);margin-bottom:0;}
   .parlay-sgp .parlay-title{color:var(--blue);}
   .track-record-row{
@@ -2194,7 +2195,33 @@ const RELIABLE_TRAILING_N = 8;   // min games behind a trailing rate before it c
 // unaffected either way and simply do not qualify.
 const LADDER_STEP_DOWN_MARKETS = new Set(["Rushing Yds", "Passing Yds", "Receiving Yds", "Rush + Rec Yds", "Total Bases"]);
 
-const NFL_PARLAY_MONEYLINES = 3;
+// Three moneylines, but not three of the same KIND. Ranking purely by edge
+// filled the card with coin flips, because a big edge almost always comes
+// from an underdog the model likes rather than from a team likely to win: a
+// real week produced MIA 57.9%, NYG 51.9% and HOU 54.7%, and five legs of
+// that multiply out to 6.4%.
+//
+// So two ANCHORS, chosen by how likely the model thinks they are to win, and
+// one VALUE leg, chosen by edge the way the whole card used to be. The
+// anchors are what give the card a realistic chance of cashing; the value leg
+// is the part that argues the book is wrong somewhere.
+//
+// Anchors have to tolerate NEGATIVE edge and that is the real trade here. The
+// market is efficient on obvious favourites, so every high-probability pick
+// on a given week tends to be priced at or above what the model says: the
+// same week gave JAX 71.9% at -6.8% edge, LAC 68.4% at -11.6%, DET 67.9% at
+// -6.2%, with nothing above 57.9% carrying positive edge at all. Requiring
+// positive edge and high probability together mostly returns nothing.
+//
+// ML_ANCHOR_MIN_EDGE stops that becoming an excuse to ship anything. A leg
+// the model rates 11 points below the book's price is one we actively think
+// is a bad price, and putting that on a card sold on finding edges would be
+// incoherent. Slightly overpriced is a fair cost for a leg that actually
+// hits; badly overpriced is not.
+const NFL_PARLAY_ML_ANCHORS = 2;
+const NFL_PARLAY_ML_VALUE = 1;
+const ML_ANCHOR_MIN_EDGE = -0.08;
+const NFL_PARLAY_MONEYLINES = NFL_PARLAY_ML_ANCHORS + NFL_PARLAY_ML_VALUE;
 const NFL_PARLAY_PROPS = 2;
 // Rush + Rec Yds is deliberately excluded. It is the SUM of two markets
 // already in this list, so a parlay could take a back's rushing yards and his
@@ -2216,17 +2243,55 @@ function collectNflParlayLegs(allGames){
   const legs = [];
   const used = new Set();
 
+  // One candidate per game, always the side the MODEL favours, carrying its
+  // real edge whether that is positive or negative. The old version emitted
+  // whichever side had positive edge instead, which meant a game the model
+  // liked at 72% entered the pool as the OTHER team at 28% and was then
+  // dropped by the prob > 0.5 filter. Every genuine favourite on the board
+  // disappeared before anything could be ranked.
   const mlCandidates = [];
   games.forEach(g => {
-    if(g.already_played || g.market_home_prob == null) return;
-    const homeEdge = g.elo_home_prob - g.market_home_prob;
-    if(homeEdge > 0) mlCandidates.push({edge: homeEdge, prob: g.elo_home_prob, label: `${g.homeAbbr} ML`, sub: `vs ${g.awayAbbr}`, market: 'Moneyline'});
-    else if(-homeEdge > 0) mlCandidates.push({edge: -homeEdge, prob: 1-g.elo_home_prob, label: `${g.awayAbbr} ML`, sub: `@ ${g.homeAbbr}`, market: 'Moneyline'});
+    if(g.already_played || g.market_home_prob == null || g.elo_home_prob == null) return;
+    const homeFav = g.elo_home_prob >= 0.5;
+    mlCandidates.push({
+      gameKey: `${g.awayAbbr}@${g.homeAbbr}`,
+      prob: homeFav ? g.elo_home_prob : 1 - g.elo_home_prob,
+      // Away edge is (1-elo) - (1-market), i.e. market_home - elo_home.
+      edge: homeFav ? g.elo_home_prob - g.market_home_prob
+                    : g.market_home_prob - g.elo_home_prob,
+      label: homeFav ? `${g.homeAbbr} ML` : `${g.awayAbbr} ML`,
+      sub: homeFav ? `vs ${g.awayAbbr}` : `@ ${g.homeAbbr}`,
+      market: 'Moneyline',
+    });
   });
-  mlCandidates.sort((a,b) => b.edge - a.edge);
-  mlCandidates.filter(l => l.prob > 0.5)
-              .slice(0, NFL_PARLAY_MONEYLINES)
-              .forEach(l => legs.push(l));
+
+  const usedGames = new Set();
+  const takeML = (pool, n) => {
+    for(const l of pool){
+      if(legs.filter(x => x.market === 'Moneyline').length >= NFL_PARLAY_MONEYLINES) return;
+      if(n <= 0) return;
+      if(usedGames.has(l.gameKey)) continue;
+      usedGames.add(l.gameKey);
+      legs.push(l);
+      n--;
+    }
+  };
+
+  // Anchors first: most likely to win, provided the price is not far worse
+  // than the model's own number.
+  takeML(
+    mlCandidates.filter(l => l.prob > 0.5 && l.edge >= ML_ANCHOR_MIN_EDGE)
+                .sort((a, b) => b.prob - a.prob),
+    NFL_PARLAY_ML_ANCHORS);
+
+  // Then the value leg: best edge among whatever is left. Still has to be a
+  // side the model favours, for the reason the original note gives -- a big
+  // edge on a team we have losing means we think the price is wrong, not that
+  // the leg will hit, and a parlay needs every leg to hit.
+  takeML(
+    mlCandidates.filter(l => l.prob > 0.5 && l.edge > 0)
+                .sort((a, b) => b.edge - a.edge),
+    NFL_PARLAY_ML_VALUE);
 
   const allProps = games.filter(g => !g.already_played).flatMap(g => g.props || []);
   const propPicks = [];
@@ -2247,7 +2312,11 @@ function parlayCardHtml(legs, sport, opts){
   opts = opts || {};
   const title = opts.title || 'SUGGESTED PARLAY';
   const accentClass = opts.accentClass || '';
-  const realCount = legs.filter(l => l.edge != null).length;
+  // Only POSITIVE edges count as "backed by an edge". An anchor leg can carry
+  // a negative one (see NFL_PARLAY_ML_ANCHORS): the model still favours it to
+  // win, it is just priced at or above what we think it is worth. Counting
+  // that as an edge would claim the opposite of what the number says.
+  const realCount = legs.filter(l => l.edge != null && l.edge > 0).length;
   const note = opts.note || (realCount === legs.length
     ? `model's highest-edge picks vs. real market prices, not just the most likely to win -- all ${legs.length} legs have real odds to compare against`
     : `${realCount} legs backed by a real edge vs. a real market price, ${legs.length - realCount} model-only where no real price is posted yet -- not just the most likely to win`);
@@ -2267,7 +2336,7 @@ function parlayCardHtml(legs, sport, opts){
     <div class="parlay-leg">
       <span class="parlay-leg-label">${l.label} <span class="p-exp">${l.sub}</span></span>
       <span class="parlay-leg-market">${l.market}</span>
-      <span class="parlay-leg-edge">${l.edge != null ? `+${(l.edge*100).toFixed(1)}% edge` : ''}</span>
+      <span class="parlay-leg-edge${l.edge != null && l.edge < 0 ? ' parlay-leg-edge-neg' : ''}">${l.edge != null ? `${l.edge >= 0 ? '+' : ''}${(l.edge*100).toFixed(1)}% edge` : ''}</span>
       <span class="parlay-leg-prob">${l.edge == null
         ? `<span class="source-badge source-model" title="Our model's own estimate -- no DraftKings price posted for this player to grade an edge against">MODEL EST.</span> `
         : ''}${pct(l.prob)}</span>
@@ -2396,7 +2465,7 @@ function nflParlayCardsHtml(weekData){
   const tdRealCount = tdLegs.filter(l => l.edge != null).length;
   return parlayCardHtml(legs, 'NFL', {
       emptyText: "No Sunday games left to build a card from this week. The suggested parlay is Sunday-only so it settles as one ticket, which means once Sunday's slate has kicked off there is nothing here until next week.",
-      note: `Sunday games only, so it is one ticket that settles the same afternoon rather than a card strung from Thursday to Monday. Shaped like a realistic parlay -- up to ${NFL_PARLAY_MONEYLINES} moneylines plus up to ${NFL_PARLAY_PROPS} player props from different markets (a passing-yards leg and a receiving-yards one, say), never two of the same stat. Every leg is one the model itself makes better than a coin flip BEFORE anything is ranked by edge: a big edge on a team the model still has losing means we think the price is wrong, not that the leg is likely to hit, and a parlay needs every leg to hit. Real edge is preferred over a model estimate wherever DraftKings has posted a price`
+      note: `Sunday games only, so it is one ticket that settles the same afternoon rather than a card strung from Thursday to Monday. Shaped like a realistic parlay: ${NFL_PARLAY_ML_ANCHORS} moneylines picked for how likely the model thinks they are to WIN, ${NFL_PARLAY_ML_VALUE} picked for the biggest gap against the book's price, plus up to ${NFL_PARLAY_PROPS} player props from different markets, never two of the same stat. The split is deliberate. Ranking every leg by edge fills the card with coin flips, because a big edge nearly always comes from an underdog we like rather than from a team likely to win. The two likely legs are what give the card a real chance of cashing; the value leg is the part that says the book is wrong somewhere. Those first two can show a NEGATIVE edge, and that is honest rather than a mistake: the market prices obvious favourites well, so a team we make 70% to win is often priced at 75%, and we would still rather have it on a parlay than a 52% coin flip with a big number next to it. What we will not do is take one priced far above our own estimate. Every leg is a side the model itself favours`
     })
     + parlayCardHtml(tdLegs, 'NFL', {
         title: 'TD SPECIAL', accentClass: 'parlay-special',

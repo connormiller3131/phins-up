@@ -72,6 +72,8 @@ const NEEDED = [
   'const RELIABLE_TRAILING_N', 'function isReliablePick',
   'const LADDER_STEP_DOWN_MARKETS', 'function pickLine', 'function bestPropInMarket',
   'const TD_MIN_OPP_PER_GM', 'function isFeaturedTdLeg',
+  // Order matters: NFL_PARLAY_MONEYLINES is derived from the two above it.
+  'const NFL_PARLAY_ML_ANCHORS', 'const NFL_PARLAY_ML_VALUE', 'const ML_ANCHOR_MIN_EDGE',
   'const NFL_PARLAY_MONEYLINES', 'const NFL_PARLAY_PROPS', 'const NFL_PARLAY_PROP_MARKETS',
   'function isSundayGame',
   'function collectNflParlayLegs', 'function collectNflTdSpecialLegs',

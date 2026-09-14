@@ -9,6 +9,1095 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.5188,
   "market_home_prob": 0.4486,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 20,
+    "home_score": 28,
+    "winner": "NYG",
+    "model_pick": "NYG",
+    "model_correct": true,
+    "market_pick": "DAL",
+    "market_correct": false
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Passing Yds",
+      "line": 248.5,
+      "projected": 248.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 230.0,
+          "over_prob": 0.585
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.539
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.493
+        },
+        {
+          "line": 260.0,
+          "over_prob": 0.447
+        },
+        {
+          "line": 270.0,
+          "over_prob": 0.401
+        }
+      ],
+      "actual_value": 175.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.476,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Completions",
+      "line": 20.0,
+      "projected": 19.8,
+      "model_over_prob": 0.491,
+      "actual_value": 22.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Pass Attempts",
+      "line": 30.5,
+      "projected": 30.6,
+      "model_over_prob": 0.505,
+      "actual_value": 34.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Rushing Yds",
+      "line": 68.0,
+      "projected": 68.2,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.774
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.17
+        }
+      ],
+      "actual_value": 41.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Carries",
+      "line": 15.0,
+      "projected": 15.0,
+      "model_over_prob": 0.405,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.521,
+      "trailing_n": 8,
+      "opp_per_gm": 18.1,
+      "dk_odds": -180,
+      "dk_implied_prob": 0.6429,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 10.5,
+      "projected": 10.7,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.162
+        }
+      ],
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.409,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Rushing Yds",
+      "line": 32.0,
+      "projected": 32.2,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.829
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.67
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.198
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Carries",
+      "line": 6.5,
+      "projected": 6.3,
+      "model_over_prob": 0.395,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.225,
+      "trailing_n": 8,
+      "opp_per_gm": 6.9,
+      "dk_odds": 800,
+      "dk_implied_prob": 0.1111,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.189
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.128
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Davis",
+      "player_id": "00-0037563",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.389,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 63.0,
+      "projected": 63.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.887
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.735
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.454
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 44.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.466,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.241,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "dk_odds": 130,
+      "dk_implied_prob": 0.4348,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 69.0,
+      "projected": 68.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.839
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.638
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.354
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.228
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.151
+        }
+      ],
+      "actual_value": 28.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 5.0,
+      "model_over_prob": 0.374,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.278,
+      "trailing_n": 8,
+      "opp_per_gm": 8.1,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 33.0,
+      "projected": 32.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.887
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.734
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.453
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.271
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.178
+        }
+      ],
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.332,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.247,
+      "trailing_n": 8,
+      "opp_per_gm": 4.2,
+      "dk_odds": 450,
+      "dk_implied_prob": 0.1818,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 29.0,
+      "projected": 28.9,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.838
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.636
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.353
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.227
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.151
+        }
+      ],
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.343,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.193,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "dk_odds": 245,
+      "dk_implied_prob": 0.2899,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Passing Yds",
+      "line": 190.0,
+      "projected": 190.2,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 170.0,
+          "over_prob": 0.593
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.547
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.501
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.409
+        }
+      ],
+      "actual_value": 230.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.324,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.502,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Pass Attempts",
+      "line": 27.0,
+      "projected": 27.1,
+      "model_over_prob": 0.503,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Rushing Yds",
+      "line": 48.0,
+      "projected": 48.0,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.772
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.575
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.244
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.17
+        }
+      ],
+      "actual_value": 81.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Carries",
+      "line": 11.5,
+      "projected": 11.4,
+      "model_over_prob": 0.402,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.502,
+      "trailing_n": 8,
+      "opp_per_gm": 16.6,
+      "dk_odds": -105,
+      "dk_implied_prob": 0.5122,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.812
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.213
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.142
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.309,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Rushing Yds",
+      "line": 63.0,
+      "projected": 62.8,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.837
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.683
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.437
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.289
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.2,
+      "model_over_prob": 0.425,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.428,
+      "trailing_n": 8,
+      "opp_per_gm": 19.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 25.5,
+      "projected": 25.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.782
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.302
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.198
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.132
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyrone Tracy Jr.",
+      "player_id": "00-0039384",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.462,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 74.0,
+      "projected": 73.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.895
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.752
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.482
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.184
+        }
+      ],
+      "actual_value": 69.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.6,
+      "model_over_prob": 0.462,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.321,
+      "trailing_n": 8,
+      "opp_per_gm": 9.9,
+      "dk_odds": 155,
+      "dk_implied_prob": 0.3922,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.844
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.648
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.361
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.154
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.338,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Darius Slayton",
+      "player_id": "00-0035535",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.155,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "dk_odds": 750,
+      "dk_implied_prob": 0.1176,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 32.0,
+      "projected": 32.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.878
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.716
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.426
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.261
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.172
+        }
+      ],
+      "actual_value": 27.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.458,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.151,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "dk_odds": 600,
+      "dk_implied_prob": 0.1429,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 26.5,
+      "projected": 26.4,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.799
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.564
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.316
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.205
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.137
+        }
+      ],
+      "actual_value": 78.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.396,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.137,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "dk_odds": 295,
+      "dk_implied_prob": 0.2532,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

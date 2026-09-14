@@ -9,6 +9,1073 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.592,
   "market_home_prob": 0.6092,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 13,
+    "home_score": 20,
+    "winner": "PIT",
+    "model_pick": "PIT",
+    "model_correct": true,
+    "market_pick": "PIT",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Tua Tagovailoa",
+      "player_id": "00-0036212",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Passing Yds",
+      "line": 182.0,
+      "projected": 182.2,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 160.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 170.0,
+          "over_prob": 0.556
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.464
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.418
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Tua Tagovailoa",
+      "player_id": "00-0036212",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.273,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Tua Tagovailoa",
+      "player_id": "00-0036212",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Completions",
+      "line": 16.5,
+      "projected": 16.5,
+      "model_over_prob": 0.498,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Tua Tagovailoa",
+      "player_id": "00-0036212",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Pass Attempts",
+      "line": 25.5,
+      "projected": 25.6,
+      "model_over_prob": 0.505,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Rushing Yds",
+      "line": 86.5,
+      "projected": 86.7,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.752
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.538
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.335
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.161
+        }
+      ],
+      "actual_value": 83.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Carries",
+      "line": 18.0,
+      "projected": 18.1,
+      "model_over_prob": 0.42,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.637,
+      "trailing_n": 8,
+      "opp_per_gm": 25.1,
+      "dk_odds": -160,
+      "dk_implied_prob": 0.6154,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 42.0,
+      "projected": 41.8,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.875
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.709
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.417
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.258
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.17
+        }
+      ],
+      "actual_value": 90.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.361,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Rushing Yds",
+      "line": 22.0,
+      "projected": 22.0,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.667
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.419
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.282
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.198
+        }
+      ],
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Carries",
+      "line": 5.5,
+      "projected": 5.5,
+      "model_over_prob": 0.41,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.118,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.182
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.122
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.411,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 70.5,
+      "projected": 70.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.863
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.247
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.162
+        }
+      ],
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 5.2,
+      "model_over_prob": 0.408,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.275,
+      "trailing_n": 8,
+      "opp_per_gm": 9.4,
+      "dk_odds": 240,
+      "dk_implied_prob": 0.2941,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 16.0,
+      "projected": 16.1,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.555
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.203
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.136
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.422,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.096,
+      "trailing_n": 8,
+      "opp_per_gm": 2.8,
+      "dk_odds": 550,
+      "dk_implied_prob": 0.1538,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 15.0,
+      "projected": 14.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.515
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.43,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.132,
+      "trailing_n": 8,
+      "opp_per_gm": 2.9,
+      "dk_odds": 900,
+      "dk_implied_prob": 0.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 55.5,
+      "projected": 55.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.785
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.539
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.305
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.199
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.133
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.476,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.183,
+      "trailing_n": 8,
+      "opp_per_gm": 7.4,
+      "dk_odds": 340,
+      "dk_implied_prob": 0.2273,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Passing Yds",
+      "line": 204.5,
+      "projected": 204.6,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 180.0,
+          "over_prob": 0.613
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.521
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.475
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.429
+        }
+      ],
+      "actual_value": 221.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.33,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.7,
+      "model_over_prob": 0.511,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Pass Attempts",
+      "line": 31.5,
+      "projected": 31.4,
+      "model_over_prob": 0.498,
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Rushing Yds",
+      "line": 51.5,
+      "projected": 51.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.822
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.659
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.411
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.194
+        }
+      ],
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Carries",
+      "line": 11.5,
+      "projected": 11.6,
+      "model_over_prob": 0.417,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.418,
+      "trailing_n": 8,
+      "opp_per_gm": 14.8,
+      "dk_odds": 120,
+      "dk_implied_prob": 0.4545,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 16.5,
+      "projected": 16.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.317
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.206
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.137
+        }
+      ],
+      "actual_value": 27.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.292,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Rushing Yds",
+      "line": 39.5,
+      "projected": 39.3,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.79
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.607
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.256
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Carries",
+      "line": 10.5,
+      "projected": 10.7,
+      "model_over_prob": 0.428,
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.305,
+      "trailing_n": 8,
+      "opp_per_gm": 15.1,
+      "dk_odds": 125,
+      "dk_implied_prob": 0.4444,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 23.0,
+      "projected": 23.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.74
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.463
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.456,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 51.0,
+      "projected": 50.8,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.864
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.247
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.162
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.37,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.211,
+      "trailing_n": 8,
+      "opp_per_gm": 7.4,
+      "dk_odds": 205,
+      "dk_implied_prob": 0.3279,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Pittman",
+      "player_id": "00-0036252",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.882
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.722
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.437
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.174
+        }
+      ],
+      "actual_value": 58.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Pittman",
+      "player_id": "00-0036252",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.419,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Pittman",
+      "player_id": "00-0036252",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.159,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Roman Wilson",
+      "player_id": "00-0039739",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 19.5,
+      "projected": 19.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.155
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Roman Wilson",
+      "player_id": "00-0039739",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.449,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Roman Wilson",
+      "player_id": "00-0039739",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.148,
+      "trailing_n": 8,
+      "opp_per_gm": 2.4,
+      "dk_odds": 600,
+      "dk_implied_prob": 0.1429,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Freiermuth",
+      "player_id": "00-0036894",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 28.5,
+      "projected": 28.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.836
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.631
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.351
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.226
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.15
+        }
+      ],
+      "actual_value": 46.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Freiermuth",
+      "player_id": "00-0036894",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.426,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Freiermuth",
+      "player_id": "00-0036894",
+      "team": "PIT",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.14,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "dk_odds": 360,
+      "dk_implied_prob": 0.2174,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

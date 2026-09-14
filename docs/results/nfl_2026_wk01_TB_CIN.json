@@ -9,6 +9,1099 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.5334,
   "market_home_prob": 0.6471,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 27,
+    "home_score": 33,
+    "winner": "CIN",
+    "model_pick": "CIN",
+    "model_correct": true,
+    "market_pick": "CIN",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Baker Mayfield",
+      "player_id": "00-0034855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Passing Yds",
+      "line": 182.0,
+      "projected": 181.9,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 160.0,
+          "over_prob": 0.6
+        },
+        {
+          "line": 170.0,
+          "over_prob": 0.555
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.462
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.417
+        }
+      ],
+      "actual_value": 216.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Baker Mayfield",
+      "player_id": "00-0034855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.371,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Baker Mayfield",
+      "player_id": "00-0034855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Completions",
+      "line": 16.5,
+      "projected": 16.5,
+      "model_over_prob": 0.502,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Baker Mayfield",
+      "player_id": "00-0034855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Pass Attempts",
+      "line": 27.0,
+      "projected": 27.1,
+      "model_over_prob": 0.503,
+      "actual_value": 28.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bucky Irving",
+      "player_id": "00-0039361",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Rushing Yds",
+      "line": 63.0,
+      "projected": 63.0,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.84
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.441
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.205
+        }
+      ],
+      "actual_value": 45.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bucky Irving",
+      "player_id": "00-0039361",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.3,
+      "model_over_prob": 0.388,
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bucky Irving",
+      "player_id": "00-0039361",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.512,
+      "trailing_n": 8,
+      "opp_per_gm": 20.9,
+      "dk_odds": 135,
+      "dk_implied_prob": 0.4255,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bucky Irving",
+      "player_id": "00-0039361",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 25.0,
+      "projected": 24.9,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.772
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.516
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 48.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bucky Irving",
+      "player_id": "00-0039361",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.373,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenny Gainwell",
+      "player_id": "00-0036919",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Rushing Yds",
+      "line": 36.0,
+      "projected": 35.8,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.738
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.513
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.225
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.156
+        }
+      ],
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenny Gainwell",
+      "player_id": "00-0036919",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.1,
+      "model_over_prob": 0.417,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenny Gainwell",
+      "player_id": "00-0036919",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.357,
+      "trailing_n": 8,
+      "opp_per_gm": 13.5,
+      "dk_odds": 215,
+      "dk_implied_prob": 0.3175,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenny Gainwell",
+      "player_id": "00-0036919",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.846
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.651
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.154
+        }
+      ],
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenny Gainwell",
+      "player_id": "00-0036919",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.411,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Emeka Egbuka",
+      "player_id": "00-0040129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 37.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.809
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.585
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.325
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.211
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.14
+        }
+      ],
+      "actual_value": 63.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emeka Egbuka",
+      "player_id": "00-0040129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.375,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emeka Egbuka",
+      "player_id": "00-0040129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.151,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Godwin Jr.",
+      "player_id": "00-0033921",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 38.0,
+      "projected": 38.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.828
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.618
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.147
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Godwin Jr.",
+      "player_id": "00-0033921",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.411,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Godwin Jr.",
+      "player_id": "00-0033921",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.184,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen McMillan",
+      "player_id": "00-0039855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 41.0,
+      "projected": 41.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.868
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.697
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.252
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.166
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen McMillan",
+      "player_id": "00-0039855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.378,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen McMillan",
+      "player_id": "00-0039855",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.21,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "dk_odds": 235,
+      "dk_implied_prob": 0.2985,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Cade Otton",
+      "player_id": "00-0038129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 37.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.816
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.598
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.332
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.143
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cade Otton",
+      "player_id": "00-0038129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.466,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cade Otton",
+      "player_id": "00-0038129",
+      "team": "TB",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.165,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Passing Yds",
+      "line": 218.5,
+      "projected": 218.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.585
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.539
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.493
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.447
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.402
+        }
+      ],
+      "actual_value": 254.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.268,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.3,
+      "model_over_prob": 0.492,
+      "actual_value": 25.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Pass Attempts",
+      "line": 30.0,
+      "projected": 30.0,
+      "model_over_prob": 0.501,
+      "actual_value": 35.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Rushing Yds",
+      "line": 65.0,
+      "projected": 65.0,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.724
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.493
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.218
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.152
+        }
+      ],
+      "actual_value": 56.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.0,
+      "model_over_prob": 0.406,
+      "actual_value": 16.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.598,
+      "trailing_n": 8,
+      "opp_per_gm": 20.9,
+      "dk_odds": -140,
+      "dk_implied_prob": 0.5833,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 34.0,
+      "projected": 33.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.896
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.754
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.485
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.354,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Rushing Yds",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.833
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.676
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.43
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.1,
+      "model_over_prob": 0.42,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.317,
+      "trailing_n": 8,
+      "opp_per_gm": 9.4,
+      "dk_odds": 340,
+      "dk_implied_prob": 0.2273,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 11.5,
+      "projected": 11.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.415
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.258
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.169
+        }
+      ],
+      "actual_value": 30.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.404,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 79.5,
+      "projected": 79.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.847
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.155
+        }
+      ],
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 6.5,
+      "projected": 6.4,
+      "model_over_prob": 0.432,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.307,
+      "trailing_n": 8,
+      "opp_per_gm": 10.9,
+      "dk_odds": -125,
+      "dk_implied_prob": 0.5556,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 57.0,
+      "projected": 56.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.21
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.14
+        }
+      ],
+      "actual_value": 59.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.387,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.382,
+      "trailing_n": 8,
+      "opp_per_gm": 6.6,
+      "dk_odds": 120,
+      "dk_implied_prob": 0.4545,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 25.5,
+      "projected": 25.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.787
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.543
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.2
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.134
+        }
+      ],
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.371,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.164,
+      "trailing_n": 8,
+      "opp_per_gm": 3.5,
+      "dk_odds": 260,
+      "dk_implied_prob": 0.2778,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receiving Yds",
+      "line": 31.0,
+      "projected": 31.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.869
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.698
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.404
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.252
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.166
+        }
+      ],
+      "actual_value": 78.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.471,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "TB",
+      "market": "Anytime TD",
+      "model_prob": 0.195,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "dk_odds": 310,
+      "dk_implied_prob": 0.2439,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

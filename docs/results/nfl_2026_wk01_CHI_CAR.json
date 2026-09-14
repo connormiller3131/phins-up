@@ -9,6 +9,1073 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.4205,
   "market_home_prob": 0.444,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 59,
+    "home_score": 37,
+    "winner": "CHI",
+    "model_pick": "CHI",
+    "model_correct": true,
+    "market_pick": "CHI",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Passing Yds",
+      "line": 227.5,
+      "projected": 227.4,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 210.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.488
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.442
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.397
+        }
+      ],
+      "actual_value": 269.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.52,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.505,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Pass Attempts",
+      "line": 33.5,
+      "projected": 33.6,
+      "model_over_prob": 0.503,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Rushing Yds",
+      "line": 66.0,
+      "projected": 65.9,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.74
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.514
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.225
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.156
+        }
+      ],
+      "actual_value": 124.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.0,
+      "model_over_prob": 0.41,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.472,
+      "trailing_n": 8,
+      "opp_per_gm": 16.1,
+      "dk_odds": -185,
+      "dk_implied_prob": 0.6491,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 15.0,
+      "projected": 14.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.43,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Rushing Yds",
+      "line": 50.0,
+      "projected": 49.8,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.617
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.375
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.261
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 100.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Carries",
+      "line": 11.5,
+      "projected": 11.6,
+      "model_over_prob": 0.417,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.306,
+      "trailing_n": 8,
+      "opp_per_gm": 14.0,
+      "dk_odds": 215,
+      "dk_implied_prob": 0.3175,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 17.5,
+      "projected": 17.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.598
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.332
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.215
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.143
+        }
+      ],
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.49,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 47.5,
+      "projected": 47.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.818
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.601
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.144
+        }
+      ],
+      "actual_value": 52.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.427,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.194,
+      "trailing_n": 8,
+      "opp_per_gm": 7.0,
+      "dk_odds": 220,
+      "dk_implied_prob": 0.3125,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 51.0,
+      "projected": 51.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.866
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.692
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.398
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.25
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.164
+        }
+      ],
+      "actual_value": 63.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.358,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.196,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "dk_odds": 170,
+      "dk_implied_prob": 0.3704,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 23.0,
+      "projected": 23.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.735
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.454
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 84.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.264,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.139,
+      "trailing_n": 8,
+      "opp_per_gm": 2.4,
+      "dk_odds": 600,
+      "dk_implied_prob": 0.1429,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 61.5,
+      "projected": 61.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.871
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.701
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.407
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.254
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.167
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 5.0,
+      "model_over_prob": 0.375,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.285,
+      "trailing_n": 8,
+      "opp_per_gm": 8.8,
+      "dk_odds": 175,
+      "dk_implied_prob": 0.3636,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Passing Yds",
+      "line": 217.0,
+      "projected": 216.9,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.578
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.532
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.486
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.44
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.394
+        }
+      ],
+      "actual_value": 361.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.419,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.0,
+      "model_over_prob": 0.502,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Pass Attempts",
+      "line": 30.5,
+      "projected": 30.5,
+      "model_over_prob": 0.501,
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Rushing Yds",
+      "line": 31.5,
+      "projected": 31.5,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.819
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.656
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.408
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.276
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 49.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Carries",
+      "line": 7.5,
+      "projected": 7.6,
+      "model_over_prob": 0.417,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.247,
+      "trailing_n": 8,
+      "opp_per_gm": 10.0,
+      "dk_odds": 125,
+      "dk_implied_prob": 0.4444,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 16.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.578
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.208
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.139
+        }
+      ],
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.29,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathon Brooks",
+      "player_id": "00-0039344",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Rushing Yds",
+      "line": 12.5,
+      "projected": 12.5,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.43
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathon Brooks",
+      "player_id": "00-0039344",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Carries",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.419,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathon Brooks",
+      "player_id": "00-0039344",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.121,
+      "trailing_n": 3,
+      "opp_per_gm": 4.0,
+      "dk_odds": 160,
+      "dk_implied_prob": 0.3846,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathon Brooks",
+      "player_id": "00-0039344",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 8.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.227
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.15
+        }
+      ],
+      "actual_value": 48.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathon Brooks",
+      "player_id": "00-0039344",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.267,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 52.0,
+      "projected": 52.1,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.878
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.716
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.425
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.261
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.172
+        }
+      ],
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.464,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.256,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 48.0,
+      "projected": 48.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.828
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.616
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.147
+        }
+      ],
+      "actual_value": 138.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.335,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.24,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "dk_odds": 295,
+      "dk_implied_prob": 0.2532,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 25.0,
+      "projected": 25.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.778
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.527
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.3
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.196
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.131
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.357,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.138,
+      "trailing_n": 8,
+      "opp_per_gm": 3.8,
+      "dk_odds": 475,
+      "dk_implied_prob": 0.1739,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 17.5,
+      "projected": 17.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.334
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.144
+        }
+      ],
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.443,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.123,
+      "trailing_n": 8,
+      "opp_per_gm": 2.2,
+      "dk_odds": 475,
+      "dk_implied_prob": 0.1739,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

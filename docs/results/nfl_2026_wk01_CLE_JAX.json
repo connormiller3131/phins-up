@@ -9,6 +9,957 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.7188,
   "market_home_prob": 0.7335,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 10,
+    "home_score": 34,
+    "winner": "JAX",
+    "model_pick": "JAX",
+    "model_correct": true,
+    "market_pick": "JAX",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Deshaun Watson",
+      "player_id": "00-0033537",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Passing Yds",
+      "line": 171.0,
+      "projected": 171.1,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.597
+        },
+        {
+          "line": 160.0,
+          "over_prob": 0.551
+        },
+        {
+          "line": 170.0,
+          "over_prob": 0.505
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.459
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.413
+        }
+      ],
+      "actual_value": 205.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Deshaun Watson",
+      "player_id": "00-0033537",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.234,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Deshaun Watson",
+      "player_id": "00-0033537",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.496,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Deshaun Watson",
+      "player_id": "00-0033537",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Pass Attempts",
+      "line": 32.5,
+      "projected": 32.3,
+      "model_over_prob": 0.494,
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Quinshon Judkins",
+      "player_id": "00-0040784",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 46.5,
+      "projected": 46.6,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.749
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.231
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.16
+        }
+      ],
+      "actual_value": 33.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Quinshon Judkins",
+      "player_id": "00-0040784",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 13.5,
+      "projected": 13.7,
+      "model_over_prob": 0.429,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Quinshon Judkins",
+      "player_id": "00-0040784",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.29,
+      "trailing_n": 8,
+      "opp_per_gm": 18.1,
+      "dk_odds": 150,
+      "dk_implied_prob": 0.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Quinshon Judkins",
+      "player_id": "00-0040784",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 15.5,
+      "projected": 15.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.542
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.2
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.134
+        }
+      ],
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Quinshon Judkins",
+      "player_id": "00-0040784",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.346,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Dylan Sampson",
+      "player_id": "00-0040162",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 15.5,
+      "projected": 15.4,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.502
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.154
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Dylan Sampson",
+      "player_id": "00-0040162",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.39,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Dylan Sampson",
+      "player_id": "00-0040162",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.145,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "dk_odds": 600,
+      "dk_implied_prob": 0.1429,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dylan Sampson",
+      "player_id": "00-0040162",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.153
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dylan Sampson",
+      "player_id": "00-0040162",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.355,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jerry Jeudy",
+      "player_id": "00-0036407",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 32.0,
+      "projected": 31.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.876
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jerry Jeudy",
+      "player_id": "00-0036407",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.326,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jerry Jeudy",
+      "player_id": "00-0036407",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.118,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 425,
+      "dk_implied_prob": 0.1905,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Harold Fannin Jr.",
+      "player_id": "00-0040663",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 45.0,
+      "projected": 45.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.775
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.522
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.298
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.194
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.131
+        }
+      ],
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Harold Fannin Jr.",
+      "player_id": "00-0040663",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.386,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Harold Fannin Jr.",
+      "player_id": "00-0040663",
+      "team": "CLE",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.217,
+      "trailing_n": 8,
+      "opp_per_gm": 7.5,
+      "dk_odds": 330,
+      "dk_implied_prob": 0.2326,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Passing Yds",
+      "line": 228.5,
+      "projected": 228.7,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 210.0,
+          "over_prob": 0.586
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.54
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.494
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.448
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.402
+        }
+      ],
+      "actual_value": 245.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.278,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.2,
+      "model_over_prob": 0.514,
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.7,
+      "model_over_prob": 0.507,
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Rushing Yds",
+      "line": 28.5,
+      "projected": 28.7,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.783
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.25
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.175
+        }
+      ],
+      "actual_value": 66.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Carries",
+      "line": 6.5,
+      "projected": 6.3,
+      "model_over_prob": 0.391,
+      "actual_value": 15.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.268,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "dk_odds": 145,
+      "dk_implied_prob": 0.4082,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.187
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.127
+        }
+      ],
+      "actual_value": 22.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.423,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Rushing Yds",
+      "line": 48.5,
+      "projected": 48.5,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.777
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.586
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.355
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.248
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.172
+        }
+      ],
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Carries",
+      "line": 10.5,
+      "projected": 10.7,
+      "model_over_prob": 0.428,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.399,
+      "trailing_n": 8,
+      "opp_per_gm": 11.2,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.288
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.188
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.127
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.408,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.6,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.833
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.627
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.349
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.225
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.149
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.313,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.185,
+      "trailing_n": 8,
+      "opp_per_gm": 4.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 62.5,
+      "projected": 62.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.88
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.72
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.174
+        }
+      ],
+      "actual_value": 83.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.405,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.286,
+      "trailing_n": 8,
+      "opp_per_gm": 7.4,
+      "dk_odds": 205,
+      "dk_implied_prob": 0.3279,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 47.0,
+      "projected": 46.9,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.806
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.209
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.139
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.384,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.255,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "dk_odds": 230,
+      "dk_implied_prob": 0.303,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.832
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.348
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.224
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.149
+        }
+      ],
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.393,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "CLE",
+      "market": "Anytime TD",
+      "model_prob": 0.216,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 260,
+      "dk_implied_prob": 0.2778,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

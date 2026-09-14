@@ -9,6 +9,911 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.4667,
   "market_home_prob": 0.3775,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 41,
+    "home_score": 23,
+    "winner": "BAL",
+    "model_pick": "BAL",
+    "model_correct": true,
+    "market_pick": "BAL",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Passing Yds",
+      "line": 188.5,
+      "projected": 188.4,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 170.0,
+          "over_prob": 0.585
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.539
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.493
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.446
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.401
+        }
+      ],
+      "actual_value": 324.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.313,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Completions",
+      "line": 13.5,
+      "projected": 13.7,
+      "model_over_prob": 0.509,
+      "actual_value": 17.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Lamar Jackson",
+      "player_id": "00-0034796",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Pass Attempts",
+      "line": 23.5,
+      "projected": 23.6,
+      "model_over_prob": 0.505,
+      "actual_value": 25.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 94.0,
+      "projected": 94.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.853
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.708
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.47
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.305
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.212
+        }
+      ],
+      "actual_value": 144.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Carries",
+      "line": 19.0,
+      "projected": 19.0,
+      "model_over_prob": 0.405,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.628,
+      "trailing_n": 8,
+      "opp_per_gm": 20.9,
+      "dk_odds": -220,
+      "dk_implied_prob": 0.6875,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 11.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Derrick Henry",
+      "player_id": "00-0032764",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.237,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 14.5,
+      "projected": 14.6,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.481
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.215
+        }
+      ],
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Carries",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.393,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.193,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "dk_odds": 600,
+      "dk_implied_prob": 0.1429,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.678
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.243
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.16
+        }
+      ],
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Justice Hill",
+      "player_id": "00-0034975",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.332,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 60.0,
+      "projected": 60.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.855
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.669
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.378
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.24
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.158
+        }
+      ],
+      "actual_value": 150.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.389,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Zay Flowers",
+      "player_id": "00-0039064",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.302,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "dk_odds": 185,
+      "dk_implied_prob": 0.3509,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 16.5,
+      "projected": 16.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.573
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.207
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.138
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.396,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashod Bateman",
+      "player_id": "00-0036550",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.144,
+      "trailing_n": 8,
+      "opp_per_gm": 2.2,
+      "dk_odds": 400,
+      "dk_implied_prob": 0.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 26.0,
+      "projected": 26.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.793
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.553
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.203
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.135
+        }
+      ],
+      "actual_value": 49.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.427,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mark Andrews",
+      "player_id": "00-0034753",
+      "team": "BAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.169,
+      "trailing_n": 8,
+      "opp_per_gm": 4.5,
+      "dk_odds": 195,
+      "dk_implied_prob": 0.339,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Passing Yds",
+      "line": 222.5,
+      "projected": 222.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.603
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.558
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.465
+        },
+        {
+          "line": 240.0,
+          "over_prob": 0.419
+        }
+      ],
+      "actual_value": 166.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.405,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.505,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.3,
+      "model_over_prob": 0.494,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Rushing Yds",
+      "line": 77.0,
+      "projected": 77.1,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.759
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.55
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.34
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.236
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.163
+        }
+      ],
+      "actual_value": 98.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Carries",
+      "line": 19.0,
+      "projected": 18.8,
+      "model_over_prob": 0.387,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.608,
+      "trailing_n": 8,
+      "opp_per_gm": 24.0,
+      "dk_odds": -185,
+      "dk_implied_prob": 0.6491,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receiving Yds",
+      "line": 22.0,
+      "projected": 21.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.39,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 49.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.841
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.643
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.358
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.152
+        }
+      ],
+      "actual_value": 61.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.333,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.23,
+      "trailing_n": 8,
+      "opp_per_gm": 4.9,
+      "dk_odds": 270,
+      "dk_implied_prob": 0.2703,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receiving Yds",
+      "line": 34.0,
+      "projected": 33.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.895
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.751
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.482
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.184
+        }
+      ],
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.349,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.157,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "dk_odds": 275,
+      "dk_implied_prob": 0.2667,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 37.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.814
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.594
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.329
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.214
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.142
+        }
+      ],
+      "actual_value": 32.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.337,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.143,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "dk_odds": 310,
+      "dk_implied_prob": 0.2439,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receiving Yds",
+      "line": 41.5,
+      "projected": 41.5,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.872
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.703
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.411
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.256
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.168
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.381,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "BAL",
+      "market": "Anytime TD",
+      "model_prob": 0.176,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "dk_odds": 215,
+      "dk_implied_prob": 0.3175,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

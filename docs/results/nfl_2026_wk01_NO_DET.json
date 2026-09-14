@@ -9,6 +9,1022 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.6791,
   "market_home_prob": 0.7513,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 30,
+    "home_score": 31,
+    "winner": "DET",
+    "model_pick": "DET",
+    "model_correct": true,
+    "market_pick": "DET",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Passing Yds",
+      "line": 256.5,
+      "projected": 256.6,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 240.0,
+          "over_prob": 0.576
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.53
+        },
+        {
+          "line": 260.0,
+          "over_prob": 0.484
+        },
+        {
+          "line": 270.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 280.0,
+          "over_prob": 0.393
+        }
+      ],
+      "actual_value": 410.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.386,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Completions",
+      "line": 22.5,
+      "projected": 22.4,
+      "model_over_prob": 0.495,
+      "actual_value": 35.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Pass Attempts",
+      "line": 33.0,
+      "projected": 33.1,
+      "model_over_prob": 0.504,
+      "actual_value": 56.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Travis Etienne",
+      "player_id": "00-0036973",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 57.0,
+      "projected": 56.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.756
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.545
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.234
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.162
+        }
+      ],
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Travis Etienne",
+      "player_id": "00-0036973",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.0,
+      "model_over_prob": 0.41,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Travis Etienne",
+      "player_id": "00-0036973",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.512,
+      "trailing_n": 8,
+      "opp_per_gm": 17.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Etienne",
+      "player_id": "00-0036973",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 25.5,
+      "projected": 25.4,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.781
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.532
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.301
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.197
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.132
+        }
+      ],
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Etienne",
+      "player_id": "00-0036973",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.396,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 39.5,
+      "projected": 39.7,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.616
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.374
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 10.2,
+      "model_over_prob": 0.423,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.241,
+      "trailing_n": 8,
+      "opp_per_gm": 13.8,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 22.5,
+      "projected": 22.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.723
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.174
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.485,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 72.5,
+      "projected": 72.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.884
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.727
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.444
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.268
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.176
+        }
+      ],
+      "actual_value": 182.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.5,
+      "model_over_prob": 0.451,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.338,
+      "trailing_n": 8,
+      "opp_per_gm": 9.1,
+      "dk_odds": 145,
+      "dk_implied_prob": 0.4082,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 34.5,
+      "projected": 34.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.902
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.767
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.19
+        }
+      ],
+      "actual_value": 69.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.338,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.17,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "dk_odds": 370,
+      "dk_implied_prob": 0.2128,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 51.5,
+      "projected": 51.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.874
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.707
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.415
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.258
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.169
+        }
+      ],
+      "actual_value": 54.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.386,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.159,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "dk_odds": 270,
+      "dk_implied_prob": 0.2703,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Passing Yds",
+      "line": 256.5,
+      "projected": 256.7,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 240.0,
+          "over_prob": 0.577
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.531
+        },
+        {
+          "line": 260.0,
+          "over_prob": 0.485
+        },
+        {
+          "line": 270.0,
+          "over_prob": 0.439
+        },
+        {
+          "line": 280.0,
+          "over_prob": 0.393
+        }
+      ],
+      "actual_value": 206.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.296,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Completions",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.504,
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Pass Attempts",
+      "line": 34.0,
+      "projected": 34.0,
+      "model_over_prob": 0.501,
+      "actual_value": 39.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Rushing Yds",
+      "line": 61.0,
+      "projected": 61.1,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.814
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.648
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.399
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.273
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": 156.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 13.8,
+      "model_over_prob": 0.391,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.643,
+      "trailing_n": 8,
+      "opp_per_gm": 21.8,
+      "dk_odds": -320,
+      "dk_implied_prob": 0.7619,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 50.0,
+      "projected": 49.8,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.85
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.37
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.236
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.156
+        }
+      ],
+      "actual_value": 30.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.9,
+      "model_over_prob": 0.369,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Rushing Yds",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.217
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.151
+        }
+      ],
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Carries",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.426,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.121,
+      "trailing_n": 8,
+      "opp_per_gm": 0.1,
+      "dk_odds": 330,
+      "dk_implied_prob": 0.2326,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.177
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.119
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.3,
+      "model_over_prob": 0.253,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 82.0,
+      "projected": 82.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.877
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.714
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 67.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 6.5,
+      "projected": 6.3,
+      "model_over_prob": 0.425,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.339,
+      "trailing_n": 8,
+      "opp_per_gm": 11.2,
+      "dk_odds": 100,
+      "dk_implied_prob": 0.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 66.5,
+      "projected": 66.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.801
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.569
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.317
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.206
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.137
+        }
+      ],
+      "actual_value": 45.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.439,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.311,
+      "trailing_n": 8,
+      "opp_per_gm": 7.8,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 21.5,
+      "projected": 21.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.703
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.41
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.255
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.168
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.471,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.255,
+      "trailing_n": 8,
+      "opp_per_gm": 2.5,
+      "dk_odds": 350,
+      "dk_implied_prob": 0.2222,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 44.5,
+      "projected": 44.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.899
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.761
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.496
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.188
+        }
+      ],
+      "actual_value": 48.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.472,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.263,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "dk_odds": 190,
+      "dk_implied_prob": 0.3448,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

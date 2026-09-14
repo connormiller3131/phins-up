@@ -9,6 +9,1073 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.5472,
   "market_home_prob": 0.4957,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 36,
+    "home_score": 31,
+    "winner": "BUF",
+    "model_pick": "HOU",
+    "model_correct": false,
+    "market_pick": "BUF",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Passing Yds",
+      "line": 204.0,
+      "projected": 204.0,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 180.0,
+          "over_prob": 0.61
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.519
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.472
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.426
+        }
+      ],
+      "actual_value": 334.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.389,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.2,
+      "model_over_prob": 0.51,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 28.8,
+      "model_over_prob": 0.492,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Rushing Yds",
+      "line": 75.5,
+      "projected": 75.7,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.737
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.511
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.224
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.156
+        }
+      ],
+      "actual_value": 57.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Carries",
+      "line": 17.5,
+      "projected": 17.3,
+      "model_over_prob": 0.39,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.467,
+      "trailing_n": 8,
+      "opp_per_gm": 21.1,
+      "dk_odds": -105,
+      "dk_implied_prob": 0.5122,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 16.0,
+      "projected": 16.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.553
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.203
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.135
+        }
+      ],
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.465,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Rushing Yds",
+      "line": 23.0,
+      "projected": 22.9,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.684
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.439
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.204
+        }
+      ],
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Carries",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.415,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.157,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "dk_odds": 550,
+      "dk_implied_prob": 0.1538,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 10.5,
+      "projected": 10.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.162
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.25,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 36.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.21
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.14
+        }
+      ],
+      "actual_value": 100.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.356,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.248,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "dk_odds": 275,
+      "dk_implied_prob": 0.2667,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 48.8,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.836
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.633
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.226
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.15
+        }
+      ],
+      "actual_value": 50.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.479,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.177,
+      "trailing_n": 8,
+      "opp_per_gm": 6.9,
+      "dk_odds": 330,
+      "dk_implied_prob": 0.2326,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 25.0,
+      "projected": 25.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.779
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.528
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.3
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.196
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.132
+        }
+      ],
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.333,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.186,
+      "trailing_n": 8,
+      "opp_per_gm": 3.5,
+      "dk_odds": 650,
+      "dk_implied_prob": 0.1333,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 37.5,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.817
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.599
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.332
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.144
+        }
+      ],
+      "actual_value": 130.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.334,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.223,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Passing Yds",
+      "line": 199.0,
+      "projected": 199.2,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 180.0,
+          "over_prob": 0.588
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.542
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.496
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.45
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.404
+        }
+      ],
+      "actual_value": 274.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.373,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 17.5,
+      "model_over_prob": 0.5,
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Pass Attempts",
+      "line": 30.5,
+      "projected": 30.5,
+      "model_over_prob": 0.499,
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 29.5,
+      "projected": 29.4,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.791
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.608
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.256
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 60.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 6.5,
+      "projected": 6.3,
+      "model_over_prob": 0.394,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.24,
+      "trailing_n": 8,
+      "opp_per_gm": 8.1,
+      "dk_odds": -120,
+      "dk_implied_prob": 0.5455,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.7,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.155
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.307,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 59.5,
+      "projected": 59.5,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.792
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.61
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.37
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.257
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 42.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 14.5,
+      "projected": 14.7,
+      "model_over_prob": 0.429,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.385,
+      "trailing_n": 8,
+      "opp_per_gm": 18.1,
+      "dk_odds": 225,
+      "dk_implied_prob": 0.3077,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 7.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.218
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.146
+        }
+      ],
+      "actual_value": -2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.344,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 58.5,
+      "projected": 58.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.834
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.629
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.225
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.15
+        }
+      ],
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.357,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.222,
+      "trailing_n": 8,
+      "opp_per_gm": 7.0,
+      "dk_odds": 170,
+      "dk_implied_prob": 0.3704,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 29.5,
+      "projected": 29.6,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.848
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.656
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.367
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.234
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.155
+        }
+      ],
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.414,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.126,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 380,
+      "dk_implied_prob": 0.2083,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 8.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.353
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.227
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.151
+        }
+      ],
+      "actual_value": 53.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.205,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylin Noel",
+      "player_id": "00-0040138",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.111,
+      "trailing_n": 8,
+      "opp_per_gm": 1.5,
+      "dk_odds": 550,
+      "dk_implied_prob": 0.1538,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 36.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.806
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.579
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.209
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.139
+        }
+      ],
+      "actual_value": 35.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.459,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.168,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "dk_odds": 310,
+      "dk_implied_prob": 0.2439,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

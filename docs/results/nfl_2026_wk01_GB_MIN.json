@@ -9,6 +9,974 @@
   "predicted_at": "2026-07-18T22:49:34",
   "elo_home_prob": 0.5657,
   "market_home_prob": 0.4957,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 22,
+    "home_score": 39,
+    "winner": "MIN",
+    "model_pick": "MIN",
+    "model_correct": true,
+    "market_pick": "GB",
+    "market_correct": false
+  },
+  "graded_at": "2026-09-14T12:15:29",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Passing Yds",
+      "line": 184.5,
+      "projected": 184.3,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 160.0,
+          "over_prob": 0.611
+        },
+        {
+          "line": 170.0,
+          "over_prob": 0.566
+        },
+        {
+          "line": 180.0,
+          "over_prob": 0.52
+        },
+        {
+          "line": 190.0,
+          "over_prob": 0.474
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.428
+        }
+      ],
+      "actual_value": 387.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.44,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Completions",
+      "line": 15.5,
+      "projected": 15.5,
+      "model_over_prob": 0.5,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Pass Attempts",
+      "line": 27.5,
+      "projected": 27.3,
+      "model_over_prob": 0.493,
+      "actual_value": 42.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Rushing Yds",
+      "line": 17.5,
+      "projected": 17.4,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.56
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.344
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.238
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.166
+        }
+      ],
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Carries",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.411,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.129,
+      "trailing_n": 8,
+      "opp_per_gm": 4.2,
+      "dk_odds": 350,
+      "dk_implied_prob": 0.2222,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.214
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.143
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.221,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 49.5,
+      "projected": 49.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.843
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.647
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.361
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.231
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.154
+        }
+      ],
+      "actual_value": 147.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.45,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.298,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "dk_odds": 185,
+      "dk_implied_prob": 0.3509,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.797
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.561
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.204
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.137
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.362,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.186,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "dk_odds": 290,
+      "dk_implied_prob": 0.2564,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 22.0,
+      "projected": 21.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.713
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 95.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.457,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.138,
+      "trailing_n": 8,
+      "opp_per_gm": 3.1,
+      "dk_odds": 360,
+      "dk_implied_prob": 0.2174,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 49.1,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.841
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.152
+        }
+      ],
+      "actual_value": 65.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.445,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.285,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "dk_odds": 220,
+      "dk_implied_prob": 0.3125,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Passing Yds",
+      "line": 214.0,
+      "projected": 213.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 190.0,
+          "over_prob": 0.609
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.564
+        },
+        {
+          "line": 210.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 220.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 230.0,
+          "over_prob": 0.425
+        }
+      ],
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.468,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Completions",
+      "line": 22.0,
+      "projected": 21.8,
+      "model_over_prob": 0.49,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Pass Attempts",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.499,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 54.0,
+      "projected": 53.8,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.849
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.701
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.463
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.301
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 13.0,
+      "projected": 13.0,
+      "model_over_prob": 0.406,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.406,
+      "trailing_n": 8,
+      "opp_per_gm": 17.0,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 22.0,
+      "projected": 22.0,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.713
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.422
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.171
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.454,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jordan Mason",
+      "player_id": "00-0037525",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 40.5,
+      "projected": 40.6,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.808
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.635
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.388
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.269
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.188
+        }
+      ],
+      "actual_value": 59.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jordan Mason",
+      "player_id": "00-0037525",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 8.0,
+      "projected": 8.1,
+      "model_over_prob": 0.419,
+      "actual_value": 15.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jordan Mason",
+      "player_id": "00-0037525",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.239,
+      "trailing_n": 8,
+      "opp_per_gm": 8.0,
+      "dk_odds": 150,
+      "dk_implied_prob": 0.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Mason",
+      "player_id": "00-0037525",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.192
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.129
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Mason",
+      "player_id": "00-0037525",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.439,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 47.5,
+      "projected": 47.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.813
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.593
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.329
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.213
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.142
+        }
+      ],
+      "actual_value": 92.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.381,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.172,
+      "trailing_n": 8,
+      "opp_per_gm": 7.2,
+      "dk_odds": 155,
+      "dk_implied_prob": 0.3922,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 29.5,
+      "projected": 29.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.847
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.154
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.397,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.187,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "dk_odds": 230,
+      "dk_implied_prob": 0.303,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 40.0,
+      "projected": 40.0,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.853
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.665
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.374
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.238
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.157
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.389,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.295,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "dk_odds": 330,
+      "dk_implied_prob": 0.2326,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 28.0,
+      "projected": 27.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.823
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.609
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.219
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.146
+        }
+      ],
+      "actual_value": 36.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.491,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.18,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "dk_odds": 390,
+      "dk_implied_prob": 0.2041,
+      "actual_scored": true,
+      "hit": true
+    }
+  ]
 }

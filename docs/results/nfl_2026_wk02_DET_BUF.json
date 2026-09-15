@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 2,
+  "awayAbbr": "DET",
+  "homeAbbr": "BUF",
+  "awayName": "Detroit Lions",
+  "homeName": "Buffalo Bills",
+  "gameday": "2026-09-17",
+  "predicted_at": "2026-09-15T11:25:24",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.605,
+  "market_home_prob": 0.6447,
+  "graded": false,
+  "actual": null
+}

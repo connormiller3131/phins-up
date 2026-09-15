@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 2,
+  "awayAbbr": "CLE",
+  "homeAbbr": "TB",
+  "awayName": "Cleveland Browns",
+  "homeName": "Tampa Bay Buccaneers",
+  "gameday": "2026-09-20",
+  "predicted_at": "2026-09-15T11:25:24",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.6247,
+  "market_home_prob": 0.7715,
+  "graded": false,
+  "actual": null
+}

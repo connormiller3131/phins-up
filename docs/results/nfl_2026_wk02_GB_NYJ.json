@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 2,
+  "awayAbbr": "GB",
+  "homeAbbr": "NYJ",
+  "awayName": "Green Bay Packers",
+  "homeName": "New York Jets",
+  "gameday": "2026-09-20",
+  "predicted_at": "2026-09-15T11:25:24",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.4024,
+  "market_home_prob": 0.3553,
+  "graded": false,
+  "actual": null
+}

@@ -150,6 +150,35 @@ WITHDRAWN = {
 }
 
 
+# Below this many graded predictions a skill score is mostly noise, so it is
+# shown without a verdict colour. Anytime TD swinging on twelve confident
+# calls is the example that set this: the number is real, the certainty is not.
+SKILL_MIN_N = 100
+
+
+def skill_score(b):
+    """Brier skill score: how much better the probabilities are than always
+    quoting the base rate. 1 - brier / (p * (1-p)).
+
+    This is the column that actually answers "is the model any good", and
+    accuracy is not. Accuracy only asks which side of 50% a number fell on, so
+    it is dominated by the base rate whenever one outcome is common: on week 1
+    Anytime TD, 46 of 157 players scored, so saying "nobody scores" every time
+    scores 70.7% and the model's 74.5% is four points of work, not three out of
+    four. It misleads in the other direction too. Passing Yds came in at 69%
+    accuracy against a 62% baseline and looked like the second best market on
+    the board, while its skill score was -6.1%: it landed on the right side of
+    50% more often than not, with probabilities worse than quoting the base
+    rate. Returns None when the base rate is degenerate and there is nothing
+    to score against."""
+    n = b["n"]
+    p = b["actual_sum"] / n
+    no_skill = p * (1 - p)
+    if no_skill <= 0:
+        return None
+    return 1 - (b["brier_sum"] / n) / no_skill
+
+
 def rows_html(store):
     if not store:
         return ""
@@ -161,15 +190,22 @@ def rows_html(store):
         rate = b["actual_sum"] / n
         base = max(rate, 1 - rate)
         brier = b["brier_sum"] / n
-        delta = acc - base
-        cls = "win" if delta > 0.02 else ("loss" if delta < -0.02 else "")
+        bss = skill_score(b)
+        # The verdict colour lives on SKILL, not accuracy. It used to sit on
+        # accuracy-minus-baseline, which painted Passing Yds green on a market
+        # whose probabilities were worse than no model at all.
+        if bss is None or n < SKILL_MIN_N:
+            skill_cls, skill_txt = "", ("%.1f%%" % (bss * 100) if bss is not None else "n/a")
+        else:
+            skill_cls = "win" if bss > 0.01 else ("loss" if bss < -0.01 else "")
+            skill_txt = "%.1f%%" % (bss * 100)
         label = e(market)
         if market in WITHDRAWN:
             label += " <span class='tag'>%s</span>" % e(WITHDRAWN[market])
         out.append("<tr><td>%s</td><td class='num'>%s</td>"
-                   "<td class='num %s'>%.0f%%</td><td class='num'>%.0f%%</td>"
-                   "<td class='num'>%.4f</td></tr>"
-                   % (label, f"{n:,}", cls, acc * 100, base * 100, brier))
+                   "<td class='num'>%.0f%%</td><td class='num'>%.0f%%</td>"
+                   "<td class='num'>%.4f</td><td class='num %s'>%s</td></tr>"
+                   % (label, f"{n:,}", acc * 100, base * 100, brier, skill_cls, skill_txt))
     return "".join(out)
 
 
@@ -179,7 +215,7 @@ def table(title, store, note):
     total_n = sum(b["n"] for b in store.values())
     total_c = sum(b["correct"] for b in store.values())
     return ("<h2>%s</h2><div class='card'><table><thead><tr><th>Market</th>"
-            "<th>Graded</th><th>Accuracy</th><th>Baseline</th><th>Brier</th>"
+            "<th>Graded</th><th>Accuracy</th><th>Baseline</th><th>Brier</th><th>Skill</th>"
             "</tr></thead><tbody>%s</tbody></table></div>"
             "<p class='note'>%s %s predictions graded, %.0f%% correct overall.</p>"
             % (e(title), rows_html(store), note, f"{total_n:,}", total_c / total_n * 100))
@@ -230,14 +266,21 @@ def build(docs_dir, results_dir):
         "predictions</b> across every game moneyline and player prop the model "
         "has published, not a selected highlight reel, and not just the picks "
         "that made it onto a card.</p>"
-        "<p class='note'>Two things to read it with. <b>Baseline</b> is the "
-        "accuracy you would get with no skill at all, by always guessing "
-        "whichever outcome happens more often -- an 89%% accuracy against an 89%% "
-        "baseline is worth nothing, and we would rather show you that than hide "
-        "it. <b>Brier score</b> measures how close probabilities land to reality: "
+        "<p class='note'>How to read it. <b>Baseline</b> is the accuracy you "
+        "would get with no skill at all, by always guessing whichever outcome "
+        "happens more often -- an 89%% accuracy against an 89%% baseline is worth "
+        "nothing, and we would rather show you that than hide it. "
+        "<b>Brier score</b> measures how close probabilities land to reality: "
         "0.00 is perfect and 0.25 is what you score by calling everything a coin "
-        "flip, so lower is better and anything meaningfully under 0.25 is doing "
-        "real work.</p></div>" % f"{total:,}")
+        "flip, so lower is better. <b>Skill</b> is the column to actually judge "
+        "us on, and the only one here that a lopsided market cannot flatter. It "
+        "asks whether our probabilities beat simply quoting how often the thing "
+        "happens. Anytime TD is the example: 46 of 157 players scored, so "
+        "\"nobody scores\" is already 71%% accurate and our 75%% is four points of "
+        "work, not three-in-four. It catches the reverse too, where a market "
+        "clears its accuracy baseline while its probabilities are worse than no "
+        "model at all. Skill on fewer than 100 graded predictions is left "
+        "uncoloured, because at that size it is mostly noise.</p></div>" % f"{total:,}")
 
     if nfl:
         note = ("Graded from %d completed NFL games." % nfl_games)

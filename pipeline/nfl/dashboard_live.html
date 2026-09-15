@@ -2869,6 +2869,36 @@ async function loadGameResult(season, week, g, idx){
 // (actual > line); grade_results computes `hit` against the middle rung of the
 // ladder, a threshold nobody was ever shown, and the two disagree on about two
 // props a game.
+// Brier skill score: do our probabilities beat simply quoting how often the
+// thing happens? 1 - brier / (p * (1-p)).
+//
+// This is the number to judge a market on, and accuracy is not. Accuracy only
+// asks which side of 50% a probability fell on, so a lopsided market flatters
+// it: on week 1 Anytime TD, 46 of 157 players scored, meaning "nobody scores"
+// is 71% accurate on its own and the model's 75% is four points of work
+// rather than three-in-four. It misleads the other way too. MLB's RBI market
+// reads 72% accurate and scores NEGATIVE skill, because its probabilities are
+// worse than quoting the base rate even though they land on the right side of
+// 50% often enough to look good.
+//
+// Under this many graded predictions the number is mostly noise, so it is
+// shown without a verdict colour rather than hidden.
+const SKILL_MIN_N = 100;
+
+function brierSkill(b){
+  const p = b.actualOverSum / b.n;
+  const noSkill = p * (1 - p);
+  if(!(noSkill > 0)) return null;
+  return 1 - (b.brierSum / b.n) / noSkill;
+}
+
+function skillCellHtml(b){
+  const bss = brierSkill(b);
+  if(bss === null) return `<span class="p-exp">skill n/a</span>`;
+  const cls = b.n < SKILL_MIN_N ? '' : (bss > 0.01 ? 'hit' : (bss < -0.01 ? 'miss' : ''));
+  return `<span class="track-record-acc ${cls}">${(bss*100).toFixed(1)}% skill</span>`;
+}
+
 let NFL_TRACK_RECORD_CACHE = null;
 
 async function loadNflTrackRecord(){
@@ -2925,12 +2955,11 @@ function nflTrackRecordTableHtml(byMarket, games, calBins){
     totalN += b.n; totalCorrect += b.correct;
     const acc = b.correct / b.n, actualRate = b.actualOverSum / b.n;
     const baseline = Math.max(actualRate, 1 - actualRate);
-    const cls = (acc - baseline) > 0.02 ? 'hit' : ((acc - baseline) < -0.02 ? 'miss' : '');
     return `<div class="track-record-row">
       <span class="track-record-market">${mk}</span>
       <span class="track-record-n">n=${b.n}</span>
-      <span class="track-record-acc ${cls}">${(acc*100).toFixed(0)}% accuracy</span>
-      <span class="p-exp">baseline ${(baseline*100).toFixed(0)}%</span>
+      <span class="p-exp">${(acc*100).toFixed(0)}% acc vs ${(baseline*100).toFixed(0)}% base</span>
+      ${skillCellHtml(b)}
     </div>`;
   }).join('');
   const overall = totalCorrect / totalN;
@@ -2939,7 +2968,7 @@ function nflTrackRecordTableHtml(byMarket, games, calBins){
       <summary>Track Record <span class="props-sample-tag">(${games} graded game${games===1?'':'s'} &middot; ${totalN} predictions &middot; ${(overall*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
       ${calibrationChartSvg(calBins, games)}
-      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result, not just the ones that made it onto a card. "Accuracy" is whether the side the model favoured matched reality; "baseline" is what you would score guessing whichever side happens more often, with no skill at all. A market sitting near its baseline (red) is not showing real edge however high the number looks. Clearly ahead of it (green) is the tell.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result, not just the ones that made it onto a card. "Accuracy" is whether the side the model favoured matched reality; "baseline" is what you would score guessing whichever side happens more often, with no skill at all. And "skill" is the number to judge us on: whether our probabilities beat simply quoting how often the thing happens. Accuracy can look strong on a lopsided market while the probabilities behind it are worse than no model at all, so skill carries the colour. Under 100 graded predictions it stays uncoloured, because at that size it is noise.</div>
     </details>`;
 }
 
@@ -3998,13 +4027,12 @@ function mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays){
     // skill above just knowing the base rate (this is what made Anytime
     // HR's raw 89% accuracy misleading -- baseline there is also ~89%).
     const baseline = Math.max(actualRate, 1 - actualRate);
-    const deltaClass = (acc - baseline) > 0.02 ? 'hit' : ((acc - baseline) < -0.02 ? 'miss' : '');
     return `
       <div class="track-record-row">
         <span class="track-record-market">${mk}</span>
         <span class="track-record-n">n=${b.n}</span>
-        <span class="track-record-acc ${deltaClass}">${(acc*100).toFixed(0)}% accuracy</span>
-        <span class="p-exp">baseline ${(baseline*100).toFixed(0)}%</span>
+        <span class="p-exp">${(acc*100).toFixed(0)}% acc vs ${(baseline*100).toFixed(0)}% base</span>
+        ${skillCellHtml(b)}
       </div>
     `;
   }).join('');
@@ -4015,7 +4043,7 @@ function mlbTrackRecordTableHtml(byMarket, dates, calBins, calDays){
       <summary>Track Record <span class="props-sample-tag">(all-time${range ? `, ${range}` : ''} &middot; ${totalN} predictions graded &middot; ${(overallAcc*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
       ${calibrationChartSvg(calBins, calDays)}
-      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- a market whose accuracy sits close to its baseline (colored red) isn't showing real edge no matter how high the number looks; clearly ahead of baseline (green) is the real tell. Three pitcher markets (Hits Allowed, Runs Allowed, Outs Recorded) were withdrawn in September 2026 after scoring worse than a coin flip, and are excluded here and from the calibration chart because they are no longer offered; the methodology notes at the bottom of the MLB tab say what went wrong with them.</div>
+      <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result since this feature started tracking (${dates.length} finalized day${dates.length===1?'':'s'}), not just picked parlay legs. "Accuracy" is whether the side the model favored matched reality; "baseline" is the accuracy from always guessing whichever side happens more often, zero skill required -- and "skill" asks the better question: do our probabilities beat simply quoting how often the thing happens? That is the coloured number, because accuracy can look strong on a lopsided market while the probabilities behind it are worse than no model at all. Green skill is real edge, red is none, and under 100 graded predictions it is left uncoloured because it is mostly noise at that size. Three pitcher markets (Hits Allowed, Runs Allowed, Outs Recorded) were withdrawn in September 2026 after scoring worse than a coin flip, and are excluded here and from the calibration chart because they are no longer offered; the methodology notes at the bottom of the MLB tab say what went wrong with them.</div>
     </details>
   `;
 }

@@ -179,11 +179,25 @@ def skill_score(b):
     return 1 - (b["brier_sum"] / n) / no_skill
 
 
+def _row_order(store):
+    """Best markets first, then the ones there is not yet enough data to
+    judge, then the failures. Alphabetical order buried the story: it put
+    Anytime TD, the only market with real edge, in the middle of a list of
+    markets showing none."""
+    def key(market):
+        b = store[market]
+        bss = skill_score(b)
+        if bss is None or b["n"] < SKILL_MIN_N:
+            return (1, 0.0, market)      # unjudgeable, park in the middle
+        return (0 if bss > 0 else 2, -bss, market)
+    return sorted(store, key=key)
+
+
 def rows_html(store):
     if not store:
         return ""
     out = []
-    for market in sorted(store):
+    for market in _row_order(store):
         b = store[market]
         n = b["n"]
         acc = b["correct"] / n
@@ -194,8 +208,12 @@ def rows_html(store):
         # The verdict colour lives on SKILL, not accuracy. It used to sit on
         # accuracy-minus-baseline, which painted Passing Yds green on a market
         # whose probabilities were worse than no model at all.
-        if bss is None or n < SKILL_MIN_N:
-            skill_cls, skill_txt = "", ("%.1f%%" % (bss * 100) if bss is not None else "n/a")
+        if bss is None:
+            skill_cls, skill_txt = "", "n/a"
+        elif n < SKILL_MIN_N:
+            # Named rather than merely uncoloured. A bare grey number still
+            # reads as a verdict; "too early" says what it actually is.
+            skill_cls, skill_txt = "", "%.1f%% <span class='tag'>too early</span>" % (bss * 100)
         else:
             skill_cls = "win" if bss > 0.01 else ("loss" if bss < -0.01 else "")
             skill_txt = "%.1f%%" % (bss * 100)
@@ -231,14 +249,34 @@ def calibration_table(cal):
         % (b["lo"] * 100, b["hi"] * 100, f'{b["n"]:,}',
            b["pred_sum"] / b["n"] * 100, b["actual_sum"] / b["n"] * 100)
         for b in bins)
+    # State the verdict rather than leaving a reader to diff two columns by
+    # eye. Weighted by sample size, and the worst band named outright: a page
+    # that exists to publish its own errors should not make you find them.
+    tot = sum(b["n"] for b in bins)
+    drift = sum((b["actual_sum"] - b["pred_sum"]) for b in bins) / tot
+    worst = max(bins, key=lambda b: (b["pred_sum"] - b["actual_sum"]) / b["n"] * (b["n"] >= 100))
+    worst_gap = (worst["pred_sum"] - worst["actual_sum"]) / worst["n"]
+    if drift < -0.01:
+        verdict = ("Across everything graded we run <b>%.1f points overconfident</b>: "
+                   "things we call likely happen less often than we say." % (-drift * 100))
+    elif drift > 0.01:
+        verdict = ("Across everything graded we run <b>%.1f points underconfident</b>: "
+                   "things we call likely happen more often than we say." % (drift * 100))
+    else:
+        verdict = "Across everything graded the two columns sit within a point of each other."
+    if worst_gap > 0.02 and worst["n"] >= 100:
+        verdict += (" The worst band is <b>%.0f%%&ndash;%.0f%%</b>, where we said %.1f%% and it "
+                    "happened %.1f%% of the time across %s predictions."
+                    % (worst["lo"] * 100, worst["hi"] * 100,
+                       worst["pred_sum"] / worst["n"] * 100,
+                       worst["actual_sum"] / worst["n"] * 100, f'{worst["n"]:,}'))
     return ("<h2>Calibration</h2><div class='card'><table><thead><tr>"
             "<th>Predicted range</th><th>Graded</th><th>We said</th>"
             "<th>Actually happened</th></tr></thead><tbody>%s</tbody></table></div>"
             "<p class='note'>The two right-hand columns should match. When we say "
-            "something is 70%% likely, it should happen about 70%% of the time. A row "
-            "where \"actually happened\" sits well below \"we said\" is the model "
-            "being overconfident in that range, and that is worth more than any "
-            "single accuracy number.</p>" % rows)
+            "something is 70%% likely, it should happen about 70%% of the time. %s "
+            "That matters more than any single accuracy number, because it is the "
+            "part you would actually be betting on.</p>" % (rows, verdict))
 
 
 def build(docs_dir, results_dir):
@@ -287,6 +325,28 @@ def build(docs_dir, results_dir):
         if mkt_n:
             note += (" On the same games the betting market called %.0f%% correctly."
                      % (mkt_correct / mkt_n * 100))
+        # The model against the market is the single most load-bearing number
+        # on this page, and it was a clause at the end of a footnote. If the
+        # market is beating us, that is the first thing a reader should see,
+        # not something they find. Stated before the table, in both directions.
+        ml = nfl.get("Moneyline")
+        if mkt_n and ml and ml["n"]:
+            ours = ml["correct"] / ml["n"] * 100
+            theirs = mkt_correct / mkt_n * 100
+            if theirs > ours + 0.5:
+                head_line = ("<b>The betting market is currently beating us on NFL games.</b> "
+                             "It has called %.0f%% of them correctly against our %.0f%%. "
+                             "We publish that because a record you can only read when it "
+                             "flatters us is not a record." % (theirs, ours))
+            elif ours > theirs + 0.5:
+                head_line = ("<b>We are currently ahead of the betting market on NFL games</b>, "
+                             "%.0f%% to %.0f%%. On this sample size that is worth very little, "
+                             "and we would rather say so now than pretend otherwise later."
+                             % (ours, theirs))
+            else:
+                head_line = ("<b>We and the betting market are level on NFL games</b>, "
+                             "%.0f%% against %.0f%%." % (ours, theirs))
+            out.append("<div class='card'><p>%s</p></div>" % head_line)
         out.append(table("NFL", nfl, note))
     else:
         out.append(

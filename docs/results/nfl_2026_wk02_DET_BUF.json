@@ -10,6 +10,1443 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.605,
   "market_home_prob": 0.6447,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 31,
+    "home_score": 41,
+    "winner": "BUF",
+    "model_pick": "BUF",
+    "model_correct": true,
+    "market_pick": "BUF",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-18T10:51:46",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Passing Yds",
+      "line": 252.5,
+      "projected": 252.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.816
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.729
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.625
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.397
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.291
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 327.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.27,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Completions",
+      "line": 23.0,
+      "projected": 22.9,
+      "model_over_prob": 0.492,
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Pass Attempts",
+      "line": 35.0,
+      "projected": 34.8,
+      "model_over_prob": 0.494,
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.375,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 71.0,
+      "projected": 71.2,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.745
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.65
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.525
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.402
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.229
+        }
+      ],
+      "actual_value": 52.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.4,
+      "model_over_prob": 0.408,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.673,
+      "trailing_n": 8,
+      "opp_per_gm": 23.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Rush + Rec Yds",
+      "line": 107.0,
+      "projected": 106.9,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.7
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.61
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.514
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.424
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.268
+        }
+      ],
+      "actual_value": 113.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 42.5,
+      "projected": 42.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.816
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.724
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.598
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.331
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.215
+        }
+      ],
+      "actual_value": 61.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.356,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 5.0,
+      "projected": 4.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.377
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.262
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.218
+        }
+      ],
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.421,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.105,
+      "trailing_n": 8,
+      "opp_per_gm": 0.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Rush + Rec Yds",
+      "line": 7.0,
+      "projected": 7.0,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.426
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.313
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.269
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.337
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.218
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.177
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.4,
+      "model_over_prob": 0.31,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 83.0,
+      "projected": 83.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.74
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.618
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.461
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 142.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.382,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.339,
+      "trailing_n": 8,
+      "opp_per_gm": 11.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 63.5,
+      "projected": 63.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.742
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.62
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.465
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.345
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.222
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 33.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.445,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.239,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.783
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.678
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.303
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.243
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.198
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.467,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.219,
+      "trailing_n": 8,
+      "opp_per_gm": 2.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 46.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.556
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.251
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 52.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.351,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.234,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.482,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "BUF",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.464,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Passing Yds",
+      "line": 233.0,
+      "projected": 232.9,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.832
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.749
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.649
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.536
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.218
+        }
+      ],
+      "actual_value": 248.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.503,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.7,
+      "model_over_prob": 0.512,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.6,
+      "model_over_prob": 0.503,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 39.0,
+      "projected": 38.8,
+      "model_over_prob": 0.364,
+      "actual_value": 69.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 71.0,
+      "projected": 70.8,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.739
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.641
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.513
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.225
+        }
+      ],
+      "actual_value": 135.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 16.0,
+      "projected": 16.1,
+      "model_over_prob": 0.423,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.508,
+      "trailing_n": 8,
+      "opp_per_gm": 18.9,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 84.5,
+      "projected": 84.7,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.394
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.291
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.251
+        }
+      ],
+      "actual_value": 139.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 18.5,
+      "projected": 18.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.745
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.47
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.223
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.289,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 22.0,
+      "projected": 21.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.755
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.664
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.544
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.416
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.337
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.28
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.234
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.435,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.196,
+      "trailing_n": 8,
+      "opp_per_gm": 4.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 32.0,
+      "projected": 31.9,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.7
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.61
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.513
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.424
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.268
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 14.0,
+      "projected": 14.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.491
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.358
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.285
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ray Davis",
+      "player_id": "00-0039875",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.325,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 47.0,
+      "projected": 46.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.448,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.364,
+      "trailing_n": 8,
+      "opp_per_gm": 6.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 47.0,
+      "projected": 46.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.806
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.71
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.579
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.418
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.321
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.209
+        }
+      ],
+      "actual_value": 38.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.455,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.227,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 25.5,
+      "projected": 25.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.788
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.685
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.543
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.391
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 63.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.332,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.239,
+      "trailing_n": 8,
+      "opp_per_gm": 3.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 43.0,
+      "projected": 42.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.734
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.61
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.452
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.271
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.219
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.178
+        }
+      ],
+      "actual_value": 95.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.363,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.255,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Tyler Bass",
+      "player_id": "00-0036162",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.497,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Tyler Bass",
+      "player_id": "00-0036162",
+      "team": "BUF",
+      "opp": "DET",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 8.1,
+      "model_over_prob": 0.486,
+      "actual_value": 5.0,
+      "hit": false
+    }
+  ]
 }

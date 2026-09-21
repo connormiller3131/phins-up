@@ -10,6 +10,1147 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.6441,
   "market_home_prob": 0.7258,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 30,
+    "home_score": 33,
+    "winner": "KC",
+    "model_pick": "KC",
+    "model_correct": true,
+    "market_pick": "KC",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-21T12:23:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Passing Yds",
+      "line": 202.0,
+      "projected": 202.2,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.815
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.728
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.395
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.289
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.199
+        }
+      ],
+      "actual_value": 210.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.365,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.501,
+      "actual_value": 22.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.6,
+      "model_over_prob": 0.505,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 12.0,
+      "projected": 12.0,
+      "model_over_prob": 0.37,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 68.5,
+      "projected": 68.3,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.691
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.448
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.207
+        }
+      ],
+      "actual_value": 92.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Carries",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.423,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.553,
+      "trailing_n": 8,
+      "opp_per_gm": 22.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Rush + Rec Yds",
+      "line": 84.5,
+      "projected": 84.7,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.394
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.291
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.251
+        }
+      ],
+      "actual_value": 132.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 19.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.761
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.647
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.495
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.231
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.187
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.373,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 45.5,
+      "projected": 45.6,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.785
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.681
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.538
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.388
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.199
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.308,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Alec Pierce",
+      "player_id": "00-0037664",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.183,
+      "trailing_n": 8,
+      "opp_per_gm": 4.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 35.0,
+      "projected": 35.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.775
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.666
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.521
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.376
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.297
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.239
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.194
+        }
+      ],
+      "actual_value": 72.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.352,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.147,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 34.0,
+      "projected": 34.2,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.759
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.645
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.492
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.187
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.343,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.131,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.3,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.813
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.72
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.445,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.179,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Spencer Shrader",
+      "player_id": "00-0039576",
+      "team": "IND",
+      "opp": "KC",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.497,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Spencer Shrader",
+      "player_id": "00-0039576",
+      "team": "IND",
+      "opp": "KC",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.467,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Passing Yds",
+      "line": 241.5,
+      "projected": 241.6,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.78
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.576
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.461
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.349
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.249
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.166
+        }
+      ],
+      "actual_value": 382.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.468,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.6,
+      "model_over_prob": 0.508,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Pass Attempts",
+      "line": 32.5,
+      "projected": 32.6,
+      "model_over_prob": 0.504,
+      "actual_value": 47.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 20.0,
+      "projected": 20.1,
+      "model_over_prob": 0.373,
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 81.5,
+      "projected": 81.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 65.0,
+          "over_prob": 0.752
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.538
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.412
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.335
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.232
+        }
+      ],
+      "actual_value": 117.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Carries",
+      "line": 18.0,
+      "projected": 18.1,
+      "model_over_prob": 0.418,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.6,
+      "trailing_n": 8,
+      "opp_per_gm": 20.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Rush + Rec Yds",
+      "line": 105.0,
+      "projected": 104.9,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.665
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.572
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.477
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.398
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.342
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.253
+        }
+      ],
+      "actual_value": 178.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 28.5,
+      "projected": 28.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.744
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.47
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.223
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 61.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.451,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 65.0,
+      "projected": 64.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.773
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.663
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.373
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 83.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.5,
+      "model_over_prob": 0.443,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.359,
+      "trailing_n": 8,
+      "opp_per_gm": 9.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 37.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.808
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.714
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.583
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.314,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.164,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyquan Thornton",
+      "player_id": "00-0038104",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 19.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.76
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.645
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.492
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.187
+        }
+      ],
+      "actual_value": 86.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyquan Thornton",
+      "player_id": "00-0038104",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.298,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyquan Thornton",
+      "player_id": "00-0038104",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.124,
+      "trailing_n": 8,
+      "opp_per_gm": 1.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.768
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.657
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.508
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.19
+        }
+      ],
+      "actual_value": 101.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.455,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.198,
+      "trailing_n": 8,
+      "opp_per_gm": 6.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "IND",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.262,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "IND",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 8.0,
+      "model_over_prob": 0.475,
+      "actual_value": 15.0,
+      "hit": true
+    }
+  ]
 }

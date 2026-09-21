@@ -10,6 +10,1127 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.2456,
   "market_home_prob": 0.3364,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 31,
+    "home_score": 7,
+    "winner": "SEA",
+    "model_pick": "SEA",
+    "model_correct": true,
+    "market_pick": "SEA",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-21T12:23:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Passing Yds",
+      "line": 190.5,
+      "projected": 190.6,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.777
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.681
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.572
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.457
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.345
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.164
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.296,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Completions",
+      "line": 17.0,
+      "projected": 16.9,
+      "model_over_prob": 0.496,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Pass Attempts",
+      "line": 26.5,
+      "projected": 26.6,
+      "model_over_prob": 0.502,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.3,
+      "model_over_prob": 0.363,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 18.5,
+      "projected": 18.5,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.696
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.588
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.356
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.297
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.249
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.209
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Carries",
+      "line": 7.5,
+      "projected": 7.5,
+      "model_over_prob": 0.412,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.136,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Rush + Rec Yds",
+      "line": 23.5,
+      "projected": 23.7,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.55
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.383
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.329
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.245
+        }
+      ],
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 5.0,
+      "projected": 5.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.381
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.299
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.241
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.196
+        }
+      ],
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.459,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 74.5,
+      "projected": 74.5,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.766
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.504
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.366
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 155.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 6.0,
+      "model_over_prob": 0.394,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.309,
+      "trailing_n": 8,
+      "opp_per_gm": 9.9,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 20.0,
+      "projected": 20.0,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.775
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.667
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.522
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.377
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.298
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.239
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.194
+        }
+      ],
+      "actual_value": 35.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.448,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.114,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 36.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.711
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.209
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.398,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.152,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 24.5,
+      "projected": 24.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.767
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.656
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.506
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.367
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.291
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.234
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.19
+        }
+      ],
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.389,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.179,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Myers",
+      "player_id": "00-0031492",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.519,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Myers",
+      "player_id": "00-0031492",
+      "team": "SEA",
+      "opp": "ARI",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.465,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Passing Yds",
+      "line": 239.0,
+      "projected": 239.2,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.772
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.676
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.566
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.45
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.24
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.16
+        }
+      ],
+      "actual_value": 95.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.439,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Completions",
+      "line": 23.5,
+      "projected": 23.5,
+      "model_over_prob": 0.497,
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Pass Attempts",
+      "line": 36.5,
+      "projected": 36.6,
+      "model_over_prob": 0.504,
+      "actual_value": 28.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 13.5,
+      "projected": 13.3,
+      "model_over_prob": 0.363,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 36.0,
+      "projected": 36.0,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.741
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.646
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.519
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.397
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.326
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.227
+        }
+      ],
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Carries",
+      "line": 12.5,
+      "projected": 12.3,
+      "model_over_prob": 0.393,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.205,
+      "trailing_n": 8,
+      "opp_per_gm": 11.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Rush + Rec Yds",
+      "line": 46.5,
+      "projected": 46.4,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.692
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.6
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.504
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.417
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.358
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.308
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.264
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 9.1,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.489
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.285
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.229
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.3,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 38.0,
+      "projected": 38.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.739
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.617
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.461
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.18
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.331,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.153,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 70.5,
+      "projected": 70.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.785
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.682
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.539
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.389
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.305
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.199
+        }
+      ],
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.435,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.304,
+      "trailing_n": 8,
+      "opp_per_gm": 9.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 18.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.754
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.638
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.485
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.354
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.228
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.282,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.091,
+      "trailing_n": 8,
+      "opp_per_gm": 2.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 71.0,
+      "projected": 70.8,
+      "model_over_prob": 0.37,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.788
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.545
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.307
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.247
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 41.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 7.0,
+      "projected": 6.8,
+      "model_over_prob": 0.372,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.281,
+      "trailing_n": 8,
+      "opp_per_gm": 10.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.469,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "SEA",
+      "market": "Kicking Points",
+      "line": 6.5,
+      "projected": 6.4,
+      "model_over_prob": 0.461,
+      "actual_value": 1.0,
+      "hit": false
+    }
+  ]
 }

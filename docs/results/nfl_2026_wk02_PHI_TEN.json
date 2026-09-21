@@ -10,6 +10,1321 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.2817,
   "market_home_prob": 0.2779,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 24,
+    "home_score": 20,
+    "winner": "PHI",
+    "model_pick": "PHI",
+    "model_correct": true,
+    "market_pick": "PHI",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-21T12:23:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Passing Yds",
+      "line": 201.5,
+      "projected": 201.4,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.813
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.725
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.621
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.196
+        }
+      ],
+      "actual_value": 264.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.425,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 17.6,
+      "model_over_prob": 0.504,
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.6,
+      "model_over_prob": 0.503,
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Rushing Yds",
+      "line": 25.5,
+      "projected": 25.7,
+      "model_over_prob": 0.374,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Rushing Yds",
+      "line": 73.0,
+      "projected": 73.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.69
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.579
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.447
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.245
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.206
+        }
+      ],
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Carries",
+      "line": 17.0,
+      "projected": 17.1,
+      "model_over_prob": 0.418,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Anytime TD",
+      "model_prob": 0.522,
+      "trailing_n": 8,
+      "opp_per_gm": 21.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Rush + Rec Yds",
+      "line": 87.5,
+      "projected": 87.6,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 75.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.528
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.436
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.237
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 16.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.209
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.27,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Rushing Yds",
+      "line": 24.0,
+      "projected": 24.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.705
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.6
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.468
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.303
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.253
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.212
+        }
+      ],
+      "actual_value": 33.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Carries",
+      "line": 5.5,
+      "projected": 5.6,
+      "model_over_prob": 0.426,
+      "actual_value": 13.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Anytime TD",
+      "model_prob": 0.197,
+      "trailing_n": 8,
+      "opp_per_gm": 6.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Rush + Rec Yds",
+      "line": 29.0,
+      "projected": 28.8,
+      "model_over_prob": 0.396,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.645
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.552
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.456
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.384
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.246
+        }
+      ],
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.383
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.302
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.197
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.357,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receiving Yds",
+      "line": 45.5,
+      "projected": 45.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.787
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.684
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.542
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 117.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.346,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Anytime TD",
+      "model_prob": 0.175,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receiving Yds",
+      "line": 31.0,
+      "projected": 30.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.789
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.687
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.546
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.393
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.307
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.247
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 74.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.4,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Anytime TD",
+      "model_prob": 0.168,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receiving Yds",
+      "line": 40.5,
+      "projected": 40.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.787
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.685
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.543
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.458,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Anytime TD",
+      "model_prob": 0.284,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.485,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "TEN",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.492,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Cam Ward",
+      "player_id": "00-0040676",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Passing Yds",
+      "line": 157.0,
+      "projected": 156.9,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 75.0,
+          "over_prob": 0.829
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.746
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.532
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.417
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.308
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.214
+        }
+      ],
+      "actual_value": 183.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Cam Ward",
+      "player_id": "00-0040676",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.283,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Cam Ward",
+      "player_id": "00-0040676",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Completions",
+      "line": 17.0,
+      "projected": 17.1,
+      "model_over_prob": 0.508,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Cam Ward",
+      "player_id": "00-0040676",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.4,
+      "model_over_prob": 0.495,
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Ward",
+      "player_id": "00-0040676",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 13.0,
+      "projected": 13.2,
+      "model_over_prob": 0.376,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 67.5,
+      "projected": 67.4,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.762
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.675
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.559
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.428
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.238
+        }
+      ],
+      "actual_value": 64.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 15.5,
+      "projected": 15.3,
+      "model_over_prob": 0.395,
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.305,
+      "trailing_n": 8,
+      "opp_per_gm": 17.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 77.0,
+      "projected": 77.0,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.701
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.611
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.515
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.425
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.313
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.268
+        }
+      ],
+      "actual_value": 65.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 8.5,
+      "projected": 8.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.464
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.344
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tony Pollard",
+      "player_id": "00-0035261",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.371,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 21.5,
+      "projected": 21.3,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.747
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.653
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.529
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.404
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.23
+        }
+      ],
+      "actual_value": 41.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 6.0,
+      "projected": 6.0,
+      "model_over_prob": 0.41,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.161,
+      "trailing_n": 8,
+      "opp_per_gm": 9.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 39.0,
+      "projected": 39.1,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.651
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.558
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.462
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.388
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.247
+        }
+      ],
+      "actual_value": 70.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.556
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.251
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyjae Spears",
+      "player_id": "00-0039032",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.346,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Wan'Dale Robinson",
+      "player_id": "00-0038117",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 60.5,
+      "projected": 60.5,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.784
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.681
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.538
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.387
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.244
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.199
+        }
+      ],
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Wan'Dale Robinson",
+      "player_id": "00-0038117",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.5,
+      "model_over_prob": 0.454,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Wan'Dale Robinson",
+      "player_id": "00-0038117",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.193,
+      "trailing_n": 8,
+      "opp_per_gm": 10.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Calvin Ridley",
+      "player_id": "00-0034837",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.745
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.625
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.348
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.224
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 35.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Calvin Ridley",
+      "player_id": "00-0034837",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.446,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Calvin Ridley",
+      "player_id": "00-0034837",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.101,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Gunnar Helm",
+      "player_id": "00-0040584",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 24.5,
+      "projected": 24.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.763
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.65
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.498
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.288
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.188
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Gunnar Helm",
+      "player_id": "00-0040584",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.333,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Gunnar Helm",
+      "player_id": "00-0040584",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.11,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Joey Slye",
+      "player_id": "00-0035192",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.446,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Joey Slye",
+      "player_id": "00-0035192",
+      "team": "TEN",
+      "opp": "PHI",
+      "market": "Kicking Points",
+      "line": 6.0,
+      "projected": 5.9,
+      "model_over_prob": 0.466,
+      "actual_value": 8.0,
+      "hit": true
+    }
+  ]
 }

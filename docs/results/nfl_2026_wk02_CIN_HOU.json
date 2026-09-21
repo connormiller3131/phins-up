@@ -10,6 +10,1463 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.6513,
   "market_home_prob": 0.5721,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 20,
+    "home_score": 6,
+    "winner": "CIN",
+    "model_pick": "HOU",
+    "model_correct": false,
+    "market_pick": "HOU",
+    "market_correct": false
+  },
+  "graded_at": "2026-09-21T12:23:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Passing Yds",
+      "line": 226.5,
+      "projected": 226.4,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.813
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.725
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.621
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.196
+        }
+      ],
+      "actual_value": 207.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.486,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Completions",
+      "line": 21.0,
+      "projected": 21.0,
+      "model_over_prob": 0.503,
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Pass Attempts",
+      "line": 32.0,
+      "projected": 31.9,
+      "model_over_prob": 0.497,
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Joe Burrow",
+      "player_id": "00-0036442",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.3,
+      "model_over_prob": 0.364,
+      "actual_value": -1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Rushing Yds",
+      "line": 60.5,
+      "projected": 60.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.736
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.638
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.511
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.39
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.269
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.224
+        }
+      ],
+      "actual_value": 80.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Carries",
+      "line": 14.5,
+      "projected": 14.6,
+      "model_over_prob": 0.418,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.567,
+      "trailing_n": 8,
+      "opp_per_gm": 20.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Rush + Rec Yds",
+      "line": 87.0,
+      "projected": 86.8,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.698
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.608
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.268
+        }
+      ],
+      "actual_value": 82.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 31.0,
+      "projected": 31.0,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.794
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.694
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.554
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.399
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.25
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chase Brown",
+      "player_id": "00-0038597",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.475,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Rushing Yds",
+      "line": 26.0,
+      "projected": 25.8,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.737
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.64
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.392
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.225
+        }
+      ],
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.428,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.226,
+      "trailing_n": 8,
+      "opp_per_gm": 9.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Rush + Rec Yds",
+      "line": 36.0,
+      "projected": 35.8,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.682
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.59
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.492
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.41
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.26
+        }
+      ],
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 12.5,
+      "projected": 12.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 16.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Samaje Perine",
+      "player_id": "00-0033526",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.426,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 69.5,
+      "projected": 69.7,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.77
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.37
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.236
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 5.9,
+      "model_over_prob": 0.372,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ja'Marr Chase",
+      "player_id": "00-0036900",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.245,
+      "trailing_n": 8,
+      "opp_per_gm": 10.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 57.5,
+      "projected": 57.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.727
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.443
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.334
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.267
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.176
+        }
+      ],
+      "actual_value": 95.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.407,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tee Higgins",
+      "player_id": "00-0036410",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.293,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 23.0,
+      "projected": 23.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.738
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.614
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.458
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.341
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.273
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.22
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.18
+        }
+      ],
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.32,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Andrei Iosivas",
+      "player_id": "00-0038619",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.13,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receiving Yds",
+      "line": 34.5,
+      "projected": 34.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.764
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.651
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.5
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.289
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.31,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Gesicki",
+      "player_id": "00-0034829",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Anytime TD",
+      "model_prob": 0.184,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Evan McPherson",
+      "player_id": "00-0036854",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.477,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Evan McPherson",
+      "player_id": "00-0036854",
+      "team": "CIN",
+      "opp": "HOU",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.465,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Passing Yds",
+      "line": 209.0,
+      "projected": 208.9,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.835
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.753
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.653
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.541
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.426
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.317
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.221
+        }
+      ],
+      "actual_value": 353.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.446,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 17.8,
+      "model_over_prob": 0.492,
+      "actual_value": 30.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Pass Attempts",
+      "line": 30.0,
+      "projected": 29.8,
+      "model_over_prob": 0.493,
+      "actual_value": 55.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "C.J. Stroud",
+      "player_id": "00-0039163",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.5,
+      "model_over_prob": 0.369,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Rushing Yds",
+      "line": 35.0,
+      "projected": 35.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.728
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.625
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.496
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.381
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.315
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.264
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.219
+        }
+      ],
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Carries",
+      "line": 8.0,
+      "projected": 7.9,
+      "model_over_prob": 0.402,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.345,
+      "trailing_n": 8,
+      "opp_per_gm": 10.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Rush + Rec Yds",
+      "line": 46.5,
+      "projected": 46.6,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.696
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.604
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.508
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.42
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.266
+        }
+      ],
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 12.5,
+      "projected": 12.5,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.599
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.441
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.266
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.216
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.175
+        }
+      ],
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "David Montgomery",
+      "player_id": "00-0035685",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.387,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Rushing Yds",
+      "line": 57.0,
+      "projected": 56.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.756
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.665
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.545
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.417
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.337
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.234
+        }
+      ],
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.2,
+      "model_over_prob": 0.429,
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.407,
+      "trailing_n": 8,
+      "opp_per_gm": 17.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Rush + Rec Yds",
+      "line": 65.5,
+      "projected": 65.7,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.678
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.588
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.489
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.408
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.302
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.258
+        }
+      ],
+      "actual_value": 35.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.6,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.507
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.234
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.19
+        }
+      ],
+      "actual_value": 27.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Woody Marks",
+      "player_id": "00-0040583",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.361,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 59.0,
+      "projected": 59.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.757
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.49
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.285
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.229
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.344,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Nico Collins",
+      "player_id": "00-0036554",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.254,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Kayshon Boutte",
+      "player_id": "00-0038608",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 29.5,
+      "projected": 29.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.765
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.653
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kayshon Boutte",
+      "player_id": "00-0038608",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.313,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kayshon Boutte",
+      "player_id": "00-0038608",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.152,
+      "trailing_n": 8,
+      "opp_per_gm": 3.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 31.0,
+      "projected": 31.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.792
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.692
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.551
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.397
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.249
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.202
+        }
+      ],
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.445,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Hutchinson",
+      "player_id": "00-0038618",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.146,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 37.0,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.809
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.716
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.585
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.425
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.325
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.261
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.211
+        }
+      ],
+      "actual_value": 140.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.433,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Schultz",
+      "player_id": "00-0034383",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Anytime TD",
+      "model_prob": 0.192,
+      "trailing_n": 8,
+      "opp_per_gm": 5.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Ka'imi Fairbairn",
+      "player_id": "00-0032726",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.515,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Ka'imi Fairbairn",
+      "player_id": "00-0032726",
+      "team": "HOU",
+      "opp": "CIN",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.6,
+      "model_over_prob": 0.486,
+      "actual_value": 6.0,
+      "hit": false
+    }
+  ]
 }

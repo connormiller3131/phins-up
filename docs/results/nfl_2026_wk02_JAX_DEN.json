@@ -10,6 +10,1447 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.4914,
   "market_home_prob": 0.5514,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 13,
+    "home_score": 20,
+    "winner": "DEN",
+    "model_pick": "JAX",
+    "model_correct": false,
+    "market_pick": "DEN",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-21T12:23:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Passing Yds",
+      "line": 228.5,
+      "projected": 228.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.819
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.733
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.63
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.516
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 189.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.52,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.4,
+      "model_over_prob": 0.495,
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Pass Attempts",
+      "line": 30.0,
+      "projected": 29.8,
+      "model_over_prob": 0.494,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 22.0,
+      "projected": 21.8,
+      "model_over_prob": 0.366,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 30.5,
+      "projected": 30.4,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.732
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.63
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.267
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.221
+        }
+      ],
+      "actual_value": 65.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.431,
+      "actual_value": 13.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.259,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Rush + Rec Yds",
+      "line": 34.5,
+      "projected": 34.6,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.659
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.469
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.393
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.338
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.25
+        }
+      ],
+      "actual_value": 62.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.363
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.288
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.188
+        }
+      ],
+      "actual_value": -3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.392,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 46.5,
+      "projected": 46.4,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.747
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.53
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.23
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Carries",
+      "line": 11.5,
+      "projected": 11.3,
+      "model_over_prob": 0.393,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.376,
+      "trailing_n": 8,
+      "opp_per_gm": 11.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Rush + Rec Yds",
+      "line": 50.5,
+      "projected": 50.4,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.672
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.582
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.485
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.298
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.255
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.351
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.28
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.226
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.184
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.392,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 36.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.797
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.698
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.559
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.313
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.252
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.204
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.487,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.16,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 67.0,
+      "projected": 67.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.813
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.719
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.591
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 98.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.448,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.299,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 44.0,
+      "projected": 44.1,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.757
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.489
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.229
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 28.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.34,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.221,
+      "trailing_n": 8,
+      "opp_per_gm": 7.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.816
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.724
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.598
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.331
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.215
+        }
+      ],
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.338,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.216,
+      "trailing_n": 8,
+      "opp_per_gm": 4.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Cam Little",
+      "player_id": "00-0039409",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.486,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Cam Little",
+      "player_id": "00-0039409",
+      "team": "JAX",
+      "opp": "DEN",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.0,
+      "model_over_prob": 0.475,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Passing Yds",
+      "line": 219.0,
+      "projected": 218.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.788
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.587
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.257
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.173
+        }
+      ],
+      "actual_value": 288.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.455,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Completions",
+      "line": 23.0,
+      "projected": 22.8,
+      "model_over_prob": 0.491,
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Pass Attempts",
+      "line": 35.0,
+      "projected": 34.9,
+      "model_over_prob": 0.498,
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 23.5,
+      "projected": 23.4,
+      "model_over_prob": 0.367,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 61.5,
+      "projected": 61.5,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.749
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.656
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.533
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.408
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.332
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.231
+        }
+      ],
+      "actual_value": 36.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 13.5,
+      "projected": 13.3,
+      "model_over_prob": 0.399,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.329,
+      "trailing_n": 8,
+      "opp_per_gm": 16.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Rush + Rec Yds",
+      "line": 67.5,
+      "projected": 67.5,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.709
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.622
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.525
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.434
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.367
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.273
+        }
+      ],
+      "actual_value": 36.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.391
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.269,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 40.5,
+      "projected": 40.4,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.732
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.629
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.502
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.384
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.266
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.221
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 10.5,
+      "projected": 10.4,
+      "model_over_prob": 0.408,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.464,
+      "trailing_n": 8,
+      "opp_per_gm": 16.5,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Rush + Rec Yds",
+      "line": 65.0,
+      "projected": 65.0,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.666
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.574
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.479
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.399
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.254
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 30.0,
+      "projected": 29.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.771
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.662
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.514
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.371
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.236
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.408,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.748
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.629
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.477
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.279
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.225
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.183
+        }
+      ],
+      "actual_value": 138.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.376,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.194,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 49.5,
+      "projected": 49.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.765
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.653
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.408,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.256,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Mims Jr.",
+      "player_id": "00-0038976",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 28.0,
+      "projected": 28.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.735
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.611
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.453
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.271
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.219
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Mims Jr.",
+      "player_id": "00-0038976",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.321,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Mims Jr.",
+      "player_id": "00-0038976",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.15,
+      "trailing_n": 8,
+      "opp_per_gm": 4.2,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 24.0,
+      "projected": 24.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.755
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.64
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.486
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.355
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.228
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.408,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.142,
+      "trailing_n": 8,
+      "opp_per_gm": 3.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Wil Lutz",
+      "player_id": "00-0032569",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.48,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Wil Lutz",
+      "player_id": "00-0032569",
+      "team": "DEN",
+      "opp": "JAX",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.1,
+      "model_over_prob": 0.487,
+      "actual_value": 8.0,
+      "hit": true
+    }
+  ]
 }

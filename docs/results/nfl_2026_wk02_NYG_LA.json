@@ -10,6 +10,1368 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.6848,
   "market_home_prob": 0.7478,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 6,
+    "home_score": 28,
+    "winner": "LA",
+    "model_pick": "LA",
+    "model_correct": true,
+    "market_pick": "LA",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-22T11:14:30",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Passing Yds",
+      "line": 203.0,
+      "projected": 202.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.817
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.73
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.627
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.513
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.398
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.346,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.5,
+      "model_over_prob": 0.502,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 29.2,
+      "model_over_prob": 0.506,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaxson Dart",
+      "player_id": "00-0040691",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 37.5,
+      "projected": 37.7,
+      "model_over_prob": 0.376,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 60.0,
+      "projected": 59.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.723
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.621
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.491
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.377
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.313
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.262
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.218
+        }
+      ],
+      "actual_value": 36.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Carries",
+      "line": 14.5,
+      "projected": 14.3,
+      "model_over_prob": 0.394,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.568,
+      "trailing_n": 8,
+      "opp_per_gm": 18.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Rush + Rec Yds",
+      "line": 83.0,
+      "projected": 83.0,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.631
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.441
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.373
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.239
+        }
+      ],
+      "actual_value": 55.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 26.5,
+      "projected": 26.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.798
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.699
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.562
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.253
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.204
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cam Skattebo",
+      "player_id": "00-0040715",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.469,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 33.0,
+      "projected": 32.8,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.683
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.57
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Carries",
+      "line": 8.0,
+      "projected": 7.8,
+      "model_over_prob": 0.395,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.206,
+      "trailing_n": 8,
+      "opp_per_gm": 9.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Rush + Rec Yds",
+      "line": 46.0,
+      "projected": 46.0,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.684
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.592
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.494
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.411
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.354
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.26
+        }
+      ],
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 15.5,
+      "projected": 15.4,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.676
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.531
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.383
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.301
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.197
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Najee Harris",
+      "player_id": "00-0036893",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.481,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 71.5,
+      "projected": 71.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.804
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.708
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.575
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.415
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.32
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.257
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.207
+        }
+      ],
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 5.2,
+      "model_over_prob": 0.413,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Nabers",
+      "player_id": "00-0039337",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.26,
+      "trailing_n": 8,
+      "opp_per_gm": 9.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 30.5,
+      "projected": 30.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.781
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.677
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.533
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.384
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.302
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.243
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.197
+        }
+      ],
+      "actual_value": 48.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.421,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Mooney",
+      "player_id": "00-0036309",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.136,
+      "trailing_n": 8,
+      "opp_per_gm": 4.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.815
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.723
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.596
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.436
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.33
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.214
+        }
+      ],
+      "actual_value": 33.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.325,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Likely",
+      "player_id": "00-0037838",
+      "team": "NYG",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.156,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Passing Yds",
+      "line": 271.0,
+      "projected": 270.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.794
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.703
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.595
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.481
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.367
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.265
+        },
+        {
+          "line": 350.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 327.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.31,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.5,
+      "model_over_prob": 0.5,
+      "actual_value": 22.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Pass Attempts",
+      "line": 34.5,
+      "projected": 34.4,
+      "model_over_prob": 0.497,
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Rushing Yds",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.369,
+      "actual_value": -1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Rushing Yds",
+      "line": 63.0,
+      "projected": 62.9,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.683
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.571
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.439
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.348
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.242
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.204
+        }
+      ],
+      "actual_value": 85.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 13.9,
+      "model_over_prob": 0.403,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.592,
+      "trailing_n": 8,
+      "opp_per_gm": 18.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Rush + Rec Yds",
+      "line": 82.5,
+      "projected": 82.6,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.528
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.435
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.236
+        }
+      ],
+      "actual_value": 97.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 24.0,
+      "projected": 23.8,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.751
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.634
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.481
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.226
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.184
+        }
+      ],
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.421,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Rushing Yds",
+      "line": 45.5,
+      "projected": 45.4,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.732
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.63
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.503
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.267
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.221
+        }
+      ],
+      "actual_value": 79.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Carries",
+      "line": 9.5,
+      "projected": 9.6,
+      "model_over_prob": 0.421,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.316,
+      "trailing_n": 8,
+      "opp_per_gm": 11.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Rush + Rec Yds",
+      "line": 53.0,
+      "projected": 52.8,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.628
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.532
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.438
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.37
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.32
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.276
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.238
+        }
+      ],
+      "actual_value": 92.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 9.2,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.492
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.286
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.187
+        }
+      ],
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.251,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 99.5,
+      "projected": 99.7,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 85.0,
+          "over_prob": 0.768
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.658
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.431,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Puka Nacua",
+      "player_id": "00-0039075",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.495,
+      "trailing_n": 8,
+      "opp_per_gm": 13.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 52.0,
+      "projected": 52.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.808
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.714
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.584
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 195.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.361,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Davante Adams",
+      "player_id": "00-0031381",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.287,
+      "trailing_n": 8,
+      "opp_per_gm": 7.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 8.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.484
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.354
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.282
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.227
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.185,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Whittington",
+      "player_id": "00-0039751",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.119,
+      "trailing_n": 8,
+      "opp_per_gm": 0.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.769
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.659
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.293
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.376,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colby Parkinson",
+      "player_id": "00-0036244",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Anytime TD",
+      "model_prob": 0.249,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Mevis",
+      "player_id": "00-0039498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.278,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Mevis",
+      "player_id": "00-0039498",
+      "team": "LA",
+      "opp": "NYG",
+      "market": "Kicking Points",
+      "line": 8.5,
+      "projected": 8.4,
+      "model_over_prob": 0.463,
+      "actual_value": 4.0,
+      "hit": false
+    }
+  ]
 }

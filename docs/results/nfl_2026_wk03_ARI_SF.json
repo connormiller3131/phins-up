@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 3,
+  "awayAbbr": "ARI",
+  "homeAbbr": "SF",
+  "awayName": "Arizona Cardinals",
+  "homeName": "San Francisco 49ers",
+  "gameday": "2026-09-27",
+  "predicted_at": "2026-09-22T11:15:20",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.7513,
+  "market_home_prob": 0.7867,
+  "graded": false,
+  "actual": null
+}

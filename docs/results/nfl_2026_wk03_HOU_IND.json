@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 3,
+  "awayAbbr": "HOU",
+  "homeAbbr": "IND",
+  "awayName": "Houston Texans",
+  "homeName": "Indianapolis Colts",
+  "gameday": "2026-09-27",
+  "predicted_at": "2026-09-22T11:15:20",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.411,
+  "market_home_prob": 0.4365,
+  "graded": false,
+  "actual": null
+}

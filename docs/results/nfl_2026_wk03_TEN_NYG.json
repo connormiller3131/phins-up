@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 3,
+  "awayAbbr": "TEN",
+  "homeAbbr": "NYG",
+  "awayName": "Tennessee Titans",
+  "homeName": "New York Giants",
+  "gameday": "2026-09-27",
+  "predicted_at": "2026-09-22T11:15:20",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.652,
+  "market_home_prob": 0.6164,
+  "graded": false,
+  "actual": null
+}

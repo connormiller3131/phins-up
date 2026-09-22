@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 3,
+  "awayAbbr": "LA",
+  "homeAbbr": "DEN",
+  "awayName": "Los Angeles Rams",
+  "homeName": "Denver Broncos",
+  "gameday": "2026-09-27",
+  "predicted_at": "2026-09-22T11:15:20",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.5351,
+  "market_home_prob": 0.4486,
+  "graded": false,
+  "actual": null
+}

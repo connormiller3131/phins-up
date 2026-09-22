@@ -1,0 +1,15 @@
+{
+  "season": 2026,
+  "week": 3,
+  "awayAbbr": "KC",
+  "homeAbbr": "MIA",
+  "awayName": "Kansas City Chiefs",
+  "homeName": "Miami Dolphins",
+  "gameday": "2026-09-27",
+  "predicted_at": "2026-09-22T11:15:20",
+  "prop_prob_model": "mixed-v1",
+  "elo_home_prob": 0.3602,
+  "market_home_prob": 0.1421,
+  "graded": false,
+  "actual": null
+}

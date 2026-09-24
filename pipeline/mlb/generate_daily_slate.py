@@ -1086,15 +1086,33 @@ def _mlb_remaining_games():
         "home_team": home["team"].map(br_to_statcast),
         "away_team": home["Opp"].map(br_to_statcast),
     })
-    # "W-L is null" means "not played yet", which also catches any blank or
-    # placeholder row Baseball-Reference carries at the end of a season. Those
-    # have no opponent, and a null team is not something the simulator can do
-    # anything sensible with, so they are dropped here rather than allowed to
-    # reach it. Reported rather than silent: if this ever removes a real game,
-    # the count is the only way anyone would notice.
+    # "W-L is null" means "not played yet", which from late September also
+    # catches POSTSEASON PLACEHOLDERS. Baseball-Reference posts scheduled home
+    # October dates for teams in contention with the opponent still TBD, so
+    # the row has Opp = None. Confirmed by scraping 2026 directly on Sep 24:
+    # the four offenders were NYY Sep 29 and Sep 30, TBR Oct 3 and Oct 5, all
+    # with a null opponent, against 43 real remaining regular-season games.
+    #
+    # Dropping them is required, not merely safe. Division titles and playoff
+    # berths are settled by the regular season, so an October game against a
+    # team yet to be determined does not belong in the simulation at all --
+    # quite apart from a null team having crashed it outright before this.
+    #
+    # EXPECT THIS COUNT TO GROW through late September and October as more
+    # teams clinch and more October dates get posted. Growth is the schedule
+    # behaving normally, not a parsing problem.
+    #
+    # This only ever drops rows with a MISSING opponent. An unknown team CODE
+    # does not land here at all: br_to_statcast passes anything it does not
+    # recognise straight through, so "XYZ" stays "XYZ" rather than becoming
+    # null. That case is caught one layer down, where simulate_remaining_wins
+    # rejects any team it has no rating for and names it, and the wrapper
+    # around build_mlb_title_odds keeps the refresh alive while it does.
+    # Both paths are covered; they are just covered in different places.
     bad = out["home_team"].isna() | out["away_team"].isna()
     if bad.any():
-        print(f"  [title odds] dropped {int(bad.sum())} remaining-game row(s) with no resolvable team")
+        print(f"  [title odds] dropped {int(bad.sum())} remaining-game row(s) with no "
+              f"opponent listed (postseason placeholders), {int((~bad).sum())} real games kept")
         out = out[~bad]
     return out.reset_index(drop=True)
 

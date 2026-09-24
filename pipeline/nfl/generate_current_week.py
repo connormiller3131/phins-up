@@ -815,6 +815,30 @@ def _nfl_reg_games(max_season=None):
     return df.sort_values(["season", "week"]).reset_index(drop=True)
 
 
+def _title_odds_or_none(fn, sport):
+    """Title odds are one decorative panel on the standings table, and the
+    frontend already skips it when absent (attachTitleOdds returns early on a
+    falsy value). It has no business taking down a refresh.
+
+    It did exactly that: a null team in the remaining schedule crashed the
+    season simulator and killed four consecutive production runs, taking the
+    NFL projections, the MLB slate, the NHL slate and the deploy with it,
+    while the live site went stale for two days. The underlying bug is fixed
+    and now fails loudly with the offending team named, but the blast radius
+    was the real problem.
+
+    Deliberately NOT a blanket try/except around everything: it wraps this one
+    panel, prints the whole traceback so a failure is still obvious in the run
+    log, and returns None so the section is omitted rather than shown stale."""
+    import traceback
+    try:
+        return fn()
+    except Exception:
+        print(f"  [title odds] {sport} title odds FAILED, continuing without them:")
+        traceback.print_exc()
+        return None
+
+
 def build_nfl_title_odds():
     """Division title + playoff berth odds, from Monte Carlo simulating the
     real remaining regular-season schedule from each team's current real Elo
@@ -1010,7 +1034,7 @@ def main():
     print(f"Results manifest: {n_snapshots} prediction snapshots on disk.", flush=True)
 
     print("Building NFL standings + stat leaders...")
-    nfl_title_odds = build_nfl_title_odds()
+    nfl_title_odds = _title_odds_or_none(build_nfl_title_odds, 'NFL')
     record_title_odds("nfl", nfl_title_odds, season=target_season)
     payload = {
         "season": target_season, "current_week": current_week,

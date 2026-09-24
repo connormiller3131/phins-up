@@ -25,8 +25,33 @@ def simulate_remaining_wins(remaining_games, current_ratings, home_adv, scale, n
     teams = sorted(current_ratings.keys())
     idx = {t: i for i, t in enumerate(teams)}
 
-    home_idx = remaining_games["home_team"].map(idx).values.astype(int)
-    away_idx = remaining_games["away_team"].map(idx).values.astype(int)
+    # The docstring above promises every team is already a key in
+    # current_ratings. Nothing used to check, and when that promise broke the
+    # failure was unreadable: .map() returns NaN for an unknown team,
+    # .astype(int) turns NaN into INT64_MIN without complaint, and numpy then
+    # raised "index -9223372036854775808 is out of bounds for axis 0 with size
+    # 30" from a line that mentions neither the team nor the schedule. That
+    # took down four consecutive production refreshes.
+    #
+    # Checked explicitly and named, because the cause is always a team code
+    # the caller failed to map (a source using a different dialect, a blank
+    # row surviving a filter, or a team with no completed games and therefore
+    # no rating).
+    mapped = {}
+    for side in ("home_team", "away_team"):
+        col = remaining_games[side]
+        unknown = sorted(set(col[~col.isin(idx)].dropna().astype(str)))
+        n_null = int(col.isna().sum())
+        if unknown or n_null:
+            raise ValueError(
+                f"simulate_remaining_wins: {side} contains values with no rating. "
+                + (f"Unmapped team codes: {unknown}. " if unknown else "")
+                + (f"{n_null} row(s) have a null team. " if n_null else "")
+                + f"Known teams ({len(teams)}): {teams}"
+            )
+        mapped[side] = col.map(idx).values.astype(int)
+
+    home_idx, away_idx = mapped["home_team"], mapped["away_team"]
     ratings = np.array([current_ratings[t] for t in teams])
 
     diff = (ratings[home_idx] + home_adv) - ratings[away_idx]

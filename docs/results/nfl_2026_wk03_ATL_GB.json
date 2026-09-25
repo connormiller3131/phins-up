@@ -10,6 +10,1417 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.6818,
   "market_home_prob": 0.7136,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 35,
+    "home_score": 14,
+    "winner": "ATL",
+    "model_pick": "GB",
+    "model_correct": false,
+    "market_pick": "GB",
+    "market_correct": false
+  },
+  "graded_at": "2026-09-25T11:29:19",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Michael Penix Jr.",
+      "player_id": "00-0039917",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Passing Yds",
+      "line": 208.5,
+      "projected": 208.3,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.833
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.751
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.65
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.538
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.219
+        }
+      ],
+      "actual_value": 256.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Michael Penix Jr.",
+      "player_id": "00-0039917",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.306,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Michael Penix Jr.",
+      "player_id": "00-0039917",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 17.5,
+      "model_over_prob": 0.499,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Michael Penix Jr.",
+      "player_id": "00-0039917",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.3,
+      "model_over_prob": 0.492,
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Michael Penix Jr.",
+      "player_id": "00-0039917",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.369,
+      "actual_value": -2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 85.5,
+      "projected": 85.5,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.732
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.631
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.505
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.386
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.268
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.223
+        }
+      ],
+      "actual_value": 194.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 18.5,
+      "projected": 18.5,
+      "model_over_prob": 0.415,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.663,
+      "trailing_n": 8,
+      "opp_per_gm": 26.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Rush + Rec Yds",
+      "line": 125.0,
+      "projected": 125.1,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 110.0,
+          "over_prob": 0.668
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.576
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.48
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 130.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 135.0,
+          "over_prob": 0.297
+        },
+        {
+          "line": 140.0,
+          "over_prob": 0.255
+        }
+      ],
+      "actual_value": 213.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 46.5,
+      "projected": 46.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.799
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.7
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.563
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.406
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.315
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.253
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.205
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bijan Robinson",
+      "player_id": "00-0038542",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.453,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 24.0,
+      "projected": 24.1,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.705
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.6
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.468
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.303
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.253
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.212
+        }
+      ],
+      "actual_value": 50.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 6.0,
+      "projected": 6.1,
+      "model_over_prob": 0.424,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.127,
+      "trailing_n": 8,
+      "opp_per_gm": 6.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Rush + Rec Yds",
+      "line": 27.5,
+      "projected": 27.7,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.626
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.528
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.436
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.319
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.275
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.237
+        }
+      ],
+      "actual_value": 50.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.372
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Robinson",
+      "player_id": "00-0037746",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.7,
+      "model_over_prob": 0.48,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 57.0,
+      "projected": 57.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.812
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.719
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.591
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.431
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.328
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 194.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.41,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Drake London",
+      "player_id": "00-0037238",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.22,
+      "trailing_n": 8,
+      "opp_per_gm": 7.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 17.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.719
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.59
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.43
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.327
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.262
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.212
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.493,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahan Dotson",
+      "player_id": "00-0037741",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.103,
+      "trailing_n": 8,
+      "opp_per_gm": 3.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 15.0,
+      "projected": 14.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.662
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.515
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.372
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.442,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Olamide Zaccheaus",
+      "player_id": "00-0035208",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.135,
+      "trailing_n": 8,
+      "opp_per_gm": 2.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 53.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.738
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.615
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.459
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.342
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.273
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.22
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.18
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.439,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Pitts",
+      "player_id": "00-0036970",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.183,
+      "trailing_n": 8,
+      "opp_per_gm": 6.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Nick Folk",
+      "player_id": "00-0025565",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.464,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Nick Folk",
+      "player_id": "00-0025565",
+      "team": "ATL",
+      "opp": "GB",
+      "market": "Kicking Points",
+      "line": 6.5,
+      "projected": 6.5,
+      "model_over_prob": 0.469,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Passing Yds",
+      "line": 221.0,
+      "projected": 220.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.703
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.595
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.48
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.367
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.264
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 312.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.508,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 17.4,
+      "model_over_prob": 0.492,
+      "actual_value": 28.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.7,
+      "model_over_prob": 0.506,
+      "actual_value": 53.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Rushing Yds",
+      "line": 7.5,
+      "projected": 7.6,
+      "model_over_prob": 0.372,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Rushing Yds",
+      "line": 28.0,
+      "projected": 28.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.689
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.579
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.447
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.294
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.207
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Carries",
+      "line": 9.5,
+      "projected": 9.3,
+      "model_over_prob": 0.396,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.3,
+      "trailing_n": 3,
+      "opp_per_gm": 9.7,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Rush + Rec Yds",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.709
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.622
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.525
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.433
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.368
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.318
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.274
+        }
+      ],
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 8.5,
+      "projected": 8.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.467
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.276
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.222
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "MarShawn Lloyd",
+      "player_id": "00-0039811",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.322,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Rushing Yds",
+      "line": 16.5,
+      "projected": 16.6,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.658
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.535
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.41
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.334
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.232
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Carries",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.42,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.148,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Rush + Rec Yds",
+      "line": 22.0,
+      "projected": 22.1,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.702
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.613
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.427
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.27
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.5
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.364
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.289
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Brooks",
+      "player_id": "00-0038685",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.237,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 60.0,
+      "projected": 59.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.773
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.663
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.517
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.373
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 96.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.363,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.385,
+      "trailing_n": 8,
+      "opp_per_gm": 7.2,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 34.5,
+      "projected": 34.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.763
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.649
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.498
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.288
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.232
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.188
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jayden Reed",
+      "player_id": "00-0039146",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.205,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 36.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.795
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.695
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.557
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.402
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.251
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 100.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.454,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.172,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receiving Yds",
+      "line": 46.5,
+      "projected": 46.4,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.8
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.701
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.565
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.407
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.316
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.254
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.205
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.43,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "ATL",
+      "market": "Anytime TD",
+      "model_prob": 0.237,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

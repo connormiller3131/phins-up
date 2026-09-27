@@ -223,7 +223,7 @@ def team_stats_table(stats, label):
             % (e(label), body))
 
 
-def game_page(g, season, week, result):
+def game_page(g, season, week, result, week_games=None):
     away = g.get("awayName") or g["awayAbbr"]
     home = g.get("homeName") or g["homeAbbr"]
     an = nickname(away, g["awayAbbr"])
@@ -277,6 +277,15 @@ def game_page(g, season, week, result):
     }
     if g.get("stadium"):
         ld["location"] = {"@type": "Place", "name": g["stadium"]}
+
+    # The sports-site layout (pipeline/nfl/game_page_v2.py). Everything above
+    # -- title, description, structured data, the primetime-only rule for the
+    # model's number -- is shared, so search results and the paywall behave
+    # exactly as they did.
+    if week_games is not None:
+        from pipeline.nfl import game_page_v2
+        return (game_page_v2.page(g, season, week, result, week_games, slug, canonical,
+                                  title, desc, ld), slug, canonical)
 
     kick = pretty_date(g.get("gameday"))
     if g.get("weekday"):
@@ -661,6 +670,9 @@ def build(nfl_data, mlb_data, docs_dir, results_dir, today_iso):
         w = int(wk)
         wdir = nfl_root / ("week-%d" % w)
         wdir.mkdir(parents=True, exist_ok=True)
+        # Results and slugs for the whole week first: every game page carries
+        # a scoreboard strip of the week's other games, finals included.
+        results, week_games = {}, []
         for g in games:
             rp = results_dir / ("nfl_%s_wk%02d_%s_%s.json"
                                 % (season, w, g["awayAbbr"], g["homeAbbr"]))
@@ -670,7 +682,19 @@ def build(nfl_data, mlb_data, docs_dir, results_dir, today_iso):
                     result = json.loads(rp.read_text(encoding="utf-8"))
                 except Exception:
                     result = None
-            page, slug, canonical = game_page(g, season, w, result)
+            results[id(g)] = result
+            a = (result or {}).get("actual") or {}
+            done = bool((result or {}).get("graded")) and a.get("home_score") is not None
+            week_games.append({
+                "slug": game_slug(g), "url": "/nfl/%s/week-%d/%s" % (season, w, game_slug(g)),
+                "away": g["awayAbbr"], "home": g["homeAbbr"],
+                "weekday": g.get("weekday"), "gametime": g.get("gametime"),
+                "final": "Final" if done else None,
+                "as": a.get("away_score") if done else "", "hs": a.get("home_score") if done else "",
+            })
+        for g in games:
+            result = results[id(g)]
+            page, slug, canonical = game_page(g, season, w, result, week_games)
             gdir = wdir / slug
             gdir.mkdir(parents=True, exist_ok=True)
             (gdir / "index.html").write_text(page, encoding="utf-8")

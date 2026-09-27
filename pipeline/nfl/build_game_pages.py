@@ -34,6 +34,8 @@ changes only when that game's data does.
 """
 import html
 import json
+
+from pipeline import site_theme
 import shutil
 
 # MLB per-game pages are OFF.
@@ -62,13 +64,9 @@ SITE = "https://phinsup.net"
 # Mirrors dashboard_live.html's :root palette so a visitor landing here from
 # a search result and then clicking through does not meet two different sites.
 CSS = """
-:root{--bg:#0E1A1C;--panel:#15262A;--panel-alt:#1B2E33;--line:#264047;
---text:#EDEFF2;--dim:#8FA6AB;--green:#00C2B8;--amber:#F5821F;--red:#F0555F;
---mono:'Consolas','SFMono-Regular',monospace;
---disp:'Century Gothic','Futura',-apple-system,'Segoe UI',sans-serif}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);
-font:15px/1.55 -apple-system,'Segoe UI',Roboto,sans-serif}
+font:15px/1.55 var(--body);font-variant-numeric:tabular-nums}
 .wrap{max-width:820px;margin:0 auto;padding:28px 20px 64px}
 a{color:var(--green)}
 .crumb{font-size:12.5px;color:var(--dim);margin-bottom:18px}
@@ -91,7 +89,7 @@ tr:last-child td{border-bottom:none}
 .big{font-size:19px;font-weight:700}
 .tag{display:inline-block;font-family:var(--mono);font-size:11px;
 padding:2px 7px;border-radius:4px;letter-spacing:.03em}
-.good{background:rgba(0,194,184,.15);color:var(--green)}
+.good{background:var(--accent-tint);color:var(--green)}
 .win{color:var(--green);font-weight:700}
 .loss{color:var(--red);font-weight:700}
 p.note{color:var(--dim);font-size:13px}
@@ -169,7 +167,7 @@ def head(title, desc, canonical, ld=None):
 <meta name="description" content="%s">
 <link rel="canonical" href="%s">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0E1A1C">
+<meta name="theme-color" content="#005778">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Phins Up">
 <meta property="og:title" content="%s">
@@ -180,12 +178,14 @@ def head(title, desc, canonical, ld=None):
 <meta name="twitter:title" content="%s">
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s/og.png">
-<style>%s</style>
+%s%s<style>%s%s%s</style>
 <script type="application/ld+json">%s</script>
 </head>
-<body><div class="wrap">""" % (
+<body>%s%s<div class="wrap">""" % (
         e(title), e(desc), e(canonical), e(title), e(desc), e(canonical), SITE,
-        e(title), e(desc), SITE, CSS, json.dumps(ld, separators=(",", ":")))
+        e(title), e(desc), SITE,
+        site_theme.HEAD_SCRIPT, site_theme.FONTS, site_theme.TOKENS, site_theme.NAV_CSS, CSS,
+        json.dumps(ld, separators=(",", ":")), site_theme.nav(SITE), site_theme.TOGGLE_JS)
 
 
 FOOT = """

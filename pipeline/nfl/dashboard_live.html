@@ -63,7 +63,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("pu-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <style>
   :root{
     /* Miami Dolphins-inspired: aqua as the primary brand/positive accent,
@@ -74,22 +75,22 @@
        "bad" color -- Miami's real palette has no red, and overloading it
        with brand meaning would fight the one color that most needs to
        stay unambiguous. */
-    --bg:#0b1114;
-    --panel:#121a1e;
-    --panel-alt:#172227;
-    --line:#223036;
-    --text:#e9eef0;
-    --text-dim:#8a9aa0;
-    --green:#00C2B8;
-    --green-dim:#0f2a2a;
-    --amber:#F5821F;
-    --amber-dim:#3A2712;
-    --red:#F0555F;
-    --red-dim:#3A1E22;
-    --blue:#4A90D9;
-    --mono:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-    --disp:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
-    --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --bg:#f3f6f7;
+    --panel:#ffffff;
+    --panel-alt:#eaf2f4;
+    --line:#d6e3e7;
+    --text:#0f2a33;
+    --text-dim:#4d6873;
+    --green:#007a82;
+    --green-dim:#dff0f1;
+    --amber:#d9480f;
+    --amber-dim:#fdebe2;
+    --red:#c92a2a;
+    --red-dim:#fbe4e4;
+    --blue:#005778;
+    --mono:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --disp:'Oswald','Arial Narrow',system-ui,sans-serif;
+    --body:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif;
     /* Shared card-level treatment -- .game/.parlay-card/.ladder-picker-panel/
        .builder-panel/.placeholder were already all at the same 12px radius
        by coincidence, not by design (each had its own literal "12px"). This
@@ -99,6 +100,24 @@
        distinguished by a 1px border. */
     --radius-card:8px;
     --shadow-card:none;
+    /* Brand aqua #008e97 measures 3.95:1 as text on white, under the 4.5:1
+       accessibility minimum, so text and the active tab use #007a82 (4.9:1),
+       which still reads as Dolphins aqua. */
+    --nav-bg:#005778;--nav-text:#ffffff;--nav-dim:#a9cdd8;--nav-active:#007a82;
+    --brand-orange:#fc4c02;--on-accent:#ffffff;--accent-tint:rgba(0,122,130,.10);
+    --live:#e03131;--scroll:#c4d6db;--swatch:#9bb3ba;
+  }
+  /* Dark mode keeps the Dolphins palette on deep navy rather than going back
+     to black and teal. Only token values change, so every rule in this file
+     adapts without being touched. Set by the pu-theme toggle in the nav. */
+  html[data-theme="dark"]{
+    --bg:#07161c;--panel:#0e232b;--panel-alt:#13303a;--line:#1f3d47;
+    --text:#e8f1f3;--text-dim:#8fb0b8;
+    --green:#1ab5bf;--green-dim:#0f3a40;--amber:#ff7a3d;--amber-dim:#3a2112;
+    --red:#ff6b6b;--red-dim:#3a1e22;--blue:#4aa3c4;
+    --nav-bg:#041016;--nav-text:#e8f1f3;--nav-dim:#7fa3ad;--nav-active:#005778;
+    --brand-orange:#ff6a2b;--on-accent:#041016;--accent-tint:rgba(26,181,191,.14);
+    --live:#ff5a5f;--scroll:#2a4a54;--swatch:#4d6b74;
   }
   *{box-sizing:border-box;}
   body{
@@ -358,7 +377,7 @@
     border-radius:999px;white-space:nowrap;
   }
   .game-permalink:hover,.game-permalink:focus-visible{
-    border-color:var(--green);background:rgba(0,194,184,.12);
+    border-color:var(--green);background:var(--accent-tint);
   }
   .venue-line{
     font-family:var(--mono);
@@ -638,7 +657,7 @@
     display:flex;height:20px;border-radius:5px;overflow:hidden;
     font-family:var(--mono);font-size:10px;
   }
-  .prob-bar div{display:flex;align-items:center;justify-content:center;color:#0C0F12;font-weight:600;}
+  .prob-bar div{display:flex;align-items:center;justify-content:center;color:var(--on-accent);font-weight:600;}
 
   .model-row{
     display:flex;
@@ -1222,30 +1241,30 @@
   .sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
   .topnav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:22px;height:52px;
-    padding:0 20px;background:#0d1518;border-bottom:1px solid var(--line)}
-  .topnav .brand{font:700 21px/1 var(--disp);letter-spacing:.04em;color:var(--text);text-decoration:none}
-  .topnav .brand b{color:var(--green);font-weight:700}
+    padding:0 20px;background:var(--nav-bg);border-bottom:none}
+  .topnav .brand{font:700 21px/1 var(--disp);letter-spacing:.04em;color:var(--nav-text);text-decoration:none}
+  .topnav .brand b{color:var(--brand-orange);font-weight:700}
   .topnav .tabnav{display:flex;gap:4px;margin:0;border:none}
-  .topnav .tabnav button{font:600 15px/1 var(--disp);letter-spacing:.06em;color:var(--text-dim);
-    background:none;border:none;border-radius:6px;padding:8px 10px;margin:0;text-transform:uppercase}
-  .topnav .tabnav button:hover{color:var(--text)}
-  .topnav .tabnav button.active{color:var(--text);background:var(--panel-alt);border:none}
-  .topnav .navlink{margin-left:auto;color:var(--text-dim);font-size:13px;text-decoration:none}
-  .topnav .navlink:hover{color:var(--text)}
+  .topnav .tabnav button{font:600 15px/1 var(--disp);letter-spacing:.06em;
+    background:none;border:none;border-radius:6px;padding:8px 10px;margin:0;text-transform:uppercase;color:var(--nav-dim)}
+  .topnav .tabnav button:hover{color:var(--nav-text)}
+  .topnav .tabnav button.active{color:#fff;background:var(--nav-active);border:none}
+  .topnav .navlink{margin-left:auto;color:var(--nav-dim);font-size:13px;text-decoration:none}
+  .topnav .navlink:hover{color:var(--nav-text)}
   .topnav .auth-slot{margin-left:0}
 
   .strip{display:flex;gap:1px;overflow-x:auto;background:var(--line);border-bottom:1px solid var(--line);
-    min-height:67px;scrollbar-width:thin;scrollbar-color:#2c3b41 transparent}
-  .strip::-webkit-scrollbar{height:6px}.strip::-webkit-scrollbar-thumb{background:#2c3b41;border-radius:3px}
+    min-height:67px;scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
+  .strip::-webkit-scrollbar{height:6px}.strip::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:3px}
   .strip .tile{flex:0 0 150px;background:var(--panel);padding:9px 12px 10px;display:block;color:inherit;text-decoration:none}
   .strip .tile:hover{background:var(--panel-alt)}
   .strip .st{font:600 11px/1 var(--body);color:var(--text-dim);letter-spacing:.03em;text-transform:uppercase;
     margin-bottom:7px;display:flex;align-items:center;gap:6px}
-  .strip .st.live{color:#ff4d4f}
-  .strip .st.live:before{content:"";width:6px;height:6px;border-radius:50%;background:#ff4d4f}
+  .strip .st.live{color:var(--live)}
+  .strip .st.live:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live)}
   .strip .tr{display:flex;justify-content:space-between;font:600 15px/1.35 var(--disp);letter-spacing:.03em;color:var(--text-dim)}
   .strip .tr.w{color:var(--text)}
-  .strip .tsw{display:inline-block;width:3px;height:12px;border-radius:2px;margin-right:7px;vertical-align:-1px;background:#5e6e74}
+  .strip .tsw{display:inline-block;width:3px;height:12px;border-radius:2px;margin-right:7px;vertical-align:-1px;background:var(--swatch)}
   .strip .none{color:var(--text-dim);font-size:12.5px;padding:24px 20px;background:var(--panel);flex:1}
 
   .sporthead{margin:22px 0 14px}
@@ -1267,7 +1286,7 @@
   .matchup{font-size:28px;letter-spacing:.02em}
   .kickoff,.venue-line{font-family:var(--body);font-size:12.5px;letter-spacing:0;color:var(--text-dim)}
   .primetime-badge{font-family:var(--body);font-size:10.5px;font-weight:700;letter-spacing:.06em;
-    color:var(--green);background:rgba(0,194,184,.14);padding:3px 7px;border-radius:4px}
+    color:var(--green);background:var(--accent-tint);padding:3px 7px;border-radius:4px}
   .final-badge{font-family:var(--body)!important;letter-spacing:.06em!important}
   .game-permalink{font-family:var(--body);font-size:12px;font-weight:600;color:var(--text);
     background:var(--panel-alt);border:1px solid var(--line);border-radius:6px;padding:5px 10px;margin-left:8px}
@@ -1306,7 +1325,18 @@
   .parlay-card{border-color:var(--line);border-left:3px solid var(--green)}
   .parlay-title{font-size:16px;letter-spacing:.07em;color:var(--text)}
   .placeholder{font-family:var(--body)}
+
+  .theme-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;
+    border-radius:6px;border:1px solid rgba(255,255,255,.18);background:none;color:var(--nav-text);cursor:pointer}
+  .theme-toggle:hover{background:rgba(255,255,255,.08)}
+  .theme-toggle svg{width:17px;height:17px}
+  .theme-toggle .sun{display:none}
+  html[data-theme="dark"] .theme-toggle .sun{display:block}
+  html[data-theme="dark"] .theme-toggle .moon{display:none}
   .p-exp{color:var(--text-dim);font-size:12px;line-height:1.5}
+  /* Solid badge: aqua text on a pale aqua fill measured 4.35:1 in light mode,
+     under the 4.5:1 minimum for text this small. */
+  .value-tag{color:var(--on-accent);background:var(--green);border-color:var(--green)}
   .matchup{cursor:pointer}
   .expand-hint{opacity:0;transition:opacity .15s;font-family:var(--body)!important;font-size:11px!important;
     letter-spacing:.03em!important;text-transform:none!important}
@@ -1330,6 +1360,7 @@
     <button id="tabbtn-nhl" onclick="showTab('nhl')">NHL</button>
   </nav>
   <a class="navlink" href="/track-record">Track record</a>
+  <button class="theme-toggle" id="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Dark mode"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
   <div class="auth-slot" id="auth-slot"></div>
 </header>
 <div class="strip" id="scorestrip" aria-label="Scores"></div>
@@ -5372,6 +5403,16 @@ initAccounts();
 applyRouteFromLocation();
 window.addEventListener('popstate', applyRouteFromLocation);
 
+
+// Light is the default; the choice is remembered per browser under
+// "pu-theme", the same key the game pages read, so it carries across the site.
+// Applied before first paint by the inline script in <head>.
+function toggleTheme(){
+  const root = document.documentElement;
+  const dark = root.getAttribute('data-theme') !== 'dark';
+  if(dark) root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
+  try{ localStorage.setItem('pu-theme', dark ? 'dark' : 'light'); }catch(e){}
+}
 // ---- Scoreboard strip -------------------------------------------------------
 // Live scores across the top for whichever sport is showing, from ESPN's
 // public scoreboard (the same host the box scores already use). NFL tiles

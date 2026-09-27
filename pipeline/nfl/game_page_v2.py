@@ -29,44 +29,25 @@ import json
 
 from pipeline.nfl.build_game_pages import (SITE, e, nickname, pct, odds, pretty_date,
                                            team_stats_table)
+from pipeline import site_theme
 
 # ESPN spells two NFL teams differently from nflverse.
 ESPN_ABBR = {"LA": "LAR", "WAS": "WSH"}
 
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
-         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700'
-         '&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">')
+FONTS = site_theme.FONTS
 
 CSS = """
-:root{--bg:#0b1114;--surface:#121a1e;--surface2:#172227;--line:#223036;--text:#e9eef0;
---dim:#8a9aa0;--faint:#5e6e74;--accent:#00c2b8;--live:#ff4d4f;
---disp:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
---body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 var(--body);
 -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 a{color:inherit;text-decoration:none}
 .num{font-variant-numeric:tabular-nums}
 
-/* top nav */
-.nav{display:flex;align-items:center;gap:22px;height:52px;padding:0 20px;
-border-bottom:1px solid var(--line);background:#0d1518;position:sticky;top:0;z-index:20}
-.brand{font:700 21px/1 var(--disp);letter-spacing:.04em}
-.brand b{color:var(--accent);font-weight:700}
-.nav .sp{display:flex;gap:4px}
-.nav .sp a{font:600 15px/1 var(--disp);letter-spacing:.06em;color:var(--dim);
-padding:8px 10px;border-radius:6px}
-.nav .sp a:hover{color:var(--text)}
-.nav .sp a.on{color:var(--text);background:var(--surface2)}
-.nav .rt{margin-left:auto;display:flex;gap:18px;font-size:13px;color:var(--dim)}
-.nav .rt a:hover{color:var(--text)}
-
 /* scoreboard strip */
 .strip{display:flex;gap:1px;overflow-x:auto;background:var(--line);
-border-bottom:1px solid var(--line);scrollbar-width:thin;scrollbar-color:#2c3b41 transparent}
+border-bottom:1px solid var(--line);scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
 .strip::-webkit-scrollbar{height:6px}.strip::-webkit-scrollbar-track{background:transparent}
-.strip::-webkit-scrollbar-thumb{background:#2c3b41;border-radius:3px}
+.strip::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:3px}
 .tile{flex:0 0 150px;background:var(--surface);padding:9px 12px 10px;display:block}
 .tile:hover{background:var(--surface2)}
 .tile.cur{background:var(--surface2);box-shadow:inset 0 -2px 0 var(--accent)}
@@ -129,7 +110,7 @@ th,td{padding:8px 10px;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
 thead th{font:600 11px/1 var(--body);color:var(--faint);letter-spacing:.05em;
 text-transform:uppercase;border-bottom:1px solid var(--line)}
-tbody td{border-bottom:1px solid #1a2529}
+tbody td{border-bottom:1px solid var(--row)}
 tbody tr:last-child td{border-bottom:none}
 td.b,th.b{font-weight:700;color:var(--text)}
 .ls td:first-child{font:700 15px/1 var(--disp);letter-spacing:.04em}
@@ -139,7 +120,7 @@ td.b,th.b{font-weight:700;color:var(--text)}
 /* team stats comparison */
 .cmp{padding:6px 16px 12px}
 .cmp .row{display:grid;grid-template-columns:70px 1fr 70px;align-items:center;gap:10px;padding:7px 0;
-border-bottom:1px solid #1a2529}
+border-bottom:1px solid var(--row)}
 .cmp .row:last-child{border-bottom:none}
 .cmp .v{font-weight:600}
 .cmp .v.r{text-align:right}
@@ -156,34 +137,34 @@ color:var(--dim);margin:0;padding:12px 16px 4px}
 /* plays */
 .q{font:700 12px/1 var(--disp);letter-spacing:.1em;color:var(--faint);padding:12px 16px 4px}
 .play{display:grid;grid-template-columns:48px 1fr auto;gap:12px;padding:10px 16px;
-border-top:1px solid #1a2529;align-items:start}
+border-top:1px solid var(--row);align-items:start}
 .play .tm{font:700 14px/1.2 var(--disp);letter-spacing:.04em}
 .play .tx{color:var(--dim);font-size:13px}
 .play .tx b{color:var(--text);font-weight:600}
 .play .sc{font:700 16px/1 var(--disp)}
 
 /* leaders */
-.ld{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1a2529}
+.ld{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--row)}
 .ld:first-of-type{border-top:none}
 .ld>div{padding:11px 16px}
-.ld>div+div{border-left:1px solid #1a2529}
+.ld>div+div{border-left:1px solid var(--row)}
 .ld .k{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
 .ld .p{font-weight:600;margin-top:3px}
 .ld .s{color:var(--dim);font-size:12.5px}
 
 /* model */
-.mrow{display:flex;justify-content:space-between;padding:9px 16px;border-top:1px solid #1a2529}
+.mrow{display:flex;justify-content:space-between;padding:9px 16px;border-top:1px solid var(--row)}
 .mrow:first-child{border-top:none}
 .mrow .k{color:var(--dim)}
 .mrow .v{font-weight:600}
 .big{font:700 26px/1 var(--disp)}
 .pill{display:inline-block;font:600 10.5px/1 var(--body);letter-spacing:.05em;text-transform:uppercase;
-padding:4px 7px;border-radius:4px;background:rgba(0,194,184,.14);color:var(--accent)}
-.pill.no{background:rgba(255,77,79,.13);color:var(--live)}
-.lock{padding:14px 16px;color:var(--dim);font-size:13px;border-top:1px solid #1a2529}
+padding:4px 7px;border-radius:4px;background:var(--accent-tint);color:var(--accent)}
+.pill.no{background:var(--bad-tint);color:var(--red)}
+.lock{padding:14px 16px;color:var(--dim);font-size:13px;border-top:1px solid var(--row)}
 .lock a{color:var(--accent);font-weight:600}
 .wp svg{display:block;width:100%;height:auto}
-.inj{display:flex;justify-content:space-between;padding:8px 16px;border-top:1px solid #1a2529;font-size:13px}
+.inj{display:flex;justify-content:space-between;padding:8px 16px;border-top:1px solid var(--row);font-size:13px}
 .inj .s{color:var(--dim)}
 .inj .s.out{color:var(--live)}
 .card .card{border:none;background:none;margin:0 0 14px;padding:0}
@@ -293,17 +274,17 @@ function winProb(sum, ev){
   const pts = wp.map((p, i) => [P + i * (W - 2 * P) / (wp.length - 1), P + (1 - p.homeWinPercentage) * (H - 2 * P)]);
   const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
   const a = side(ev, 'away'), h = side(ev, 'home');
-  let ca = hex(a.team.color) || '#8a9aa0', ch = hex(h.team.color) || '#00c2b8';
+  let ca = hex(a.team.color) || '#6b8790', ch = hex(h.team.color) || '#007a82';
   if (near(ca, ch)) ch = hex(h.team.alternateColor) || ch;
   const last = wp[wp.length - 1].homeWinPercentage;
   const lead = last >= 0.5 ? h : a, lp = last >= 0.5 ? last : 1 - last;
   return `<div class="pad" style="padding-bottom:4px;display:flex;justify-content:space-between;font-size:12px;color:var(--dim)">
       <span><b style="color:var(--text)">${esc(lead.team.abbreviation)}</b> ${(lp * 100).toFixed(1)}%</span><span>ESPN win probability</span></div>
     <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Win probability through the game">
-      <line x1="${P}" x2="${W-P}" y1="${H/2}" y2="${H/2}" stroke="#2c3b41" stroke-dasharray="4 4"/>
-      <text x="${P+2}" y="${P+11}" fill="${ch}" font-size="11" font-weight="700">${esc(h.team.abbreviation)}</text>
-      <text x="${P+2}" y="${H-P-3}" fill="${ca}" font-size="11" font-weight="700">${esc(a.team.abbreviation)}</text>
-      <path d="${line}" fill="none" stroke="#e9eef0" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="${P}" x2="${W-P}" y1="${H/2}" y2="${H/2}" style="stroke:var(--chart-mid)" stroke-dasharray="4 4"/>
+      <text x="${P+2}" y="${P+11}" style="fill:var(--dim)" font-size="11" font-weight="700">${esc(h.team.abbreviation)}</text>
+      <text x="${P+2}" y="${H-P-3}" style="fill:var(--dim)" font-size="11" font-weight="700">${esc(a.team.abbreviation)}</text>
+      <path d="${line}" fill="none" style="stroke:var(--chart-line)" stroke-width="2" stroke-linejoin="round"/>
     </svg>`;
 }
 
@@ -462,22 +443,19 @@ def head(title, desc, canonical, ld):
         '<title>%s</title><meta name="description" content="%s">'
         '<link rel="canonical" href="%s">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
-        '<meta name="theme-color" content="#0b1114">'
+        '<meta name="theme-color" content="#005778">'
         '<meta property="og:type" content="article"><meta property="og:site_name" content="Phins Up">'
         '<meta property="og:title" content="%s"><meta property="og:description" content="%s">'
         '<meta property="og:url" content="%s"><meta property="og:image" content="%s/og.png">'
         '<meta name="twitter:card" content="summary_large_image">'
         % (e(title), e(desc), e(canonical), e(title), e(desc), e(canonical), SITE)
-        + FONTS + "<style>" + CSS + "</style>"
+        + site_theme.HEAD_SCRIPT + FONTS
+        + "<style>" + site_theme.TOKENS + site_theme.NAV_CSS + CSS + "</style>"
         + '<script type="application/ld+json">' + _esc_json(ld) + "</script></head><body>")
 
 
 def nav(active="nfl"):
-    sp = "".join('<a href="%s/%s" class="%s">%s</a>' % (SITE, h, "on" if k == active else "", lab)
-                 for k, h, lab in (("nfl", "", "NFL"), ("mlb", "#mlb", "MLB"), ("nhl", "#nhl", "NHL")))
-    return ('<header class="nav"><a class="brand" href="%s/">PHINS <b>UP</b></a>'
-            '<nav class="sp">%s</nav><div class="rt"><a href="%s/track-record">Track record</a>'
-            '<a href="%s/">Sign in</a></div></header>' % (SITE, sp, SITE, SITE))
+    return site_theme.nav(SITE, active)
 
 
 def strip_static(week_games, cur_slug):
@@ -623,6 +601,7 @@ def page(g, season, week, result, week_games, slug, canonical, title, desc, ld):
         '&middot; <a href="%s/track-record">Track record</a> &middot; '
         '<a href="https://x.com/PhinsUpDotNet" rel="noopener">@PhinsUpDotNet</a></footer>' % SITE,
         '</main>',
+        site_theme.TOGGLE_JS,
         '<script>const CFG=%s;</script><script>%s</script>' % (_esc_json(cfg), JS),
         '</body></html>',
     ])

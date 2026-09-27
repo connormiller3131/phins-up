@@ -34,6 +34,7 @@ from pipeline.nfl.props.prop_models import (
 )
 from pipeline.common.count_dist import estimate_dispersion
 from pipeline.nfl.grade_results import STAT_COL_BY_MARKET
+from pipeline.nfl import calibration
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_history import record_title_odds
@@ -640,7 +641,7 @@ def save_pending_props(store):
         json.dump(store, f)
 
 
-def write_prediction_snapshot(season, week, game):
+def write_prediction_snapshot(season, week, game, prop_prob_model=PROP_PROB_MODEL):
     """Freezes this game's pregame prediction (win probs + full props array)
     the first time it's generated. Never overwritten on later runs, so it
     stays the model's true pregame call even as later refreshes update
@@ -675,7 +676,10 @@ def write_prediction_snapshot(season, week, game):
         # record or calibration chart has to filter on this rather than
         # pooling probabilities from different models (the same trap MLB's
         # PROP_PROB_MODEL guards against).
-        "prop_prob_model": PROP_PROB_MODEL,
+        # Carries the calibration suffix only when a correction was actually
+        # applied, so a run with too little graded data to fit one never
+        # claims to be calibrated.
+        "prop_prob_model": prop_prob_model,
         "elo_home_prob": game["elo_home_prob"],
         "market_home_prob": game["market_home_prob"],
         "graded": False,
@@ -947,6 +951,13 @@ def main():
     prop_models["td"] = prepare_td_model()
     print("Prop models ready.", flush=True)
 
+    # Fitted on every graded NFL yardage rung on disk. Only graded games feed
+    # it and it is applied to games not yet played, so it never sees the
+    # outcome of anything it corrects. None means too little data yet, in
+    # which case probabilities stay raw and the stamp stays unsuffixed.
+    rung_cal = calibration.fit(RESULTS_DIR)
+    prop_version = PROP_PROB_MODEL + (calibration.VERSION_SUFFIX if rung_cal else "")
+
     injury_status = load_injury_status(target_season)
 
     print("Fetching current DraftKings game lines (one bulk call)...", flush=True)
@@ -971,6 +982,10 @@ def main():
                                               injuries=injury_status, week=week)
                          + build_props_for_team(home, away, starters, home_env, prop_models,
                                                 injuries=injury_status, week=week))
+                # Before anything reads them: the frozen snapshot, the ladder
+                # the SGP picks from, and the payload the site renders all see
+                # the same calibrated numbers, with the raw ones kept alongside.
+                calibration.apply(props, rung_cal)
 
             elo_p = week_elo[i]
             market_home_prob = round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None
@@ -1024,7 +1039,7 @@ def main():
         if week == current_week:
             for g in games_out:
                 if not g["already_played"]:
-                    write_prediction_snapshot(target_season, week, g)
+                    write_prediction_snapshot(target_season, week, g, prop_prob_model=prop_version)
 
         weeks_out[str(week)] = {"games": games_out}
         print(f"  week {week}: {len(games_out)} games, "

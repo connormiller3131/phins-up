@@ -2907,9 +2907,19 @@ async function loadNflTrackRecord(){
   if(manifest === null) return {byMarket: {}, games: 0, calBins: [], calDays: 0};
 
   const byMarket = {};
-  const calBins = Array.from({length: 10}, (_, i) => ({lo: i/10, hi: (i+1)/10, n: 0, predSum: 0, actualSum: 0}));
+  // Calibration is binned PER MODEL VERSION and only one version is charted.
+  // NFL yardage probabilities are recalibrated from week 4 of 2026
+  // (pipeline/nfl/calibration.py); pooling games from before and after into
+  // one chart would make it impossible to tell whether either was calibrated.
+  // The accuracy/skill rows are deliberately NOT split: they grade the number
+  // we actually showed at the time, whichever version produced it. Mirrors
+  // collect_nfl in build_track_record.py.
+  const newBins = () => Array.from({length: 10}, (_, i) => ({lo: i/10, hi: (i+1)/10, n: 0, predSum: 0, actualSum: 0}));
+  const binsByVersion = {};
+  const gamesByVersion = {};
+  let curBins = null;
   const addCal = (prob, outcome) => {
-    const b = calBins[Math.min(9, Math.max(0, Math.floor(prob * 10)))];
+    const b = curBins[Math.min(9, Math.max(0, Math.floor(prob * 10)))];
     b.n++; b.predSum += prob; b.actualSum += outcome;
   };
   const record = (market, prob, outcome) => {
@@ -2926,6 +2936,9 @@ async function loadNflTrackRecord(){
     const snap = await fetchJsonWithRetry(`results/${f}`);
     if(!snap || !snap.graded || !snap.actual) continue;
     games++;
+    const version = snap.prop_prob_model || NFL_BASE_PROB_MODEL;
+    curBins = binsByVersion[version] || (binsByVersion[version] = newBins());
+    gamesByVersion[version] = (gamesByVersion[version] || 0) + 1;
     const a = snap.actual;
     if(snap.elo_home_prob != null && a.home_score != null && a.away_score != null){
       record('Moneyline', snap.elo_home_prob, a.home_score > a.away_score ? 1 : 0);
@@ -2940,11 +2953,32 @@ async function loadNflTrackRecord(){
       record(p.market, p.model_over_prob, p.actual_value > p.line ? 1 : 0);
     });
   }
-  NFL_TRACK_RECORD_CACHE = {byMarket, games, calBins, calDays: games};
+  // Newest version with enough graded predictions to read, else the base one.
+  const counts = Object.fromEntries(Object.entries(binsByVersion).map(([v, bins]) => [v, bins.reduce((t, b) => t + b.n, 0)]));
+  const ready = Object.keys(counts).filter(v => counts[v] >= NFL_CAL_VIEW_MIN).sort();
+  const calVersion = ready.length ? ready[ready.length - 1]
+                   : (binsByVersion[NFL_BASE_PROB_MODEL] ? NFL_BASE_PROB_MODEL : Object.keys(binsByVersion)[0]);
+  const calBins = calVersion ? binsByVersion[calVersion] : newBins();
+  const calNote = nflCalibrationNote(calVersion, counts);
+  NFL_TRACK_RECORD_CACHE = {byMarket, games, calBins, calDays: calVersion ? gamesByVersion[calVersion] : 0, calNote};
   return NFL_TRACK_RECORD_CACHE;
 }
 
-function nflTrackRecordTableHtml(byMarket, games, calBins){
+const NFL_BASE_PROB_MODEL = 'mixed-v1';         // also what unstamped week 1 games used
+const NFL_CAL_VIEW_MIN = 500;                   // about one week of graded NFL predictions
+
+function nflCalibrationNote(calVersion, counts){
+  const calibrated = NFL_BASE_PROB_MODEL + '-cal1';
+  if(calVersion === calibrated){
+    return 'Calibration chart: recalibrated yardage probabilities, from Week 4 of 2026 on.';
+  }
+  const graded = counts[calibrated] || 0;
+  return 'Calibration chart: NFL yardage probabilities are recalibrated from Week 4 of 2026, but this chart '
+    + 'still shows the version before that, because ' + (graded ? `only ${graded.toLocaleString()} recalibrated predictions have been graded so far` : 'none has been graded yet')
+    + '. It switches over once there are enough to read. The two are never pooled.';
+}
+
+function nflTrackRecordTableHtml(byMarket, games, calBins, calDays, calNote){
   const markets = Object.keys(byMarket).sort();
   if(!markets.length){
     return `<div class="placeholder parlay-empty">No graded NFL predictions yet -- the first land once week 1 is played.</div>`;
@@ -2967,7 +3001,8 @@ function nflTrackRecordTableHtml(byMarket, games, calBins){
     <details class="props-toggle" id="nfl-track-record">
       <summary>Track Record <span class="props-sample-tag">(${games} graded game${games===1?'':'s'} &middot; ${totalN} predictions &middot; ${(overall*100).toFixed(0)}% accuracy)</span></summary>
       <div class="track-record-table">${rows}</div>
-      ${calibrationChartSvg(calBins, games)}
+      ${calibrationChartSvg(calBins, calDays != null ? calDays : games)}
+      ${calNote ? `<div class="p-exp" style="margin-top:4px;">${calNote}</div>` : ''}
       <div class="p-exp" style="margin-top:6px;">Every game moneyline and player prop with a real result, not just the ones that made it onto a card. "Accuracy" is whether the side the model favoured matched reality; "baseline" is what you would score guessing whichever side happens more often, with no skill at all. And "skill" is the number to judge us on: whether our probabilities beat simply quoting how often the thing happens. Accuracy can look strong on a lopsided market while the probabilities behind it are worse than no model at all, so skill carries the colour. Under 100 graded predictions it stays uncoloured, because at that size it is noise.</div>
     </details>`;
 }
@@ -2976,8 +3011,8 @@ async function renderNflTrackRecord(){
   const wrap = document.getElementById('nfl-track-record-wrap');
   if(!wrap) return;
   wrap.innerHTML = `<div class="placeholder">Loading track record...</div>`;
-  const {byMarket, games, calBins} = await loadNflTrackRecord();
-  wrap.innerHTML = nflTrackRecordTableHtml(byMarket, games, calBins);
+  const {byMarket, games, calBins, calDays, calNote} = await loadNflTrackRecord();
+  wrap.innerHTML = nflTrackRecordTableHtml(byMarket, games, calBins, calDays, calNote);
 }
 
 // Populate the plain-language primer on every sport tab. Done once at load

@@ -92,10 +92,30 @@ def collect_mlb(results_dir, cal):
     return store, dates
 
 
+# The calibration table must never pool two versions of the model, or it can
+# no longer say whether either one was calibrated. NFL yardage probabilities
+# are recalibrated from week 4 of 2026 (pipeline/nfl/calibration.py), so a
+# graded NFL game belongs to exactly one version and only one version is
+# shown: the newest with enough graded predictions to read. The skill table
+# is different on purpose -- it grades the probability we actually showed at
+# the time, whichever version produced it.
+NFL_BASE_VERSION = "mixed-v1"        # also what unstamped week 1 games used
+NFL_CAL_VIEW_MIN = 500               # about one week of graded NFL predictions
+
+
+def _nfl_version(snap):
+    return snap.get("prop_prob_model") or NFL_BASE_VERSION
+
+
 def collect_nfl(results_dir, cal):
-    """NFL snapshots are one file per game, graded in place once played."""
+    """NFL snapshots are one file per game, graded in place once played.
+
+    Calibration bins are gathered per model version and only the chosen
+    version is merged into `cal`. Also returns the chosen version and the
+    graded count per version, so the page can say what it is showing."""
     store, games = {}, 0
     market_n = market_correct = 0
+    by_version = {}
     for f in sorted(results_dir.glob("nfl_*.json")):
         try:
             snap = json.loads(f.read_text(encoding="utf-8"))
@@ -103,12 +123,13 @@ def collect_nfl(results_dir, cal):
             continue
         if not snap.get("graded") or not snap.get("actual"):
             continue
+        vcal = by_version.setdefault(_nfl_version(snap), new_calibration())
         a = snap["actual"]
         games += 1
         if (snap.get("elo_home_prob") is not None
                 and a.get("home_score") is not None and a.get("away_score") is not None):
             _record(store, "Moneyline", snap["elo_home_prob"],
-                    1 if a["home_score"] > a["away_score"] else 0, cal)
+                    1 if a["home_score"] > a["away_score"] else 0, vcal)
         if a.get("market_pick"):
             market_n += 1
             market_correct += 1 if a.get("market_correct") else 0
@@ -119,7 +140,7 @@ def collect_nfl(results_dir, cal):
                 # here because there is no line involved.
                 if p.get("hit") is None or p.get("model_prob") is None:
                     continue
-                _record(store, market, p["model_prob"], 1 if p["hit"] else 0, cal)
+                _record(store, market, p["model_prob"], 1 if p["hit"] else 0, vcal)
                 continue
 
             # Everything else is an over/under, and the stored `hit` CANNOT be
@@ -135,8 +156,18 @@ def collect_nfl(results_dir, cal):
                                   p.get("actual_value"))
             if prob is None or line is None or actual is None:
                 continue
-            _record(store, market, prob, 1 if actual > line else 0, cal)
-    return store, games, market_n, market_correct
+            _record(store, market, prob, 1 if actual > line else 0, vcal)
+    # Newest version with enough graded predictions to read, else the base one.
+    # "-cal1" sorts after the base name, so it takes over once it qualifies.
+    counts = {v: sum(b["n"] for b in bins) for v, bins in by_version.items()}
+    ready = sorted(v for v, n in counts.items() if n >= NFL_CAL_VIEW_MIN)
+    chosen = ready[-1] if ready else (NFL_BASE_VERSION if NFL_BASE_VERSION in by_version
+                                      else next(iter(by_version), None))
+    if chosen:
+        for dst, src in zip(cal, by_version[chosen]):
+            for k in ("n", "pred_sum", "actual_sum"):
+                dst[k] += src[k]
+    return store, games, market_n, market_correct, chosen, counts
 
 
 # Markets no longer offered. Their history stays on this page -- deleting the
@@ -282,7 +313,7 @@ def calibration_table(cal):
 def build(docs_dir, results_dir):
     cal = new_calibration()
     mlb, mlb_dates = collect_mlb(results_dir, cal)
-    nfl, nfl_games, mkt_n, mkt_correct = collect_nfl(results_dir, cal)
+    nfl, nfl_games, mkt_n, mkt_correct, nfl_cal_version, nfl_cal_counts = collect_nfl(results_dir, cal)
 
     total = sum(b["n"] for b in list(mlb.values()) + list(nfl.values()))
     canonical = "%s/track-record" % SITE
@@ -372,6 +403,20 @@ def build(docs_dir, results_dir):
             "not offered again until the models behind them are rebuilt.</p>")
 
     out.append(calibration_table(cal))
+    if nfl_cal_counts:
+        cal_ver = NFL_BASE_VERSION + "-cal1"
+        graded_cal = nfl_cal_counts.get(cal_ver, 0)
+        if nfl_cal_version == cal_ver:
+            nfl_note = "The NFL predictions in this table use the recalibrated yardage probabilities, from Week 4 of 2026 on."
+        else:
+            so_far = ("none has been graded yet" if not graded_cal
+                      else "only %s have been graded so far" % f"{graded_cal:,}")
+            nfl_note = ("NFL yardage probabilities are recalibrated from Week 4 of 2026. The NFL "
+                        "predictions in this table still come from the version before that, "
+                        "because %s; they switch over once there are enough to read. The two are "
+                        "never pooled, since mixing them would make it impossible to tell whether "
+                        "either one was calibrated." % so_far)
+        out.append("<p class='note'>%s</p>" % nfl_note)
 
     out.append(
         "<div class='cta'>These are statistical projections for information and "

@@ -41650,7 +41650,7 @@
               "over_prob": 0.048
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41680,7 +41680,7 @@
               "over_prob": 0.162
             }
           ],
-          "actual": 4
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41696,7 +41696,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 165,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41712,7 +41712,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 165,
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41724,7 +41724,7 @@
           "model_prob": 0.229,
           "confirmed_starter": false,
           "trailing_n": 18,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41750,7 +41750,7 @@
               "over_prob": 0.057
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41780,7 +41780,7 @@
               "over_prob": 0.252
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41796,7 +41796,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 128,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41812,7 +41812,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 128,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41824,7 +41824,7 @@
           "model_prob": 0.136,
           "confirmed_starter": false,
           "trailing_n": 17,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41850,7 +41850,7 @@
               "over_prob": 0.152
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41876,7 +41876,7 @@
               "over_prob": 0.153
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41892,7 +41892,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 66,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41908,7 +41908,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 66,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41920,7 +41920,7 @@
           "model_prob": 0.082,
           "confirmed_starter": false,
           "trailing_n": 17,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41946,7 +41946,7 @@
               "over_prob": 0.057
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41976,7 +41976,7 @@
               "over_prob": 0.209
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -41992,7 +41992,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 158,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42008,7 +42008,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 158,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42020,7 +42020,7 @@
           "model_prob": 0.131,
           "confirmed_starter": false,
           "trailing_n": 16,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42046,7 +42046,7 @@
               "over_prob": 0.053
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42076,7 +42076,7 @@
               "over_prob": 0.209
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42092,7 +42092,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 56,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42108,7 +42108,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 56,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42120,7 +42120,7 @@
           "model_prob": 0.137,
           "confirmed_starter": false,
           "trailing_n": 14,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42146,7 +42146,7 @@
               "over_prob": 0.173
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42172,7 +42172,7 @@
               "over_prob": 0.148
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42188,7 +42188,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 135,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42204,7 +42204,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 135,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42216,7 +42216,7 @@
           "model_prob": 0.103,
           "confirmed_starter": false,
           "trailing_n": 13,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42242,7 +42242,7 @@
               "over_prob": 0.132
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42268,7 +42268,7 @@
               "over_prob": 0.116
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42284,7 +42284,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 135,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42300,7 +42300,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 135,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42312,7 +42312,7 @@
           "model_prob": 0.076,
           "confirmed_starter": false,
           "trailing_n": 13,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42338,7 +42338,7 @@
               "over_prob": 0.112
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42364,7 +42364,7 @@
               "over_prob": 0.137
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42380,7 +42380,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 94,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42396,7 +42396,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 94,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42408,7 +42408,7 @@
           "model_prob": 0.097,
           "confirmed_starter": false,
           "trailing_n": 11,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42530,7 +42530,7 @@
               "over_prob": 0.112
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42556,7 +42556,7 @@
               "over_prob": 0.106
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42572,7 +42572,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 92,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42588,7 +42588,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 92,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -42600,7 +42600,7 @@
           "model_prob": 0.078,
           "confirmed_starter": false,
           "trailing_n": 11,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43014,7 +43014,7 @@
               "over_prob": 0.077
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43044,7 +43044,7 @@
               "over_prob": 0.209
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43060,7 +43060,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 71,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43076,7 +43076,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 71,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43088,7 +43088,7 @@
           "model_prob": 0.095,
           "confirmed_starter": false,
           "trailing_n": 17,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43114,7 +43114,7 @@
               "over_prob": 0.062
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43144,7 +43144,7 @@
               "over_prob": 0.188
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43160,7 +43160,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 144,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43176,7 +43176,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 144,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43188,7 +43188,7 @@
           "model_prob": 0.132,
           "confirmed_starter": false,
           "trailing_n": 17,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43214,7 +43214,7 @@
               "over_prob": 0.053
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43244,7 +43244,7 @@
               "over_prob": 0.228
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43260,7 +43260,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 155,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43276,7 +43276,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 155,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43288,7 +43288,7 @@
           "model_prob": 0.178,
           "confirmed_starter": false,
           "trailing_n": 16,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43314,7 +43314,7 @@
               "over_prob": 0.057
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43344,7 +43344,7 @@
               "over_prob": 0.194
             }
           ],
-          "actual": 4
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43360,7 +43360,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 141,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43376,7 +43376,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 141,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43388,7 +43388,7 @@
           "model_prob": 0.083,
           "confirmed_starter": false,
           "trailing_n": 15,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43414,7 +43414,7 @@
               "over_prob": 0.053
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43440,7 +43440,7 @@
               "over_prob": 0.168
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43456,7 +43456,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 127,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43472,7 +43472,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 127,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43484,7 +43484,7 @@
           "model_prob": 0.129,
           "confirmed_starter": false,
           "trailing_n": 15,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43510,7 +43510,7 @@
               "over_prob": 0.162
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43536,7 +43536,7 @@
               "over_prob": 0.142
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43552,7 +43552,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 77,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43568,7 +43568,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 77,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43580,7 +43580,7 @@
           "model_prob": 0.087,
           "confirmed_starter": false,
           "trailing_n": 14,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43606,7 +43606,7 @@
               "over_prob": 0.141
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43632,7 +43632,7 @@
               "over_prob": 0.132
             }
           ],
-          "actual": 3
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43648,7 +43648,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 157,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43664,7 +43664,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 157,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43676,7 +43676,7 @@
           "model_prob": 0.072,
           "confirmed_starter": false,
           "trailing_n": 14,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43702,7 +43702,7 @@
               "over_prob": 0.062
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43728,7 +43728,7 @@
               "over_prob": 0.163
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43744,7 +43744,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 100,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43760,7 +43760,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 100,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43772,7 +43772,7 @@
           "model_prob": 0.075,
           "confirmed_starter": false,
           "trailing_n": 13,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43894,7 +43894,7 @@
               "over_prob": 0.172
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43920,7 +43920,7 @@
               "over_prob": 0.137
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43936,7 +43936,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 128,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43952,7 +43952,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 128,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43964,7 +43964,7 @@
           "model_prob": 0.058,
           "confirmed_starter": false,
           "trailing_n": 11,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -43990,7 +43990,7 @@
               "over_prob": 0.122
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44016,7 +44016,7 @@
               "over_prob": 0.142
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44032,7 +44032,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 43,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44048,7 +44048,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 43,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44060,7 +44060,7 @@
           "model_prob": 0.083,
           "confirmed_starter": false,
           "trailing_n": 11,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44086,7 +44086,7 @@
               "over_prob": 0.155
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44112,7 +44112,7 @@
               "over_prob": 0.158
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44128,7 +44128,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 9,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44144,7 +44144,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 9,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44156,7 +44156,7 @@
           "model_prob": 0.087,
           "confirmed_starter": false,
           "trailing_n": 6,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44182,7 +44182,7 @@
               "over_prob": 0.131
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44212,7 +44212,7 @@
               "over_prob": 0.204
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44228,7 +44228,7 @@
           "model_dispersion": 0.0,
           "confirmed_starter": false,
           "trailing_n": 5,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44244,7 +44244,7 @@
           "model_dispersion": 1.2863,
           "confirmed_starter": false,
           "trailing_n": 5,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -44256,7 +44256,7 @@
           "model_prob": 0.122,
           "confirmed_starter": false,
           "trailing_n": 2,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -44285,7 +44285,7 @@
               "over_prob": 0.262
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -44300,7 +44300,7 @@
           "model_std": 0.875,
           "model_dispersion": 0.0571,
           "trailing_n": 8,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -44329,7 +44329,7 @@
               "over_prob": 0.277
             }
           ],
-          "actual": 7
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -44344,12 +44344,12 @@
           "model_std": 0.875,
           "model_dispersion": 0.0571,
           "trailing_n": 11,
-          "actual": 3
+          "actual": null
         }
       ],
-      "already_played": true,
-      "away_score": 2,
-      "home_score": 4,
+      "already_played": false,
+      "away_score": null,
+      "home_score": null,
       "awayTeamStats": {
         "offense": {
           "batting": {
@@ -44391,7 +44391,8 @@
             "runs_allowed_per_game": 3.7
           }
         }
-      }
+      },
+      "postponed_to": "2026-09-23"
     }
   ]
 }

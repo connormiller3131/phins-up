@@ -28328,7 +28328,7 @@
               "over_prob": 0.111
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28355,7 +28355,7 @@
               "over_prob": 0.176
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28368,7 +28368,7 @@
           "model_over_prob": 0.447,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28381,7 +28381,7 @@
           "model_over_prob": 0.319,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28391,7 +28391,7 @@
           "market": "Anytime HR",
           "model_prob": 0.231,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28414,7 +28414,7 @@
               "over_prob": 0.084
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28437,7 +28437,7 @@
               "over_prob": 0.332
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28450,7 +28450,7 @@
           "model_over_prob": 0.37,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28463,7 +28463,7 @@
           "model_over_prob": 0.684,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28473,7 +28473,7 @@
           "market": "Anytime HR",
           "model_prob": 0.085,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28496,7 +28496,7 @@
               "over_prob": 0.099
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28523,7 +28523,7 @@
               "over_prob": 0.286
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28536,7 +28536,7 @@
           "model_over_prob": 0.428,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28549,7 +28549,7 @@
           "model_over_prob": 0.487,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28559,7 +28559,7 @@
           "market": "Anytime HR",
           "model_prob": 0.115,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28582,7 +28582,7 @@
               "over_prob": 0.094
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28609,7 +28609,7 @@
               "over_prob": 0.266
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28622,7 +28622,7 @@
           "model_over_prob": 0.697,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28635,7 +28635,7 @@
           "model_over_prob": 0.464,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28645,7 +28645,7 @@
           "market": "Anytime HR",
           "model_prob": 0.115,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28668,7 +28668,7 @@
               "over_prob": 0.156
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28691,7 +28691,7 @@
               "over_prob": 0.409
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28704,7 +28704,7 @@
           "model_over_prob": 0.37,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28717,7 +28717,7 @@
           "model_over_prob": 0.464,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28727,7 +28727,7 @@
           "market": "Anytime HR",
           "model_prob": 0.099,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28832,7 +28832,7 @@
               "over_prob": 0.188
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28855,7 +28855,7 @@
               "over_prob": 0.326
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28868,7 +28868,7 @@
           "model_over_prob": 0.697,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28881,7 +28881,7 @@
           "model_over_prob": 0.464,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28891,7 +28891,7 @@
           "market": "Anytime HR",
           "model_prob": 0.099,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28914,7 +28914,7 @@
               "over_prob": 0.171
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28937,7 +28937,7 @@
               "over_prob": 0.403
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28950,7 +28950,7 @@
           "model_over_prob": 0.37,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28963,7 +28963,7 @@
           "model_over_prob": 0.671,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28973,7 +28973,7 @@
           "market": "Anytime HR",
           "model_prob": 0.085,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -28996,7 +28996,7 @@
               "over_prob": 0.188
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29023,7 +29023,7 @@
               "over_prob": 0.251
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29036,7 +29036,7 @@
           "model_over_prob": 0.37,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29049,7 +29049,7 @@
           "model_over_prob": 0.472,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29059,7 +29059,7 @@
           "market": "Anytime HR",
           "model_prob": 0.115,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29328,7 +29328,7 @@
               "over_prob": 0.18
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29351,7 +29351,7 @@
               "over_prob": 0.415
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29364,7 +29364,7 @@
           "model_over_prob": 0.662,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29377,7 +29377,7 @@
           "model_over_prob": 0.464,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29387,7 +29387,7 @@
           "market": "Anytime HR",
           "model_prob": 0.085,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29410,7 +29410,7 @@
               "over_prob": 0.093
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29437,7 +29437,7 @@
               "over_prob": 0.263
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29450,7 +29450,7 @@
           "model_over_prob": 0.342,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29463,7 +29463,7 @@
           "model_over_prob": 0.286,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29473,7 +29473,7 @@
           "market": "Anytime HR",
           "model_prob": 0.113,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29586,7 +29586,7 @@
               "over_prob": 0.088
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29613,7 +29613,7 @@
               "over_prob": 0.278
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29626,7 +29626,7 @@
           "model_over_prob": 0.457,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29639,7 +29639,7 @@
           "model_over_prob": 0.472,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29649,7 +29649,7 @@
           "market": "Anytime HR",
           "model_prob": 0.131,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29676,7 +29676,7 @@
               "over_prob": 0.046
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29703,7 +29703,7 @@
               "over_prob": 0.077
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29716,7 +29716,7 @@
           "model_over_prob": 0.418,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 3
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29729,7 +29729,7 @@
           "model_over_prob": 0.149,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29739,7 +29739,7 @@
           "market": "Anytime HR",
           "model_prob": 0.228,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29766,7 +29766,7 @@
               "over_prob": 0.04
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29793,7 +29793,7 @@
               "over_prob": 0.278
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29806,7 +29806,7 @@
           "model_over_prob": 0.182,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29819,7 +29819,7 @@
           "model_over_prob": 0.487,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29829,7 +29829,7 @@
           "market": "Anytime HR",
           "model_prob": 0.097,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29852,7 +29852,7 @@
               "over_prob": 0.11
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29879,7 +29879,7 @@
               "over_prob": 0.149
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29892,7 +29892,7 @@
           "model_over_prob": 0.361,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29905,7 +29905,7 @@
           "model_over_prob": 0.32,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29915,7 +29915,7 @@
           "market": "Anytime HR",
           "model_prob": 0.174,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29938,7 +29938,7 @@
               "over_prob": 0.088
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29965,7 +29965,7 @@
               "over_prob": 0.263
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29978,7 +29978,7 @@
           "model_over_prob": 0.379,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -29991,7 +29991,7 @@
           "model_over_prob": 0.472,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30001,7 +30001,7 @@
           "market": "Anytime HR",
           "model_prob": 0.131,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30024,7 +30024,7 @@
               "over_prob": 0.083
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30051,7 +30051,7 @@
               "over_prob": 0.254
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30064,7 +30064,7 @@
           "model_over_prob": 0.671,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30077,7 +30077,7 @@
           "model_over_prob": 0.472,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30087,7 +30087,7 @@
           "market": "Anytime HR",
           "model_prob": 0.097,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30196,7 +30196,7 @@
               "over_prob": 0.179
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30219,7 +30219,7 @@
               "over_prob": 0.323
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30232,7 +30232,7 @@
           "model_over_prob": 0.671,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30245,7 +30245,7 @@
           "model_over_prob": 0.495,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30255,7 +30255,7 @@
           "market": "Anytime HR",
           "model_prob": 0.097,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30278,7 +30278,7 @@
               "over_prob": 0.083
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30305,7 +30305,7 @@
               "over_prob": 0.249
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30318,7 +30318,7 @@
           "model_over_prob": 0.671,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30331,7 +30331,7 @@
           "model_over_prob": 0.28,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30341,7 +30341,7 @@
           "market": "Anytime HR",
           "model_prob": 0.097,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30360,7 +30360,7 @@
               "over_prob": 0.31
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30383,7 +30383,7 @@
               "over_prob": 0.381
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30396,7 +30396,7 @@
           "model_over_prob": 0.615,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30409,7 +30409,7 @@
           "model_over_prob": 0.657,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30419,7 +30419,7 @@
           "market": "Anytime HR",
           "model_prob": 0.083,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30431,7 +30431,7 @@
           "projected": 5.0,
           "model_over_prob": 0.505,
           "model_std": 1.456,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30443,7 +30443,7 @@
           "projected": 5.4,
           "model_over_prob": 0.474,
           "model_std": 1.529,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30455,7 +30455,7 @@
           "projected": 1.7,
           "model_over_prob": 0.362,
           "model_std": 0.871,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30467,7 +30467,7 @@
           "projected": 2.7,
           "model_over_prob": 0.419,
           "model_std": 1.347,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30479,7 +30479,7 @@
           "projected": 15.5,
           "model_over_prob": 0.421,
           "model_std": 2.605,
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30491,7 +30491,7 @@
           "projected": 4.5,
           "model_over_prob": 0.505,
           "model_std": 1.456,
-          "actual": 5
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30503,7 +30503,7 @@
           "projected": 4.4,
           "model_over_prob": 0.472,
           "model_std": 1.529,
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30515,7 +30515,7 @@
           "projected": 2.4,
           "model_over_prob": 0.256,
           "model_std": 0.871,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30527,7 +30527,7 @@
           "projected": 2.4,
           "model_over_prob": 0.475,
           "model_std": 1.347,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -30539,12 +30539,13 @@
           "projected": 14.6,
           "model_over_prob": 0.435,
           "model_std": 2.605,
-          "actual": 19
+          "actual": null
         }
       ],
-      "already_played": true,
-      "away_score": 0,
-      "home_score": 2
+      "already_played": false,
+      "away_score": null,
+      "home_score": null,
+      "postponed_to": "2026-07-22"
     },
     {
       "awayAbbr": "BAL",
@@ -30597,7 +30598,7 @@
               "over_prob": 0.11
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30624,7 +30625,7 @@
               "over_prob": 0.273
             }
           ],
-          "actual": 5
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30637,7 +30638,7 @@
           "model_over_prob": 0.689,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30650,7 +30651,7 @@
           "model_over_prob": 0.442,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30660,7 +30661,7 @@
           "market": "Anytime HR",
           "model_prob": 0.091,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30683,7 +30684,7 @@
               "over_prob": 0.078
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30710,7 +30711,7 @@
               "over_prob": 0.268
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30723,7 +30724,7 @@
           "model_over_prob": 0.438,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30736,7 +30737,7 @@
           "model_over_prob": 0.479,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30746,7 +30747,7 @@
           "market": "Anytime HR",
           "model_prob": 0.123,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30855,7 +30856,7 @@
               "over_prob": 0.093
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30882,7 +30883,7 @@
               "over_prob": 0.268
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30895,7 +30896,7 @@
           "model_over_prob": 0.418,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30908,7 +30909,7 @@
           "model_over_prob": 0.472,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30918,7 +30919,7 @@
           "market": "Anytime HR",
           "model_prob": 0.123,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30941,7 +30942,7 @@
               "over_prob": 0.098
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30968,7 +30969,7 @@
               "over_prob": 0.145
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30981,7 +30982,7 @@
           "model_over_prob": 0.418,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -30994,7 +30995,7 @@
           "model_over_prob": 0.14,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31004,7 +31005,7 @@
           "market": "Anytime HR",
           "model_prob": 0.165,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31027,7 +31028,7 @@
               "over_prob": 0.162
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31050,7 +31051,7 @@
               "over_prob": 0.405
             }
           ],
-          "actual": 3
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31063,7 +31064,7 @@
           "model_over_prob": 0.399,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31076,7 +31077,7 @@
           "model_over_prob": 0.487,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 3
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31086,7 +31087,7 @@
           "market": "Anytime HR",
           "model_prob": 0.091,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31109,7 +31110,7 @@
               "over_prob": 0.075
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31132,7 +31133,7 @@
               "over_prob": 0.338
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31145,7 +31146,7 @@
           "model_over_prob": 0.38,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31158,7 +31159,7 @@
           "model_over_prob": 0.458,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31168,7 +31169,7 @@
           "market": "Anytime HR",
           "model_prob": 0.095,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31273,7 +31274,7 @@
               "over_prob": 0.098
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31300,7 +31301,7 @@
               "over_prob": 0.197
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31313,7 +31314,7 @@
           "model_over_prob": 0.361,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31326,7 +31327,7 @@
           "model_over_prob": 0.464,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31336,7 +31337,7 @@
           "market": "Anytime HR",
           "model_prob": 0.123,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31359,7 +31360,7 @@
               "over_prob": 0.085
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31382,7 +31383,7 @@
               "over_prob": 0.318
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31395,7 +31396,7 @@
           "model_over_prob": 0.399,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31408,7 +31409,7 @@
           "model_over_prob": 0.457,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31418,7 +31419,7 @@
           "market": "Anytime HR",
           "model_prob": 0.078,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31441,7 +31442,7 @@
               "over_prob": 0.083
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31464,7 +31465,7 @@
               "over_prob": 0.323
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31477,7 +31478,7 @@
           "model_over_prob": 0.438,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31490,7 +31491,7 @@
           "model_over_prob": 0.449,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31500,7 +31501,7 @@
           "market": "Anytime HR",
           "model_prob": 0.091,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31683,7 +31684,7 @@
               "over_prob": 0.079
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31706,7 +31707,7 @@
               "over_prob": 0.322
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31719,7 +31720,7 @@
           "model_over_prob": 0.347,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31732,7 +31733,7 @@
           "model_over_prob": 0.437,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31742,7 +31743,7 @@
           "market": "Anytime HR",
           "model_prob": 0.09,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31765,7 +31766,7 @@
               "over_prob": 0.187
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31788,7 +31789,7 @@
               "over_prob": 0.322
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31801,7 +31802,7 @@
           "model_over_prob": 0.186,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31814,7 +31815,7 @@
           "model_over_prob": 0.437,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31824,7 +31825,7 @@
           "market": "Anytime HR",
           "model_prob": 0.104,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31847,7 +31848,7 @@
               "over_prob": 0.079
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31874,7 +31875,7 @@
               "over_prob": 0.257
             }
           ],
-          "actual": 3
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31887,7 +31888,7 @@
           "model_over_prob": 0.443,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31900,7 +31901,7 @@
           "model_over_prob": 0.264,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -31910,7 +31911,7 @@
           "market": "Anytime HR",
           "model_prob": 0.121,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32019,7 +32020,7 @@
               "over_prob": 0.156
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32042,7 +32043,7 @@
               "over_prob": 0.301
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32055,7 +32056,7 @@
           "model_over_prob": 0.366,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32068,7 +32069,7 @@
           "model_over_prob": 0.437,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32078,7 +32079,7 @@
           "market": "Anytime HR",
           "model_prob": 0.104,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32101,7 +32102,7 @@
               "over_prob": 0.163
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32128,7 +32129,7 @@
               "over_prob": 0.229
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32141,7 +32142,7 @@
           "model_over_prob": 0.366,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32154,7 +32155,7 @@
           "model_over_prob": 0.46,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32164,7 +32165,7 @@
           "market": "Anytime HR",
           "model_prob": 0.121,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32187,7 +32188,7 @@
               "over_prob": 0.159
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32210,7 +32211,7 @@
               "over_prob": 0.39
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32223,7 +32224,7 @@
           "model_over_prob": 0.676,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32236,7 +32237,7 @@
           "model_over_prob": 0.65,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32246,7 +32247,7 @@
           "market": "Anytime HR",
           "model_prob": 0.077,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32269,7 +32270,7 @@
               "over_prob": 0.141
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32292,7 +32293,7 @@
               "over_prob": 0.359
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32305,7 +32306,7 @@
           "model_over_prob": 0.347,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32318,7 +32319,7 @@
           "model_over_prob": 0.639,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32328,7 +32329,7 @@
           "market": "Anytime HR",
           "model_prob": 0.077,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32351,7 +32352,7 @@
               "over_prob": 0.148
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32374,7 +32375,7 @@
               "over_prob": 0.381
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32387,7 +32388,7 @@
           "model_over_prob": 0.62,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32400,7 +32401,7 @@
           "model_over_prob": 0.639,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32410,7 +32411,7 @@
           "market": "Anytime HR",
           "model_prob": 0.077,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32433,7 +32434,7 @@
               "over_prob": 0.163
             }
           ],
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32460,7 +32461,7 @@
               "over_prob": 0.243
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32473,7 +32474,7 @@
           "model_over_prob": 0.366,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32486,7 +32487,7 @@
           "model_over_prob": 0.43,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 1
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32496,7 +32497,7 @@
           "market": "Anytime HR",
           "model_prob": 0.14,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32519,7 +32520,7 @@
               "over_prob": 0.163
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32542,7 +32543,7 @@
               "over_prob": 0.291
             }
           ],
-          "actual": 2
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32555,7 +32556,7 @@
           "model_over_prob": 0.443,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32568,7 +32569,7 @@
           "model_over_prob": 0.66,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32578,7 +32579,7 @@
           "market": "Anytime HR",
           "model_prob": 0.09,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32683,7 +32684,7 @@
               "over_prob": 0.164
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32706,7 +32707,7 @@
               "over_prob": 0.383
             }
           ],
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32719,7 +32720,7 @@
           "model_over_prob": 0.62,
           "model_std": 0.556,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32732,7 +32733,7 @@
           "model_over_prob": 0.435,
           "model_std": 0.822,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Batting",
@@ -32742,7 +32743,7 @@
           "market": "Anytime HR",
           "model_prob": 0.077,
           "confirmed_starter": false,
-          "actual": 0
+          "actual": null
         },
         {
           "section": "Pitching",
@@ -32805,9 +32806,10 @@
           "actual": null
         }
       ],
-      "already_played": true,
-      "away_score": 3,
-      "home_score": 6
+      "already_played": false,
+      "away_score": null,
+      "home_score": null,
+      "postponed_to": "2026-07-22"
     }
   ]
 }

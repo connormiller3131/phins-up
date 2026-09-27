@@ -42,9 +42,9 @@ function asFreeAccountSees(nflData, mlbData, acct) {
       g.props = entry ? entry.props : [];
     }
   }
-  for (const day of Object.values(mlb.days || {})) {
+  for (const [date, day] of Object.entries(mlb.days || {})) {
     for (const g of day.games || []) {
-      const entry = acct.mlb[String(g.gamePk)];
+      const entry = acct.mlb[`${date}|${g.gamePk}`];
       g.props = entry ? entry.props : [];
       if (entry && entry.hr_combo !== undefined) g.hr_combo = entry.hr_combo;
     }

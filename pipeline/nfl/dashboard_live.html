@@ -5107,9 +5107,11 @@ function mergeGatedPayload(payload){
     });
   });
   const mlb = payload.mlb || {};
-  Object.values(MLB_DATA.days || {}).forEach(day => {
+  // Date AND gamePk: a postponed game keeps its gamePk when it is made up,
+  // so it appears on two days (see mlb_game_key in gated_payload.py).
+  Object.entries(MLB_DATA.days || {}).forEach(([date, day]) => {
     (day.games || []).forEach(g => {
-      const hit = mlb[String(g.gamePk)];
+      const hit = mlb[`${date}|${g.gamePk}`];
       if(hit){ Object.assign(g, hit); merged++; }
     });
   });

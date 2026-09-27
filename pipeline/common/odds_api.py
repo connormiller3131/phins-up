@@ -22,6 +22,23 @@ def _api_key():
     return key
 
 
+def _raise_for_status(resp):
+    """raise_for_status, but carrying The Odds API's own reason. Every refresh
+    from 2026-09-10 onward logged only "401 Client Error: Unauthorized", which
+    cannot tell a used-up monthly quota from a revoked or mistyped key -- and
+    those have different fixes. The API says which in its JSON body
+    (error_code, e.g. OUT_OF_USAGE_CREDITS or INVALID_KEY). The request URL is
+    left out on purpose: it carries the key, and this goes to a public log."""
+    if resp.ok:
+        return
+    try:
+        body = resp.json()
+        reason = f"[{body.get('error_code')}] {body.get('message')}"
+    except ValueError:
+        reason = resp.text[:200]
+    raise requests.HTTPError(f"{resp.status_code} from The Odds API: {reason}", response=resp)
+
+
 def get_game_odds(sport_key: str, bookmaker: str = "draftkings", markets: str = "h2h,spreads,totals"):
     """Bulk game-lines pull for an entire sport's upcoming slate. Cheap: costs
     (# markets) credits total for ALL games in one call, regardless of slate size."""
@@ -36,7 +53,7 @@ def get_game_odds(sport_key: str, bookmaker: str = "draftkings", markets: str = 
         },
         timeout=30,
     )
-    resp.raise_for_status()
+    _raise_for_status(resp)
     remaining = resp.headers.get("x-requests-remaining")
     used = resp.headers.get("x-requests-used")
     print(f"[odds_api] credits used this call, remaining: {remaining} (used so far this period: {used})")
@@ -58,7 +75,7 @@ def get_event_player_props(sport_key: str, event_id: str, markets: str, bookmake
         },
         timeout=30,
     )
-    resp.raise_for_status()
+    _raise_for_status(resp)
     remaining = resp.headers.get("x-requests-remaining")
     used = resp.headers.get("x-requests-used")
     print(f"[odds_api] event props call for {event_id}, credits remaining: {remaining} (used so far this period: {used})")

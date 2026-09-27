@@ -110,7 +110,7 @@ const propKey = (playerId, market) => `${playerId}|${market}`;
 
 export function collectKeptIds(DATA, MLB_DATA, sel) {
   const nfl = new Map();   // "week|away|home" -> Set("<player_id>|<market>")
-  const mlb = new Map();   // gamePk           -> Set("<player_id>|<market>")
+  const mlb = new Map();   // "date|gamePk"     -> Set("<player_id>|<market>")
 
   const keep = (map, key, playerId, market) => {
     if (playerId == null || !market) return;
@@ -179,7 +179,9 @@ export function collectKeptIds(DATA, MLB_DATA, sel) {
 
   for (const [date, day] of Object.entries(MLB_DATA.days || {})) {
     const games = day.games || [];
-    const keyOf = (g) => String(g.gamePk);
+    // Must match mlb_game_key in gated_payload.py: a postponed game keeps its
+    // gamePk on its makeup date, so gamePk alone collides across days.
+    const keyOf = (g) => `${date}|${g.gamePk}`;
     scatter(mlb, keyOf, games, sel.collectMlbParlayLegs(games));
     scatter(mlb, keyOf, games, sel.mlbHrSpecialPicksForDate(date));
     for (const g of games) scatter(mlb, keyOf, [g], sel.collectMlbSameGameParlayLegs(g));

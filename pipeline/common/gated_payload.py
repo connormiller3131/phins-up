@@ -80,11 +80,16 @@ def nfl_game_key(week, game):
     return f"{week}|{game.get('awayAbbr')}|{game.get('homeAbbr')}"
 
 
-def mlb_game_key(game):
-    """MLB carries MLB's own gamePk, which is already unique per game and
-    survives doubleheaders (two games, same teams, same date, distinct
-    gamePk) where an abbreviation pair would collide."""
-    return str(game.get("gamePk"))
+def mlb_game_key(date, game):
+    """The slate date plus MLB's own gamePk. gamePk alone survives
+    doubleheaders (two games, same teams, same date, distinct gamePk) but NOT
+    postponements: a rained-out game keeps its gamePk when it is made up, so
+    it sits on two days of the slate under one id. Keyed by gamePk alone, the
+    makeup day's props overwrote the original day's, and a visitor opening
+    the original day got another day's props. Seen for real on TOR @ BAL,
+    gamePk 824785, postponed 2026-09-22 and played 2026-09-23; the account
+    split verifier caught it and failed three refreshes in a row."""
+    return f"{date}|{game.get('gamePk')}"
 
 
 def split_nfl(data):
@@ -108,12 +113,12 @@ def split_nfl(data):
 def split_mlb(data):
     """Mutates data into its free form; returns the gated map."""
     gated = {}
-    for day in (data.get("days") or {}).values():
+    for date, day in (data.get("days") or {}).items():
         for game in day.get("games") or []:
             summarise_props(game)
             lifted = _lift(game, MLB_GATED_GAME_KEYS)
             if lifted:
-                gated[mlb_game_key(game)] = lifted
+                gated[mlb_game_key(date, game)] = lifted
     return gated
 
 

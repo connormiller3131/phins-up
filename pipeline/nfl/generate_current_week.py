@@ -35,6 +35,7 @@ from pipeline.nfl.props.prop_models import (
 from pipeline.common.count_dist import estimate_dispersion
 from pipeline.nfl.grade_results import STAT_COL_BY_MARKET
 from pipeline.nfl import calibration
+from pipeline.nfl import qb_adjust
 from pipeline.nfl.props.nfl_td_odds import fetch_current_week_odds_map, attach_current_lines, attach_td_odds
 from pipeline.nfl.team_stats_display import build_team_stats_table, current_team_stats
 from pipeline.common.odds_history import record_title_odds
@@ -681,6 +682,9 @@ def write_prediction_snapshot(season, week, game, prop_prob_model=PROP_PROB_MODE
         # claims to be calibrated.
         "prop_prob_model": prop_prob_model,
         "elo_home_prob": game["elo_home_prob"],
+        "elo_home_prob_raw": game.get("elo_home_prob_raw"),
+        "qb_out_diff": game.get("qb_out_diff"),
+        "win_prob_model": "elo+qb1",
         "market_home_prob": game["market_home_prob"],
         "graded": False,
         "actual": None,
@@ -941,6 +945,14 @@ def main():
     # it does mean this is not a way to reconstruct who started in week 3.
     starters, depth_chart_dt = get_starters(target_season, current_week)
     print(f"Depth charts as of {depth_chart_dt}", flush=True)
+
+    # Quarterback-out shift on top of Elo (pipeline/nfl/qb_adjust.py). Only
+    # weeks with an injury report have entries, so every other week comes back
+    # as exactly raw Elo. A manual QB override for the current week counts as
+    # the starter being out.
+    qb_beta, _, _ = qb_adjust.fit_shift()
+    qb_out = qb_adjust.qb_out_by_week(
+        target_season, {current_week: load_starter_overrides(target_season, current_week)})
     temp_fill, wind_fill, implied_fill = env_fill_values(games_df)
 
     print("Fitting prop models (once, reused across all weeks)...", flush=True)
@@ -989,7 +1001,11 @@ def main():
 
             elo_p = week_elo[i]
             market_home_prob = round(float(row.market_home_prob), 4) if pd.notna(row.market_home_prob) else None
-            elo_home_prob = round(float(elo_p), 4) if elo_p is not None else None
+            elo_home_prob_raw = round(float(elo_p), 4) if elo_p is not None else None
+            qb_out_diff = qb_out.get((week, home), 0.0) - qb_out.get((week, away), 0.0)
+            elo_home_prob = elo_home_prob_raw
+            if elo_home_prob_raw is not None and qb_out_diff:
+                elo_home_prob = round(qb_adjust.adjust(elo_home_prob_raw, qb_out_diff, qb_beta), 4)
 
             # "Good value" (pregame odds only, per spec): does the model's win
             # probability for a side beat that side's own pregame fair %?
@@ -1013,6 +1029,11 @@ def main():
                 "good_value_home": good_value_home,
                 "good_value_away": good_value_away,
                 "elo_home_prob": elo_home_prob,
+                # Kept so the adjustment is inspectable and never compounds:
+                # everything downstream reads elo_home_prob, the raw Elo sits
+                # here, and qb_out_diff says why the two differ.
+                "elo_home_prob_raw": elo_home_prob_raw,
+                "qb_out_diff": qb_out_diff,
                 "roof": row.roof if pd.notna(row.roof) else None,
                 "away_rest": int(row.away_rest) if pd.notna(row.away_rest) else None,
                 "home_rest": int(row.home_rest) if pd.notna(row.home_rest) else None,

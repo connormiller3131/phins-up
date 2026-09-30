@@ -10,6 +10,1451 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.7412,
   "market_home_prob": 0.7221,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 24,
+    "home_score": 31,
+    "winner": "DET",
+    "model_pick": "DET",
+    "model_correct": true,
+    "market_pick": "DET",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-30T18:43:08",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Passing Yds",
+      "line": 219.5,
+      "projected": 219.3,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.79
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.697
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.589
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.474
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.361
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.174
+        }
+      ],
+      "actual_value": 321.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.362,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Completions",
+      "line": 21.5,
+      "projected": 21.4,
+      "model_over_prob": 0.494,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Pass Attempts",
+      "line": 31.5,
+      "projected": 31.4,
+      "model_over_prob": 0.497,
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.4,
+      "model_over_prob": 0.369,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 61.0,
+      "projected": 61.0,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.741
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.646
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.52
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.398
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.326
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.228
+        }
+      ],
+      "actual_value": 32.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 15.5,
+      "projected": 15.6,
+      "model_over_prob": 0.423,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.453,
+      "trailing_n": 8,
+      "opp_per_gm": 18.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 80.0,
+      "projected": 80.2,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 65.0,
+          "over_prob": 0.668
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.577
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.481
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.401
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.344
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.297
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.255
+        }
+      ],
+      "actual_value": 55.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 24.5,
+      "projected": 24.4,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.765
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.652
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.501
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.289
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.384,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 24.0,
+      "projected": 24.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.707
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.47
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.365
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.304
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.255
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 5.5,
+      "projected": 5.6,
+      "model_over_prob": 0.42,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.191,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 28.0,
+      "projected": 27.9,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.63
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.533
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.441
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.373
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.322
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.238
+        }
+      ],
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 8.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.46
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.22
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.18
+        }
+      ],
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.244,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 55.0,
+      "projected": 54.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.773
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.664
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.518
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.374
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 107.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.8,
+      "model_over_prob": 0.354,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.279,
+      "trailing_n": 8,
+      "opp_per_gm": 8.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 49.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.761
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.647
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.494
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.231
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.187
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.208,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Williams",
+      "player_id": "00-0039451",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 28.5,
+      "projected": 28.3,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.742
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.621
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.467
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.346
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.276
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.222
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.181
+        }
+      ],
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Williams",
+      "player_id": "00-0039451",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.387,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaiah Williams",
+      "player_id": "00-0039451",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.124,
+      "trailing_n": 8,
+      "opp_per_gm": 4.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mason Taylor",
+      "player_id": "00-0040736",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 29.5,
+      "projected": 29.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.768
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.658
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.293
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Mason Taylor",
+      "player_id": "00-0040736",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.374,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Mason Taylor",
+      "player_id": "00-0040736",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.148,
+      "trailing_n": 8,
+      "opp_per_gm": 4.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Sanders",
+      "player_id": "00-0034794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.272,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Sanders",
+      "player_id": "00-0034794",
+      "team": "NYJ",
+      "opp": "DET",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.464,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Passing Yds",
+      "line": 267.5,
+      "projected": 267.4,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.783
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.689
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.58
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.465
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.352
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.252
+        },
+        {
+          "line": 350.0,
+          "over_prob": 0.169
+        }
+      ],
+      "actual_value": 269.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.311,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Completions",
+      "line": 23.0,
+      "projected": 23.0,
+      "model_over_prob": 0.5,
+      "actual_value": 25.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Pass Attempts",
+      "line": 34.5,
+      "projected": 34.5,
+      "model_over_prob": 0.499,
+      "actual_value": 32.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 5.0,
+      "projected": 5.0,
+      "model_over_prob": 0.369,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 64.0,
+      "projected": 63.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.702
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.595
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.464
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.301
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.252
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.211
+        }
+      ],
+      "actual_value": 99.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Carries",
+      "line": 17.0,
+      "projected": 17.1,
+      "model_over_prob": 0.427,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.693,
+      "trailing_n": 8,
+      "opp_per_gm": 23.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Rush + Rec Yds",
+      "line": 100.5,
+      "projected": 100.4,
+      "model_over_prob": 0.398,
+      "ladder": [
+        {
+          "line": 85.0,
+          "over_prob": 0.673
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.582
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.485
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.403
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.347
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.299
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.256
+        }
+      ],
+      "actual_value": 164.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 43.5,
+      "projected": 43.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.745
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.348
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.223
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 65.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.436,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.7,
+      "model_over_prob": 0.382,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.46
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.36
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.3
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.251
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Carries",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.398,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.12,
+      "trailing_n": 8,
+      "opp_per_gm": 0.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Rush + Rec Yds",
+      "line": 13.0,
+      "projected": 13.2,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.537
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.444
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.375
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.279
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.24
+        }
+      ],
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.385
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.303
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.243
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.198
+        }
+      ],
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.402,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 84.0,
+      "projected": 84.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.758
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.644
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.491
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.358
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.285
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.23
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.388,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.368,
+      "trailing_n": 8,
+      "opp_per_gm": 11.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 67.0,
+      "projected": 67.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.812
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.719
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.591
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.431
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.327
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.263
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 49.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.477,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.265,
+      "trailing_n": 8,
+      "opp_per_gm": 8.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 25.0,
+      "projected": 25.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.774
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.665
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.52
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.375
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.296
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.238
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.193
+        }
+      ],
+      "actual_value": 66.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.306,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.25,
+      "trailing_n": 8,
+      "opp_per_gm": 3.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 50.0,
+      "projected": 49.8,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.771
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.661
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.514
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.372
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.236
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": 44.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.394,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.299,
+      "trailing_n": 8,
+      "opp_per_gm": 5.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.269,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "NYJ",
+      "market": "Kicking Points",
+      "line": 8.5,
+      "projected": 8.4,
+      "model_over_prob": 0.457,
+      "actual_value": 7.0,
+      "hit": false
+    }
+  ]
 }

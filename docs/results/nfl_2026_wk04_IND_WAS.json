@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 4,
+  "awayAbbr": "IND",
+  "homeAbbr": "WAS",
+  "awayName": "Indianapolis Colts",
+  "homeName": "Washington Commanders",
+  "gameday": "2026-10-04",
+  "predicted_at": "2026-09-30T18:44:01",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.4732,
+  "elo_home_prob_raw": 0.4732,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.3775,
+  "graded": false,
+  "actual": null
+}

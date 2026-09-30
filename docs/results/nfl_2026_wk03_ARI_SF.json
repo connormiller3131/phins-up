@@ -10,6 +10,1139 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.7513,
   "market_home_prob": 0.7867,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 30,
+    "home_score": 36,
+    "winner": "SF",
+    "model_pick": "SF",
+    "model_correct": true,
+    "market_pick": "SF",
+    "market_correct": true
+  },
+  "graded_at": "2026-09-30T18:43:08",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Passing Yds",
+      "line": 213.5,
+      "projected": 213.5,
+      "model_over_prob": 0.5,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.77
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.673
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.562
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.447
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.336
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.157
+        }
+      ],
+      "actual_value": 280.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.431,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Completions",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.506,
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Pass Attempts",
+      "line": 33.5,
+      "projected": 33.5,
+      "model_over_prob": 0.5,
+      "actual_value": 52.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jacoby Brissett",
+      "player_id": "00-0033119",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Rushing Yds",
+      "line": 11.5,
+      "projected": 11.6,
+      "model_over_prob": 0.373,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Rushing Yds",
+      "line": 38.0,
+      "projected": 38.0,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.686
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.574
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.443
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.35
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.244
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.206
+        }
+      ],
+      "actual_value": -1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Carries",
+      "line": 12.0,
+      "projected": 12.0,
+      "model_over_prob": 0.418,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.202,
+      "trailing_n": 8,
+      "opp_per_gm": 10.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Rush + Rec Yds",
+      "line": 47.5,
+      "projected": 47.4,
+      "model_over_prob": 0.397,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.707
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.619
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.523
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.432
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.366
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.317
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.273
+        }
+      ],
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.369
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.292
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.235
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.191
+        }
+      ],
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.315,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 61.0,
+      "projected": 61.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.794
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.694
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.555
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.4
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.311
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.25
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.203
+        }
+      ],
+      "actual_value": 89.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.462,
+      "actual_value": 11.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Michael Wilson",
+      "player_id": "00-0038559",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.297,
+      "trailing_n": 8,
+      "opp_per_gm": 8.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 35.5,
+      "projected": 35.7,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.787
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.684
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.543
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.391
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.306
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.246
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.2
+        }
+      ],
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.48,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Marvin Harrison Jr.",
+      "player_id": "00-0039849",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.158,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 19.1,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.757
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.49
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.285
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.229
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 22.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.299,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendrick Bourne",
+      "player_id": "00-0033307",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.097,
+      "trailing_n": 8,
+      "opp_per_gm": 3.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 68.0,
+      "projected": 68.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.74
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.618
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.461
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.343
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.274
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.221
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.18
+        }
+      ],
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 6.5,
+      "projected": 6.6,
+      "model_over_prob": 0.467,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.329,
+      "trailing_n": 8,
+      "opp_per_gm": 10.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.467,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "SF",
+      "market": "Kicking Points",
+      "line": 6.5,
+      "projected": 6.5,
+      "model_over_prob": 0.474,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Passing Yds",
+      "line": 226.0,
+      "projected": 225.8,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.811
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.723
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.618
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.504
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.389
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.194
+        }
+      ],
+      "actual_value": 297.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.275,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.7,
+      "model_over_prob": 0.513,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Pass Attempts",
+      "line": 27.5,
+      "projected": 27.7,
+      "model_over_prob": 0.506,
+      "actual_value": 27.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 24.5,
+      "projected": 24.5,
+      "model_over_prob": 0.371,
+      "actual_value": 34.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 67.0,
+      "projected": 66.9,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.756
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.664
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.544
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.416
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.337
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.281
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.235
+        }
+      ],
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.5,
+      "model_over_prob": 0.414,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.655,
+      "trailing_n": 8,
+      "opp_per_gm": 21.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Rush + Rec Yds",
+      "line": 99.0,
+      "projected": 99.1,
+      "model_over_prob": 0.4,
+      "ladder": [
+        {
+          "line": 85.0,
+          "over_prob": 0.65
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.557
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.461
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.387
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.287
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.247
+        }
+      ],
+      "actual_value": 116.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 39.0,
+      "projected": 39.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.755
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.639
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.486
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.355
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.283
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.228
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.185
+        }
+      ],
+      "actual_value": 41.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.386,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 45.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.792
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.691
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.55
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.396
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.309
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.248
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.201
+        }
+      ],
+      "actual_value": 34.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.481,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.316,
+      "trailing_n": 8,
+      "opp_per_gm": 6.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 40.0,
+      "projected": 40.1,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.777
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.669
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.525
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.379
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.299
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.24
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.195
+        }
+      ],
+      "actual_value": 80.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.415,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.209,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Demarcus Robinson",
+      "player_id": "00-0032775",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 32.0,
+      "projected": 31.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.259
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.209
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Demarcus Robinson",
+      "player_id": "00-0032775",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.413,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Demarcus Robinson",
+      "player_id": "00-0032775",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.221,
+      "trailing_n": 8,
+      "opp_per_gm": 3.0,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 52.0,
+      "projected": 52.2,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.812
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.718
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.59
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.43
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.327
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.262
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.212
+        }
+      ],
+      "actual_value": 82.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.394,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.273,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Eddy Pineiro",
+      "player_id": "00-0034173",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.487,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Eddy Pineiro",
+      "player_id": "00-0034173",
+      "team": "SF",
+      "opp": "ARI",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 7.9,
+      "model_over_prob": 0.464,
+      "actual_value": 6.0,
+      "hit": false
+    }
+  ]
 }

@@ -10,6 +10,1364 @@
   "prop_prob_model": "mixed-v1",
   "elo_home_prob": 0.5032,
   "market_home_prob": 0.3962,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 7,
+    "home_score": 27,
+    "winner": "CHI",
+    "model_pick": "CHI",
+    "model_correct": true,
+    "market_pick": "PHI",
+    "market_correct": false
+  },
+  "graded_at": "2026-09-30T18:43:08",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Passing Yds",
+      "line": 198.0,
+      "projected": 198.1,
+      "model_over_prob": 0.501,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.802
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.606
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.491
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.377
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.273
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 153.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.437,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Completions",
+      "line": 17.5,
+      "projected": 17.6,
+      "model_over_prob": 0.507,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.7,
+      "model_over_prob": 0.507,
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Rushing Yds",
+      "line": 24.0,
+      "projected": 24.1,
+      "model_over_prob": 0.374,
+      "actual_value": 25.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Rushing Yds",
+      "line": 74.5,
+      "projected": 74.6,
+      "model_over_prob": 0.38,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.716
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.613
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.483
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.372
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.216
+        }
+      ],
+      "actual_value": 82.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.7,
+      "model_over_prob": 0.432,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.488,
+      "trailing_n": 8,
+      "opp_per_gm": 19.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Rush + Rec Yds",
+      "line": 84.5,
+      "projected": 84.6,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.66
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.567
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.394
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.339
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.291
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.251
+        }
+      ],
+      "actual_value": 80.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 11.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.581
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": -2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.342,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Rushing Yds",
+      "line": 31.5,
+      "projected": 31.6,
+      "model_over_prob": 0.379,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.749
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.657
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.534
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.409
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.333
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.232
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Carries",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.403,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.253,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Rush + Rec Yds",
+      "line": 36.5,
+      "projected": 36.7,
+      "model_over_prob": 0.401,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.697
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.605
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.509
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.361
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.31
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.267
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 6.5,
+      "projected": 6.3,
+      "model_over_prob": 0.371,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.405
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.314
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.253
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.204
+        }
+      ],
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tank Bigsby",
+      "player_id": "00-0038555",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.464,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 52.0,
+      "projected": 51.9,
+      "model_over_prob": 0.374,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.807
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.582
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.421
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.323
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 65.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.422,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.21,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.3,
+      "model_over_prob": 0.372,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.814
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.721
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.594
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.434
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.329
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.264
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.213
+        }
+      ],
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.404,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.165,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.5,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.766
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.654
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.504
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.366
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.29
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.233
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.189
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.447,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Anytime TD",
+      "model_prob": 0.284,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.482,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "CHI",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.494,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Passing Yds",
+      "line": 222.5,
+      "projected": 222.4,
+      "model_over_prob": 0.499,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.8
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.709
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.603
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.488
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.374
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.27
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.183
+        }
+      ],
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.434,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 18.1,
+      "model_over_prob": 0.508,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Pass Attempts",
+      "line": 32.0,
+      "projected": 32.1,
+      "model_over_prob": 0.504,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Caleb Williams",
+      "player_id": "00-0039918",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 25.5,
+      "projected": 25.3,
+      "model_over_prob": 0.364,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 60.5,
+      "projected": 60.6,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.735
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.637
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.51
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.389
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.321
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.269
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.224
+        }
+      ],
+      "actual_value": 84.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.1,
+      "model_over_prob": 0.421,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.421,
+      "trailing_n": 8,
+      "opp_per_gm": 16.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 76.5,
+      "projected": 76.5,
+      "model_over_prob": 0.399,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.694
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.602
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.506
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.419
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.359
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.309
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.265
+        }
+      ],
+      "actual_value": 88.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 15.0,
+      "projected": 14.9,
+      "model_over_prob": 0.373,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.663
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.516
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.373
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.295
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.237
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.192
+        }
+      ],
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "D'Andre Swift",
+      "player_id": "00-0036275",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.417,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 39.5,
+      "projected": 39.5,
+      "model_over_prob": 0.378,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.712
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.609
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.478
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.37
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.308
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.258
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.214
+        }
+      ],
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 9.5,
+      "projected": 9.4,
+      "model_over_prob": 0.404,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.227,
+      "trailing_n": 8,
+      "opp_per_gm": 12.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 57.0,
+      "projected": 56.8,
+      "model_over_prob": 0.396,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.698
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.608
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.512
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.423
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.362
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.312
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.268
+        }
+      ],
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.376,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.736
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.612
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.455
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.34
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.272
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.219
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.179
+        }
+      ],
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyle Monangai",
+      "player_id": "00-0040236",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.264,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 42.0,
+      "projected": 42.0,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.808
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.714
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.584
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.424
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.324
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.26
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.21
+        }
+      ],
+      "actual_value": 44.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.336,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rome Odunze",
+      "player_id": "00-0039919",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.151,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 50.0,
+      "projected": 50.2,
+      "model_over_prob": 0.381,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.779
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.673
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.528
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.381
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.3
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.241
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.196
+        }
+      ],
+      "actual_value": 61.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.344,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Luther Burden III",
+      "player_id": "00-0040735",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.161,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 29.0,
+      "projected": 29.0,
+      "model_over_prob": 0.377,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.757
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.642
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.488
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.357
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.284
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.229
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.186
+        }
+      ],
+      "actual_value": 90.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.424,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kalif Raymond",
+      "player_id": "00-0032464",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.122,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 53.5,
+      "projected": 53.5,
+      "model_over_prob": 0.375,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.745
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.624
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.471
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.348
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.277
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.223
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.182
+        }
+      ],
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.403,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Colston Loveland",
+      "player_id": "00-0040126",
+      "team": "CHI",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.197,
+      "trailing_n": 8,
+      "opp_per_gm": 8.0,
+      "actual_scored": false,
+      "hit": false
+    }
+  ]
 }

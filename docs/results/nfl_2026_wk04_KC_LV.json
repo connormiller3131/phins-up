@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 4,
+  "awayAbbr": "KC",
+  "homeAbbr": "LV",
+  "awayName": "Kansas City Chiefs",
+  "homeName": "Las Vegas Raiders",
+  "gameday": "2026-10-04",
+  "predicted_at": "2026-09-30T18:44:01",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.39,
+  "elo_home_prob_raw": 0.39,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.3364,
+  "graded": false,
+  "actual": null
+}

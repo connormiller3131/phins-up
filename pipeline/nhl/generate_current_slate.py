@@ -153,6 +153,18 @@ def _nhl_name(entry):
     return f"{entry['firstName']['default']} {entry['lastName']['default']}"
 
 
+def _point_pct(t):
+    """The API leaves pointPctg OFF a team that has not played yet (0 of 0 is
+    undefined), rather than sending null or 0. Seen for real on 2026-09-28,
+    when /now rolled over to the 2026-27 table with 10 teams on 1 GP and 22
+    on 0: t["pointPctg"] raised KeyError and failed five refreshes in a row.
+    None for a team with no games; the page never shows this column."""
+    pct = t.get("pointPctg")
+    if pct is None and t.get("gamesPlayed"):
+        pct = t.get("points", 0) / (2 * t["gamesPlayed"])
+    return None if pct is None else round(pct, 3)
+
+
 def build_nhl_standings():
     """Real, current NHL standings straight from the league's own standings
     endpoint -- unlike NFL/MLB there's no win-loss aggregation to do
@@ -174,7 +186,7 @@ def build_nhl_standings():
             "rank": t["divisionSequence"],
             "games_played": t["gamesPlayed"], "wins": t["wins"], "losses": t["losses"],
             "ot_losses": t["otLosses"], "points": t["points"],
-            "point_pct": round(t["pointPctg"], 3), "streak": streak,
+            "point_pct": _point_pct(t), "streak": streak,
         }
         by_division.setdefault(row["division"], []).append(row)
     for div_rows in by_division.values():
@@ -404,9 +416,22 @@ def _safe_stat_leaders():
         return {"skaters": [], "goalies": []}
 
 
+def _safe_standings():
+    """Same reasoning as _safe_stat_leaders: the standings table is a panel,
+    and a field the league's API stops sending must not throw away the
+    night's predictions for all three sports. It did exactly that for two
+    days (see _point_pct). An empty table renders as an empty section."""
+    try:
+        return build_nhl_standings()
+    except Exception as e:
+        print(f"  NHL standings unavailable ({e.__class__.__name__}: {e}) -- "
+              f"continuing without them, the rest of the payload is unaffected")
+        return {"season": None, "as_of": None, "standings": {}}
+
+
 def _write_payload(dates, today_iso, days_out, elo_params=None, real_today_iso=None):
     print("Building NHL standings + stat leaders...")
-    nhl_standings = build_nhl_standings()
+    nhl_standings = _safe_standings()
     nhl_title_odds = build_nhl_title_odds()
     record_title_odds("nhl", nhl_title_odds, snapshot_date=today_iso, season=nhl_standings.get("season"))
     payload = {

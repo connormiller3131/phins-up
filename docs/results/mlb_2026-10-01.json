@@ -1,0 +1,2438 @@
+{
+  "date": "2026-10-01",
+  "weekday": "Thursday",
+  "finalized": true,
+  "elo_params": {
+    "k": 2,
+    "home_adv": 10,
+    "scale": 200,
+    "season_regression": 0.5,
+    "train_log_loss": 0.6767889948225273
+  },
+  "pitcher_blend_used": true,
+  "prop_prob_model": "negbin-v1",
+  "generated_at": "2026-10-04T12:12:53",
+  "games": [
+    {
+      "awayAbbr": "PHI",
+      "homeAbbr": "ATL",
+      "awayName": "Philadelphia Phillies",
+      "homeName": "Atlanta Braves",
+      "gameDatetime": "2026-10-02T00:00:00Z",
+      "gamePk": 849844,
+      "awayProbablePitcher": "Aaron Nola",
+      "awayProbablePitcherId": 605400,
+      "homeProbablePitcher": "Ray Kerr",
+      "homeProbablePitcherId": 678061,
+      "elo_home_prob": 0.4545,
+      "team_elo_home_prob": 0.5422,
+      "market": {
+        "mlHome": -114,
+        "mlAway": -106,
+        "run_line_home": 1.5,
+        "total_line": 7.5,
+        "home_fair_prob": 0.5087
+      },
+      "good_value_home": false,
+      "good_value_away": true,
+      "hr_combo": {
+        "player_a": "Matt Olson",
+        "prob_a": 0.181,
+        "player_b": "Kyle Schwarber",
+        "prob_b": 0.234,
+        "prob_either": 0.372
+      },
+      "props": [
+        {
+          "section": "Batting",
+          "player": "Drake Baldwin",
+          "player_id": 686948,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.278,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 93,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.278
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.087
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Drake Baldwin",
+          "player_id": 686948,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.6,
+          "model_over_prob": 0.386,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 93,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.632
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.386
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.232
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Drake Baldwin",
+          "player_id": 686948,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.249,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 93,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Drake Baldwin",
+          "player_id": 686948,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.277,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 93,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Drake Baldwin",
+          "player_id": 686948,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.125,
+          "confirmed_starter": true,
+          "trailing_n": 18,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Matt Olson",
+          "player_id": 621566,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.213,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.213
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.056
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Matt Olson",
+          "player_id": 621566,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.4,
+          "model_over_prob": 0.353,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.605
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.353
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.203
+            }
+          ],
+          "actual": 4
+        },
+        {
+          "section": "Batting",
+          "player": "Matt Olson",
+          "player_id": 621566,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.206,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Matt Olson",
+          "player_id": 621566,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.323,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Matt Olson",
+          "player_id": 621566,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.181,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Mauricio Dub\u00f3n",
+          "player_id": 643289,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.267,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 162,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.267
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.082
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mauricio Dub\u00f3n",
+          "player_id": 643289,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.5,
+          "model_over_prob": 0.375,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 162,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.623
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.375
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.222
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mauricio Dub\u00f3n",
+          "player_id": 643289,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.249,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 162,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mauricio Dub\u00f3n",
+          "player_id": 643289,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.269,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 162,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mauricio Dub\u00f3n",
+          "player_id": 643289,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.075,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mike Yastrzemski",
+          "player_id": 573262,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.479,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 145,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.479
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.14
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mike Yastrzemski",
+          "player_id": 573262,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.304,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 145,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.304
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.162
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mike Yastrzemski",
+          "player_id": 573262,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.249,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 145,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mike Yastrzemski",
+          "player_id": 573262,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.301,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 145,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mike Yastrzemski",
+          "player_id": 573262,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.114,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Austin Riley",
+          "player_id": 663586,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.509,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 168,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.509
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.16
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Austin Riley",
+          "player_id": 663586,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.317,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 168,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.574
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.317
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.172
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Austin Riley",
+          "player_id": 663586,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.29,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 168,
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Austin Riley",
+          "player_id": 663586,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.293,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 168,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Austin Riley",
+          "player_id": 663586,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.149,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Ozzie Albies",
+          "player_id": 645277,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.523,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.523
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.17
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ozzie Albies",
+          "player_id": 645277,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.335,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.59
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.335
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.188
+            }
+          ],
+          "actual": 4
+        },
+        {
+          "section": "Batting",
+          "player": "Ozzie Albies",
+          "player_id": 645277,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.29,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ozzie Albies",
+          "player_id": 645277,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.309,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 171,
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Ozzie Albies",
+          "player_id": 645277,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.123,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ronald Acu\u00f1a",
+          "player_id": 660670,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.202,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 57,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.202
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.052
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ronald Acu\u00f1a",
+          "player_id": 660670,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.4,
+          "model_over_prob": 0.347,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 57,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.6
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.347
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.198
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ronald Acu\u00f1a",
+          "player_id": 660670,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.31,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 57,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Ronald Acu\u00f1a",
+          "player_id": 660670,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.309,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 57,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Ronald Acu\u00f1a",
+          "player_id": 660670,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.155,
+          "confirmed_starter": false,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Michael Harris",
+          "player_id": 671739,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.278,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 164,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.278
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.087
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Michael Harris",
+          "player_id": 671739,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.6,
+          "model_over_prob": 0.386,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 164,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.632
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.386
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.232
+            }
+          ],
+          "actual": 4
+        },
+        {
+          "section": "Batting",
+          "player": "Michael Harris",
+          "player_id": 671739,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.206,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 164,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Michael Harris",
+          "player_id": 671739,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.293,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 164,
+          "actual": 3
+        },
+        {
+          "section": "Batting",
+          "player": "Michael Harris",
+          "player_id": 671739,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.112,
+          "confirmed_starter": false,
+          "trailing_n": 17,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Sean Murphy",
+          "player_id": 669221,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.479,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 31,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.479
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.14
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sean Murphy",
+          "player_id": 669221,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.278,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 31,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.278
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.141
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sean Murphy",
+          "player_id": 669221,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.29,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 31,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sean Murphy",
+          "player_id": 669221,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.277,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 31,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sean Murphy",
+          "player_id": 669221,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.117,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Ha-Seong Kim",
+          "player_id": 673490,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.431,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.431
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.11
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Ha-Seong Kim",
+          "player_id": 673490,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.236,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.236
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.11
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Ha-Seong Kim",
+          "player_id": 673490,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.329,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Ha-Seong Kim",
+          "player_id": 673490,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.26,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Ha-Seong Kim",
+          "player_id": 673490,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.078,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brewer Hicklen",
+          "player_id": 676551,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.458,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 8,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.458
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.126
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brewer Hicklen",
+          "player_id": 676551,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.247,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 8,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.247
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.118
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brewer Hicklen",
+          "player_id": 676551,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.32,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 8,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brewer Hicklen",
+          "player_id": 676551,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.233,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 8,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brewer Hicklen",
+          "player_id": 676551,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Anytime HR",
+          "model_prob": 0.061,
+          "confirmed_starter": false,
+          "trailing_n": 6,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Trea Turner",
+          "player_id": 607208,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.199,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.199
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.05
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Trea Turner",
+          "player_id": 607208,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.31,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.31
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.167
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Trea Turner",
+          "player_id": 607208,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.293,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Trea Turner",
+          "player_id": 607208,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.242,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Trea Turner",
+          "player_id": 607208,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.109,
+          "confirmed_starter": true,
+          "trailing_n": 18,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Schwarber",
+          "player_id": 656941,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.519,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.519
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.167
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Schwarber",
+          "player_id": 656941,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.329,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.584
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.329
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.182
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Schwarber",
+          "player_id": 656941,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.436,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Schwarber",
+          "player_id": 656941,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.26,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Schwarber",
+          "player_id": 656941,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.234,
+          "confirmed_starter": true,
+          "trailing_n": 18,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryce Harper",
+          "player_id": 547180,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.209,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 166,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.209
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.055
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Bryce Harper",
+          "player_id": 547180,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.4,
+          "model_over_prob": 0.346,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 166,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.6
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.346
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.197
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Bryce Harper",
+          "player_id": 547180,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.252,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 166,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryce Harper",
+          "player_id": 547180,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.277,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 166,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryce Harper",
+          "player_id": 547180,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.162,
+          "confirmed_starter": true,
+          "trailing_n": 18,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Alec Bohm",
+          "player_id": 664761,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.22,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.22
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.06
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Alec Bohm",
+          "player_id": 664761,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.335,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.589
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.335
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.187
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Alec Bohm",
+          "player_id": 664761,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.332,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Alec Bohm",
+          "player_id": 664761,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.301,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 161,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Alec Bohm",
+          "player_id": 664761,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.092,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryson Stott",
+          "player_id": 681082,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.22,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 163,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.22
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.06
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryson Stott",
+          "player_id": 681082,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.4,
+          "model_over_prob": 0.352,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 163,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.604
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.352
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.202
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryson Stott",
+          "player_id": 681082,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.313,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 163,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryson Stott",
+          "player_id": 681082,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.268,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 163,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryson Stott",
+          "player_id": 681082,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.082,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryan De La Cruz",
+          "player_id": 650559,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.49,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 33,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.49
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.146
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Bryan De La Cruz",
+          "player_id": 650559,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.271,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 33,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.271
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.136
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Bryan De La Cruz",
+          "player_id": 650559,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.252,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 33,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryan De La Cruz",
+          "player_id": 650559,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.232,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 33,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Bryan De La Cruz",
+          "player_id": 650559,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.096,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Edmundo Sosa",
+          "player_id": 624641,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.519,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 92,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.519
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.167
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Edmundo Sosa",
+          "player_id": 624641,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.335,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 92,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.589
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.335
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.187
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Edmundo Sosa",
+          "player_id": 624641,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.1,
+          "model_over_prob": 0.138,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 92,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Edmundo Sosa",
+          "player_id": 624641,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.26,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 92,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Edmundo Sosa",
+          "player_id": 624641,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.091,
+          "confirmed_starter": true,
+          "trailing_n": 9,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Justin Crawford",
+          "player_id": 702222,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.519,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 152,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.519
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.167
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Justin Crawford",
+          "player_id": 702222,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.31,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": true,
+          "trailing_n": 152,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.31
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.167
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Justin Crawford",
+          "player_id": 702222,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.186,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 152,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Justin Crawford",
+          "player_id": 702222,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.277,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": true,
+          "trailing_n": 152,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Justin Crawford",
+          "player_id": 702222,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.064,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "J. T. Realmuto",
+          "player_id": 592663,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.459,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 129,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.459
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.126
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "J. T. Realmuto",
+          "player_id": 592663,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.291,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 129,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.291
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.151
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "J. T. Realmuto",
+          "player_id": 592663,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.252,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 129,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "J. T. Realmuto",
+          "player_id": 592663,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.285,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 129,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "J. T. Realmuto",
+          "player_id": 592663,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.106,
+          "confirmed_starter": false,
+          "trailing_n": 15,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Stubbs",
+          "player_id": 596117,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.442,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 21,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.442
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.117
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Stubbs",
+          "player_id": 596117,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.235,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 21,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.235
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.11
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Stubbs",
+          "player_id": 596117,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.186,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 21,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Stubbs",
+          "player_id": 596117,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.242,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 21,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Stubbs",
+          "player_id": 596117,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.067,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Brandon Marsh",
+          "player_id": 669016,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.474,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.474
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.136
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Brandon Marsh",
+          "player_id": 669016,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.277,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 161,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.277
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.141
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Brandon Marsh",
+          "player_id": 669016,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.208,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 161,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Brandon Marsh",
+          "player_id": 669016,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.26,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 161,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Brandon Marsh",
+          "player_id": 669016,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.092,
+          "confirmed_starter": false,
+          "trailing_n": 11,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Derek Hill",
+          "player_id": 656537,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.49,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 95,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.49
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.146
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Derek Hill",
+          "player_id": 656537,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.329,
+          "model_std": 1.696,
+          "model_dispersion": 0.8655,
+          "confirmed_starter": false,
+          "trailing_n": 95,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.584
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.329
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.182
+            }
+          ],
+          "actual": 3
+        },
+        {
+          "section": "Batting",
+          "player": "Derek Hill",
+          "player_id": 656537,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.162,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 95,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Derek Hill",
+          "player_id": 656537,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.268,
+          "model_std": 0.816,
+          "model_dispersion": 1.2857,
+          "confirmed_starter": false,
+          "trailing_n": 95,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Derek Hill",
+          "player_id": 656537,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Anytime HR",
+          "model_prob": 0.093,
+          "confirmed_starter": false,
+          "trailing_n": 9,
+          "actual": 0
+        },
+        {
+          "section": "Pitching",
+          "player": "Ray Kerr",
+          "player_id": 678061,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Pitcher Strikeouts",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.325,
+          "model_std": 1.467,
+          "model_dispersion": 0.0321,
+          "trailing_n": 10,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.325
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.117
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Pitching",
+          "player": "Ray Kerr",
+          "player_id": 678061,
+          "team": "ATL",
+          "opp": "PHI",
+          "market": "Pitcher Walks Allowed",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.344,
+          "model_std": 0.875,
+          "model_dispersion": 0.0575,
+          "trailing_n": 10,
+          "actual": 1
+        },
+        {
+          "section": "Pitching",
+          "player": "Aaron Nola",
+          "player_id": 605400,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Pitcher Strikeouts",
+          "line": 5.0,
+          "projected": 4.8,
+          "model_over_prob": 0.348,
+          "model_std": 1.467,
+          "model_dispersion": 0.0321,
+          "trailing_n": 35,
+          "ladder": [
+            {
+              "line": 4.0,
+              "over_prob": 0.511
+            },
+            {
+              "line": 5.0,
+              "over_prob": 0.348
+            },
+            {
+              "line": 6.0,
+              "over_prob": 0.218
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Pitching",
+          "player": "Aaron Nola",
+          "player_id": 605400,
+          "team": "PHI",
+          "opp": "ATL",
+          "market": "Pitcher Walks Allowed",
+          "line": 2.0,
+          "projected": 1.8,
+          "model_over_prob": 0.262,
+          "model_std": 0.875,
+          "model_dispersion": 0.0575,
+          "trailing_n": 35,
+          "actual": 2
+        }
+      ],
+      "already_played": true,
+      "away_score": 2,
+      "home_score": 6,
+      "awayTeamStats": {
+        "offense": {
+          "batting": {
+            "hits_per_game": 7.5,
+            "total_bases_per_game": 11.7,
+            "hr_per_game": 0.6,
+            "bb_per_game": 3.8,
+            "k_per_game": 7.6,
+            "rbi_per_game": 3.3
+          }
+        },
+        "defense": {
+          "pitching": {
+            "era": 5.08,
+            "k_per_game": 10.3,
+            "hits_allowed_per_game": 9.1,
+            "bb_allowed_per_game": 3.0,
+            "runs_allowed_per_game": 5.0
+          }
+        }
+      },
+      "homeTeamStats": {
+        "offense": {
+          "batting": {
+            "hits_per_game": 7.0,
+            "total_bases_per_game": 11.7,
+            "hr_per_game": 1.1,
+            "bb_per_game": 3.1,
+            "k_per_game": 8.2,
+            "rbi_per_game": 3.8
+          }
+        },
+        "defense": {
+          "pitching": {
+            "era": 3.57,
+            "k_per_game": 8.2,
+            "hits_allowed_per_game": 8.0,
+            "bb_allowed_per_game": 1.9,
+            "runs_allowed_per_game": 3.5
+          }
+        }
+      }
+    }
+  ]
+}

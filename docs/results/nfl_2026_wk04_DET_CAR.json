@@ -13,6 +13,1606 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.3775,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 26,
+    "home_score": 32,
+    "winner": "CAR",
+    "model_pick": "DET",
+    "model_correct": false,
+    "market_pick": "DET",
+    "market_correct": false
+  },
+  "graded_at": "2026-10-05T14:04:01",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Passing Yds",
+      "line": 257.0,
+      "projected": 257.1,
+      "model_over_prob": 0.51,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.771,
+          "over_prob_raw": 0.83
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.699,
+          "over_prob_raw": 0.747
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.618,
+          "over_prob_raw": 0.645
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.533
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.448,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.285,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 412.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.31,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Completions",
+      "line": 23.0,
+      "projected": 22.9,
+      "model_over_prob": 0.493,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Pass Attempts",
+      "line": 34.5,
+      "projected": 34.3,
+      "model_over_prob": 0.492,
+      "actual_value": 52.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jared Goff",
+      "player_id": "00-0033106",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Rushing Yds",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.416,
+      "model_over_prob_raw": 0.374,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Rushing Yds",
+      "line": 67.0,
+      "projected": 67.1,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.708,
+          "over_prob_raw": 0.758
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.636,
+          "over_prob_raw": 0.668
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.547,
+          "over_prob_raw": 0.55
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.451,
+          "over_prob_raw": 0.42
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.389,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.283
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.236
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Carries",
+      "line": 17.5,
+      "projected": 17.3,
+      "model_over_prob": 0.397,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.732,
+      "trailing_n": 8,
+      "opp_per_gm": 23.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Rush + Rec Yds",
+      "line": 106.0,
+      "projected": 106.0,
+      "model_over_prob": 0.435,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.685
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.594
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.508,
+          "over_prob_raw": 0.497
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.412
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.355
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.305
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.261
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 77.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 47.0,
+      "projected": 46.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.75,
+          "over_prob_raw": 0.807
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.671,
+          "over_prob_raw": 0.712
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.571,
+          "over_prob_raw": 0.582
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.452,
+          "over_prob_raw": 0.422
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.323
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.281,
+          "over_prob_raw": 0.21
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jahmyr Gibbs",
+      "player_id": "00-0039139",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.483,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Rushing Yds",
+      "line": 12.5,
+      "projected": 12.3,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.553,
+          "over_prob_raw": 0.558
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.454,
+          "over_prob_raw": 0.425
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.391,
+          "over_prob_raw": 0.342
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.238
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Carries",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.436,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.125,
+      "trailing_n": 8,
+      "opp_per_gm": 1.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Rush + Rec Yds",
+      "line": 16.0,
+      "projected": 16.1,
+      "model_over_prob": 0.436,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.594
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.508,
+          "over_prob_raw": 0.497
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.413
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.355
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.305
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.261
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.424,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.359,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.27,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 17.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sione Vaki",
+      "player_id": "00-0039364",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.42,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 87.0,
+      "projected": 86.8,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.749,
+          "over_prob_raw": 0.806
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.67,
+          "over_prob_raw": 0.711
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.569,
+          "over_prob_raw": 0.58
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.45,
+          "over_prob_raw": 0.419
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.375,
+          "over_prob_raw": 0.322
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.259
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.209
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 75.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.432,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Amon-Ra St. Brown",
+      "player_id": "00-0036963",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.423,
+      "trailing_n": 8,
+      "opp_per_gm": 12.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 57.5,
+      "projected": 57.7,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.684,
+          "over_prob_raw": 0.729
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.587,
+          "over_prob_raw": 0.604
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.47,
+          "over_prob_raw": 0.446
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.335
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.268
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.249,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 102.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.413,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jameson Williams",
+      "player_id": "00-0037240",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.216,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 26.5,
+      "projected": 26.3,
+      "model_over_prob": 0.413,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.742,
+          "over_prob_raw": 0.798
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.66,
+          "over_prob_raw": 0.699
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.555,
+          "over_prob_raw": 0.561
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.369,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.319,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.275,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 95.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.314,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Isaac TeSlaa",
+      "player_id": "00-0040669",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.217,
+      "trailing_n": 8,
+      "opp_per_gm": 3.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 49.1,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.707,
+          "over_prob_raw": 0.757
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.616,
+          "over_prob_raw": 0.642
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.489
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.357
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.284
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.229
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 84.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.385,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Sam LaPorta",
+      "player_id": "00-0039065",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Anytime TD",
+      "model_prob": 0.296,
+      "trailing_n": 8,
+      "opp_per_gm": 5.9,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.498,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Bates",
+      "player_id": "00-0039172",
+      "team": "DET",
+      "opp": "CAR",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 7.9,
+      "model_over_prob": 0.464,
+      "actual_value": 14.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Passing Yds",
+      "line": 233.5,
+      "projected": 233.5,
+      "model_over_prob": 0.51,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.775,
+          "over_prob_raw": 0.834
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.703,
+          "over_prob_raw": 0.752
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.624,
+          "over_prob_raw": 0.652
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.54,
+          "over_prob_raw": 0.54
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.454,
+          "over_prob_raw": 0.424
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.22
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 329.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.465,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Completions",
+      "line": 21.0,
+      "projected": 20.8,
+      "model_over_prob": 0.488,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Pass Attempts",
+      "line": 33.5,
+      "projected": 33.4,
+      "model_over_prob": 0.495,
+      "actual_value": 41.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bryce Young",
+      "player_id": "00-0039150",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 16.0,
+      "projected": 16.1,
+      "model_over_prob": 0.414,
+      "model_over_prob_raw": 0.372,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 40.0,
+      "projected": 39.9,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.678,
+          "over_prob_raw": 0.721
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.599,
+          "over_prob_raw": 0.619
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.489
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.417,
+          "over_prob_raw": 0.376
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.367,
+          "over_prob_raw": 0.312
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.262
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.218
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 122.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 11.0,
+      "projected": 10.8,
+      "model_over_prob": 0.398,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.338,
+      "trailing_n": 8,
+      "opp_per_gm": 12.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 53.0,
+      "projected": 52.9,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.605,
+          "over_prob_raw": 0.628
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.533
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.465,
+          "over_prob_raw": 0.439
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.413,
+          "over_prob_raw": 0.371
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.374,
+          "over_prob_raw": 0.321
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.238
+        }
+      ],
+      "model_over_prob_raw": 0.397,
+      "actual_value": 129.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 17.5,
+      "projected": 17.7,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.684,
+          "over_prob_raw": 0.729
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.588,
+          "over_prob_raw": 0.605
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.471,
+          "over_prob_raw": 0.447
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.332,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.249,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chuba Hubbard",
+      "player_id": "00-0036555",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.352,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Rushing Yds",
+      "line": 15.0,
+      "projected": 14.8,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.599,
+          "over_prob_raw": 0.619
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.489
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.417,
+          "over_prob_raw": 0.376
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.367,
+          "over_prob_raw": 0.312
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.262
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.218
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Carries",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.395,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.122,
+      "trailing_n": 8,
+      "opp_per_gm": 3.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Rush + Rec Yds",
+      "line": 17.0,
+      "projected": 17.1,
+      "model_over_prob": 0.436,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.596,
+          "over_prob_raw": 0.615
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.524,
+          "over_prob_raw": 0.519
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.457,
+          "over_prob_raw": 0.428
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.409,
+          "over_prob_raw": 0.365
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.333,
+          "over_prob_raw": 0.27
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.423,
+          "over_prob_raw": 0.384
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.359,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.269,
+          "over_prob_raw": 0.197
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Dillon",
+      "player_id": "00-0036265",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.177,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 52.5,
+      "projected": 52.6,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.683,
+          "over_prob_raw": 0.727
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.586,
+          "over_prob_raw": 0.602
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.469,
+          "over_prob_raw": 0.444
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.334
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.33,
+          "over_prob_raw": 0.267
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.286,
+          "over_prob_raw": 0.216
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.249,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 192.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.346,
+      "actual_value": 14.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tetairoa McMillan",
+      "player_id": "00-0040124",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.185,
+      "trailing_n": 8,
+      "opp_per_gm": 6.8,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 56.0,
+      "projected": 56.2,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.74,
+          "over_prob_raw": 0.796
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.658,
+          "over_prob_raw": 0.696
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.553,
+          "over_prob_raw": 0.558
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.437,
+          "over_prob_raw": 0.402
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.367,
+          "over_prob_raw": 0.312
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.251
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.275,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.462,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jalen Coker",
+      "player_id": "00-0039491",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.273,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 21.0,
+      "projected": 20.8,
+      "model_over_prob": 0.413,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.734,
+          "over_prob_raw": 0.789
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.652,
+          "over_prob_raw": 0.688
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.547
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.43,
+          "over_prob_raw": 0.393
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.363,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.498,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Legette",
+      "player_id": "00-0039342",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.12,
+      "trailing_n": 8,
+      "opp_per_gm": 2.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receiving Yds",
+      "line": 21.5,
+      "projected": 21.6,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.746,
+          "over_prob_raw": 0.802
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.664,
+          "over_prob_raw": 0.704
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.563,
+          "over_prob_raw": 0.571
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.412
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.372,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.321,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.277,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.362,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tommy Tremble",
+      "player_id": "00-0037005",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Anytime TD",
+      "model_prob": 0.141,
+      "trailing_n": 8,
+      "opp_per_gm": 3.0,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Ryan Fitzgerald",
+      "player_id": "00-0040279",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.485,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Ryan Fitzgerald",
+      "player_id": "00-0040279",
+      "team": "CAR",
+      "opp": "DET",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.452,
+      "actual_value": 8.0,
+      "hit": true
+    }
+  ]
 }

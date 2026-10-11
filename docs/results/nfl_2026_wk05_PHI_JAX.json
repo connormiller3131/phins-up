@@ -13,6 +13,1612 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.7095,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 17,
+    "home_score": 19,
+    "winner": "JAX",
+    "model_pick": "JAX",
+    "model_correct": true,
+    "market_pick": "JAX",
+    "market_correct": true
+  },
+  "graded_at": "2026-10-11T19:17:26",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Passing Yds",
+      "line": 179.5,
+      "projected": 179.3,
+      "model_over_prob": 0.519,
+      "ladder": [
+        {
+          "line": 100.0,
+          "over_prob": 0.772,
+          "over_prob_raw": 0.822
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.699,
+          "over_prob_raw": 0.736
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.619,
+          "over_prob_raw": 0.633
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.534,
+          "over_prob_raw": 0.52
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.448,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.362,
+          "over_prob_raw": 0.297
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.344,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Completions",
+      "line": 18.0,
+      "projected": 17.8,
+      "model_over_prob": 0.491,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.7,
+      "model_over_prob": 0.509,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Jalen Hurts",
+      "player_id": "00-0036389",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 25.0,
+      "projected": 25.0,
+      "model_over_prob": 0.422,
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 59.5,
+      "projected": 59.3,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.678,
+          "over_prob_raw": 0.709
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.606
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.499,
+          "over_prob_raw": 0.473
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.367
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.306
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.255
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 15.0,
+      "projected": 15.0,
+      "model_over_prob": 0.419,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.336,
+      "trailing_n": 8,
+      "opp_per_gm": 17.8,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Rush + Rec Yds",
+      "line": 70.0,
+      "projected": 70.0,
+      "model_over_prob": 0.443,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.644,
+          "over_prob_raw": 0.666
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.574,
+          "over_prob_raw": 0.573
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.503,
+          "over_prob_raw": 0.478
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.443,
+          "over_prob_raw": 0.399
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.399,
+          "over_prob_raw": 0.342
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.253
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 10.5,
+      "projected": 10.4,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.535
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.432,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.276,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.392,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Rushing Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.433,
+          "over_prob_raw": 0.386
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.38,
+          "over_prob_raw": 0.319
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.337,
+          "over_prob_raw": 0.267
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.222
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Carries",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.426,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.095,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "dk_odds": 180,
+      "dk_implied_prob": 0.3571,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Rush + Rec Yds",
+      "line": 13.0,
+      "projected": 12.8,
+      "model_over_prob": 0.44,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.542,
+          "over_prob_raw": 0.531
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.438
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.421,
+          "over_prob_raw": 0.37
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.311,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.395,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 7.5,
+      "projected": 7.7,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.447
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.306,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 52.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.694,
+          "over_prob_raw": 0.73
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.606
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.447
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.45,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.168,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 33.5,
+      "projected": 33.3,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.705,
+          "over_prob_raw": 0.743
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.621
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.466
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.345
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.222
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.468,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.135,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 20.0,
+      "projected": 20.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.735,
+          "over_prob_raw": 0.779
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.673
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.54,
+          "over_prob_raw": 0.528
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.429,
+          "over_prob_raw": 0.381
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.3
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.241
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.196
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.427,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.098,
+      "trailing_n": 4,
+      "opp_per_gm": 4.0,
+      "dk_odds": 400,
+      "dk_implied_prob": 0.2,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.5,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.706,
+          "over_prob_raw": 0.745
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.613,
+          "over_prob_raw": 0.625
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.498,
+          "over_prob_raw": 0.472
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.223
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.26,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.455,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Anytime TD",
+      "model_prob": 0.231,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.452,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "JAX",
+      "market": "Kicking Points",
+      "line": 6.0,
+      "projected": 6.2,
+      "model_over_prob": 0.494,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Passing Yds",
+      "line": 213.5,
+      "projected": 213.7,
+      "model_over_prob": 0.52,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.728,
+          "over_prob_raw": 0.771
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.65,
+          "over_prob_raw": 0.674
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.566,
+          "over_prob_raw": 0.563
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.448
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.312,
+          "over_prob_raw": 0.238
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.237,
+          "over_prob_raw": 0.158
+        }
+      ],
+      "model_over_prob_raw": 0.501,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.484,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.4,
+      "model_over_prob": 0.495,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Passing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Pass Attempts",
+      "line": 28.0,
+      "projected": 28.2,
+      "model_over_prob": 0.508,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Trevor Lawrence",
+      "player_id": "00-0036971",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 16.0,
+      "projected": 16.2,
+      "model_over_prob": 0.425,
+      "model_over_prob_raw": 0.375,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 41.5,
+      "projected": 41.6,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.75
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.658
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.534
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.45,
+          "over_prob_raw": 0.408
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.392,
+          "over_prob_raw": 0.333
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.231
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 9.5,
+      "projected": 9.6,
+      "model_over_prob": 0.426,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.339,
+      "trailing_n": 8,
+      "opp_per_gm": 10.0,
+      "dk_odds": -105,
+      "dk_implied_prob": 0.5122,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 50.0,
+      "projected": 50.2,
+      "model_over_prob": 0.445,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.647,
+          "over_prob_raw": 0.67
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.578
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.506,
+          "over_prob_raw": 0.482
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.4,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.362,
+          "over_prob_raw": 0.297
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.254
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 9.0,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.51,
+          "over_prob_raw": 0.488
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.41,
+          "over_prob_raw": 0.356
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.283
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.229
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Bhayshul Tuten",
+      "player_id": "00-0040719",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.261,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 40.5,
+      "projected": 40.5,
+      "model_over_prob": 0.428,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.698,
+          "over_prob_raw": 0.734
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.62,
+          "over_prob_raw": 0.635
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.525,
+          "over_prob_raw": 0.507
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.434,
+          "over_prob_raw": 0.387
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.268
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.223
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 10.5,
+      "projected": 10.3,
+      "model_over_prob": 0.399,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.382,
+      "trailing_n": 8,
+      "opp_per_gm": 10.1,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 45.0,
+      "projected": 45.0,
+      "model_over_prob": 0.443,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.645,
+          "over_prob_raw": 0.667
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.575,
+          "over_prob_raw": 0.574
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.504,
+          "over_prob_raw": 0.479
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.443,
+          "over_prob_raw": 0.399
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.399,
+          "over_prob_raw": 0.342
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.253
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.412,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.352,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.23
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.265,
+          "over_prob_raw": 0.187
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Rodriguez Jr.",
+      "player_id": "00-0038611",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.358,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 71.0,
+      "projected": 70.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.743,
+          "over_prob_raw": 0.789
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.66,
+          "over_prob_raw": 0.687
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.546
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.393
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.32,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.278,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.9,
+      "model_over_prob": 0.364,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Parker Washington",
+      "player_id": "00-0038606",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.357,
+      "trailing_n": 8,
+      "opp_per_gm": 8.9,
+      "dk_odds": 160,
+      "dk_implied_prob": 0.3846,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 36.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.757,
+          "over_prob_raw": 0.805
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.678,
+          "over_prob_raw": 0.709
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.578
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.458,
+          "over_prob_raw": 0.418
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.382,
+          "over_prob_raw": 0.321
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.258
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.285,
+          "over_prob_raw": 0.208
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.412,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jakobi Meyers",
+      "player_id": "00-0034960",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.197,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "dk_odds": 265,
+      "dk_implied_prob": 0.274,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 28.0,
+      "projected": 28.0,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.699,
+          "over_prob_raw": 0.736
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.603,
+          "over_prob_raw": 0.612
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.486,
+          "over_prob_raw": 0.455
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.219
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.257,
+          "over_prob_raw": 0.179
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.422,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brian Thomas Jr.",
+      "player_id": "00-0039893",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.176,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 37.5,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.767,
+          "over_prob_raw": 0.816
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.689,
+          "over_prob_raw": 0.724
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.592,
+          "over_prob_raw": 0.598
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.474,
+          "over_prob_raw": 0.439
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.391,
+          "over_prob_raw": 0.332
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.335,
+          "over_prob_raw": 0.265
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.42,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Brenton Strange",
+      "player_id": "00-0038935",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.22,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Cam Little",
+      "player_id": "00-0039409",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.489,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Kicking",
+      "player": "Cam Little",
+      "player_id": "00-0039409",
+      "team": "JAX",
+      "opp": "PHI",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.462,
+      "actual_value": null,
+      "hit": null
+    }
+  ]
 }

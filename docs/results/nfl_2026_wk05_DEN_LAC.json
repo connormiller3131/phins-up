@@ -13,6 +13,1627 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.3775,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 23,
+    "home_score": 17,
+    "winner": "DEN",
+    "model_pick": "DEN",
+    "model_correct": true,
+    "market_pick": "DEN",
+    "market_correct": true
+  },
+  "graded_at": "2026-10-12T14:52:41",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Passing Yds",
+      "line": 220.0,
+      "projected": 220.0,
+      "model_over_prob": 0.519,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.746,
+          "over_prob_raw": 0.792
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.67,
+          "over_prob_raw": 0.7
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.588,
+          "over_prob_raw": 0.592
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.477
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.332,
+          "over_prob_raw": 0.261
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.254,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 123.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.443,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.495,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Pass Attempts",
+      "line": 33.5,
+      "projected": 33.4,
+      "model_over_prob": 0.496,
+      "actual_value": 27.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bo Nix",
+      "player_id": "00-0039732",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Rushing Yds",
+      "line": 22.0,
+      "projected": 21.9,
+      "model_over_prob": 0.421,
+      "model_over_prob_raw": 0.37,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Rushing Yds",
+      "line": 56.0,
+      "projected": 56.1,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.742
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.629,
+          "over_prob_raw": 0.647
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.521
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.398
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.326
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.341,
+          "over_prob_raw": 0.272
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.303,
+          "over_prob_raw": 0.228
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 68.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Carries",
+      "line": 13.5,
+      "projected": 13.4,
+      "model_over_prob": 0.408,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.27,
+      "trailing_n": 8,
+      "opp_per_gm": 14.6,
+      "dk_odds": 130,
+      "dk_implied_prob": 0.4348,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Rush + Rec Yds",
+      "line": 63.0,
+      "projected": 62.9,
+      "model_over_prob": 0.442,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.617,
+          "over_prob_raw": 0.631
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.534
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.474,
+          "over_prob_raw": 0.44
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.422,
+          "over_prob_raw": 0.372
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.382,
+          "over_prob_raw": 0.321
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.278
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.312,
+          "over_prob_raw": 0.238
+        }
+      ],
+      "model_over_prob_raw": 0.398,
+      "actual_value": 74.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 8.0,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.485,
+          "over_prob_raw": 0.454
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.219
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.257,
+          "over_prob_raw": 0.179
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "J.K. Dobbins",
+      "player_id": "00-0036158",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.287,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Rushing Yds",
+      "line": 31.0,
+      "projected": 31.0,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.703,
+          "over_prob_raw": 0.741
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.629,
+          "over_prob_raw": 0.646
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.533,
+          "over_prob_raw": 0.518
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.441,
+          "over_prob_raw": 0.396
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.326
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.227
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Carries",
+      "line": 8.5,
+      "projected": 8.7,
+      "model_over_prob": 0.429,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.34,
+      "trailing_n": 8,
+      "opp_per_gm": 14.4,
+      "dk_odds": 175,
+      "dk_implied_prob": 0.3636,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Rush + Rec Yds",
+      "line": 63.5,
+      "projected": 63.5,
+      "model_over_prob": 0.444,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.626,
+          "over_prob_raw": 0.642
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.546
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.483,
+          "over_prob_raw": 0.451
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.429,
+          "over_prob_raw": 0.381
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.328
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.35,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.243
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 40.5,
+      "projected": 40.4,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.738,
+          "over_prob_raw": 0.783
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.653,
+          "over_prob_raw": 0.678
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.534
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.432,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.276,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "RJ Harvey",
+      "player_id": "00-0040730",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.401,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 41.5,
+      "projected": 41.7,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.756,
+          "over_prob_raw": 0.804
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.676,
+          "over_prob_raw": 0.707
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.575,
+          "over_prob_raw": 0.575
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.455,
+          "over_prob_raw": 0.415
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.38,
+          "over_prob_raw": 0.319
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.257
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.284,
+          "over_prob_raw": 0.207
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.434,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Waddle",
+      "player_id": "00-0036613",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.204,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "dk_odds": 155,
+      "dk_implied_prob": 0.3922,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 33.5,
+      "projected": 33.3,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.703,
+          "over_prob_raw": 0.741
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.608,
+          "over_prob_raw": 0.619
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.492,
+          "over_prob_raw": 0.463
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.4,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.343,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.221
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.352,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Courtland Sutton",
+      "player_id": "00-0034348",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.174,
+      "trailing_n": 8,
+      "opp_per_gm": 6.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Bryant",
+      "player_id": "00-0040134",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 29.0,
+      "projected": 29.1,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.716,
+          "over_prob_raw": 0.757
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.626,
+          "over_prob_raw": 0.642
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.511,
+          "over_prob_raw": 0.489
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.411,
+          "over_prob_raw": 0.357
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.284
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.229
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Bryant",
+      "player_id": "00-0040134",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.45,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Pat Bryant",
+      "player_id": "00-0040134",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.149,
+      "trailing_n": 8,
+      "opp_per_gm": 3.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receiving Yds",
+      "line": 23.0,
+      "projected": 22.9,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.697,
+          "over_prob_raw": 0.733
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.601,
+          "over_prob_raw": 0.61
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.483,
+          "over_prob_raw": 0.452
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.338
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.294,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.256,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 55.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.345,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Evan Engram",
+      "player_id": "00-0033881",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Anytime TD",
+      "model_prob": 0.144,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Wil Lutz",
+      "player_id": "00-0032569",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.263,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Wil Lutz",
+      "player_id": "00-0032569",
+      "team": "DEN",
+      "opp": "LAC",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.6,
+      "model_over_prob": 0.484,
+      "actual_value": 11.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Justin Herbert",
+      "player_id": "00-0036355",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Passing Yds",
+      "line": 209.0,
+      "projected": 208.8,
+      "model_over_prob": 0.519,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.784,
+          "over_prob_raw": 0.835
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.713,
+          "over_prob_raw": 0.753
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.634,
+          "over_prob_raw": 0.653
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.55,
+          "over_prob_raw": 0.541
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.463,
+          "over_prob_raw": 0.425
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.378,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.221
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 121.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Justin Herbert",
+      "player_id": "00-0036355",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.32,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Justin Herbert",
+      "player_id": "00-0036355",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.7,
+      "model_over_prob": 0.51,
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Justin Herbert",
+      "player_id": "00-0036355",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Pass Attempts",
+      "line": 30.5,
+      "projected": 30.4,
+      "model_over_prob": 0.498,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Justin Herbert",
+      "player_id": "00-0036355",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 26.5,
+      "projected": 26.6,
+      "model_over_prob": 0.424,
+      "model_over_prob_raw": 0.374,
+      "actual_value": 54.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 50.5,
+      "projected": 50.6,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.698,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.621,
+          "over_prob_raw": 0.636
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.526,
+          "over_prob_raw": 0.509
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.435,
+          "over_prob_raw": 0.388
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.268
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.223
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 33.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Carries",
+      "line": 13.0,
+      "projected": 13.1,
+      "model_over_prob": 0.421,
+      "actual_value": 14.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.438,
+      "trailing_n": 8,
+      "opp_per_gm": 15.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Rush + Rec Yds",
+      "line": 60.5,
+      "projected": 60.3,
+      "model_over_prob": 0.441,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.672
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.579,
+          "over_prob_raw": 0.58
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.484
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.446,
+          "over_prob_raw": 0.403
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.345
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.363,
+          "over_prob_raw": 0.298
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.255
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": 39.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 12.0,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.582,
+          "over_prob_raw": 0.584
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.462,
+          "over_prob_raw": 0.423
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.383,
+          "over_prob_raw": 0.323
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.21
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Omarion Hampton",
+      "player_id": "00-0040666",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.468,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Rushing Yds",
+      "line": 29.5,
+      "projected": 29.4,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.68,
+          "over_prob_raw": 0.712
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.601,
+          "over_prob_raw": 0.609
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.477
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.42,
+          "over_prob_raw": 0.369
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.1,
+      "model_over_prob": 0.427,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.179,
+      "trailing_n": 8,
+      "opp_per_gm": 8.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Rush + Rec Yds",
+      "line": 35.5,
+      "projected": 35.6,
+      "model_over_prob": 0.444,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.653,
+          "over_prob_raw": 0.678
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.583,
+          "over_prob_raw": 0.586
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.511,
+          "over_prob_raw": 0.489
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.406
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.35
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.257
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 8.5,
+      "projected": 8.7,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.504,
+          "over_prob_raw": 0.479
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.406,
+          "over_prob_raw": 0.351
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.348,
+          "over_prob_raw": 0.28
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.301,
+          "over_prob_raw": 0.226
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.262,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Keaton Mitchell",
+      "player_id": "00-0038454",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.382,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ladd McConkey",
+      "player_id": "00-0039915",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 33.5,
+      "projected": 33.3,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.742
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.621
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.466
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.345
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.222
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Ladd McConkey",
+      "player_id": "00-0039915",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.463,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Ladd McConkey",
+      "player_id": "00-0039915",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.15,
+      "trailing_n": 8,
+      "opp_per_gm": 4.0,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Quentin Johnston",
+      "player_id": "00-0038544",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.4,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.706,
+          "over_prob_raw": 0.744
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.613,
+          "over_prob_raw": 0.625
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.498,
+          "over_prob_raw": 0.471
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.347
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.223
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.26,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Quentin Johnston",
+      "player_id": "00-0038544",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.31,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Quentin Johnston",
+      "player_id": "00-0038544",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.143,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Harris",
+      "player_id": "00-0040727",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 35.5,
+      "projected": 35.4,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.737,
+          "over_prob_raw": 0.782
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.653,
+          "over_prob_raw": 0.677
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.544,
+          "over_prob_raw": 0.533
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.432,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.276,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Harris",
+      "player_id": "00-0040727",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.486,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tre Harris",
+      "player_id": "00-0040727",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.116,
+      "trailing_n": 8,
+      "opp_per_gm": 4.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Charlie Kolar",
+      "player_id": "00-0038046",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receiving Yds",
+      "line": 9.0,
+      "projected": 8.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.506,
+          "over_prob_raw": 0.482
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.407,
+          "over_prob_raw": 0.353
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.349,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.227
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.262,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Charlie Kolar",
+      "player_id": "00-0038046",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.9,
+      "model_over_prob": 0.213,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Charlie Kolar",
+      "player_id": "00-0038046",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Anytime TD",
+      "model_prob": 0.087,
+      "trailing_n": 8,
+      "opp_per_gm": 0.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Cameron Dicker",
+      "player_id": "00-0037224",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.505,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Cameron Dicker",
+      "player_id": "00-0037224",
+      "team": "LAC",
+      "opp": "DEN",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.464,
+      "actual_value": 5.0,
+      "hit": false
+    }
+  ]
 }

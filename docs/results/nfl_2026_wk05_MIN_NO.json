@@ -13,6 +13,1616 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.4675,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 23,
+    "home_score": 13,
+    "winner": "MIN",
+    "model_pick": "MIN",
+    "model_correct": true,
+    "market_pick": "MIN",
+    "market_correct": true
+  },
+  "graded_at": "2026-10-12T14:52:41",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Passing Yds",
+      "line": 180.0,
+      "projected": 180.2,
+      "model_over_prob": 0.52,
+      "ladder": [
+        {
+          "line": 100.0,
+          "over_prob": 0.775,
+          "over_prob_raw": 0.825
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.702,
+          "over_prob_raw": 0.74
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.622,
+          "over_prob_raw": 0.637
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.537,
+          "over_prob_raw": 0.524
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.451,
+          "over_prob_raw": 0.409
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.301
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.286,
+          "over_prob_raw": 0.209
+        }
+      ],
+      "model_over_prob_raw": 0.501,
+      "actual_value": 229.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.331,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 19.0,
+      "model_over_prob": 0.502,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 28.9,
+      "model_over_prob": 0.495,
+      "actual_value": 30.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyler Murray",
+      "player_id": "00-0035228",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Rushing Yds",
+      "line": 24.5,
+      "projected": 24.3,
+      "model_over_prob": 0.418,
+      "model_over_prob_raw": 0.366,
+      "actual_value": 51.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Rushing Yds",
+      "line": 67.0,
+      "projected": 67.0,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.716,
+          "over_prob_raw": 0.757
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.644,
+          "over_prob_raw": 0.666
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.546
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.457,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.338
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.349,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.309,
+          "over_prob_raw": 0.235
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 113.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Carries",
+      "line": 17.5,
+      "projected": 17.6,
+      "model_over_prob": 0.424,
+      "actual_value": 25.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.452,
+      "trailing_n": 8,
+      "opp_per_gm": 20.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Rush + Rec Yds",
+      "line": 82.0,
+      "projected": 82.1,
+      "model_over_prob": 0.444,
+      "ladder": [
+        {
+          "line": 65.0,
+          "over_prob": 0.672,
+          "over_prob_raw": 0.702
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.604,
+          "over_prob_raw": 0.613
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.532,
+          "over_prob_raw": 0.517
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.464,
+          "over_prob_raw": 0.426
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 117.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 19.5,
+      "projected": 19.3,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.721,
+          "over_prob_raw": 0.763
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.631,
+          "over_prob_raw": 0.649
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.498
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.414,
+          "over_prob_raw": 0.362
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.307,
+          "over_prob_raw": 0.232
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.266,
+          "over_prob_raw": 0.188
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Aaron Jones",
+      "player_id": "00-0033293",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.364,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Rushing Yds",
+      "line": 8.0,
+      "projected": 8.0,
+      "model_over_prob": 0.428,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.477,
+          "over_prob_raw": 0.443
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.35
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.358,
+          "over_prob_raw": 0.292
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.244
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.283,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Carries",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.43,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.101,
+      "trailing_n": 8,
+      "opp_per_gm": 1.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Rush + Rec Yds",
+      "line": 10.5,
+      "projected": 10.5,
+      "model_over_prob": 0.443,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.51,
+          "over_prob_raw": 0.487
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.448,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.3
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.256
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 5.0,
+      "projected": 5.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.429,
+          "over_prob_raw": 0.381
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.364,
+          "over_prob_raw": 0.299
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.241
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.196
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeeJay Dallas",
+      "player_id": "00-0036425",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.458,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 49.5,
+      "projected": 49.7,
+      "model_over_prob": 0.428,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.726,
+          "over_prob_raw": 0.769
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.658
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.526,
+          "over_prob_raw": 0.509
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.42,
+          "over_prob_raw": 0.369
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.358,
+          "over_prob_raw": 0.292
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.309,
+          "over_prob_raw": 0.235
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.269,
+          "over_prob_raw": 0.191
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 79.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.387,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Justin Jefferson",
+      "player_id": "00-0036322",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.176,
+      "trailing_n": 8,
+      "opp_per_gm": 6.8,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 31.0,
+      "projected": 30.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.743,
+          "over_prob_raw": 0.789
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.662,
+          "over_prob_raw": 0.689
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.547
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.394
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.371,
+          "over_prob_raw": 0.308
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.32,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.278,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.381,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jordan Addison",
+      "player_id": "00-0038994",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.169,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 27.0,
+      "projected": 27.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.763,
+          "over_prob_raw": 0.812
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.686,
+          "over_prob_raw": 0.72
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.587,
+          "over_prob_raw": 0.591
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.468,
+          "over_prob_raw": 0.431
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.328
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.334,
+          "over_prob_raw": 0.263
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.289,
+          "over_prob_raw": 0.213
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.361,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jauan Jennings",
+      "player_id": "00-0036259",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.162,
+      "trailing_n": 8,
+      "opp_per_gm": 3.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receiving Yds",
+      "line": 39.0,
+      "projected": 39.1,
+      "model_over_prob": 0.428,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.717,
+          "over_prob_raw": 0.758
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.627,
+          "over_prob_raw": 0.644
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.513,
+          "over_prob_raw": 0.491
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.411,
+          "over_prob_raw": 0.358
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.352,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.23
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.265,
+          "over_prob_raw": 0.187
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.334,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "T.J. Hockenson",
+      "player_id": "00-0035229",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Anytime TD",
+      "model_prob": 0.182,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Will Reichard",
+      "player_id": "00-0039404",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.288,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Will Reichard",
+      "player_id": "00-0039404",
+      "team": "MIN",
+      "opp": "NO",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.7,
+      "model_over_prob": 0.498,
+      "actual_value": 11.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Passing Yds",
+      "line": 269.5,
+      "projected": 269.7,
+      "model_over_prob": 0.52,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.745,
+          "over_prob_raw": 0.791
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.67,
+          "over_prob_raw": 0.699
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.587,
+          "over_prob_raw": 0.591
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.501,
+          "over_prob_raw": 0.476
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.414,
+          "over_prob_raw": 0.362
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 350.0,
+          "over_prob": 0.254,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.501,
+      "actual_value": 96.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.5,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Completions",
+      "line": 24.5,
+      "projected": 24.4,
+      "model_over_prob": 0.497,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Pass Attempts",
+      "line": 37.0,
+      "projected": 37.0,
+      "model_over_prob": 0.501,
+      "actual_value": 25.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Shough",
+      "player_id": "00-0040743",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Rushing Yds",
+      "line": 18.5,
+      "projected": 18.4,
+      "model_over_prob": 0.421,
+      "model_over_prob_raw": 0.37,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Rushing Yds",
+      "line": 32.0,
+      "projected": 32.1,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.717,
+          "over_prob_raw": 0.758
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.646,
+          "over_prob_raw": 0.668
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.557,
+          "over_prob_raw": 0.55
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.459,
+          "over_prob_raw": 0.42
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.283
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.236
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 9.9,
+      "model_over_prob": 0.408,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.246,
+      "trailing_n": 8,
+      "opp_per_gm": 12.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Rush + Rec Yds",
+      "line": 45.5,
+      "projected": 45.3,
+      "model_over_prob": 0.442,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.673
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.579,
+          "over_prob_raw": 0.58
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.484
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.446,
+          "over_prob_raw": 0.403
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.402,
+          "over_prob_raw": 0.346
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.364,
+          "over_prob_raw": 0.299
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.255
+        }
+      ],
+      "model_over_prob_raw": 0.397,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 18.5,
+      "projected": 18.6,
+      "model_over_prob": 0.428,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.709,
+          "over_prob_raw": 0.748
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.616,
+          "over_prob_raw": 0.629
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.477
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.35
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.347,
+          "over_prob_raw": 0.279
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.3,
+          "over_prob_raw": 0.225
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.261,
+          "over_prob_raw": 0.183
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": -6.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Alvin Kamara",
+      "player_id": "00-0033906",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.4,
+      "model_over_prob": 0.421,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Rushing Yds",
+      "line": 27.5,
+      "projected": 27.6,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.655,
+          "over_prob_raw": 0.68
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.568,
+          "over_prob_raw": 0.565
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.469,
+          "over_prob_raw": 0.433
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.345
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.314,
+          "over_prob_raw": 0.24
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 30.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Carries",
+      "line": 8.0,
+      "projected": 7.8,
+      "model_over_prob": 0.396,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.212,
+      "trailing_n": 8,
+      "opp_per_gm": 8.2,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Rush + Rec Yds",
+      "line": 33.0,
+      "projected": 32.8,
+      "model_over_prob": 0.441,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.615,
+          "over_prob_raw": 0.628
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.542,
+          "over_prob_raw": 0.531
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.438
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.421,
+          "over_prob_raw": 0.37
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.311,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": 30.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 8.0,
+      "projected": 8.0,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.486,
+          "over_prob_raw": 0.456
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.397,
+          "over_prob_raw": 0.34
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.341,
+          "over_prob_raw": 0.272
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.219
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.257,
+          "over_prob_raw": 0.179
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kendre Miller",
+      "player_id": "00-0038551",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.27,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 91.5,
+      "projected": 91.5,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 75.0,
+          "over_prob": 0.753,
+          "over_prob_raw": 0.801
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.673,
+          "over_prob_raw": 0.703
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.57,
+          "over_prob_raw": 0.568
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.451,
+          "over_prob_raw": 0.409
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.378,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.255
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.283,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 7.0,
+      "projected": 6.8,
+      "model_over_prob": 0.373,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Olave",
+      "player_id": "00-0037239",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.329,
+      "trailing_n": 8,
+      "opp_per_gm": 11.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 52.9,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.697,
+          "over_prob_raw": 0.733
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.601,
+          "over_prob_raw": 0.61
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.483,
+          "over_prob_raw": 0.451
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.338
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.294,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.256,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.438,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devaughn Vele",
+      "player_id": "00-0039424",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.226,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bryce Lance",
+      "player_id": "00-0041067",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 18.5,
+      "projected": 18.5,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.706,
+          "over_prob_raw": 0.745
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.613,
+          "over_prob_raw": 0.625
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.498,
+          "over_prob_raw": 0.472
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.223
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.26,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bryce Lance",
+      "player_id": "00-0041067",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.456,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bryce Lance",
+      "player_id": "00-0041067",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.11,
+      "trailing_n": 4,
+      "opp_per_gm": 3.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 52.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.696,
+          "over_prob_raw": 0.732
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.6,
+          "over_prob_raw": 0.608
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.481,
+          "over_prob_raw": 0.449
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.395,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.256,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.404,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Juwan Johnson",
+      "player_id": "00-0036040",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Anytime TD",
+      "model_prob": 0.183,
+      "trailing_n": 8,
+      "opp_per_gm": 6.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Daniel Carlson",
+      "player_id": "00-0034161",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.503,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Daniel Carlson",
+      "player_id": "00-0034161",
+      "team": "NO",
+      "opp": "MIN",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.0,
+      "model_over_prob": 0.475,
+      "actual_value": 1.0,
+      "hit": false
+    }
+  ]
 }

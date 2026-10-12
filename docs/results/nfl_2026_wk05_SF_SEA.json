@@ -13,6 +13,1648 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.5965,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 32,
+    "home_score": 29,
+    "winner": "SF",
+    "model_pick": "SEA",
+    "model_correct": false,
+    "market_pick": "SEA",
+    "market_correct": false
+  },
+  "graded_at": "2026-10-12T14:52:41",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Passing Yds",
+      "line": 210.5,
+      "projected": 210.4,
+      "model_over_prob": 0.519,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.788,
+          "over_prob_raw": 0.84
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.718,
+          "over_prob_raw": 0.759
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.639,
+          "over_prob_raw": 0.66
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.555,
+          "over_prob_raw": 0.548
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.468,
+          "over_prob_raw": 0.432
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.383,
+          "over_prob_raw": 0.322
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.301,
+          "over_prob_raw": 0.226
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 189.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.441,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.6,
+      "model_over_prob": 0.506,
+      "actual_value": 19.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.3,
+      "model_over_prob": 0.492,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Brock Purdy",
+      "player_id": "00-0037834",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 26.5,
+      "projected": 26.5,
+      "model_over_prob": 0.421,
+      "model_over_prob_raw": 0.37,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 51.0,
+      "projected": 51.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.706,
+          "over_prob_raw": 0.744
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.632,
+          "over_prob_raw": 0.65
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.537,
+          "over_prob_raw": 0.524
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.328
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.343,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.229
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 68.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Carries",
+      "line": 13.0,
+      "projected": 12.8,
+      "model_over_prob": 0.393,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.553,
+      "trailing_n": 8,
+      "opp_per_gm": 19.5,
+      "dk_odds": -170,
+      "dk_implied_prob": 0.6296,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Rush + Rec Yds",
+      "line": 85.0,
+      "projected": 85.2,
+      "model_over_prob": 0.446,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.647,
+          "over_prob_raw": 0.67
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.578
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.483
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.446,
+          "over_prob_raw": 0.402
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.4,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.363,
+          "over_prob_raw": 0.298
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.254
+        }
+      ],
+      "model_over_prob_raw": 0.402,
+      "actual_value": 83.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.3,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.742
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.621
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.466
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.345
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.222
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian McCaffrey",
+      "player_id": "00-0033280",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.1,
+      "model_over_prob": 0.378,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Rushing Yds",
+      "line": 28.0,
+      "projected": 27.9,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.659,
+          "over_prob_raw": 0.685
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.573,
+          "over_prob_raw": 0.572
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.474,
+          "over_prob_raw": 0.44
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.357,
+          "over_prob_raw": 0.291
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Carries",
+      "line": 7.5,
+      "projected": 7.5,
+      "model_over_prob": 0.414,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.163,
+      "trailing_n": 4,
+      "opp_per_gm": 8.2,
+      "dk_odds": 475,
+      "dk_implied_prob": 0.1739,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Rush + Rec Yds",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.443,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.611,
+          "over_prob_raw": 0.623
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.539,
+          "over_prob_raw": 0.526
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.47,
+          "over_prob_raw": 0.434
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.367
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.343,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.309,
+          "over_prob_raw": 0.235
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.395,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kaelon Black",
+      "player_id": "00-0041052",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.5,
+      "model_over_prob": 0.38,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 49.5,
+      "projected": 49.3,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.721,
+          "over_prob_raw": 0.763
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.632,
+          "over_prob_raw": 0.65
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.498
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.414,
+          "over_prob_raw": 0.362
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.307,
+          "over_prob_raw": 0.232
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.266,
+          "over_prob_raw": 0.188
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 113.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.358,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Mike Evans",
+      "player_id": "00-0031408",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.257,
+      "trailing_n": 8,
+      "opp_per_gm": 6.8,
+      "dk_odds": 195,
+      "dk_implied_prob": 0.339,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.6,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.754,
+          "over_prob_raw": 0.802
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.674,
+          "over_prob_raw": 0.705
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.573,
+          "over_prob_raw": 0.572
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.454,
+          "over_prob_raw": 0.413
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.283,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.314,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Deebo Samuel Sr.",
+      "player_id": "00-0035719",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.21,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brandin Cooks",
+      "player_id": "00-0031236",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 24.0,
+      "projected": 23.9,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.713,
+          "over_prob_raw": 0.753
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.621,
+          "over_prob_raw": 0.636
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.483
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.408,
+          "over_prob_raw": 0.354
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.349,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.227
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.263,
+          "over_prob_raw": 0.185
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brandin Cooks",
+      "player_id": "00-0031236",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.264,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Brandin Cooks",
+      "player_id": "00-0031236",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.112,
+      "trailing_n": 8,
+      "opp_per_gm": 3.2,
+      "dk_odds": 850,
+      "dk_implied_prob": 0.1053,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receiving Yds",
+      "line": 50.0,
+      "projected": 49.9,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.73,
+          "over_prob_raw": 0.774
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.643,
+          "over_prob_raw": 0.665
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.534,
+          "over_prob_raw": 0.519
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.424,
+          "over_prob_raw": 0.374
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.296
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.311,
+          "over_prob_raw": 0.237
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.271,
+          "over_prob_raw": 0.193
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.374,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Kittle",
+      "player_id": "00-0033288",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Anytime TD",
+      "model_prob": 0.279,
+      "trailing_n": 8,
+      "opp_per_gm": 6.0,
+      "dk_odds": 160,
+      "dk_implied_prob": 0.3846,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Eddy Pineiro",
+      "player_id": "00-0034173",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.458,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Eddy Pineiro",
+      "player_id": "00-0034173",
+      "team": "SF",
+      "opp": "SEA",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 6.8,
+      "model_over_prob": 0.456,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Passing Yds",
+      "line": 186.5,
+      "projected": 186.3,
+      "model_over_prob": 0.519,
+      "ladder": [
+        {
+          "line": 100.0,
+          "over_prob": 0.79,
+          "over_prob_raw": 0.842
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.72,
+          "over_prob_raw": 0.762
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.642,
+          "over_prob_raw": 0.664
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.558,
+          "over_prob_raw": 0.552
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.472,
+          "over_prob_raw": 0.437
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.326
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.229
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 195.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.403,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Completions",
+      "line": 17.0,
+      "projected": 17.1,
+      "model_over_prob": 0.505,
+      "actual_value": 18.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Pass Attempts",
+      "line": 26.0,
+      "projected": 26.2,
+      "model_over_prob": 0.507,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Sam Darnold",
+      "player_id": "00-0034869",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Rushing Yds",
+      "line": 6.5,
+      "projected": 6.4,
+      "model_over_prob": 0.419,
+      "model_over_prob_raw": 0.368,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Rushing Yds",
+      "line": 45.5,
+      "projected": 45.4,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.697,
+          "over_prob_raw": 0.733
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.618,
+          "over_prob_raw": 0.632
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.522,
+          "over_prob_raw": 0.504
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.433,
+          "over_prob_raw": 0.386
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.337,
+          "over_prob_raw": 0.267
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.221
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 61.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Carries",
+      "line": 12.0,
+      "projected": 12.1,
+      "model_over_prob": 0.427,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.272,
+      "trailing_n": 8,
+      "opp_per_gm": 12.0,
+      "dk_odds": -135,
+      "dk_implied_prob": 0.5745,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Rush + Rec Yds",
+      "line": 54.0,
+      "projected": 53.9,
+      "model_over_prob": 0.442,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.629,
+          "over_prob_raw": 0.647
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.56,
+          "over_prob_raw": 0.554
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.488,
+          "over_prob_raw": 0.458
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.432,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.39,
+          "over_prob_raw": 0.331
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.353,
+          "over_prob_raw": 0.286
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.319,
+          "over_prob_raw": 0.246
+        }
+      ],
+      "model_over_prob_raw": 0.398,
+      "actual_value": 72.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 7.5,
+      "projected": 7.5,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.475,
+          "over_prob_raw": 0.441
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.392,
+          "over_prob_raw": 0.333
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.336,
+          "over_prob_raw": 0.266
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.292,
+          "over_prob_raw": 0.216
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.254,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Emanuel Wilson",
+      "player_id": "00-0038797",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.206,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Rushing Yds",
+      "line": 21.0,
+      "projected": 20.9,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.702,
+          "over_prob_raw": 0.74
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.628,
+          "over_prob_raw": 0.645
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.532,
+          "over_prob_raw": 0.517
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.44,
+          "over_prob_raw": 0.395
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.325
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.301,
+          "over_prob_raw": 0.226
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Carries",
+      "line": 5.5,
+      "projected": 5.5,
+      "model_over_prob": 0.412,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.184,
+      "trailing_n": 8,
+      "opp_per_gm": 6.1,
+      "dk_odds": 240,
+      "dk_implied_prob": 0.2941,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Rush + Rec Yds",
+      "line": 32.0,
+      "projected": 32.2,
+      "model_over_prob": 0.445,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.674,
+          "over_prob_raw": 0.705
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.605,
+          "over_prob_raw": 0.615
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.534,
+          "over_prob_raw": 0.519
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.465,
+          "over_prob_raw": 0.428
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.417,
+          "over_prob_raw": 0.365
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.377,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.34,
+          "over_prob_raw": 0.27
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 12.0,
+      "projected": 12.0,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.583,
+          "over_prob_raw": 0.585
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.463,
+          "over_prob_raw": 0.425
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.384,
+          "over_prob_raw": 0.324
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.211
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 24.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Holani",
+      "player_id": "00-0039299",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.397,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 79.5,
+      "projected": 79.6,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 65.0,
+          "over_prob": 0.725,
+          "over_prob_raw": 0.768
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.637,
+          "over_prob_raw": 0.657
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.525,
+          "over_prob_raw": 0.507
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.419,
+          "over_prob_raw": 0.368
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.357,
+          "over_prob_raw": 0.291
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.308,
+          "over_prob_raw": 0.234
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.268,
+          "over_prob_raw": 0.19
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 102.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 6.0,
+      "projected": 6.1,
+      "model_over_prob": 0.397,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaxon Smith-Njigba",
+      "player_id": "00-0038543",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.378,
+      "trailing_n": 8,
+      "opp_per_gm": 9.5,
+      "dk_odds": -120,
+      "dk_implied_prob": 0.5455,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.427,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.748,
+          "over_prob_raw": 0.795
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.667,
+          "over_prob_raw": 0.695
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.561,
+          "over_prob_raw": 0.556
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.445,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.375,
+          "over_prob_raw": 0.312
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.322,
+          "over_prob_raw": 0.25
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.263,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashid Shaheed",
+      "player_id": "00-0037545",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.159,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "dk_odds": 340,
+      "dk_implied_prob": 0.2273,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 35.0,
+      "projected": 35.2,
+      "model_over_prob": 0.429,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.734,
+          "over_prob_raw": 0.778
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.648,
+          "over_prob_raw": 0.671
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.539,
+          "over_prob_raw": 0.526
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.429,
+          "over_prob_raw": 0.38
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.364,
+          "over_prob_raw": 0.299
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.314,
+          "over_prob_raw": 0.24
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.195
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.367,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Cooper Kupp",
+      "player_id": "00-0033908",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.192,
+      "trailing_n": 8,
+      "opp_per_gm": 4.8,
+      "dk_odds": 350,
+      "dk_implied_prob": 0.2222,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receiving Yds",
+      "line": 23.0,
+      "projected": 22.8,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.694,
+          "over_prob_raw": 0.73
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.606
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.447
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.353,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "AJ Barner",
+      "player_id": "00-0039793",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Anytime TD",
+      "model_prob": 0.175,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "dk_odds": 260,
+      "dk_implied_prob": 0.2778,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Myers",
+      "player_id": "00-0031492",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.497,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Myers",
+      "player_id": "00-0031492",
+      "team": "SEA",
+      "opp": "SF",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.6,
+      "model_over_prob": 0.483,
+      "actual_value": 17.0,
+      "hit": true
+    }
+  ]
 }

@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 6,
+  "awayAbbr": "BAL",
+  "homeAbbr": "CLE",
+  "awayName": "Baltimore Ravens",
+  "homeName": "Cleveland Browns",
+  "gameday": "2026-10-18",
+  "predicted_at": "2026-10-13T13:52:22",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.3629,
+  "elo_home_prob_raw": 0.3629,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.331,
+  "graded": false,
+  "actual": null
+}

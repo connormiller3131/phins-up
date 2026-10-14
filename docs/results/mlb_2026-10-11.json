@@ -1,0 +1,2714 @@
+{
+  "date": "2026-10-11",
+  "weekday": "Sunday",
+  "finalized": true,
+  "elo_params": {
+    "k": 2,
+    "home_adv": 10,
+    "scale": 200,
+    "season_regression": 0.5,
+    "train_log_loss": 0.6767951191255013
+  },
+  "pitcher_blend_used": true,
+  "prop_prob_model": "negbin-v1",
+  "generated_at": "2026-10-14T11:37:59",
+  "games": [
+    {
+      "awayAbbr": "LAD",
+      "homeAbbr": "MIL",
+      "awayName": "Los Angeles Dodgers",
+      "homeName": "Milwaukee Brewers",
+      "gameDatetime": "2026-10-12T00:00:00Z",
+      "gamePk": 849809,
+      "awayProbablePitcher": "Tarik Skubal",
+      "awayProbablePitcherId": 669373,
+      "homeProbablePitcher": "Jacob Misiorowski",
+      "homeProbablePitcherId": 694819,
+      "elo_home_prob": 0.5298,
+      "team_elo_home_prob": 0.5604,
+      "market": {
+        "mlHome": -111,
+        "mlAway": -101,
+        "run_line_home": 1.5,
+        "total_line": 6.0,
+        "home_fair_prob": 0.5115
+      },
+      "good_value_home": true,
+      "good_value_away": false,
+      "hr_combo": {
+        "player_a": "Jackson Chourio",
+        "prob_a": 0.125,
+        "player_b": "Shohei Ohtani",
+        "prob_b": 0.181,
+        "prob_either": 0.284
+      },
+      "props": [
+        {
+          "section": "Batting",
+          "player": "Jackson Chourio",
+          "player_id": 694192,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.214,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 132,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.214
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.057
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Jackson Chourio",
+          "player_id": 694192,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.4,
+          "model_over_prob": 0.338,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 132,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.593
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.338
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.19
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Jackson Chourio",
+          "player_id": 694192,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.29,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 132,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Jackson Chourio",
+          "player_id": 694192,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.324,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 132,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Jackson Chourio",
+          "player_id": 694192,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.125,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Brice Turang",
+          "player_id": 668930,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.225,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 158,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.225
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.062
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Brice Turang",
+          "player_id": 668930,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.5,
+          "model_over_prob": 0.367,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 158,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.617
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.367
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.215
+            }
+          ],
+          "actual": 4
+        },
+        {
+          "section": "Batting",
+          "player": "Brice Turang",
+          "player_id": 668930,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.31,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 158,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Brice Turang",
+          "player_id": 668930,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.286,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 158,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Brice Turang",
+          "player_id": 668930,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.087,
+          "confirmed_starter": true,
+          "trailing_n": 18,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "William Contreras",
+          "player_id": 661388,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.225,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 156,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.225
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.062
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "William Contreras",
+          "player_id": 661388,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.5,
+          "model_over_prob": 0.367,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 156,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.617
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.367
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.215
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "William Contreras",
+          "player_id": 661388,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.329,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 156,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "William Contreras",
+          "player_id": 661388,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.317,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 156,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "William Contreras",
+          "player_id": 661388,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.12,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Jake Bauers",
+          "player_id": 641343,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.525,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.525
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.172
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Jake Bauers",
+          "player_id": 641343,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.275,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.275
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.139
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Jake Bauers",
+          "player_id": 641343,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.401,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Jake Bauers",
+          "player_id": 641343,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.243,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Jake Bauers",
+          "player_id": 641343,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.088,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Andrew Vaughn",
+          "player_id": 683734,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.511,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 106,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.511
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.161
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Andrew Vaughn",
+          "player_id": 683734,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.282,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 106,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.282
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.144
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Andrew Vaughn",
+          "player_id": 683734,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.249,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 106,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Andrew Vaughn",
+          "player_id": 683734,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.243,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 106,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Andrew Vaughn",
+          "player_id": 683734,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.091,
+          "confirmed_starter": true,
+          "trailing_n": 11,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Mitchell",
+          "player_id": 669003,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.481,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.481
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.141
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Mitchell",
+          "player_id": 669003,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.247,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.247
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.118
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Mitchell",
+          "player_id": 669003,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.31,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Mitchell",
+          "player_id": 669003,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.215,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 155,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Garrett Mitchell",
+          "player_id": 669003,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.075,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Cooper Pratt",
+          "player_id": 806198,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.193,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 77,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.193
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.048
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Cooper Pratt",
+          "player_id": 806198,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.282,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 77,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.282
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.144
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Cooper Pratt",
+          "player_id": 806198,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.249,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 77,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Cooper Pratt",
+          "player_id": 806198,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.234,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 77,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Cooper Pratt",
+          "player_id": 806198,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.059,
+          "confirmed_starter": true,
+          "trailing_n": 14,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Luis Lara",
+          "player_id": 800325,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.511,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 58,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.511
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.161
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Luis Lara",
+          "player_id": 800325,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.254,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 58,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.254
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.123
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Luis Lara",
+          "player_id": 800325,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.228,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 58,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Luis Lara",
+          "player_id": 800325,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.261,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 58,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Luis Lara",
+          "player_id": 800325,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.058,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Joey Ortiz",
+          "player_id": 687401,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.225,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 129,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.225
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.062
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Joey Ortiz",
+          "player_id": 687401,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.326,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 129,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.582
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.326
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.18
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Joey Ortiz",
+          "player_id": 687401,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.228,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 129,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Joey Ortiz",
+          "player_id": 687401,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.253,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 129,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Joey Ortiz",
+          "player_id": 687401,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.071,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Christian Yelich",
+          "player_id": 592885,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.182,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 106,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.182
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.044
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Christian Yelich",
+          "player_id": 592885,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.288,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 106,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.288
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.149
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Christian Yelich",
+          "player_id": 592885,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.31,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 106,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Christian Yelich",
+          "player_id": 592885,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.286,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 106,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Christian Yelich",
+          "player_id": 592885,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.093,
+          "confirmed_starter": false,
+          "trailing_n": 16,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sal Frelick",
+          "player_id": 686217,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.466,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.466
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.131
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sal Frelick",
+          "player_id": 686217,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.232,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.232
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.108
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sal Frelick",
+          "player_id": 686217,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.29,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sal Frelick",
+          "player_id": 686217,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.253,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 25,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Sal Frelick",
+          "player_id": 686217,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.064,
+          "confirmed_starter": false,
+          "trailing_n": 13,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "David Hamilton",
+          "player_id": 666152,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.497,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 123,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.497
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.151
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "David Hamilton",
+          "player_id": 666152,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.254,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 123,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.254
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.123
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "David Hamilton",
+          "player_id": 666152,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.206,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 123,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "David Hamilton",
+          "player_id": 666152,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.225,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 123,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "David Hamilton",
+          "player_id": 666152,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.066,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Gary S\u00e1nchez",
+          "player_id": 596142,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.45,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 91,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.45
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.121
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Gary S\u00e1nchez",
+          "player_id": 596142,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.268,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 91,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.268
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.134
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Gary S\u00e1nchez",
+          "player_id": 596142,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.329,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 91,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Gary S\u00e1nchez",
+          "player_id": 596142,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.27,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 91,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Gary S\u00e1nchez",
+          "player_id": 596142,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Anytime HR",
+          "model_prob": 0.116,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Mookie Betts",
+          "player_id": 605141,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.223,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 120,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.223
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.061
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Mookie Betts",
+          "player_id": 605141,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.5,
+          "model_over_prob": 0.372,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 120,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.621
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.372
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.22
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Mookie Betts",
+          "player_id": 605141,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.388,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 120,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Mookie Betts",
+          "player_id": 605141,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.271,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 120,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Mookie Betts",
+          "player_id": 605141,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.139,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Freddie Freeman",
+          "player_id": 518692,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.181,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.181
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.043
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Freddie Freeman",
+          "player_id": 518692,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.301,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.301
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.159
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Freddie Freeman",
+          "player_id": 518692,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.233,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Freddie Freeman",
+          "player_id": 518692,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.271,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 165,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Freddie Freeman",
+          "player_id": 518692,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.116,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Will Smith",
+          "player_id": 669257,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.181,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 27,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.181
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.043
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Will Smith",
+          "player_id": 669257,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.326,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 27,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.582
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.326
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.18
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Will Smith",
+          "player_id": 669257,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.295,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 27,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Will Smith",
+          "player_id": 669257,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.254,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 27,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Will Smith",
+          "player_id": 669257,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.126,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Shohei Ohtani",
+          "player_id": 660271,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.479,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 144,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.479
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.14
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Shohei Ohtani",
+          "player_id": 660271,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.239,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 144,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.239
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.113
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Shohei Ohtani",
+          "player_id": 660271,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.315,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 144,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Shohei Ohtani",
+          "player_id": 660271,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.216,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 144,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Shohei Ohtani",
+          "player_id": 660271,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.181,
+          "confirmed_starter": true,
+          "trailing_n": 17,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Teoscar Hern\u00e1ndez",
+          "player_id": 606192,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.9,
+          "model_over_prob": 0.213,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 79,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.213
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.056
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Teoscar Hern\u00e1ndez",
+          "player_id": 606192,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.326,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 79,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.582
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.326
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.18
+            }
+          ],
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Teoscar Hern\u00e1ndez",
+          "player_id": 606192,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.165,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 79,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Teoscar Hern\u00e1ndez",
+          "player_id": 606192,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.254,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 79,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Teoscar Hern\u00e1ndez",
+          "player_id": 606192,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.133,
+          "confirmed_starter": true,
+          "trailing_n": 16,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Max Muncy",
+          "player_id": 571970,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.181,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 159,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.181
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.043
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Max Muncy",
+          "player_id": 571970,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.5,
+          "model_over_prob": 0.361,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 159,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.612
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.361
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.21
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Max Muncy",
+          "player_id": 571970,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.211,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 159,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Max Muncy",
+          "player_id": 571970,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.288,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 159,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Max Muncy",
+          "player_id": 571970,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.159,
+          "confirmed_starter": true,
+          "trailing_n": 14,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Andy Pages",
+          "player_id": 681624,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.189,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.189
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.046
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Andy Pages",
+          "player_id": 681624,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.323,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.579
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.323
+            },
+            {
+              "line": 2.5,
+              "over_prob": 0.177
+            }
+          ],
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Andy Pages",
+          "player_id": 681624,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.325,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Andy Pages",
+          "player_id": 681624,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.296,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 1
+        },
+        {
+          "section": "Batting",
+          "player": "Andy Pages",
+          "player_id": 681624,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.113,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Tucker",
+          "player_id": 663656,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.191,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 164,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.191
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.047
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Tucker",
+          "player_id": 663656,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.314,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 164,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.314
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.17
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Tucker",
+          "player_id": 663656,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.295,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 164,
+          "actual": 2
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Tucker",
+          "player_id": 663656,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.236,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 164,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Kyle Tucker",
+          "player_id": 663656,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.128,
+          "confirmed_starter": true,
+          "trailing_n": 15,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Enrique Hern\u00e1ndez",
+          "player_id": 571771,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.479,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 36,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.479
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.14
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Enrique Hern\u00e1ndez",
+          "player_id": 571771,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.307,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": true,
+          "trailing_n": 36,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.307
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.165
+            }
+          ],
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Enrique Hern\u00e1ndez",
+          "player_id": 571771,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.0,
+          "projected": 0.2,
+          "model_over_prob": 0.211,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": true,
+          "trailing_n": 36,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Enrique Hern\u00e1ndez",
+          "player_id": 571771,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.288,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": true,
+          "trailing_n": 36,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Enrique Hern\u00e1ndez",
+          "player_id": 571771,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.1,
+          "confirmed_starter": true,
+          "trailing_n": 12,
+          "actual": 0
+        },
+        {
+          "section": "Batting",
+          "player": "Tommy Edman",
+          "player_id": 669242,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.464,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 88,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.464
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.13
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Tommy Edman",
+          "player_id": 669242,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.1,
+          "model_over_prob": 0.275,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 88,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.275
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.139
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Tommy Edman",
+          "player_id": 669242,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.254,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 88,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Tommy Edman",
+          "player_id": 669242,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.288,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 88,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Tommy Edman",
+          "player_id": 669242,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.088,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Josue De Paula",
+          "player_id": 800543,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.7,
+          "model_over_prob": 0.505,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.505
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.157
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Josue De Paula",
+          "player_id": 800543,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.2,
+          "model_over_prob": 0.303,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.303
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.161
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Josue De Paula",
+          "player_id": 800543,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.437,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Josue De Paula",
+          "player_id": 800543,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.276,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 14,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Josue De Paula",
+          "player_id": 800543,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.071,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Hunter Feduccia",
+          "player_id": 676439,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.5,
+          "model_over_prob": 0.396,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 92,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.396
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.092
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Hunter Feduccia",
+          "player_id": 676439,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 0.8,
+          "model_over_prob": 0.194,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 92,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.194
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.082
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Hunter Feduccia",
+          "player_id": 676439,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.4,
+          "model_over_prob": 0.353,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 92,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Hunter Feduccia",
+          "player_id": 676439,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.236,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 92,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Hunter Feduccia",
+          "player_id": 676439,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.056,
+          "confirmed_starter": false,
+          "trailing_n": 12,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Miguel Rojas",
+          "player_id": 500743,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Hits",
+          "line": 0.5,
+          "projected": 0.6,
+          "model_over_prob": 0.448,
+          "model_std": 0.848,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 109,
+          "ladder": [
+            {
+              "line": 0.5,
+              "over_prob": 0.448
+            },
+            {
+              "line": 1.5,
+              "over_prob": 0.12
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Miguel Rojas",
+          "player_id": 500743,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Total Bases",
+          "line": 1.0,
+          "projected": 1.0,
+          "model_over_prob": 0.254,
+          "model_std": 1.695,
+          "model_dispersion": 0.8657,
+          "confirmed_starter": false,
+          "trailing_n": 109,
+          "ladder": [
+            {
+              "line": 1.0,
+              "over_prob": 0.254
+            },
+            {
+              "line": 2.0,
+              "over_prob": 0.123
+            }
+          ],
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Miguel Rojas",
+          "player_id": 500743,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Walks",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.233,
+          "model_std": 0.554,
+          "model_dispersion": 0.0,
+          "confirmed_starter": false,
+          "trailing_n": 109,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Miguel Rojas",
+          "player_id": 500743,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "RBI",
+          "line": 0.5,
+          "projected": 0.3,
+          "model_over_prob": 0.236,
+          "model_std": 0.816,
+          "model_dispersion": 1.2854,
+          "confirmed_starter": false,
+          "trailing_n": 109,
+          "actual": null
+        },
+        {
+          "section": "Batting",
+          "player": "Miguel Rojas",
+          "player_id": 500743,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Anytime HR",
+          "model_prob": 0.07,
+          "confirmed_starter": false,
+          "trailing_n": 9,
+          "actual": null
+        },
+        {
+          "section": "Pitching",
+          "player": "Jacob Misiorowski",
+          "player_id": 694819,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Pitcher Strikeouts",
+          "line": 6.5,
+          "projected": 6.7,
+          "model_over_prob": 0.493,
+          "model_std": 1.468,
+          "model_dispersion": 0.0325,
+          "trailing_n": 33,
+          "ladder": [
+            {
+              "line": 5.5,
+              "over_prob": 0.635
+            },
+            {
+              "line": 6.5,
+              "over_prob": 0.493
+            },
+            {
+              "line": 7.5,
+              "over_prob": 0.359
+            }
+          ],
+          "actual": 5
+        },
+        {
+          "section": "Pitching",
+          "player": "Jacob Misiorowski",
+          "player_id": 694819,
+          "team": "MIL",
+          "opp": "LAD",
+          "market": "Pitcher Walks Allowed",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.365,
+          "model_std": 0.875,
+          "model_dispersion": 0.0575,
+          "trailing_n": 33,
+          "actual": 3
+        },
+        {
+          "section": "Pitching",
+          "player": "Tarik Skubal",
+          "player_id": 669373,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Pitcher Strikeouts",
+          "line": 7.0,
+          "projected": 7.1,
+          "model_over_prob": 0.41,
+          "model_std": 1.468,
+          "model_dispersion": 0.0325,
+          "trailing_n": 21,
+          "ladder": [
+            {
+              "line": 6.0,
+              "over_prob": 0.545
+            },
+            {
+              "line": 7.0,
+              "over_prob": 0.41
+            },
+            {
+              "line": 8.0,
+              "over_prob": 0.292
+            }
+          ],
+          "actual": 7
+        },
+        {
+          "section": "Pitching",
+          "player": "Tarik Skubal",
+          "player_id": 669373,
+          "team": "LAD",
+          "opp": "MIL",
+          "market": "Pitcher Walks Allowed",
+          "line": 1.5,
+          "projected": 1.3,
+          "model_over_prob": 0.361,
+          "model_std": 0.875,
+          "model_dispersion": 0.0575,
+          "trailing_n": 21,
+          "actual": 2
+        }
+      ],
+      "already_played": true,
+      "away_score": 1,
+      "home_score": 2,
+      "awayTeamStats": {
+        "offense": {
+          "batting": {
+            "hits_per_game": 7.5,
+            "total_bases_per_game": 12.2,
+            "hr_per_game": 1.3,
+            "bb_per_game": 3.4,
+            "k_per_game": 8.7,
+            "rbi_per_game": 2.8
+          }
+        },
+        "defense": {
+          "pitching": {
+            "era": 2.13,
+            "k_per_game": 11.3,
+            "hits_allowed_per_game": 5.5,
+            "bb_allowed_per_game": 3.0,
+            "runs_allowed_per_game": 2.1
+          }
+        }
+      },
+      "homeTeamStats": {
+        "offense": {
+          "batting": {
+            "hits_per_game": 8.6,
+            "total_bases_per_game": 12.7,
+            "hr_per_game": 0.9,
+            "bb_per_game": 3.9,
+            "k_per_game": 8.4,
+            "rbi_per_game": 4.1
+          }
+        },
+        "defense": {
+          "pitching": {
+            "era": 2.34,
+            "k_per_game": 8.8,
+            "hits_allowed_per_game": 5.3,
+            "bb_allowed_per_game": 3.6,
+            "runs_allowed_per_game": 2.3
+          }
+        }
+      }
+    }
+  ]
+}

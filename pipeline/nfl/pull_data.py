@@ -1,5 +1,6 @@
 """Pull NFL schedules, play-by-play, and player stats via nflreadpy and cache locally as parquet."""
 import io
+import time
 import pathlib
 import datetime
 import urllib.request
@@ -35,10 +36,31 @@ INJURY_RELEASE = ("https://github.com/nflverse/nflverse-data/releases/download/"
                   "injuries/injuries_%d.parquet")
 
 
+# GitHub serves nflverse's release files, and it has bad minutes. On
+# 2026-10-13 a single 500 on stats_player_week_2025.parquet failed a whole
+# refresh 40 seconds in, and the next run pulled the same file fine. A blip
+# like that should cost a retry, not the run. ConnectionError is what
+# nflreadpy raises for any failed download; a real, lasting outage still
+# fails after the last attempt, which is the right outcome.
+RETRY_WAITS = (15, 45, 90)
+
+
+def with_retry(label, fn, *args, **kwargs):
+    for attempt, wait in enumerate(RETRY_WAITS + (None,), start=1):
+        try:
+            return fn(*args, **kwargs)
+        except ConnectionError as e:
+            if wait is None:
+                raise
+            print(f"  {label}: download failed ({e}); retry {attempt} of "
+                  f"{len(RETRY_WAITS)} in {wait}s")
+            time.sleep(wait)
+
+
 def load_injuries_including_current(seasons):
     """load_injuries, plus any season nflreadpy declines but nflverse has."""
     supported = [s for s in seasons if s <= nfl.get_current_season()]
-    df = nfl.load_injuries(seasons=supported) if supported else None
+    df = with_retry("injuries", nfl.load_injuries, seasons=supported) if supported else None
 
     for season in [s for s in seasons if s > nfl.get_current_season()]:
         try:
@@ -76,12 +98,12 @@ def save(df, name):
 def main():
     print(f"Pulling seasons {SEASONS[0]}-{SEASONS[-1]}...")
 
-    schedules = nfl.load_schedules(seasons=SEASONS)  # schedules includes future/in-progress seasons
+    schedules = with_retry("schedules", nfl.load_schedules, seasons=SEASONS)  # schedules includes future/in-progress seasons
     save(schedules, "schedules")
 
     # Team conf/division for the standings/season view -- not tied to a
     # season, just the current alignment, so no seasons param.
-    teams = nfl.load_teams()
+    teams = with_retry("teams", nfl.load_teams)
     save(teams, "teams")
 
     # Play-by-play, player/team stats, and rosters only exist for seasons with
@@ -90,16 +112,16 @@ def main():
     stats_seasons = [s for s in SEASONS if s <= nfl.get_current_season()]
     print(f"Stats/pbp/roster seasons capped at {stats_seasons[-1]} (nflreadpy's current completed season)")
 
-    pbp = nfl.load_pbp(seasons=stats_seasons)
+    pbp = with_retry("pbp", nfl.load_pbp, seasons=stats_seasons)
     save(pbp, "pbp")
 
-    player_stats = nfl.load_player_stats(seasons=stats_seasons)
+    player_stats = with_retry("player_stats", nfl.load_player_stats, seasons=stats_seasons)
     save(player_stats, "player_stats")
 
-    team_stats = nfl.load_team_stats(seasons=stats_seasons)
+    team_stats = with_retry("team_stats", nfl.load_team_stats, seasons=stats_seasons)
     save(team_stats, "team_stats")
 
-    rosters = nfl.load_rosters_weekly(seasons=stats_seasons)
+    rosters = with_retry("rosters_weekly", nfl.load_rosters_weekly, seasons=stats_seasons)
     save(rosters, "rosters_weekly")
 
     # Weekly injury report: per player per week, with report_status

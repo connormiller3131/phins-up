@@ -195,12 +195,27 @@ def compose_pregame(nfl):
     return text, "x_posted:nfl-%s-wk%d-pregame" % (nfl["season"], week)
 
 
+def last_finished_week(nfl):
+    """The most recent week whose every game has been played, or None.
+
+    NOT current_week. The site moves current_week on to the next slate as soon
+    as the last game of a week ends, so by the Tuesday and Wednesday this post
+    runs, current_week is already the NEXT week, with its games unplayed. Read
+    that way, the results post waited on games a week away and never fired:
+    Week 5 held on both 2026-10-13 and 10-14 with all 15 games graded."""
+    done = [int(w) for w, wk in (nfl.get("weeks") or {}).items()
+            if wk.get("games") and all(g.get("already_played") for g in wk["games"])]
+    return max(done) if done else None
+
+
 def compose_results(nfl, results_dir):
     """Only fires once every game of the week carries a graded result, so the
     record posted is the whole week rather than a partial one that would have
     to be corrected later."""
-    season, week = nfl["season"], int(nfl["current_week"])
-    graded, correct, mkt_n, mkt_correct = 0, 0, 0, 0
+    season, week = nfl["season"], last_finished_week(nfl)
+    if week is None:
+        return None, None
+    graded, correct, ties, mkt_n, mkt_correct = 0, 0, 0, 0, 0
     total = len(nfl["weeks"][str(week)]["games"])
     for f in sorted(results_dir.glob("nfl_%s_wk%02d_*.json" % (season, week))):
         snap = json.loads(f.read_text(encoding="utf-8"))
@@ -208,6 +223,11 @@ def compose_results(nfl, results_dir):
         if not snap.get("graded") or not a:
             continue
         graded += 1
+        # A tie has no winner to call, so it is left out of "X of Y winners"
+        # rather than counted as a miss (NYG 27, WAS 27 in Week 5 of 2026).
+        if a.get("winner") == "TIE":
+            ties += 1
+            continue
         correct += 1 if a.get("model_correct") else 0
         if a.get("market_pick"):
             mkt_n += 1
@@ -215,8 +235,10 @@ def compose_results(nfl, results_dir):
     if not graded or graded < total:
         return None, None
 
-    lines = ["NFL Week %d results.\n" % week,
-             "The model called %d of %d winners." % (correct, graded)]
+    called = "The model called %d of %d winners." % (correct, graded - ties)
+    if ties:
+        called += " (%s ended in a tie.)" % ("One game" if ties == 1 else "%d games" % ties)
+    lines = ["NFL Week %d results.\n" % week, called]
     if mkt_n:
         lines.append("The betting market called %d." % mkt_correct)
     lines.append("\nEvery prediction we have made, graded, including the "

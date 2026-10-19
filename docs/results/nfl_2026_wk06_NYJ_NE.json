@@ -13,6 +13,1639 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.7572,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 19,
+    "home_score": 26,
+    "winner": "NE",
+    "model_pick": "NE",
+    "model_correct": true,
+    "market_pick": "NE",
+    "market_correct": true
+  },
+  "graded_at": "2026-10-19T12:37:23",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Passing Yds",
+      "line": 189.5,
+      "projected": 189.3,
+      "model_over_prob": 0.51,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.725,
+          "over_prob_raw": 0.773
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.645,
+          "over_prob_raw": 0.676
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.56,
+          "over_prob_raw": 0.566
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.451
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.24
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.229,
+          "over_prob_raw": 0.16
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 252.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.283,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.6,
+      "model_over_prob": 0.504,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Pass Attempts",
+      "line": 28.5,
+      "projected": 28.4,
+      "model_over_prob": 0.497,
+      "actual_value": 30.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Geno Smith",
+      "player_id": "00-0030565",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 8.5,
+      "projected": 8.6,
+      "model_over_prob": 0.413,
+      "model_over_prob_raw": 0.373,
+      "actual_value": -1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 55.5,
+      "projected": 55.7,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.694,
+          "over_prob_raw": 0.736
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.615,
+          "over_prob_raw": 0.638
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.51
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.427,
+          "over_prob_raw": 0.39
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.372,
+          "over_prob_raw": 0.321
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.268
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.224
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Carries",
+      "line": 15.0,
+      "projected": 14.8,
+      "model_over_prob": 0.393,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.391,
+      "trailing_n": 8,
+      "opp_per_gm": 18.4,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Rush + Rec Yds",
+      "line": 73.0,
+      "projected": 72.8,
+      "model_over_prob": 0.431,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.608,
+          "over_prob_raw": 0.628
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.532
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.464,
+          "over_prob_raw": 0.439
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.411,
+          "over_prob_raw": 0.37
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.371,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.335,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.301,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 17.5,
+      "projected": 17.5,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.685,
+          "over_prob_raw": 0.726
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.586,
+          "over_prob_raw": 0.6
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.466,
+          "over_prob_raw": 0.441
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.332
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.266
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.215
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.244,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Breece Hall",
+      "player_id": "00-0038120",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.321,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 34.0,
+      "projected": 34.1,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.67,
+          "over_prob_raw": 0.707
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.589,
+          "over_prob_raw": 0.603
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.489,
+          "over_prob_raw": 0.471
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.407,
+          "over_prob_raw": 0.365
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.357,
+          "over_prob_raw": 0.303
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.316,
+          "over_prob_raw": 0.254
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.279,
+          "over_prob_raw": 0.212
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 78.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Carries",
+      "line": 8.5,
+      "projected": 8.3,
+      "model_over_prob": 0.392,
+      "actual_value": 17.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.212,
+      "trailing_n": 8,
+      "opp_per_gm": 10.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Rush + Rec Yds",
+      "line": 41.5,
+      "projected": 41.5,
+      "model_over_prob": 0.434,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.66,
+          "over_prob_raw": 0.695
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.588,
+          "over_prob_raw": 0.602
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.515,
+          "over_prob_raw": 0.506
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.419
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.402,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.362,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.265
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 104.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.413,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.462,
+          "over_prob_raw": 0.436
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.33
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.264
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.281,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 26.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Braelon Allen",
+      "player_id": "00-0039794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.333,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 53.0,
+      "projected": 53.0,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.693,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.595,
+          "over_prob_raw": 0.611
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.475,
+          "over_prob_raw": 0.453
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.285,
+          "over_prob_raw": 0.219
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.247,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 44.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.464,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Garrett Wilson",
+      "player_id": "00-0037740",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.236,
+      "trailing_n": 8,
+      "opp_per_gm": 7.9,
+      "dk_odds": 190,
+      "dk_implied_prob": 0.3448,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 46.2,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.745,
+          "over_prob_raw": 0.796
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.662,
+          "over_prob_raw": 0.697
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.558
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.436,
+          "over_prob_raw": 0.402
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.313
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.251
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.272,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.348,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Adonai Mitchell",
+      "player_id": "00-0039890",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.175,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tim Patrick",
+      "player_id": "00-0033375",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 15.0,
+      "projected": 15.1,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.64,
+          "over_prob_raw": 0.669
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.528,
+          "over_prob_raw": 0.523
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.377
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.353,
+          "over_prob_raw": 0.298
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.303,
+          "over_prob_raw": 0.239
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.262,
+          "over_prob_raw": 0.194
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tim Patrick",
+      "player_id": "00-0033375",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.391,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tim Patrick",
+      "player_id": "00-0033375",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.101,
+      "trailing_n": 8,
+      "opp_per_gm": 2.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenyon Sadiq",
+      "player_id": "00-0041032",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.5,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.685,
+          "over_prob_raw": 0.726
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.586,
+          "over_prob_raw": 0.6
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.466,
+          "over_prob_raw": 0.441
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.332
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.266
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.215
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.244,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenyon Sadiq",
+      "player_id": "00-0041032",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.468,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenyon Sadiq",
+      "player_id": "00-0041032",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.166,
+      "trailing_n": 5,
+      "opp_per_gm": 4.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Sanders",
+      "player_id": "00-0034794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.492,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jason Sanders",
+      "player_id": "00-0034794",
+      "team": "NYJ",
+      "opp": "NE",
+      "market": "Kicking Points",
+      "line": 6.5,
+      "projected": 6.5,
+      "model_over_prob": 0.471,
+      "actual_value": 13.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Passing Yds",
+      "line": 211.5,
+      "projected": 211.5,
+      "model_over_prob": 0.511,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.788,
+          "over_prob_raw": 0.843
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.716,
+          "over_prob_raw": 0.763
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.636,
+          "over_prob_raw": 0.664
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.551,
+          "over_prob_raw": 0.553
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.463,
+          "over_prob_raw": 0.438
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.377,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.23
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 235.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.454,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Completions",
+      "line": 18.5,
+      "projected": 18.5,
+      "model_over_prob": 0.501,
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Pass Attempts",
+      "line": 29.0,
+      "projected": 28.9,
+      "model_over_prob": 0.495,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 30.5,
+      "projected": 30.6,
+      "model_over_prob": 0.413,
+      "model_over_prob_raw": 0.373,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 52.0,
+      "projected": 52.0,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.71,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.667
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.546
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.447,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.234
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 36.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Carries",
+      "line": 13.0,
+      "projected": 13.2,
+      "model_over_prob": 0.428,
+      "actual_value": 14.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.452,
+      "trailing_n": 8,
+      "opp_per_gm": 16.9,
+      "dk_odds": -160,
+      "dk_implied_prob": 0.6154,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Rush + Rec Yds",
+      "line": 71.5,
+      "projected": 71.6,
+      "model_over_prob": 0.434,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.661,
+          "over_prob_raw": 0.696
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.589,
+          "over_prob_raw": 0.603
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.516,
+          "over_prob_raw": 0.507
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.419
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.402,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.362,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.265
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 36.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 23.5,
+      "projected": 23.7,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.749
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.609,
+          "over_prob_raw": 0.63
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.478
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.351
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.337,
+          "over_prob_raw": 0.279
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.225
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.252,
+          "over_prob_raw": 0.183
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.303,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Rushing Yds",
+      "line": 35.5,
+      "projected": 35.7,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.693,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.615,
+          "over_prob_raw": 0.638
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.517,
+          "over_prob_raw": 0.509
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.427,
+          "over_prob_raw": 0.39
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.372,
+          "over_prob_raw": 0.321
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.268
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.289,
+          "over_prob_raw": 0.223
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 31.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Carries",
+      "line": 9.5,
+      "projected": 9.3,
+      "model_over_prob": 0.397,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.247,
+      "trailing_n": 8,
+      "opp_per_gm": 10.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Rush + Rec Yds",
+      "line": 43.5,
+      "projected": 43.5,
+      "model_over_prob": 0.434,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.618,
+          "over_prob_raw": 0.641
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.545
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.45
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.42,
+          "over_prob_raw": 0.381
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.377,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.242
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 40.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.4,
+      "model_over_prob": 0.413,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.51,
+          "over_prob_raw": 0.499
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.363
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.232
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.258,
+          "over_prob_raw": 0.189
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.288,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 50.0,
+      "projected": 50.0,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.726,
+          "over_prob_raw": 0.775
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.667
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.526,
+          "over_prob_raw": 0.521
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.376
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.352,
+          "over_prob_raw": 0.297
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.238
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.262,
+          "over_prob_raw": 0.194
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 42.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.434,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Romeo Doubs",
+      "player_id": "00-0037816",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.234,
+      "trailing_n": 8,
+      "opp_per_gm": 5.4,
+      "dk_odds": 190,
+      "dk_implied_prob": 0.3448,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 28.5,
+      "projected": 28.7,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.706,
+          "over_prob_raw": 0.751
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.612,
+          "over_prob_raw": 0.633
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.495,
+          "over_prob_raw": 0.48
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.397,
+          "over_prob_raw": 0.352
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.28
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.226
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.253,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 86.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.449,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.185,
+      "trailing_n": 8,
+      "opp_per_gm": 4.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.743,
+          "over_prob_raw": 0.794
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.659,
+          "over_prob_raw": 0.694
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.551,
+          "over_prob_raw": 0.554
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.434,
+          "over_prob_raw": 0.399
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.364,
+          "over_prob_raw": 0.311
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.25
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.271,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.476,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.164,
+      "trailing_n": 8,
+      "opp_per_gm": 2.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.5,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.763,
+          "over_prob_raw": 0.816
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.684,
+          "over_prob_raw": 0.724
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.585,
+          "over_prob_raw": 0.598
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.464,
+          "over_prob_raw": 0.439
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.332
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.265
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 48.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.445,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Anytime TD",
+      "model_prob": 0.156,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "dk_odds": 185,
+      "dk_implied_prob": 0.3509,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Andy Borregales",
+      "player_id": "00-0040200",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.462,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Andy Borregales",
+      "player_id": "00-0040200",
+      "team": "NE",
+      "opp": "NYJ",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.452,
+      "actual_value": 8.0,
+      "hit": true
+    }
+  ]
 }

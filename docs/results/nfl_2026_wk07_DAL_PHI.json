@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 7,
+  "awayAbbr": "DAL",
+  "homeAbbr": "PHI",
+  "awayName": "Dallas Cowboys",
+  "homeName": "Philadelphia Eagles",
+  "gameday": "2026-10-26",
+  "predicted_at": "2026-10-20T11:11:14",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.6089,
+  "elo_home_prob_raw": 0.6089,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.3425,
+  "graded": false,
+  "actual": null
+}

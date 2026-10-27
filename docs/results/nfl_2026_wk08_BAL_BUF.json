@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 8,
+  "awayAbbr": "BAL",
+  "homeAbbr": "BUF",
+  "awayName": "Baltimore Ravens",
+  "homeName": "Buffalo Bills",
+  "gameday": "2026-11-01",
+  "predicted_at": "2026-10-27T11:51:29",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.7175,
+  "elo_home_prob_raw": 0.7175,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.6309,
+  "graded": false,
+  "actual": null
+}

@@ -13,6 +13,1616 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.2341,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 24,
+    "home_score": 19,
+    "winner": "NE",
+    "model_pick": "NE",
+    "model_correct": true,
+    "market_pick": "NE",
+    "market_correct": true
+  },
+  "graded_at": "2026-11-02T15:10:17",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Passing Yds",
+      "line": 240.5,
+      "projected": 240.3,
+      "model_over_prob": 0.513,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.73,
+          "over_prob_raw": 0.776
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.652,
+          "over_prob_raw": 0.681
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.567,
+          "over_prob_raw": 0.571
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.479,
+          "over_prob_raw": 0.455
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.392,
+          "over_prob_raw": 0.343
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.309,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.233,
+          "over_prob_raw": 0.162
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 199.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.486,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Completions",
+      "line": 20.0,
+      "projected": 20.1,
+      "model_over_prob": 0.506,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.6,
+      "model_over_prob": 0.504,
+      "actual_value": 20.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Drake Maye",
+      "player_id": "00-0039851",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Rushing Yds",
+      "line": 28.0,
+      "projected": 27.8,
+      "model_over_prob": 0.41,
+      "model_over_prob_raw": 0.365,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Rushing Yds",
+      "line": 42.5,
+      "projected": 42.4,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.718,
+          "over_prob_raw": 0.762
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.646,
+          "over_prob_raw": 0.674
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.557,
+          "over_prob_raw": 0.558
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.458,
+          "over_prob_raw": 0.427
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.391,
+          "over_prob_raw": 0.342
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.238
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 82.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Carries",
+      "line": 11.0,
+      "projected": 10.9,
+      "model_over_prob": 0.408,
+      "actual_value": 19.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.432,
+      "trailing_n": 8,
+      "opp_per_gm": 14.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Rush + Rec Yds",
+      "line": 67.0,
+      "projected": 67.1,
+      "model_over_prob": 0.437,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.669,
+          "over_prob_raw": 0.703
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.6,
+          "over_prob_raw": 0.614
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.527,
+          "over_prob_raw": 0.518
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.458,
+          "over_prob_raw": 0.427
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.409,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.332,
+          "over_prob_raw": 0.27
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 90.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 28.5,
+      "projected": 28.3,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.702,
+          "over_prob_raw": 0.743
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.605,
+          "over_prob_raw": 0.621
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.488,
+          "over_prob_raw": 0.466
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.393,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.336,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.222
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.252,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rhamondre Stevenson",
+      "player_id": "00-0036875",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.304,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Rushing Yds",
+      "line": 32.5,
+      "projected": 32.6,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.65,
+          "over_prob_raw": 0.678
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.562,
+          "over_prob_raw": 0.564
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.463,
+          "over_prob_raw": 0.433
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.393,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.347,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.24
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Carries",
+      "line": 8.0,
+      "projected": 8.1,
+      "model_over_prob": 0.426,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.222,
+      "trailing_n": 8,
+      "opp_per_gm": 8.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Rush + Rec Yds",
+      "line": 41.5,
+      "projected": 41.7,
+      "model_over_prob": 0.438,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.665,
+          "over_prob_raw": 0.698
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.594,
+          "over_prob_raw": 0.606
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.52,
+          "over_prob_raw": 0.509
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.453,
+          "over_prob_raw": 0.42
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.407,
+          "over_prob_raw": 0.361
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.31
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.267
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 10.0,
+      "projected": 10.0,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.529,
+          "over_prob_raw": 0.521
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.375
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.354,
+          "over_prob_raw": 0.296
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.238
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.194
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "TreVeyon Henderson",
+      "player_id": "00-0040734",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.299,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 52.0,
+      "projected": 52.2,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.762,
+          "over_prob_raw": 0.812
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.682,
+          "over_prob_raw": 0.718
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.581,
+          "over_prob_raw": 0.589
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.459,
+          "over_prob_raw": 0.429
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.326
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.262
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.281,
+          "over_prob_raw": 0.212
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.2,
+      "model_over_prob": 0.408,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "A.J. Brown",
+      "player_id": "00-0035676",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.204,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.4,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.751,
+          "over_prob_raw": 0.8
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.669,
+          "over_prob_raw": 0.702
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.563,
+          "over_prob_raw": 0.566
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.443,
+          "over_prob_raw": 0.408
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.254
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 76.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.406,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeMario Douglas",
+      "player_id": "00-0038621",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.197,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 16.5,
+      "projected": 16.3,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.668,
+          "over_prob_raw": 0.701
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.562,
+          "over_prob_raw": 0.564
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.407
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.369,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 37.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.419,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Efton Chism III",
+      "player_id": "00-0040563",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.137,
+      "trailing_n": 8,
+      "opp_per_gm": 2.1,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.3,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.75,
+          "over_prob_raw": 0.799
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.667,
+          "over_prob_raw": 0.7
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.561,
+          "over_prob_raw": 0.563
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.406
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.369,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 30.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.392,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Hunter Henry",
+      "player_id": "00-0033090",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Anytime TD",
+      "model_prob": 0.188,
+      "trailing_n": 8,
+      "opp_per_gm": 4.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Andy Borregales",
+      "player_id": "00-0040200",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.473,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Andy Borregales",
+      "player_id": "00-0040200",
+      "team": "NE",
+      "opp": "MIA",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.4,
+      "model_over_prob": 0.464,
+      "actual_value": 6.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Passing Yds",
+      "line": 185.5,
+      "projected": 185.3,
+      "model_over_prob": 0.513,
+      "ladder": [
+        {
+          "line": 100.0,
+          "over_prob": 0.787,
+          "over_prob_raw": 0.84
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.715,
+          "over_prob_raw": 0.759
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.635,
+          "over_prob_raw": 0.659
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.55,
+          "over_prob_raw": 0.548
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.462,
+          "over_prob_raw": 0.432
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.375,
+          "over_prob_raw": 0.322
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.225
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 211.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.192,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Completions",
+      "line": 15.0,
+      "projected": 15.1,
+      "model_over_prob": 0.507,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Pass Attempts",
+      "line": 24.5,
+      "projected": 24.5,
+      "model_over_prob": 0.501,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Malik Willis",
+      "player_id": "00-0038128",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 36.0,
+      "projected": 36.2,
+      "model_over_prob": 0.418,
+      "model_over_prob_raw": 0.376,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 41.5,
+      "projected": 41.3,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.705,
+          "over_prob_raw": 0.746
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.63,
+          "over_prob_raw": 0.653
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.528
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.44,
+          "over_prob_raw": 0.404
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.329
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.335,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.23
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 69.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Carries",
+      "line": 11.0,
+      "projected": 10.9,
+      "model_over_prob": 0.4,
+      "actual_value": 19.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.3,
+      "trailing_n": 8,
+      "opp_per_gm": 11.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Rush + Rec Yds",
+      "line": 46.5,
+      "projected": 46.6,
+      "model_over_prob": 0.436,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.664,
+          "over_prob_raw": 0.696
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.592,
+          "over_prob_raw": 0.604
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.519,
+          "over_prob_raw": 0.507
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.452,
+          "over_prob_raw": 0.419
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.266
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 69.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 5.0,
+      "projected": 4.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.373
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.353,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.303,
+          "over_prob_raw": 0.237
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.263,
+          "over_prob_raw": 0.193
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ollie Gordon II",
+      "player_id": "00-0040198",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.0,
+      "model_over_prob": 0.247,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Rushing Yds",
+      "line": 22.0,
+      "projected": 21.8,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.71,
+          "over_prob_raw": 0.752
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.637,
+          "over_prob_raw": 0.662
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.543,
+          "over_prob_raw": 0.539
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.447,
+          "over_prob_raw": 0.413
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.335
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.278
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.3,
+          "over_prob_raw": 0.233
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Carries",
+      "line": 6.5,
+      "projected": 6.5,
+      "model_over_prob": 0.413,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.143,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Rush + Rec Yds",
+      "line": 27.0,
+      "projected": 26.8,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.665,
+          "over_prob_raw": 0.698
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.595,
+          "over_prob_raw": 0.607
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.521,
+          "over_prob_raw": 0.51
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.453,
+          "over_prob_raw": 0.421
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.407,
+          "over_prob_raw": 0.362
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.367,
+          "over_prob_raw": 0.312
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.267
+        }
+      ],
+      "model_over_prob_raw": 0.395,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.413,
+          "over_prob_raw": 0.369
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.293
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.235
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.261,
+          "over_prob_raw": 0.191
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Wright",
+      "player_id": "00-0039874",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.427,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 37.0,
+      "projected": 37.0,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.759,
+          "over_prob_raw": 0.809
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.678,
+          "over_prob_raw": 0.714
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.584
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.455,
+          "over_prob_raw": 0.423
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.323
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.323,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.279,
+          "over_prob_raw": 0.21
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.445,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Malik Washington",
+      "player_id": "00-0039880",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.15,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Caleb Douglas",
+      "player_id": "00-0041523",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 45.5,
+      "projected": 45.4,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.735,
+          "over_prob_raw": 0.782
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.677
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.538,
+          "over_prob_raw": 0.532
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.424,
+          "over_prob_raw": 0.383
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.358,
+          "over_prob_raw": 0.301
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.308,
+          "over_prob_raw": 0.242
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.267,
+          "over_prob_raw": 0.197
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 43.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Caleb Douglas",
+      "player_id": "00-0041523",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.311,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Caleb Douglas",
+      "player_id": "00-0041523",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.155,
+      "trailing_n": 3,
+      "opp_per_gm": 4.3,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Bell",
+      "player_id": "00-0041525",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 20.0,
+      "projected": 20.1,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.73,
+          "over_prob_raw": 0.776
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.643,
+          "over_prob_raw": 0.669
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.531,
+          "over_prob_raw": 0.523
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.376
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.297
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.239
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.194
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 31.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Bell",
+      "player_id": "00-0041525",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.472,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Chris Bell",
+      "player_id": "00-0041525",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.096,
+      "trailing_n": 6,
+      "opp_per_gm": 3.3,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 36.2,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.748,
+          "over_prob_raw": 0.797
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.666,
+          "over_prob_raw": 0.699
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.559,
+          "over_prob_raw": 0.56
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.44,
+          "over_prob_raw": 0.404
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.368,
+          "over_prob_raw": 0.313
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.252
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 43.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.376,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Greg Dulcich",
+      "player_id": "00-0037252",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Anytime TD",
+      "model_prob": 0.123,
+      "trailing_n": 8,
+      "opp_per_gm": 4.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Zane Gonzalez",
+      "player_id": "00-0033862",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.497,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Zane Gonzalez",
+      "player_id": "00-0033862",
+      "team": "MIA",
+      "opp": "NE",
+      "market": "Kicking Points",
+      "line": 6.5,
+      "projected": 6.7,
+      "model_over_prob": 0.491,
+      "actual_value": 7.0,
+      "hit": true
+    }
+  ]
 }

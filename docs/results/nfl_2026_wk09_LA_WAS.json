@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 9,
+  "awayAbbr": "LA",
+  "homeAbbr": "WAS",
+  "awayName": "Los Angeles Rams",
+  "homeName": "Washington Commanders",
+  "gameday": "2026-11-08",
+  "predicted_at": "2026-11-03T13:53:49",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.3454,
+  "elo_home_prob_raw": 0.3454,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.3194,
+  "graded": false,
+  "actual": null
+}

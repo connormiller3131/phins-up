@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 9,
+  "awayAbbr": "NYJ",
+  "homeAbbr": "KC",
+  "awayName": "New York Jets",
+  "homeName": "Kansas City Chiefs",
+  "gameday": "2026-11-08",
+  "predicted_at": "2026-11-03T13:53:49",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.7724,
+  "elo_home_prob_raw": 0.7724,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.7958,
+  "graded": false,
+  "actual": null
+}

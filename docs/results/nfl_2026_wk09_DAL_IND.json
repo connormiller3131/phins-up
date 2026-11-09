@@ -13,6 +13,1637 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.295,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 27,
+    "home_score": 23,
+    "winner": "DAL",
+    "model_pick": "DAL",
+    "model_correct": true,
+    "market_pick": "DAL",
+    "market_correct": true
+  },
+  "graded_at": "2026-11-09T15:40:41",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Passing Yds",
+      "line": 234.5,
+      "projected": 234.7,
+      "model_over_prob": 0.515,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.783,
+          "over_prob_raw": 0.838
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.632,
+          "over_prob_raw": 0.657
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.548,
+          "over_prob_raw": 0.545
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.461,
+          "over_prob_raw": 0.429
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.224
+        }
+      ],
+      "model_over_prob_raw": 0.501,
+      "actual_value": 335.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.287,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Completions",
+      "line": 21.5,
+      "projected": 21.5,
+      "model_over_prob": 0.499,
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Pass Attempts",
+      "line": 33.0,
+      "projected": 33.2,
+      "model_over_prob": 0.507,
+      "actual_value": 34.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Dak Prescott",
+      "player_id": "00-0033077",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 12.0,
+      "projected": 11.8,
+      "model_over_prob": 0.412,
+      "model_over_prob_raw": 0.365,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 66.0,
+      "projected": 66.2,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.701,
+          "over_prob_raw": 0.744
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.627,
+          "over_prob_raw": 0.65
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.532,
+          "over_prob_raw": 0.524
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.229
+        }
+      ],
+      "model_over_prob_raw": 0.382,
+      "actual_value": 101.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Carries",
+      "line": 16.5,
+      "projected": 16.4,
+      "model_over_prob": 0.4,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.68,
+      "trailing_n": 8,
+      "opp_per_gm": 19.8,
+      "dk_odds": -240,
+      "dk_implied_prob": 0.7059,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Rush + Rec Yds",
+      "line": 82.5,
+      "projected": 82.6,
+      "model_over_prob": 0.439,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.608,
+          "over_prob_raw": 0.626
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.534,
+          "over_prob_raw": 0.527
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.465,
+          "over_prob_raw": 0.435
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.414,
+          "over_prob_raw": 0.368
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.375,
+          "over_prob_raw": 0.319
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 124.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 18.5,
+      "projected": 18.3,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.7,
+          "over_prob_raw": 0.742
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.604,
+          "over_prob_raw": 0.62
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.487,
+          "over_prob_raw": 0.464
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.395,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.274
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.292,
+          "over_prob_raw": 0.221
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.181
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Javonte Williams",
+      "player_id": "00-0036997",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.38,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Rushing Yds",
+      "line": 18.5,
+      "projected": 18.4,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.659,
+          "over_prob_raw": 0.692
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.584
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.477,
+          "over_prob_raw": 0.45
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.402,
+          "over_prob_raw": 0.353
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.356,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.208
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 77.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Carries",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.398,
+      "actual_value": 12.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.17,
+      "trailing_n": 8,
+      "opp_per_gm": 4.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Rush + Rec Yds",
+      "line": 24.5,
+      "projected": 24.3,
+      "model_over_prob": 0.435,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.631,
+          "over_prob_raw": 0.655
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.559,
+          "over_prob_raw": 0.561
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.487,
+          "over_prob_raw": 0.464
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.43,
+          "over_prob_raw": 0.389
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.388,
+          "over_prob_raw": 0.335
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.289
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.249
+        }
+      ],
+      "model_over_prob_raw": 0.395,
+      "actual_value": 77.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 7.0,
+      "projected": 6.8,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.452,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.258
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.208
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Goodson",
+      "player_id": "00-0037120",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.7,
+      "model_over_prob": 0.492,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 83.0,
+      "projected": 82.8,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.692,
+          "over_prob_raw": 0.733
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.595,
+          "over_prob_raw": 0.608
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.476,
+          "over_prob_raw": 0.449
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.389,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.334,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.251,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 195.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 7.0,
+      "projected": 6.8,
+      "model_over_prob": 0.373,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "CeeDee Lamb",
+      "player_id": "00-0036358",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.428,
+      "trailing_n": 8,
+      "opp_per_gm": 11.8,
+      "dk_odds": -135,
+      "dk_implied_prob": 0.5745,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 60.5,
+      "projected": 60.3,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.732,
+          "over_prob_raw": 0.781
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.647,
+          "over_prob_raw": 0.676
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.538,
+          "over_prob_raw": 0.532
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.425,
+          "over_prob_raw": 0.382
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.36,
+          "over_prob_raw": 0.3
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.241
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.27,
+          "over_prob_raw": 0.197
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.456,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "George Pickens",
+      "player_id": "00-0037247",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.271,
+      "trailing_n": 8,
+      "opp_per_gm": 7.8,
+      "dk_odds": -110,
+      "dk_implied_prob": 0.5238,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 41.0,
+      "projected": 41.2,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.746,
+          "over_prob_raw": 0.797
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.664,
+          "over_prob_raw": 0.698
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.559,
+          "over_prob_raw": 0.56
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.441,
+          "over_prob_raw": 0.403
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.313
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.251
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.277,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 53.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.437,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ryan Flournoy",
+      "player_id": "00-0039410",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.236,
+      "trailing_n": 8,
+      "opp_per_gm": 5.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receiving Yds",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.734,
+          "over_prob_raw": 0.783
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.679
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.539,
+          "over_prob_raw": 0.534
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.426,
+          "over_prob_raw": 0.384
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.36,
+          "over_prob_raw": 0.301
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.311,
+          "over_prob_raw": 0.242
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.271,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.368,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jake Ferguson",
+      "player_id": "00-0038041",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Anytime TD",
+      "model_prob": 0.202,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Brandon Aubrey",
+      "player_id": "00-0037692",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.512,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Brandon Aubrey",
+      "player_id": "00-0037692",
+      "team": "DAL",
+      "opp": "IND",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 8.1,
+      "model_over_prob": 0.489,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Passing Yds",
+      "line": 193.0,
+      "projected": 192.9,
+      "model_over_prob": 0.514,
+      "ladder": [
+        {
+          "line": 125.0,
+          "over_prob": 0.736,
+          "over_prob_raw": 0.785
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.659,
+          "over_prob_raw": 0.691
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.575,
+          "over_prob_raw": 0.582
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.489,
+          "over_prob_raw": 0.467
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.354
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.32,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.244,
+          "over_prob_raw": 0.17
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 180.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Passing TDs",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.327,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Completions",
+      "line": 19.5,
+      "projected": 19.6,
+      "model_over_prob": 0.507,
+      "actual_value": 20.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Pass Attempts",
+      "line": 32.0,
+      "projected": 31.8,
+      "model_over_prob": 0.493,
+      "actual_value": 34.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Daniel Jones",
+      "player_id": "00-0035710",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Rushing Yds",
+      "line": 11.5,
+      "projected": 11.3,
+      "model_over_prob": 0.412,
+      "model_over_prob_raw": 0.365,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Rushing Yds",
+      "line": 75.0,
+      "projected": 75.1,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.687,
+          "over_prob_raw": 0.727
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.608,
+          "over_prob_raw": 0.625
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.51,
+          "over_prob_raw": 0.495
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.423,
+          "over_prob_raw": 0.38
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.371,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.263
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.29,
+          "over_prob_raw": 0.219
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Carries",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.413,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.624,
+      "trailing_n": 8,
+      "opp_per_gm": 22.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Rush + Rec Yds",
+      "line": 97.5,
+      "projected": 97.5,
+      "model_over_prob": 0.437,
+      "ladder": [
+        {
+          "line": 80.0,
+          "over_prob": 0.673,
+          "over_prob_raw": 0.709
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.605,
+          "over_prob_raw": 0.622
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.532,
+          "over_prob_raw": 0.524
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.463,
+          "over_prob_raw": 0.432
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.413,
+          "over_prob_raw": 0.367
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.374,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.274
+        }
+      ],
+      "model_over_prob_raw": 0.398,
+      "actual_value": 64.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 26.5,
+      "projected": 26.3,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.748,
+          "over_prob_raw": 0.799
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.666,
+          "over_prob_raw": 0.7
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.56,
+          "over_prob_raw": 0.562
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.313
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.319,
+          "over_prob_raw": 0.252
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.277,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 18.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jonathan Taylor",
+      "player_id": "00-0036223",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.45,
+      "actual_value": 5.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Rushing Yds",
+      "line": 24.5,
+      "projected": 24.4,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.674,
+          "over_prob_raw": 0.711
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.596,
+          "over_prob_raw": 0.609
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.496,
+          "over_prob_raw": 0.476
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.415,
+          "over_prob_raw": 0.369
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.306
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.323,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.286,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 45.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Carries",
+      "line": 5.0,
+      "projected": 5.2,
+      "model_over_prob": 0.432,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.135,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Rush + Rec Yds",
+      "line": 27.0,
+      "projected": 27.1,
+      "model_over_prob": 0.438,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.668,
+          "over_prob_raw": 0.703
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.599,
+          "over_prob_raw": 0.614
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.527,
+          "over_prob_raw": 0.517
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.458,
+          "over_prob_raw": 0.426
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.411,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.371,
+          "over_prob_raw": 0.314
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.335,
+          "over_prob_raw": 0.27
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 42.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.408,
+          "over_prob_raw": 0.361
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.349,
+          "over_prob_raw": 0.287
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.301,
+          "over_prob_raw": 0.231
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.262,
+          "over_prob_raw": 0.188
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": -3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Seth McGowan",
+      "player_id": "00-0041125",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.7,
+      "model_over_prob": 0.489,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 42.0,
+      "projected": 42.0,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.757,
+          "over_prob_raw": 0.809
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.678,
+          "over_prob_raw": 0.715
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.577,
+          "over_prob_raw": 0.584
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.456,
+          "over_prob_raw": 0.423
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.378,
+          "over_prob_raw": 0.323
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.326,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.21
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.7,
+      "model_over_prob": 0.48,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.172,
+      "trailing_n": 8,
+      "opp_per_gm": 6.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 46.0,
+      "projected": 45.8,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.741,
+          "over_prob_raw": 0.791
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.658,
+          "over_prob_raw": 0.69
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.55,
+          "over_prob_raw": 0.548
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.434,
+          "over_prob_raw": 0.394
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 26.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.5,
+      "model_over_prob": 0.446,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keenan Allen",
+      "player_id": "00-0030279",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.181,
+      "trailing_n": 8,
+      "opp_per_gm": 7.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Laquon Treadwell",
+      "player_id": "00-0032951",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 26.0,
+      "projected": 26.1,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.743,
+          "over_prob_raw": 0.794
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.662,
+          "over_prob_raw": 0.695
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.555,
+          "over_prob_raw": 0.555
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.438,
+          "over_prob_raw": 0.399
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.368,
+          "over_prob_raw": 0.31
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.25
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.276,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Laquon Treadwell",
+      "player_id": "00-0032951",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.355,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Laquon Treadwell",
+      "player_id": "00-0032951",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.118,
+      "trailing_n": 8,
+      "opp_per_gm": 3.5,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receiving Yds",
+      "line": 43.0,
+      "projected": 42.9,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.693,
+          "over_prob_raw": 0.734
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.596,
+          "over_prob_raw": 0.61
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.478,
+          "over_prob_raw": 0.452
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.389,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.335,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.289,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.252,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 44.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 4.9,
+      "model_over_prob": 0.361,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Warren",
+      "player_id": "00-0040128",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Anytime TD",
+      "model_prob": 0.246,
+      "trailing_n": 8,
+      "opp_per_gm": 7.8,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Spencer Shrader",
+      "player_id": "00-0039576",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.511,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Spencer Shrader",
+      "player_id": "00-0039576",
+      "team": "IND",
+      "opp": "DAL",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.45,
+      "actual_value": 11.0,
+      "hit": true
+    }
+  ]
 }

@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 10,
+  "awayAbbr": "LAC",
+  "homeAbbr": "BAL",
+  "awayName": "Los Angeles Chargers",
+  "homeName": "Baltimore Ravens",
+  "gameday": "2026-11-16",
+  "predicted_at": "2026-11-10T14:36:15",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.6717,
+  "elo_home_prob_raw": 0.6717,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.6575,
+  "graded": false,
+  "actual": null
+}

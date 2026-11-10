@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 10,
+  "awayAbbr": "LA",
+  "homeAbbr": "ARI",
+  "awayName": "Los Angeles Rams",
+  "homeName": "Arizona Cardinals",
+  "gameday": "2026-11-15",
+  "predicted_at": "2026-11-10T14:36:15",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.2765,
+  "elo_home_prob_raw": 0.2765,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.2133,
+  "graded": false,
+  "actual": null
+}

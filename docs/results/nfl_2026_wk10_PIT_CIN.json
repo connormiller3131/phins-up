@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 10,
+  "awayAbbr": "PIT",
+  "homeAbbr": "CIN",
+  "awayName": "Pittsburgh Steelers",
+  "homeName": "Cincinnati Bengals",
+  "gameday": "2026-11-15",
+  "predicted_at": "2026-11-10T14:36:15",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.5344,
+  "elo_home_prob_raw": 0.5344,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.6164,
+  "graded": false,
+  "actual": null
+}

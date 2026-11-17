@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 11,
+  "awayAbbr": "PIT",
+  "homeAbbr": "PHI",
+  "awayName": "Pittsburgh Steelers",
+  "homeName": "Philadelphia Eagles",
+  "gameday": "2026-11-22",
+  "predicted_at": "2026-11-17T15:44:09",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.4105,
+  "elo_home_prob_raw": 0.4105,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.3425,
+  "graded": false,
+  "actual": null
+}

@@ -13,6 +13,1612 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.3425,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 16,
+    "home_score": 19,
+    "winner": "PHI",
+    "model_pick": "PIT",
+    "model_correct": false,
+    "market_pick": "PIT",
+    "market_correct": false
+  },
+  "graded_at": "2026-11-23T17:43:12",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Passing Yds",
+      "line": 219.0,
+      "projected": 218.9,
+      "model_over_prob": 0.515,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.74,
+          "over_prob_raw": 0.789
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.663,
+          "over_prob_raw": 0.695
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.587
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.495,
+          "over_prob_raw": 0.472
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.409,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.257
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.249,
+          "over_prob_raw": 0.173
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 227.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.449,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Completions",
+      "line": 20.0,
+      "projected": 19.8,
+      "model_over_prob": 0.488,
+      "actual_value": 30.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Pass Attempts",
+      "line": 33.0,
+      "projected": 33.1,
+      "model_over_prob": 0.502,
+      "actual_value": 44.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Aaron Rodgers",
+      "player_id": "00-0023459",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 4.5,
+      "projected": 4.4,
+      "model_over_prob": 0.414,
+      "model_over_prob_raw": 0.366,
+      "actual_value": 29.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 72.0,
+      "projected": 72.0,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.712,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.64,
+          "over_prob_raw": 0.666
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.549,
+          "over_prob_raw": 0.545
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.453,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.392,
+          "over_prob_raw": 0.338
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.307,
+          "over_prob_raw": 0.236
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 28.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 14.5,
+      "projected": 14.7,
+      "model_over_prob": 0.437,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.409,
+      "trailing_n": 8,
+      "opp_per_gm": 19.0,
+      "dk_odds": -105,
+      "dk_implied_prob": 0.5122,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 100.0,
+      "projected": 100.2,
+      "model_over_prob": 0.441,
+      "ladder": [
+        {
+          "line": 85.0,
+          "over_prob": 0.643,
+          "over_prob_raw": 0.67
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.573,
+          "over_prob_raw": 0.577
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.501,
+          "over_prob_raw": 0.481
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.441,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.397,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.358,
+          "over_prob_raw": 0.296
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.255
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 34.0,
+      "projected": 33.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.755
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.62,
+          "over_prob_raw": 0.639
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.504,
+          "over_prob_raw": 0.485
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.404,
+          "over_prob_raw": 0.353
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.299,
+          "over_prob_raw": 0.227
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.26,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Jaylen Warren",
+      "player_id": "00-0037228",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 2.9,
+      "model_over_prob": 0.333,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Rushing Yds",
+      "line": 32.0,
+      "projected": 32.2,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.715,
+          "over_prob_raw": 0.76
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.644,
+          "over_prob_raw": 0.671
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.555,
+          "over_prob_raw": 0.553
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.458,
+          "over_prob_raw": 0.423
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.341
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.348,
+          "over_prob_raw": 0.284
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.308,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.382,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Carries",
+      "line": 8.5,
+      "projected": 8.6,
+      "model_over_prob": 0.422,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.22,
+      "trailing_n": 8,
+      "opp_per_gm": 10.8,
+      "dk_odds": 120,
+      "dk_implied_prob": 0.4545,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Rush + Rec Yds",
+      "line": 44.5,
+      "projected": 44.7,
+      "model_over_prob": 0.442,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.663
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.567,
+          "over_prob_raw": 0.569
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.495,
+          "over_prob_raw": 0.473
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.436,
+          "over_prob_raw": 0.395
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.394,
+          "over_prob_raw": 0.34
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.292
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.32,
+          "over_prob_raw": 0.251
+        }
+      ],
+      "model_over_prob_raw": 0.402,
+      "actual_value": 34.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 17.5,
+      "projected": 17.5,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.687,
+          "over_prob_raw": 0.726
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.59,
+          "over_prob_raw": 0.6
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.471,
+          "over_prob_raw": 0.44
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.331
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.332,
+          "over_prob_raw": 0.265
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.215
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.251,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rico Dowdle",
+      "player_id": "00-0036139",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.341,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 49.0,
+      "projected": 49.2,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.715,
+          "over_prob_raw": 0.76
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.626,
+          "over_prob_raw": 0.647
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.51,
+          "over_prob_raw": 0.493
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.408,
+          "over_prob_raw": 0.358
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.349,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.23
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.261,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 4.0,
+      "model_over_prob": 0.365,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DK Metcalf",
+      "player_id": "00-0035640",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.203,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "dk_odds": 205,
+      "dk_implied_prob": 0.3279,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Germie Bernard",
+      "player_id": "00-0041489",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.6,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.752,
+          "over_prob_raw": 0.803
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.672,
+          "over_prob_raw": 0.707
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.57,
+          "over_prob_raw": 0.573
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.45,
+          "over_prob_raw": 0.413
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.376,
+          "over_prob_raw": 0.318
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.255
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 40.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Germie Bernard",
+      "player_id": "00-0041489",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.465,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Germie Bernard",
+      "player_id": "00-0041489",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.155,
+      "trailing_n": 8,
+      "opp_per_gm": 5.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ben Skowronek",
+      "player_id": "00-0036862",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.428,
+          "over_prob_raw": 0.384
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.362,
+          "over_prob_raw": 0.301
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.312,
+          "over_prob_raw": 0.242
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.272,
+          "over_prob_raw": 0.197
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ben Skowronek",
+      "player_id": "00-0036862",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.6,
+      "model_over_prob": 0.464,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ben Skowronek",
+      "player_id": "00-0036862",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.104,
+      "trailing_n": 8,
+      "opp_per_gm": 0.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Washington",
+      "player_id": "00-0038558",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receiving Yds",
+      "line": 28.0,
+      "projected": 27.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.695,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.611
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.453
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.391,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.336,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.254,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 22.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Washington",
+      "player_id": "00-0038558",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.2,
+      "model_over_prob": 0.381,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Darnell Washington",
+      "player_id": "00-0038558",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Anytime TD",
+      "model_prob": 0.175,
+      "trailing_n": 8,
+      "opp_per_gm": 3.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Chris Boswell",
+      "player_id": "00-0031136",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.513,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Chris Boswell",
+      "player_id": "00-0031136",
+      "team": "PIT",
+      "opp": "PHI",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.489,
+      "actual_value": 10.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Milton III",
+      "player_id": "00-0039398",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Passing Yds",
+      "line": 120.0,
+      "projected": 119.9,
+      "model_over_prob": 0.515,
+      "ladder": [
+        {
+          "line": 50.0,
+          "over_prob": 0.742,
+          "over_prob_raw": 0.792
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.666,
+          "over_prob_raw": 0.699
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.584,
+          "over_prob_raw": 0.592
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.498,
+          "over_prob_raw": 0.477
+        },
+        {
+          "line": 150.0,
+          "over_prob": 0.412,
+          "over_prob_raw": 0.363
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.261
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.252,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 141.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Milton III",
+      "player_id": "00-0039398",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Passing TDs",
+      "line": 0.5,
+      "projected": 0.3,
+      "model_over_prob": 0.26,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Milton III",
+      "player_id": "00-0039398",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Completions",
+      "line": 12.0,
+      "projected": 11.9,
+      "model_over_prob": 0.494,
+      "actual_value": 11.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Joe Milton III",
+      "player_id": "00-0039398",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Pass Attempts",
+      "line": 19.0,
+      "projected": 19.0,
+      "model_over_prob": 0.5,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Joe Milton III",
+      "player_id": "00-0039398",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Rushing Yds",
+      "line": 21.5,
+      "projected": 21.7,
+      "model_over_prob": 0.42,
+      "model_over_prob_raw": 0.374,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Rushing Yds",
+      "line": 44.0,
+      "projected": 44.2,
+      "model_over_prob": 0.426,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.673,
+          "over_prob_raw": 0.708
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.594,
+          "over_prob_raw": 0.605
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.495,
+          "over_prob_raw": 0.472
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.414,
+          "over_prob_raw": 0.366
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.305
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.255
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.382,
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Carries",
+      "line": 12.5,
+      "projected": 12.5,
+      "model_over_prob": 0.416,
+      "actual_value": 17.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.275,
+      "trailing_n": 8,
+      "opp_per_gm": 14.0,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Rush + Rec Yds",
+      "line": 55.5,
+      "projected": 55.6,
+      "model_over_prob": 0.44,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.65,
+          "over_prob_raw": 0.678
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.587
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.488
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.444,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.349
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.3
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.257
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 75.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 10.0,
+      "projected": 9.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.529,
+          "over_prob_raw": 0.518
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.419,
+          "over_prob_raw": 0.372
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.357,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.308,
+          "over_prob_raw": 0.237
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.268,
+          "over_prob_raw": 0.193
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Saquon Barkley",
+      "player_id": "00-0034844",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.381,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Rushing Yds",
+      "line": 8.0,
+      "projected": 8.1,
+      "model_over_prob": 0.424,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.443
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.35
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.356,
+          "over_prob_raw": 0.293
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.245
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.206
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Carries",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.394,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.104,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Rush + Rec Yds",
+      "line": 16.0,
+      "projected": 16.0,
+      "model_over_prob": 0.439,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.586,
+          "over_prob_raw": 0.594
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.511,
+          "over_prob_raw": 0.494
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.411
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.404,
+          "over_prob_raw": 0.353
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.304
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.26
+        }
+      ],
+      "model_over_prob_raw": 0.398,
+      "actual_value": 9.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 7.0,
+      "projected": 6.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.456,
+          "over_prob_raw": 0.421
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.322
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.259
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.283,
+          "over_prob_raw": 0.209
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Will Shipley",
+      "player_id": "00-0039746",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 1.1,
+      "model_over_prob": 0.29,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 57.5,
+      "projected": 57.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.763,
+          "over_prob_raw": 0.815
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.685,
+          "over_prob_raw": 0.723
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.587,
+          "over_prob_raw": 0.596
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.468,
+          "over_prob_raw": 0.436
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.329
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.264
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 41.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 5.0,
+      "projected": 5.1,
+      "model_over_prob": 0.397,
+      "actual_value": 5.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DeVonta Smith",
+      "player_id": "00-0036912",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.191,
+      "trailing_n": 8,
+      "opp_per_gm": 8.6,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 32.0,
+      "projected": 32.1,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.758,
+          "over_prob_raw": 0.81
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.68,
+          "over_prob_raw": 0.717
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.587
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.46,
+          "over_prob_raw": 0.426
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.324
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.26
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.285,
+          "over_prob_raw": 0.211
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.6,
+      "model_over_prob": 0.471,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Dontayvion Wicks",
+      "player_id": "00-0038393",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.104,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 38.5,
+      "projected": 38.5,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.746
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.627
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.471
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.398,
+          "over_prob_raw": 0.346
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.342,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.296,
+          "over_prob_raw": 0.223
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.258,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.346,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Makai Lemon",
+      "player_id": "00-0040867",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.121,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receiving Yds",
+      "line": 39.5,
+      "projected": 39.3,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.718,
+          "over_prob_raw": 0.763
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.629,
+          "over_prob_raw": 0.651
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.514,
+          "over_prob_raw": 0.498
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.41,
+          "over_prob_raw": 0.361
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.287
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.303,
+          "over_prob_raw": 0.231
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.263,
+          "over_prob_raw": 0.188
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 38.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.9,
+      "model_over_prob": 0.347,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dallas Goedert",
+      "player_id": "00-0034351",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Anytime TD",
+      "model_prob": 0.139,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.468,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Jake Elliott",
+      "player_id": "00-0033787",
+      "team": "PHI",
+      "opp": "PIT",
+      "market": "Kicking Points",
+      "line": 6.0,
+      "projected": 6.2,
+      "model_over_prob": 0.496,
+      "actual_value": 13.0,
+      "hit": true
+    }
+  ]
 }

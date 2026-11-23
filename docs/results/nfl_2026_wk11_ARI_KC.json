@@ -13,6 +13,1522 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.8989,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 7,
+    "home_score": 34,
+    "winner": "KC",
+    "model_pick": "KC",
+    "model_correct": true,
+    "market_pick": "KC",
+    "market_correct": true
+  },
+  "graded_at": "2026-11-23T17:43:12",
+  "props_graded": [
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 34.5,
+      "projected": 34.4,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.675,
+          "over_prob_raw": 0.71
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.596,
+          "over_prob_raw": 0.608
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.497,
+          "over_prob_raw": 0.475
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.368
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.306
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.324,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 10.1,
+      "model_over_prob": 0.424,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.187,
+      "trailing_n": 8,
+      "opp_per_gm": 11.8,
+      "dk_odds": 270,
+      "dk_implied_prob": 0.2703,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Rush + Rec Yds",
+      "line": 48.5,
+      "projected": 48.6,
+      "model_over_prob": 0.439,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.623,
+          "over_prob_raw": 0.643
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.55,
+          "over_prob_raw": 0.546
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.478,
+          "over_prob_raw": 0.45
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.425,
+          "over_prob_raw": 0.38
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.383,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.243
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 14.5,
+      "projected": 14.5,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.633,
+          "over_prob_raw": 0.656
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.519,
+          "over_prob_raw": 0.505
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.413,
+          "over_prob_raw": 0.365
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.353,
+          "over_prob_raw": 0.29
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.233
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.189
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Allgeier",
+      "player_id": "00-0037263",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.34,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 21.0,
+      "projected": 21.1,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.701,
+          "over_prob_raw": 0.743
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.626,
+          "over_prob_raw": 0.648
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.53,
+          "over_prob_raw": 0.52
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.398
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.383,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.273
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.3,
+          "over_prob_raw": 0.228
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 35.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Carries",
+      "line": 6.0,
+      "projected": 6.1,
+      "model_over_prob": 0.422,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.099,
+      "trailing_n": 8,
+      "opp_per_gm": 7.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Rush + Rec Yds",
+      "line": 30.5,
+      "projected": 30.6,
+      "model_over_prob": 0.439,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.65,
+          "over_prob_raw": 0.678
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.58,
+          "over_prob_raw": 0.586
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.506,
+          "over_prob_raw": 0.487
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.444,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.4,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.361,
+          "over_prob_raw": 0.3
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.257
+        }
+      ],
+      "model_over_prob_raw": 0.399,
+      "actual_value": 45.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 9.5,
+      "projected": 9.5,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.504
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.412,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.352,
+          "over_prob_raw": 0.289
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.233
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.189
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Bam Knight",
+      "player_id": "00-0037157",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.3,
+      "model_over_prob": 0.357,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Simi Fehoko",
+      "player_id": "00-0036646",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 3.0,
+      "projected": 3.2,
+      "model_over_prob": 0.425,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.343
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.339,
+          "over_prob_raw": 0.273
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.293,
+          "over_prob_raw": 0.22
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.256,
+          "over_prob_raw": 0.18
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Simi Fehoko",
+      "player_id": "00-0036646",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.4,
+      "model_over_prob": 0.353,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Simi Fehoko",
+      "player_id": "00-0036646",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.057,
+      "trailing_n": 8,
+      "opp_per_gm": 0.5,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Reggie Virgil",
+      "player_id": "00-0041070",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 19.5,
+      "projected": 19.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.72,
+          "over_prob_raw": 0.766
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.631,
+          "over_prob_raw": 0.654
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.517,
+          "over_prob_raw": 0.502
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.412,
+          "over_prob_raw": 0.364
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.352,
+          "over_prob_raw": 0.289
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.232
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.189
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Reggie Virgil",
+      "player_id": "00-0041070",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.445,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Reggie Virgil",
+      "player_id": "00-0041070",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.074,
+      "trailing_n": 3,
+      "opp_per_gm": 3.7,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Devin Duvernay",
+      "player_id": "00-0036331",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 5.5,
+      "projected": 5.6,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.431,
+          "over_prob_raw": 0.388
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.304
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.314,
+          "over_prob_raw": 0.244
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devin Duvernay",
+      "player_id": "00-0036331",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 1.0,
+      "projected": 0.8,
+      "model_over_prob": 0.192,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Devin Duvernay",
+      "player_id": "00-0036331",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.059,
+      "trailing_n": 8,
+      "opp_per_gm": 0.9,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 60.0,
+      "projected": 59.8,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.726,
+          "over_prob_raw": 0.773
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.639,
+          "over_prob_raw": 0.664
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.527,
+          "over_prob_raw": 0.516
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.371
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.356,
+          "over_prob_raw": 0.294
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.307,
+          "over_prob_raw": 0.236
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.267,
+          "over_prob_raw": 0.192
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 54.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 6.5,
+      "projected": 6.4,
+      "model_over_prob": 0.434,
+      "actual_value": 9.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Trey McBride",
+      "player_id": "00-0037744",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.183,
+      "trailing_n": 8,
+      "opp_per_gm": 9.5,
+      "dk_odds": 230,
+      "dk_implied_prob": 0.303,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.502,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Chad Ryland",
+      "player_id": "00-0038567",
+      "team": "ARI",
+      "opp": "KC",
+      "market": "Kicking Points",
+      "line": 6.0,
+      "projected": 5.9,
+      "model_over_prob": 0.46,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Passing Yds",
+      "line": 252.0,
+      "projected": 251.9,
+      "model_over_prob": 0.515,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.762,
+          "over_prob_raw": 0.814
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.688,
+          "over_prob_raw": 0.727
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.607,
+          "over_prob_raw": 0.623
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.522,
+          "over_prob_raw": 0.509
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.436,
+          "over_prob_raw": 0.394
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.351,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 324.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.9,
+      "model_over_prob": 0.302,
+      "actual_value": 3.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Completions",
+      "line": 20.5,
+      "projected": 20.4,
+      "model_over_prob": 0.496,
+      "actual_value": 27.0,
+      "hit": true
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Pass Attempts",
+      "line": 30.0,
+      "projected": 30.2,
+      "model_over_prob": 0.506,
+      "actual_value": 39.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 9.0,
+      "projected": 8.8,
+      "model_over_prob": 0.412,
+      "model_over_prob_raw": 0.363,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 94.5,
+      "projected": 94.4,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 80.0,
+          "over_prob": 0.676,
+          "over_prob_raw": 0.712
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.61
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.498,
+          "over_prob_raw": 0.477
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.369
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.367,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.257
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Carries",
+      "line": 19.5,
+      "projected": 19.3,
+      "model_over_prob": 0.394,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.733,
+      "trailing_n": 8,
+      "opp_per_gm": 24.4,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Rush + Rec Yds",
+      "line": 118.5,
+      "projected": 118.3,
+      "model_over_prob": 0.436,
+      "ladder": [
+        {
+          "line": 105.0,
+          "over_prob": 0.619,
+          "over_prob_raw": 0.638
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.54
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.474,
+          "over_prob_raw": 0.445
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.423,
+          "over_prob_raw": 0.377
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.324
+        },
+        {
+          "line": 130.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.28
+        },
+        {
+          "line": 135.0,
+          "over_prob": 0.311,
+          "over_prob_raw": 0.24
+        }
+      ],
+      "model_over_prob_raw": 0.395,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.764,
+          "over_prob_raw": 0.816
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.686,
+          "over_prob_raw": 0.724
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.588,
+          "over_prob_raw": 0.597
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.468,
+          "over_prob_raw": 0.437
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.33
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.264
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.351,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Rushing Yds",
+      "line": 27.0,
+      "projected": 26.9,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.755
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.639,
+          "over_prob_raw": 0.664
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.546,
+          "over_prob_raw": 0.541
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.452,
+          "over_prob_raw": 0.415
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.39,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.28
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.234
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 105.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Carries",
+      "line": 6.0,
+      "projected": 5.8,
+      "model_over_prob": 0.393,
+      "actual_value": 23.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.308,
+      "trailing_n": 8,
+      "opp_per_gm": 7.6,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Rush + Rec Yds",
+      "line": 51.5,
+      "projected": 51.4,
+      "model_over_prob": 0.439,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.662,
+          "over_prob_raw": 0.694
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.592,
+          "over_prob_raw": 0.603
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.504
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.453,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.408,
+          "over_prob_raw": 0.358
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.368,
+          "over_prob_raw": 0.308
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.332,
+          "over_prob_raw": 0.265
+        }
+      ],
+      "model_over_prob_raw": 0.398,
+      "actual_value": 143.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 28.0,
+      "projected": 27.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.695,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.598,
+          "over_prob_raw": 0.611
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.48,
+          "over_prob_raw": 0.453
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.392,
+          "over_prob_raw": 0.338
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.336,
+          "over_prob_raw": 0.27
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.254,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.334,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 54.0,
+      "projected": 54.0,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.712,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.622,
+          "over_prob_raw": 0.642
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.488
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.355
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.347,
+          "over_prob_raw": 0.283
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.3,
+          "over_prob_raw": 0.228
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.261,
+          "over_prob_raw": 0.185
+        }
+      ],
+      "model_over_prob_raw": 0.374,
+      "actual_value": 53.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.6,
+      "model_over_prob": 0.459,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.265,
+      "trailing_n": 8,
+      "opp_per_gm": 7.1,
+      "dk_odds": 170,
+      "dk_implied_prob": 0.3704,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 40.5,
+      "projected": 40.5,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.736,
+          "over_prob_raw": 0.784
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.651,
+          "over_prob_raw": 0.68
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.542,
+          "over_prob_raw": 0.536
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.429,
+          "over_prob_raw": 0.385
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.363,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.243
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.198
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 59.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.444,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.25,
+      "trailing_n": 8,
+      "opp_per_gm": 6.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 36.1,
+      "model_over_prob": 0.423,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.746,
+          "over_prob_raw": 0.796
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.664,
+          "over_prob_raw": 0.697
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.558,
+          "over_prob_raw": 0.557
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.441,
+          "over_prob_raw": 0.401
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.311
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.319,
+          "over_prob_raw": 0.25
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.277,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 38.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.5,
+      "model_over_prob": 0.442,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.208,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "dk_odds": 255,
+      "dk_implied_prob": 0.2817,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receiving Yds",
+      "line": 48.5,
+      "projected": 48.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.703,
+          "over_prob_raw": 0.745
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.609,
+          "over_prob_raw": 0.625
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.492,
+          "over_prob_raw": 0.469
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.398,
+          "over_prob_raw": 0.346
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.341,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.222
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.258,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 74.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.47,
+      "actual_value": 6.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Anytime TD",
+      "model_prob": 0.274,
+      "trailing_n": 8,
+      "opp_per_gm": 5.8,
+      "dk_odds": 195,
+      "dk_implied_prob": 0.339,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.487,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "ARI",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 8.0,
+      "model_over_prob": 0.473,
+      "actual_value": 10.0,
+      "hit": true
+    }
+  ]
 }

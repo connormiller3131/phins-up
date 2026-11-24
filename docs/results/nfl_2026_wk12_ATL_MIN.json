@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "week": 12,
+  "awayAbbr": "ATL",
+  "homeAbbr": "MIN",
+  "awayName": "Atlanta Falcons",
+  "homeName": "Minnesota Vikings",
+  "gameday": "2026-11-29",
+  "predicted_at": "2026-11-24T01:59:31",
+  "prop_prob_model": "mixed-v1-cal1",
+  "elo_home_prob": 0.7103,
+  "elo_home_prob_raw": 0.7103,
+  "qb_out_diff": 0.0,
+  "win_prob_model": "elo+qb1",
+  "market_home_prob": 0.7446,
+  "graded": false,
+  "actual": null
+}

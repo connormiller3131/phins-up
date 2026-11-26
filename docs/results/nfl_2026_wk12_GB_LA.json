@@ -13,6 +13,1579 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.5579,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 13,
+    "home_score": 26,
+    "winner": "LA",
+    "model_pick": "LA",
+    "model_correct": true,
+    "market_pick": "LA",
+    "market_correct": true
+  },
+  "graded_at": "2026-11-26T16:37:47",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Passing Yds",
+      "line": 264.0,
+      "projected": 263.8,
+      "model_over_prob": 0.512,
+      "ladder": [
+        {
+          "line": 200.0,
+          "over_prob": 0.723,
+          "over_prob_raw": 0.771
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.645,
+          "over_prob_raw": 0.674
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.56,
+          "over_prob_raw": 0.564
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.473,
+          "over_prob_raw": 0.448
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.238
+        },
+        {
+          "line": 350.0,
+          "over_prob": 0.23,
+          "over_prob_raw": 0.158
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 198.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.494,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Completions",
+      "line": 22.5,
+      "projected": 22.5,
+      "model_over_prob": 0.498,
+      "actual_value": 17.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Pass Attempts",
+      "line": 35.0,
+      "projected": 34.9,
+      "model_over_prob": 0.496,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Jordan Love",
+      "player_id": "00-0036264",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 5.5,
+      "projected": 5.4,
+      "model_over_prob": 0.41,
+      "model_over_prob_raw": 0.366,
+      "actual_value": 7.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 42.0,
+      "projected": 41.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.665
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.545,
+          "over_prob_raw": 0.543
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.416
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.341,
+          "over_prob_raw": 0.281
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.302,
+          "over_prob_raw": 0.235
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Carries",
+      "line": 13.0,
+      "projected": 12.8,
+      "model_over_prob": 0.393,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.419,
+      "trailing_n": 8,
+      "opp_per_gm": 15.9,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Rush + Rec Yds",
+      "line": 58.0,
+      "projected": 57.8,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.63
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.536,
+          "over_prob_raw": 0.531
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.466,
+          "over_prob_raw": 0.438
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.413,
+          "over_prob_raw": 0.37
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.373,
+          "over_prob_raw": 0.32
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.337,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.237
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 17.0,
+      "projected": 16.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.676,
+          "over_prob_raw": 0.714
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.575,
+          "over_prob_raw": 0.583
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.453,
+          "over_prob_raw": 0.422
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.375,
+          "over_prob_raw": 0.322
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.323,
+          "over_prob_raw": 0.259
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.279,
+          "over_prob_raw": 0.209
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Jacobs",
+      "player_id": "00-0035700",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.1,
+      "model_over_prob": 0.357,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Rushing Yds",
+      "line": 24.0,
+      "projected": 24.2,
+      "model_over_prob": 0.422,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.671,
+          "over_prob_raw": 0.707
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.591,
+          "over_prob_raw": 0.604
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.49,
+          "over_prob_raw": 0.471
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.409,
+          "over_prob_raw": 0.365
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.36,
+          "over_prob_raw": 0.304
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.319,
+          "over_prob_raw": 0.255
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.213
+        }
+      ],
+      "model_over_prob_raw": 0.381,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Carries",
+      "line": 6.5,
+      "projected": 6.7,
+      "model_over_prob": 0.431,
+      "actual_value": 8.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.163,
+      "trailing_n": 8,
+      "opp_per_gm": 6.9,
+      "dk_odds": 215,
+      "dk_implied_prob": 0.3175,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Rush + Rec Yds",
+      "line": 28.5,
+      "projected": 28.6,
+      "model_over_prob": 0.437,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.622,
+          "over_prob_raw": 0.645
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.548,
+          "over_prob_raw": 0.548
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.476,
+          "over_prob_raw": 0.452
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.423,
+          "over_prob_raw": 0.382
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.329
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.342,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.244
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 3.0,
+      "projected": 2.8,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.386,
+          "over_prob_raw": 0.336
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.286,
+          "over_prob_raw": 0.217
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.249,
+          "over_prob_raw": 0.177
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 19.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Kaleb Johnson",
+      "player_id": "00-0040142",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 0.5,
+      "projected": 0.4,
+      "model_over_prob": 0.302,
+      "actual_value": 1.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 71.0,
+      "projected": 70.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 55.0,
+          "over_prob": 0.742,
+          "over_prob_raw": 0.792
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.659,
+          "over_prob_raw": 0.692
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.551,
+          "over_prob_raw": 0.551
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.433,
+          "over_prob_raw": 0.395
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.364,
+          "over_prob_raw": 0.308
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.312,
+          "over_prob_raw": 0.247
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.271,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 65.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.473,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Christian Watson",
+      "player_id": "00-0038124",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.225,
+      "trailing_n": 8,
+      "opp_per_gm": 7.5,
+      "dk_odds": 165,
+      "dk_implied_prob": 0.3774,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 77.5,
+      "projected": 77.4,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 60.0,
+          "over_prob": 0.763,
+          "over_prob_raw": 0.816
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.684,
+          "over_prob_raw": 0.724
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.585,
+          "over_prob_raw": 0.597
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.465,
+          "over_prob_raw": 0.437
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.33
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.327,
+          "over_prob_raw": 0.264
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.283,
+          "over_prob_raw": 0.214
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 39.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 5.5,
+      "projected": 5.7,
+      "model_over_prob": 0.477,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Matthew Golden",
+      "player_id": "00-0040667",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.347,
+      "trailing_n": 8,
+      "opp_per_gm": 10.5,
+      "dk_odds": 180,
+      "dk_implied_prob": 0.3571,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Savion Williams",
+      "player_id": "00-0040009",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 18.0,
+      "projected": 18.0,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.696,
+          "over_prob_raw": 0.738
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.599,
+          "over_prob_raw": 0.615
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.479,
+          "over_prob_raw": 0.456
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.389,
+          "over_prob_raw": 0.339
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.333,
+          "over_prob_raw": 0.271
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.288,
+          "over_prob_raw": 0.219
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.251,
+          "over_prob_raw": 0.179
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Savion Williams",
+      "player_id": "00-0040009",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.455,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Savion Williams",
+      "player_id": "00-0040009",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.125,
+      "trailing_n": 8,
+      "opp_per_gm": 3.4,
+      "dk_odds": 500,
+      "dk_implied_prob": 0.1667,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receiving Yds",
+      "line": 37.5,
+      "projected": 37.3,
+      "model_over_prob": 0.413,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.761,
+          "over_prob_raw": 0.814
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.683,
+          "over_prob_raw": 0.722
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.583,
+          "over_prob_raw": 0.594
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.462,
+          "over_prob_raw": 0.433
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.379,
+          "over_prob_raw": 0.327
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.325,
+          "over_prob_raw": 0.262
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.282,
+          "over_prob_raw": 0.213
+        }
+      ],
+      "model_over_prob_raw": 0.37,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.47,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tucker Kraft",
+      "player_id": "00-0038996",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Anytime TD",
+      "model_prob": 0.208,
+      "trailing_n": 8,
+      "opp_per_gm": 6.4,
+      "dk_odds": 230,
+      "dk_implied_prob": 0.303,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Trey Smack",
+      "player_id": "00-0040899",
+      "team": "GB",
+      "opp": "LA",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.521,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Trey Smack",
+      "player_id": "00-0040899",
+      "team": "GB",
+      "opp": "LA",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.3,
+      "model_over_prob": 0.448,
+      "actual_value": 7.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Passing Yds",
+      "line": 254.0,
+      "projected": 253.9,
+      "model_over_prob": 0.512,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.767,
+          "over_prob_raw": 0.821
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.693,
+          "over_prob_raw": 0.735
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.612,
+          "over_prob_raw": 0.632
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.526,
+          "over_prob_raw": 0.518
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.403
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.354,
+          "over_prob_raw": 0.296
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.274,
+          "over_prob_raw": 0.204
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 140.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Passing TDs",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.261,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Completions",
+      "line": 25.0,
+      "projected": 24.9,
+      "model_over_prob": 0.492,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Pass Attempts",
+      "line": 37.5,
+      "projected": 37.5,
+      "model_over_prob": 0.499,
+      "actual_value": 23.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Matthew Stafford",
+      "player_id": "00-0026498",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 4.5,
+      "projected": 4.3,
+      "model_over_prob": 0.408,
+      "model_over_prob_raw": 0.363,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 59.5,
+      "projected": 59.4,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.674,
+          "over_prob_raw": 0.711
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.594,
+          "over_prob_raw": 0.609
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.494,
+          "over_prob_raw": 0.476
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.412,
+          "over_prob_raw": 0.368
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.363,
+          "over_prob_raw": 0.307
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.32,
+          "over_prob_raw": 0.256
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.284,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 46.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 14.0,
+      "projected": 14.0,
+      "model_over_prob": 0.414,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.549,
+      "trailing_n": 8,
+      "opp_per_gm": 20.2,
+      "dk_odds": 115,
+      "dk_implied_prob": 0.4651,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Rush + Rec Yds",
+      "line": 86.5,
+      "projected": 86.6,
+      "model_over_prob": 0.436,
+      "ladder": [
+        {
+          "line": 70.0,
+          "over_prob": 0.663,
+          "over_prob_raw": 0.697
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.591,
+          "over_prob_raw": 0.605
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.518,
+          "over_prob_raw": 0.507
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.451,
+          "over_prob_raw": 0.419
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.329,
+          "over_prob_raw": 0.266
+        }
+      ],
+      "model_over_prob_raw": 0.4,
+      "actual_value": 65.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 34.0,
+      "projected": 34.2,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.714,
+          "over_prob_raw": 0.76
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.624,
+          "over_prob_raw": 0.647
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.507,
+          "over_prob_raw": 0.493
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.404,
+          "over_prob_raw": 0.358
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.345,
+          "over_prob_raw": 0.285
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.229
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.257,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Kyren Williams",
+      "player_id": "00-0037840",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.338,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Rushing Yds",
+      "line": 47.5,
+      "projected": 47.6,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.647,
+          "over_prob_raw": 0.677
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.56,
+          "over_prob_raw": 0.563
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.459,
+          "over_prob_raw": 0.43
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.393,
+          "over_prob_raw": 0.344
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.347,
+          "over_prob_raw": 0.288
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.306,
+          "over_prob_raw": 0.24
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.271,
+          "over_prob_raw": 0.201
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 184.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Carries",
+      "line": 10.0,
+      "projected": 10.0,
+      "model_over_prob": 0.415,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.466,
+      "trailing_n": 8,
+      "opp_per_gm": 12.6,
+      "dk_odds": 120,
+      "dk_implied_prob": 0.4545,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Rush + Rec Yds",
+      "line": 60.5,
+      "projected": 60.7,
+      "model_over_prob": 0.437,
+      "ladder": [
+        {
+          "line": 45.0,
+          "over_prob": 0.649,
+          "over_prob_raw": 0.68
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.579,
+          "over_prob_raw": 0.589
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.505,
+          "over_prob_raw": 0.49
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.407
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.397,
+          "over_prob_raw": 0.35
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.359,
+          "over_prob_raw": 0.302
+        },
+        {
+          "line": 75.0,
+          "over_prob": 0.322,
+          "over_prob_raw": 0.258
+        }
+      ],
+      "model_over_prob_raw": 0.401,
+      "actual_value": 205.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 16.5,
+      "projected": 16.4,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.668,
+          "over_prob_raw": 0.703
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.563,
+          "over_prob_raw": 0.567
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.443,
+          "over_prob_raw": 0.408
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.369,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.275,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 21.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Blake Corum",
+      "player_id": "00-0039738",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.485,
+      "actual_value": 2.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Konata Mumpfield",
+      "player_id": "00-0040590",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 27.5,
+      "projected": 27.7,
+      "model_over_prob": 0.42,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.689,
+          "over_prob_raw": 0.73
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.591,
+          "over_prob_raw": 0.605
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.471,
+          "over_prob_raw": 0.445
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.385,
+          "over_prob_raw": 0.334
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.33,
+          "over_prob_raw": 0.267
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.285,
+          "over_prob_raw": 0.216
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.248,
+          "over_prob_raw": 0.176
+        }
+      ],
+      "model_over_prob_raw": 0.379,
+      "actual_value": 69.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Konata Mumpfield",
+      "player_id": "00-0040590",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 2.0,
+      "projected": 2.0,
+      "model_over_prob": 0.321,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Konata Mumpfield",
+      "player_id": "00-0040590",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.14,
+      "trailing_n": 8,
+      "opp_per_gm": 3.2,
+      "dk_odds": 350,
+      "dk_implied_prob": 0.2222,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 19.0,
+      "projected": 18.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.711,
+          "over_prob_raw": 0.756
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.619,
+          "over_prob_raw": 0.641
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.503,
+          "over_prob_raw": 0.487
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.354
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.342,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.227
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.5,
+      "model_over_prob": 0.418,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tutu Atwell",
+      "player_id": "00-0036849",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.113,
+      "trailing_n": 8,
+      "opp_per_gm": 2.4,
+      "dk_odds": 400,
+      "dk_implied_prob": 0.2,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Higbee",
+      "player_id": "00-0033110",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receiving Yds",
+      "line": 36.5,
+      "projected": 36.4,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.749,
+          "over_prob_raw": 0.8
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.667,
+          "over_prob_raw": 0.702
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.562,
+          "over_prob_raw": 0.566
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.442,
+          "over_prob_raw": 0.407
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.369,
+          "over_prob_raw": 0.315
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.253
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.275,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 14.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Higbee",
+      "player_id": "00-0033110",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.427,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Tyler Higbee",
+      "player_id": "00-0033110",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Anytime TD",
+      "model_prob": 0.185,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 300,
+      "dk_implied_prob": 0.25,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Brandon McManus",
+      "player_id": "00-0029822",
+      "team": "LA",
+      "opp": "GB",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.504,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Kicking",
+      "player": "Brandon McManus",
+      "player_id": "00-0029822",
+      "team": "LA",
+      "opp": "GB",
+      "market": "Kicking Points",
+      "line": 7.5,
+      "projected": 7.5,
+      "model_over_prob": 0.469,
+      "actual_value": 14.0,
+      "hit": true
+    }
+  ]
 }

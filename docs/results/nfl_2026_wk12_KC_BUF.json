@@ -13,6 +13,1665 @@
   "qb_out_diff": 0.0,
   "win_prob_model": "elo+qb1",
   "market_home_prob": 0.5766,
-  "graded": false,
-  "actual": null
+  "graded": true,
+  "actual": {
+    "away_score": 10,
+    "home_score": 13,
+    "winner": "BUF",
+    "model_pick": "BUF",
+    "model_correct": true,
+    "market_pick": "BUF",
+    "market_correct": true
+  },
+  "graded_at": "2026-11-27T16:23:32",
+  "props_graded": [
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Passing Yds",
+      "line": 251.5,
+      "projected": 251.4,
+      "model_over_prob": 0.512,
+      "ladder": [
+        {
+          "line": 175.0,
+          "over_prob": 0.76,
+          "over_prob_raw": 0.813
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.685,
+          "over_prob_raw": 0.725
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.604,
+          "over_prob_raw": 0.621
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.517,
+          "over_prob_raw": 0.506
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.43,
+          "over_prob_raw": 0.392
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.286
+        },
+        {
+          "line": 325.0,
+          "over_prob": 0.267,
+          "over_prob_raw": 0.196
+        }
+      ],
+      "model_over_prob_raw": 0.499,
+      "actual_value": 174.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.7,
+      "model_over_prob": 0.506,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Completions",
+      "line": 21.5,
+      "projected": 21.4,
+      "model_over_prob": 0.494,
+      "actual_value": 16.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Pass Attempts",
+      "line": 32.5,
+      "projected": 32.4,
+      "model_over_prob": 0.498,
+      "actual_value": 29.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Patrick Mahomes",
+      "player_id": "00-0033873",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 7.0,
+      "projected": 7.2,
+      "model_over_prob": 0.416,
+      "model_over_prob_raw": 0.373,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 89.0,
+      "projected": 88.9,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 75.0,
+          "over_prob": 0.667,
+          "over_prob_raw": 0.702
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.585,
+          "over_prob_raw": 0.596
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.485,
+          "over_prob_raw": 0.464
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.406,
+          "over_prob_raw": 0.361
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.358,
+          "over_prob_raw": 0.301
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.317,
+          "over_prob_raw": 0.252
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.28,
+          "over_prob_raw": 0.211
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 18.0,
+      "projected": 17.9,
+      "model_over_prob": 0.406,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.674,
+      "trailing_n": 8,
+      "opp_per_gm": 24.4,
+      "dk_odds": -130,
+      "dk_implied_prob": 0.5652,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Rush + Rec Yds",
+      "line": 112.5,
+      "projected": 112.3,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 95.0,
+          "over_prob": 0.671,
+          "over_prob_raw": 0.707
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.602,
+          "over_prob_raw": 0.619
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.528,
+          "over_prob_raw": 0.521
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.459,
+          "over_prob_raw": 0.43
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.41,
+          "over_prob_raw": 0.366
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 125.0,
+          "over_prob": 0.334,
+          "over_prob_raw": 0.272
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 26.5,
+      "projected": 26.4,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 10.0,
+          "over_prob": 0.75,
+          "over_prob_raw": 0.801
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.668,
+          "over_prob_raw": 0.704
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.564,
+          "over_prob_raw": 0.569
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.443,
+          "over_prob_raw": 0.409
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.318,
+          "over_prob_raw": 0.254
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.275,
+          "over_prob_raw": 0.205
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Receiving",
+      "player": "Kenneth Walker III",
+      "player_id": "00-0038134",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.0,
+      "model_over_prob": 0.36,
+      "actual_value": null,
+      "hit": null
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Rushing Yds",
+      "line": 31.5,
+      "projected": 31.3,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.702,
+          "over_prob_raw": 0.746
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.628,
+          "over_prob_raw": 0.653
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.533,
+          "over_prob_raw": 0.528
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.439,
+          "over_prob_raw": 0.403
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.329
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.336,
+          "over_prob_raw": 0.275
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.231
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 72.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Carries",
+      "line": 7.0,
+      "projected": 7.0,
+      "model_over_prob": 0.411,
+      "actual_value": 17.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.339,
+      "trailing_n": 8,
+      "opp_per_gm": 10.5,
+      "dk_odds": -130,
+      "dk_implied_prob": 0.5652,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Rush + Rec Yds",
+      "line": 57.5,
+      "projected": 57.4,
+      "model_over_prob": 0.434,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.672,
+          "over_prob_raw": 0.708
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.603,
+          "over_prob_raw": 0.62
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.529,
+          "over_prob_raw": 0.522
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.46,
+          "over_prob_raw": 0.431
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.411,
+          "over_prob_raw": 0.367
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.37,
+          "over_prob_raw": 0.316
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.334,
+          "over_prob_raw": 0.272
+        }
+      ],
+      "model_over_prob_raw": 0.397,
+      "actual_value": 96.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 29.0,
+      "projected": 28.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.71,
+          "over_prob_raw": 0.755
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.618,
+          "over_prob_raw": 0.64
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.502,
+          "over_prob_raw": 0.486
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.354
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.342,
+          "over_prob_raw": 0.282
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.295,
+          "over_prob_raw": 0.227
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.255,
+          "over_prob_raw": 0.184
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 24.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Emmett Johnson",
+      "player_id": "00-0041013",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.3,
+      "model_over_prob": 0.39,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 53.5,
+      "projected": 53.5,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 40.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.748
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.61,
+          "over_prob_raw": 0.629
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.493,
+          "over_prob_raw": 0.474
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.396,
+          "over_prob_raw": 0.348
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.338,
+          "over_prob_raw": 0.277
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.291,
+          "over_prob_raw": 0.223
+        },
+        {
+          "line": 70.0,
+          "over_prob": 0.253,
+          "over_prob_raw": 0.182
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 19.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 4.5,
+      "projected": 4.7,
+      "model_over_prob": 0.477,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Rashee Rice",
+      "player_id": "00-0039067",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.209,
+      "trailing_n": 8,
+      "opp_per_gm": 6.9,
+      "dk_odds": 200,
+      "dk_implied_prob": 0.3333,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 35.0,
+      "projected": 34.9,
+      "model_over_prob": 0.416,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.726,
+          "over_prob_raw": 0.774
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.638,
+          "over_prob_raw": 0.666
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.527,
+          "over_prob_raw": 0.519
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.416,
+          "over_prob_raw": 0.373
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.353,
+          "over_prob_raw": 0.295
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.304,
+          "over_prob_raw": 0.237
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.264,
+          "over_prob_raw": 0.193
+        }
+      ],
+      "model_over_prob_raw": 0.373,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.399,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Xavier Worthy",
+      "player_id": "00-0039894",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.161,
+      "trailing_n": 8,
+      "opp_per_gm": 5.1,
+      "dk_odds": 450,
+      "dk_implied_prob": 0.1818,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 36.0,
+      "projected": 36.1,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.745,
+          "over_prob_raw": 0.796
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.662,
+          "over_prob_raw": 0.696
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.555,
+          "over_prob_raw": 0.557
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.436,
+          "over_prob_raw": 0.4
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.366,
+          "over_prob_raw": 0.311
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.315,
+          "over_prob_raw": 0.25
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.273,
+          "over_prob_raw": 0.203
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.3,
+      "model_over_prob": 0.409,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Josh Downs",
+      "player_id": "00-0038997",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.19,
+      "trailing_n": 8,
+      "opp_per_gm": 5.5,
+      "dk_odds": 240,
+      "dk_implied_prob": 0.2941,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receiving Yds",
+      "line": 44.0,
+      "projected": 44.2,
+      "model_over_prob": 0.421,
+      "ladder": [
+        {
+          "line": 30.0,
+          "over_prob": 0.716,
+          "over_prob_raw": 0.762
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.625,
+          "over_prob_raw": 0.649
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.509,
+          "over_prob_raw": 0.495
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.405,
+          "over_prob_raw": 0.359
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.286
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.23
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.258,
+          "over_prob_raw": 0.187
+        }
+      ],
+      "model_over_prob_raw": 0.38,
+      "actual_value": 71.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.423,
+      "actual_value": 4.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "Travis Kelce",
+      "player_id": "00-0030506",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Anytime TD",
+      "model_prob": 0.214,
+      "trailing_n": 8,
+      "opp_per_gm": 5.2,
+      "dk_odds": 200,
+      "dk_implied_prob": 0.3333,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "FG Made",
+      "line": 1.5,
+      "projected": 1.6,
+      "model_over_prob": 0.459,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Harrison Butker",
+      "player_id": "00-0033303",
+      "team": "KC",
+      "opp": "BUF",
+      "market": "Kicking Points",
+      "line": 7.0,
+      "projected": 7.0,
+      "model_over_prob": 0.47,
+      "actual_value": 4.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Passing Yds",
+      "line": 232.0,
+      "projected": 232.1,
+      "model_over_prob": 0.512,
+      "ladder": [
+        {
+          "line": 150.0,
+          "over_prob": 0.776,
+          "over_prob_raw": 0.83
+        },
+        {
+          "line": 175.0,
+          "over_prob": 0.703,
+          "over_prob_raw": 0.747
+        },
+        {
+          "line": 200.0,
+          "over_prob": 0.623,
+          "over_prob_raw": 0.646
+        },
+        {
+          "line": 225.0,
+          "over_prob": 0.537,
+          "over_prob_raw": 0.533
+        },
+        {
+          "line": 250.0,
+          "over_prob": 0.449,
+          "over_prob_raw": 0.417
+        },
+        {
+          "line": 275.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.309
+        },
+        {
+          "line": 300.0,
+          "over_prob": 0.284,
+          "over_prob_raw": 0.215
+        }
+      ],
+      "model_over_prob_raw": 0.5,
+      "actual_value": 81.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Passing TDs",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.412,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Completions",
+      "line": 19.0,
+      "projected": 18.8,
+      "model_over_prob": 0.49,
+      "actual_value": 10.0,
+      "hit": false
+    },
+    {
+      "section": "Passing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Pass Attempts",
+      "line": 29.5,
+      "projected": 29.7,
+      "model_over_prob": 0.506,
+      "actual_value": 21.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Josh Allen",
+      "player_id": "00-0034857",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 23.5,
+      "projected": 23.6,
+      "model_over_prob": 0.414,
+      "model_over_prob_raw": 0.371,
+      "actual_value": 43.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 91.5,
+      "projected": 91.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 75.0,
+          "over_prob": 0.704,
+          "over_prob_raw": 0.748
+        },
+        {
+          "line": 80.0,
+          "over_prob": 0.63,
+          "over_prob_raw": 0.655
+        },
+        {
+          "line": 85.0,
+          "over_prob": 0.535,
+          "over_prob_raw": 0.53
+        },
+        {
+          "line": 90.0,
+          "over_prob": 0.44,
+          "over_prob_raw": 0.405
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.33
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.337,
+          "over_prob_raw": 0.276
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.231
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 117.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Carries",
+      "line": 20.5,
+      "projected": 20.5,
+      "model_over_prob": 0.418,
+      "actual_value": 32.0,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.791,
+      "trailing_n": 8,
+      "opp_per_gm": 23.6,
+      "dk_odds": -110,
+      "dk_implied_prob": 0.5238,
+      "actual_scored": true,
+      "hit": true
+    },
+    {
+      "section": "Rushing",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Rush + Rec Yds",
+      "line": 106.0,
+      "projected": 105.8,
+      "model_over_prob": 0.433,
+      "ladder": [
+        {
+          "line": 90.0,
+          "over_prob": 0.651,
+          "over_prob_raw": 0.682
+        },
+        {
+          "line": 95.0,
+          "over_prob": 0.582,
+          "over_prob_raw": 0.592
+        },
+        {
+          "line": 100.0,
+          "over_prob": 0.506,
+          "over_prob_raw": 0.491
+        },
+        {
+          "line": 105.0,
+          "over_prob": 0.444,
+          "over_prob_raw": 0.41
+        },
+        {
+          "line": 110.0,
+          "over_prob": 0.398,
+          "over_prob_raw": 0.351
+        },
+        {
+          "line": 115.0,
+          "over_prob": 0.36,
+          "over_prob_raw": 0.303
+        },
+        {
+          "line": 120.0,
+          "over_prob": 0.323,
+          "over_prob_raw": 0.259
+        }
+      ],
+      "model_over_prob_raw": 0.396,
+      "actual_value": 125.0,
+      "hit": true
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 14.5,
+      "projected": 14.4,
+      "model_over_prob": 0.414,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.627,
+          "over_prob_raw": 0.652
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.512,
+          "over_prob_raw": 0.499
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.406,
+          "over_prob_raw": 0.361
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.346,
+          "over_prob_raw": 0.287
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.298,
+          "over_prob_raw": 0.231
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.259,
+          "over_prob_raw": 0.188
+        }
+      ],
+      "model_over_prob_raw": 0.371,
+      "actual_value": 8.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "James Cook",
+      "player_id": "00-0037248",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 1.5,
+      "projected": 1.4,
+      "model_over_prob": 0.403,
+      "actual_value": 1.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Rushing Yds",
+      "line": 3.5,
+      "projected": 3.4,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 5.0,
+          "over_prob": 0.401,
+          "over_prob_raw": 0.354
+        },
+        {
+          "line": 10.0,
+          "over_prob": 0.354,
+          "over_prob_raw": 0.296
+        },
+        {
+          "line": 15.0,
+          "over_prob": 0.313,
+          "over_prob_raw": 0.248
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.279,
+          "over_prob_raw": 0.209
+        }
+      ],
+      "model_over_prob_raw": 0.377,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Carries",
+      "line": 1.0,
+      "projected": 1.2,
+      "model_over_prob": 0.438,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.148,
+      "trailing_n": 8,
+      "opp_per_gm": 4.2,
+      "dk_odds": 550,
+      "dk_implied_prob": 0.1538,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Rushing",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Rush + Rec Yds",
+      "line": 28.5,
+      "projected": 28.7,
+      "model_over_prob": 0.438,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.623,
+          "over_prob_raw": 0.646
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.549,
+          "over_prob_raw": 0.549
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.478,
+          "over_prob_raw": 0.454
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.423,
+          "over_prob_raw": 0.383
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.381,
+          "over_prob_raw": 0.329
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.343,
+          "over_prob_raw": 0.283
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.31,
+          "over_prob_raw": 0.244
+        }
+      ],
+      "model_over_prob_raw": 0.402,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 30.0,
+      "projected": 30.1,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 15.0,
+          "over_prob": 0.729,
+          "over_prob_raw": 0.777
+        },
+        {
+          "line": 20.0,
+          "over_prob": 0.641,
+          "over_prob_raw": 0.67
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.53,
+          "over_prob_raw": 0.524
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.418,
+          "over_prob_raw": 0.376
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.355,
+          "over_prob_raw": 0.297
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.305,
+          "over_prob_raw": 0.238
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.265,
+          "over_prob_raw": 0.194
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 12.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Ty Johnson",
+      "player_id": "00-0035537",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.7,
+      "model_over_prob": 0.492,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 51.0,
+      "projected": 51.1,
+      "model_over_prob": 0.418,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.744,
+          "over_prob_raw": 0.795
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.661,
+          "over_prob_raw": 0.695
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.554,
+          "over_prob_raw": 0.555
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.436,
+          "over_prob_raw": 0.399
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.365,
+          "over_prob_raw": 0.31
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.314,
+          "over_prob_raw": 0.249
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.272,
+          "over_prob_raw": 0.202
+        }
+      ],
+      "model_over_prob_raw": 0.376,
+      "actual_value": 15.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 4.0,
+      "projected": 3.8,
+      "model_over_prob": 0.33,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "DJ Moore",
+      "player_id": "00-0034827",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.299,
+      "trailing_n": 8,
+      "opp_per_gm": 6.6,
+      "dk_odds": 225,
+      "dk_implied_prob": 0.3077,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 48.0,
+      "projected": 47.9,
+      "model_over_prob": 0.415,
+      "ladder": [
+        {
+          "line": 35.0,
+          "over_prob": 0.693,
+          "over_prob_raw": 0.734
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.595,
+          "over_prob_raw": 0.61
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.476,
+          "over_prob_raw": 0.452
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.387,
+          "over_prob_raw": 0.337
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.331,
+          "over_prob_raw": 0.269
+        },
+        {
+          "line": 60.0,
+          "over_prob": 0.287,
+          "over_prob_raw": 0.218
+        },
+        {
+          "line": 65.0,
+          "over_prob": 0.25,
+          "over_prob_raw": 0.178
+        }
+      ],
+      "model_over_prob_raw": 0.372,
+      "actual_value": 33.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 3.5,
+      "projected": 3.6,
+      "model_over_prob": 0.46,
+      "actual_value": 3.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Khalil Shakir",
+      "player_id": "00-0037261",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.192,
+      "trailing_n": 8,
+      "opp_per_gm": 5.9,
+      "dk_odds": 265,
+      "dk_implied_prob": 0.274,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 32.5,
+      "projected": 32.5,
+      "model_over_prob": 0.417,
+      "ladder": [
+        {
+          "line": 20.0,
+          "over_prob": 0.687,
+          "over_prob_raw": 0.727
+        },
+        {
+          "line": 25.0,
+          "over_prob": 0.588,
+          "over_prob_raw": 0.601
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.468,
+          "over_prob_raw": 0.441
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.383,
+          "over_prob_raw": 0.332
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.328,
+          "over_prob_raw": 0.265
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.284,
+          "over_prob_raw": 0.215
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.247,
+          "over_prob_raw": 0.175
+        }
+      ],
+      "model_over_prob_raw": 0.375,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 2.5,
+      "projected": 2.5,
+      "model_over_prob": 0.45,
+      "actual_value": 0.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Keon Coleman",
+      "player_id": "00-0039901",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.223,
+      "trailing_n": 8,
+      "opp_per_gm": 4.1,
+      "dk_odds": 400,
+      "dk_implied_prob": 0.2,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receiving Yds",
+      "line": 39.0,
+      "projected": 39.1,
+      "model_over_prob": 0.419,
+      "ladder": [
+        {
+          "line": 25.0,
+          "over_prob": 0.714,
+          "over_prob_raw": 0.76
+        },
+        {
+          "line": 30.0,
+          "over_prob": 0.623,
+          "over_prob_raw": 0.646
+        },
+        {
+          "line": 35.0,
+          "over_prob": 0.506,
+          "over_prob_raw": 0.492
+        },
+        {
+          "line": 40.0,
+          "over_prob": 0.403,
+          "over_prob_raw": 0.357
+        },
+        {
+          "line": 45.0,
+          "over_prob": 0.344,
+          "over_prob_raw": 0.284
+        },
+        {
+          "line": 50.0,
+          "over_prob": 0.297,
+          "over_prob_raw": 0.229
+        },
+        {
+          "line": 55.0,
+          "over_prob": 0.257,
+          "over_prob_raw": 0.186
+        }
+      ],
+      "model_over_prob_raw": 0.378,
+      "actual_value": 13.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Receptions",
+      "line": 3.0,
+      "projected": 3.1,
+      "model_over_prob": 0.376,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Receiving",
+      "player": "Dalton Kincaid",
+      "player_id": "00-0038933",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Anytime TD",
+      "model_prob": 0.199,
+      "trailing_n": 8,
+      "opp_per_gm": 4.4,
+      "dk_odds": 255,
+      "dk_implied_prob": 0.2817,
+      "actual_scored": false,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Tyler Bass",
+      "player_id": "00-0036162",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "FG Made",
+      "line": 2.0,
+      "projected": 1.8,
+      "model_over_prob": 0.259,
+      "actual_value": 2.0,
+      "hit": false
+    },
+    {
+      "section": "Kicking",
+      "player": "Tyler Bass",
+      "player_id": "00-0036162",
+      "team": "BUF",
+      "opp": "KC",
+      "market": "Kicking Points",
+      "line": 8.0,
+      "projected": 7.8,
+      "model_over_prob": 0.45,
+      "actual_value": 7.0,
+      "hit": false
+    }
+  ]
 }
